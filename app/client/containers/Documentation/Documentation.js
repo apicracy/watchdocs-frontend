@@ -5,14 +5,14 @@ import { connect } from 'react-redux';
 @connect(state => ({
   title: state.app.title,
 }))
-export default class Conpent extends React.Component {
+export default class Dashboard extends React.Component {
   static propTypes = {
   }
 
   render() {
     return (
       <div>
-        <p>Content</p>
+        <h1>Tutapi Documentation</h1>
       </div>
     );
   }
