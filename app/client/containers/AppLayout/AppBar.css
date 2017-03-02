@@ -8,7 +8,9 @@
 .appBar__left {
   display: flex;
   flex: 1;
+  max-width: 300px;
   align-items: center;
+  justify-content: space-between;
 }
 
 .appBar__right {

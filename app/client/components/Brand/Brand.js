@@ -5,7 +5,7 @@ import { Link } from 'react-router'
 
 const Brand = ({ href = '/' }) => {
   return (
-    <Link to={href} className={styles.brand}>Tutapi</Link>
+    <Link to={href} className={styles.brand}>WatchDocs</Link>
   )
 }
 
