@@ -1,0 +1,25 @@
+.appLayout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.inner {
+  display: flex;
+  flex: 1;
+}
+
+.contentWrapper {
+  background: #ECEEFA;
+  display: flex;
+  flex: 1;
+}
+
+.navigation {
+  display: inline-flex;
+  align-items: center;
+}
+
+.right {
+  align-items: center;
+}

@@ -1,0 +1,12 @@
+.appBar {
+  display: flex;
+  padding: 15px;
+  background: #6C6AB8;
+  color: white;
+  justify-content: space-between;
+}
+
+.secondary {
+  composes: appBar;
+  background: #4e4c88;
+}

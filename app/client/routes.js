@@ -1,14 +1,16 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-import App from 'containers/App';
+import AppLayout from 'containers/AppLayout';
 import About from 'containers/About';
 import NoMatch from 'containers/NoMatch';
-import Content from 'containers/Content';
+
+/* import pages */
+import Documentation from 'containers/Documentation/Documentation';
 
 const routes = (
-  <Route path="/" component={App}>
-    <IndexRoute component={Content} />
+  <Route path="/" component={AppLayout}>
+    <IndexRoute component={Documentation} />
     <Route path="about" component={About} />
     <Route path="*" component={NoMatch} />
   </Route>

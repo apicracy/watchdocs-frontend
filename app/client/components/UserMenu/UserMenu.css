@@ -1,0 +1,11 @@
+.userMenuWrapper {
+  display: inline-flex;
+  padding: 5px 15px;
+  cursor: pointer;
+  align-items: center;
+}
+
+.username {
+  padding-left: 5px;
+  padding-right: 15px;
+}

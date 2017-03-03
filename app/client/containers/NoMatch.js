@@ -6,7 +6,10 @@ import { connect } from 'react-redux';
 export default class NoMatch extends React.Component {
   render() {
     return (
-      <div>No match</div>
+      <div>
+        <h1>404 Page not found</h1>
+        <h3>{"The page you are looking for doesn't exist."}</h3>
+      </div>
     );
   }
 }

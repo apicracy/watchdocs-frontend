@@ -1,0 +1,9 @@
+.navigationLink {
+  color: #FFFFFF;
+  text-decoration: none;
+  padding: 5px 10px;
+}
+
+.navigationLinkActive {
+  color: #6fb3e3;
+}
