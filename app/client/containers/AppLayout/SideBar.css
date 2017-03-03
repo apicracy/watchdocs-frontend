@@ -1,8 +1,0 @@
-.sideBar {
-  display: flex;
-  flex: 1 1;
-  max-width: 250px;
-  padding: 10px;
-
-  border-right: 1px solid #BBBBBB;
-}

@@ -1,5 +1,7 @@
 .brand {
-  font-size: 24px;
-  color: #000000;
+  font-size: 30px;
+  color: #FFFFFF;
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
 }

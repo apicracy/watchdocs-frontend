@@ -1,12 +1,21 @@
 .appLayout {
   display: flex;
   flex-direction: column;
-
   height: 100vh;
 }
 
-.contentWrapper {
+.inner {
   display: flex;
   flex: 1;
-  flex-direction: row;
+}
+
+.contentWrapper {
+  background: #ECEEFA;
+  display: flex;
+  flex: 1;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
 }

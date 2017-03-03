@@ -1,9 +1,9 @@
 .navigationLink {
-  color: #000000;
+  color: #FFFFFF;
   text-decoration: none;
   padding: 5px 10px;
 }
 
 .navigationLinkActive {
-  font-family: 'RobotoBold', Helvetica, sans-serif;
+  color: #6fb3e3;
 }

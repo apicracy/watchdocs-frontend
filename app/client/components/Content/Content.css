@@ -1,0 +1,9 @@
+.content {
+  display: flex;
+  flex-basis: 750px;
+}
+
+.justify {
+  composes: content;
+  justify-content: space-between;
+}
