@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './AppLayout.css';
 
 import AppBar from 'components/AppBar/AppBar';
-import SideBar from 'components/SideBar/SideBar';
+import SideBar from 'containers/SideBar/SideBar';
 import Content from 'components/Content/Content';
 
 import Container from 'components/Container/Container'
@@ -22,7 +22,7 @@ class AppLayout extends React.Component {
             <Brand />
             <div className={styles.right}>
               <div className={styles.navigation}>
-                <NavLink url="/" text="API documentation" />
+                <NavLink url="/docs" text="API documentation" />
                 <NavLink url="/static" text="Static pages" />
                 <NavLink url="/settings" text="Settings" />
               </div>
@@ -40,9 +40,7 @@ class AppLayout extends React.Component {
         </AppBar>
         <div className={styles.inner}>
           <Container>
-            <SideBar>
-              Test
-            </SideBar>
+            <SideBar />
             <Content>
               <div className={styles.contentWrapper}>
                 { this.props.children }

@@ -1,0 +1,18 @@
+.root {
+  text-decoration: none;
+  color: #000000;
+  display: flex;
+  padding: 5px 0;
+}
+
+.method {
+  display: flex;
+  flex-basis: 60px;
+  color: #4e4c88;
+  font-family: 'RobotoBold', Helvetica, sans-serif;
+}
+
+.path {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
