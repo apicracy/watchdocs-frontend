@@ -16,6 +16,10 @@
 }
 
 .navigation {
-  display: flex;
+  display: inline-flex;
+  align-items: center;
+}
+
+.right {
   align-items: center;
 }

@@ -7,7 +7,6 @@ import SideBar from 'components/SideBar/SideBar';
 import Content from 'components/Content/Content';
 
 import Container from 'components/Container/Container'
-import SidebarContainer from 'components/Container/SidebarContainer'
 import Brand from 'components/Brand/Brand';
 import NavLink from 'components/NavigationLink/NavigationLink';
 import UserMenu from 'components/UserMenu/UserMenu';
@@ -19,37 +18,36 @@ class AppLayout extends React.Component {
     return (
       <div className={styles.appLayout}>
         <AppBar>
-          <SidebarContainer>
-            <SideBar>
-              <Brand />
-            </SideBar>
-          </SidebarContainer>
           <Container>
-            <Content>
+            <Brand />
+            <div className={styles.right}>
               <div className={styles.navigation}>
                 <NavLink url="/" text="API documentation" />
                 <NavLink url="/static" text="Static pages" />
                 <NavLink url="/settings" text="Settings" />
               </div>
               <UserMenu username="WatchDocs User" />
-            </Content>
+            </div>
           </Container>
         </AppBar>
         <AppBar secondary>
-         test
+          <Container>
+            <div>
+              <Select options={['Project']} />
+              <Select options={['v1']} />
+            </div>
+          </Container>
         </AppBar>
         <div className={styles.inner}>
-          <SidebarContainer>
+          <Container>
             <SideBar>
               Test
             </SideBar>
-          </SidebarContainer>
-          <Container>
-            <div className={styles.contentWrapper}>
-              <Content>
+            <Content>
+              <div className={styles.contentWrapper}>
                 { this.props.children }
-              </Content>
-            </div>
+              </div>
+            </Content>
           </Container>
         </div>
       </div>
