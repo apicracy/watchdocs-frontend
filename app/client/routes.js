@@ -19,7 +19,7 @@ const routes = (
     <Route path="/docs" component={AppLayout}>
       <IndexRoute component={Documentation} />
       <Route path=":group_id" component={GroupDoc}>
-        <Route path="endpoint/:endpoint_id" component={GroupDoc} />
+        <Route path="endpoint/:endpoint_id" component={EndpointDoc} />
       </Route>
     </Route>
     <Route path="*" component={AppLayout}>

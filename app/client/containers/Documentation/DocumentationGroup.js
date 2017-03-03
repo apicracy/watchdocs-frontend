@@ -13,7 +13,8 @@ export default class DocumentationGroup extends React.Component {
     return (
       <div>
         <h1>WatchDocs Documentation</h1>
-        <h3>{`You're viewing documentation for group ${this.props.location.query.id}`}</h3>
+        <h3>{`You're viewing documentation for group ${this.props.params.group_id}`}</h3>
+        { this.props.children }
       </div>
     );
   }

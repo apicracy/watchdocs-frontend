@@ -8,7 +8,7 @@ const EndpointListItem = ({ path, method, params, id, groupId }) => {
 
   if (params && params.length > 0) {
     params = params.map(param => ':' + param)
-    paramsFormated = '(' + params.join(', ') + ')'
+    paramsFormated = '/(' + params.join(', ') + ')'
   }
 
   return (

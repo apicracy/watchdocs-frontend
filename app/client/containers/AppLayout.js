@@ -33,14 +33,13 @@ class AppLayout extends React.Component {
         <AppBar secondary>
           <Container>
             <div>
-              <Select options={['Project']} />
-              <Select options={['v1']} />
+              <Select options={['Project v1']} />
             </div>
           </Container>
         </AppBar>
         <div className={styles.inner}>
           <Container>
-            <SideBar />
+            <SideBar params={this.props.params} />
             <Content>
               <div className={styles.contentWrapper}>
                 { this.props.children }

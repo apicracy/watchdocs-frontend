@@ -12,8 +12,7 @@ export default class DocumentationEndpoint extends React.Component {
   render() {
     return (
       <div>
-        <h1>WatchDocs Documentation</h1>
-        <h3>{`You're viewing documentation for endpoint ${this.props.location.query.id}`}</h3>
+        <h4>{`You're viewing documentation for endpoint ${this.props.params.endpoint_id}`}</h4>
       </div>
     );
   }

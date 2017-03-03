@@ -7,11 +7,12 @@ import Icon from 'components/Icon/Icon'
 import { Link } from 'react-router'
 
 
-const EndpointListGroup = ({ groupName, id, endpoints, groupPath }) => {
+const EndpointListGroup = ({ groupName, id, endpoints, groupPath, isActive }) => {
   return (
     <div className={styles.root}>
       <Link to={`/docs/${id}`} className={styles.link}>
-        <Icon name="folder-o" size="lg" />
+        { isActive && <Icon name="folder-open-o" size="lg" /> }
+        { !isActive && <Icon name="folder-o" size="lg" /> }
         <span className={styles.groupName}>{ groupName }</span>
       </Link>
       <div className={styles.endpoints}>
