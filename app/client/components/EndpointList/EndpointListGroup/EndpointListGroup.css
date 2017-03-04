@@ -9,7 +9,13 @@
   color: #4e4c88;
   display: flex;
   align-items: center;
-  padding: 5px 0;
+  padding: 5px;
+  justify-content: space-between;
+}
+
+.selected {
+  composes: link;
+  background-color: #EEEEEE;
 }
 
 .groupName {

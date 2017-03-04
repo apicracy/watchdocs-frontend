@@ -11,6 +11,7 @@ class SideBar extends React.Component {
 
   render() {
     const { group_id, endpoint_id } = this.props.params
+
     return (
       <aside className={styles.sideBar}>
         <EndpointList endpoints={this.props.endpoints} activeGroup={group_id} selected={endpoint_id} />

@@ -4,7 +4,7 @@ import styles from './EndpointList.css'
 import EndpointListGroup from './EndpointListGroup/EndpointListGroup'
 
 const EndpointList = (props) => {
-  const { endpoints, activeGroup } = props;
+  const { endpoints, activeGroup, selected } = props;
 
   return (
     <div className={styles.root}>
@@ -14,6 +14,7 @@ const EndpointList = (props) => {
           endpoints.map(group => (
             <EndpointListGroup
               isActive={(`${group.id}` === activeGroup)}
+              selected={selected}
               key={group.id}
               {...group} />
           ))
