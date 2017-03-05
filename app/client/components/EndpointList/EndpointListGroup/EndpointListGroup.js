@@ -24,18 +24,45 @@ class EndpointListGroup extends React.Component {
     return <Icon name="folder-o" size="lg" />
   }
 
-  renderEndpoints(endpoints) {
+  renderEndpoint(endpoint) {
     const { id, groupPath, isActive, selected } = this.props
 
+    return (
+      <EndpointListItem
+        key={endpoint.id}
+        isSelected={(selected === `${endpoint.id}`)}
+        groupId={id}
+        path={groupPath}
+        {...endpoint} />
+    )
+  }
+
+  renderEndpointGroup(group) {
+    const { groupPath, selected, activeGroup } = this.props
+
+    return (
+      <EndpointListGroup
+        isActive={(`${group.id}` === activeGroup)}
+        activeGroup={activeGroup}
+        selected={selected}
+        key={group.id}
+        {...group}
+        groupPath={groupPath + group.groupPath} />
+    )
+  }
+
+  renderEndpointList(endpoints) {
     if(this.state.isOpen) {
-      return endpoints.map(endpoint => (
-        <EndpointListItem
-          key={endpoint.id}
-          isSelected={(selected === `${endpoint.id}`)}
-          groupId={id}
-          path={groupPath}
-          {...endpoint} />
-      ))
+      return endpoints.map(endpoint => {
+
+        if(endpoint.method) {
+          return this.renderEndpoint(endpoint)
+        } else if(endpoint.groupPath) {
+          return this.renderEndpointGroup(endpoint)
+        }
+
+        return null // do not render
+      })
     }
 
     return []
@@ -67,7 +94,7 @@ class EndpointListGroup extends React.Component {
           { (isActive && !selected) && <Icon name="ellipsis-h" /> }
         </Link>
         <div className={styles.endpoints}>
-          { this.renderEndpoints(endpoints) }
+          { this.renderEndpointList(endpoints) }
         </div>
       </div>
     )

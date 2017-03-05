@@ -1,11 +1,9 @@
 .selectWrapper {
   display: inline-flex;
   align-items: center;
-  border: 1px solid #FFFFFF;
   padding: 3px 5px;
-  font-size: 14px;
-  margin: 0 10px;
   cursor: pointer;
+  margin-right: 30px;
 }
 
 .selectedOption {

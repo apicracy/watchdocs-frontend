@@ -14,6 +14,7 @@ const EndpointList = (props) => {
           endpoints.map(group => (
             <EndpointListGroup
               isActive={(`${group.id}` === activeGroup)}
+              activeGroup={activeGroup}
               selected={selected}
               key={group.id}
               {...group} />

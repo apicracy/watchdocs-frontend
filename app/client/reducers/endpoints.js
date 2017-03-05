@@ -26,6 +26,30 @@ export const INITIAL_STATE = [
       {method: 'GET', params: ['user_id'], id: generateId()},
       {method: 'DELETE', params: ['user_id'], id: generateId()},
       {method: 'PUT', params: ['user_id'], id: generateId()},
+      {
+        id: generateId(),
+        groupName: 'Administrators',
+        groupPath: '/administrators',
+        endpoints: [
+          {method: 'GET', params: [], id: generateId()},
+          {
+            id: generateId(),
+            groupName: 'Another nested group',
+            groupPath: '/nested',
+            endpoints: [
+              {method: 'GET', params: [], id: generateId()}
+            ]
+          }
+        ]
+      },
+      {
+        id: generateId(),
+        groupName: 'Inactive',
+        groupPath: '/inavtive',
+        endpoints: [
+          {method: 'GET', params: [], id: generateId()}
+        ]
+      }
     ]
   }
 ];

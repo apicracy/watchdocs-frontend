@@ -18,35 +18,19 @@ class AppLayout extends React.Component {
     return (
       <div className={styles.appLayout}>
         <AppBar>
-          <Container>
+          <Container center>
             <Brand />
             <div className={styles.right}>
               <div className={styles.navigation}>
-                <NavLink url="/docs" text="API documentation" />
-                <NavLink url="/static" text="Static pages" />
-                <NavLink url="/settings" text="Settings" />
+                <NavLink url="/about" text="About" />
+                <NavLink url="/docs" text="Documentation manager" />
+                <NavLink url="/help" text="Help" />
               </div>
               <UserMenu username="WatchDocs User" />
             </div>
           </Container>
         </AppBar>
-        <AppBar secondary>
-          <Container>
-            <div>
-              <Select options={['Project v1']} />
-            </div>
-          </Container>
-        </AppBar>
-        <div className={styles.inner}>
-          <Container>
-            <SideBar params={this.props.params} />
-            <Content>
-              <div className={styles.contentWrapper}>
-                { this.props.children }
-              </div>
-            </Content>
-          </Container>
-        </div>
+        { this.props.children }
       </div>
     )
   }

@@ -19,6 +19,7 @@
 
 .method {
   display: flex;
+  flex-shrink: 0;
   flex-basis: 55px;
   color: #4e4c88;
   font-family: 'RobotoBold', Helvetica, sans-serif;
