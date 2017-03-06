@@ -1,6 +1,6 @@
 .content {
   display: flex;
-  flex-basis: 750px;
+  flex: 2;
 }
 
 .justify {

@@ -6,8 +6,6 @@ import { connect } from 'react-redux';
   title: state.app.title,
 }))
 export default class Dashboard extends React.Component {
-  static propTypes = {
-  }
 
   render() {
     return (

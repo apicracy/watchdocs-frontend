@@ -13,6 +13,19 @@
   background: #ECEEFA;
   display: flex;
   flex: 1;
+  position: relative;
+  padding: 25px 50px;
+}
+
+.contentWrapper:after {
+  background-color: #ECEEFA;
+  position: absolute;
+  display: block;
+  left: 100%;
+  top: 0;
+  bottom: 0;
+  content: '';
+  width: 1000px;
 }
 
 .navigation {

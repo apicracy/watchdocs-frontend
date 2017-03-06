@@ -1,0 +1,29 @@
+.root {
+  display: flex;
+  flex-direction: column;
+}
+
+.link {
+  text-decoration: none;
+  color: #4e4c88;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  justify-content: space-between;
+}
+
+.selected {
+  composes: link;
+  background-color: #EEEEEE;
+}
+
+.groupName {
+  margin-left: 15px;
+  font-size: 16px;
+}
+
+.endpoints {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}

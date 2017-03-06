@@ -3,14 +3,10 @@ import React from 'react';
 import styles from './AppLayout.css';
 
 import AppBar from 'components/AppBar/AppBar';
-import SideBar from 'components/SideBar/SideBar';
-import Content from 'components/Content/Content';
-
 import Container from 'components/Container/Container';
 import Brand from 'components/Brand/Brand';
 import NavLink from 'components/NavigationLink/NavigationLink';
 import UserMenu from 'components/UserMenu/UserMenu';
-import Select from 'components/Select/Select';
 
 class AppLayout extends React.Component {
 
@@ -18,38 +14,19 @@ class AppLayout extends React.Component {
     return (
       <div className={styles.appLayout}>
         <AppBar>
-          <Container>
+          <Container center>
             <Brand />
             <div className={styles.right}>
               <div className={styles.navigation}>
-                <NavLink url="/" text="API documentation" />
-                <NavLink url="/static" text="Static pages" />
-                <NavLink url="/settings" text="Settings" />
+                <NavLink url="/about" text="About" />
+                <NavLink url="/docs" text="Documentation manager" />
+                <NavLink url="/help" text="Help" />
               </div>
               <UserMenu username="WatchDocs User" />
             </div>
           </Container>
         </AppBar>
-        <AppBar secondary>
-          <Container>
-            <div>
-              <Select options={['Project']} />
-              <Select options={['v1']} />
-            </div>
-          </Container>
-        </AppBar>
-        <div className={styles.inner}>
-          <Container>
-            <SideBar>
-              Test
-            </SideBar>
-            <Content>
-              <div className={styles.contentWrapper}>
-                { this.props.children }
-              </div>
-            </Content>
-          </Container>
-        </div>
+        { this.props.children }
       </div>
     );
   }

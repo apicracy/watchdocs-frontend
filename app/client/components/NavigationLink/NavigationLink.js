@@ -3,27 +3,24 @@ import { Link, IndexLink } from 'react-router';
 
 import styles from './NavigationLink.css';
 
-const NavigationLink = ({ url = '/', text }) => {
-  let component;
-
+const NavigationLink = ({ url = '/', text, index }) => {
   const props = {
     to: url,
     className: styles.navigationLink,
     activeClassName: styles.navigationLinkActive,
   };
 
-  if (props.to === '/') {
-    component = <IndexLink {...props}>{ text }</IndexLink>;
-  } else {
-    component = <Link {...props}>{ text }</Link>;
+  if (index) {
+    return <IndexLink {...props}>{ text }</IndexLink>;
   }
 
-  return component;
+  return <Link {...props}>{ text }</Link>;
 };
-
-export default NavigationLink;
 
 NavigationLink.propTypes = {
   url: React.PropTypes.string,
   text: React.PropTypes.string,
+  index: React.PropTypes.bool,
 };
+
+export default NavigationLink;

@@ -1,0 +1,32 @@
+.root {
+  text-decoration: none;
+  color: #000000;
+  display: flex;
+  padding: 5px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.selected {
+  composes: root;
+  background-color: #EEEEEE;
+}
+
+.data {
+  display: flex;
+  flex: 1;
+}
+
+.method {
+  display: flex;
+  flex-shrink: 0;
+  flex-basis: 55px;
+  color: #4e4c88;
+  font-family: 'RobotoBold', Helvetica, sans-serif;
+}
+
+.path {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

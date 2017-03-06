@@ -11,9 +11,11 @@
  */
 
 import { appReducer } from 'reducers/app-reducer';
+import { endpoints } from 'reducers/endpoints';
 /* reapp: import new reducer */
 
 export const reducers = {
   app: appReducer,
-    /* reapp: append new reducer */
+  endpoints,
+  /* reapp: append new reducer */
 };

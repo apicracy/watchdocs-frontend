@@ -2,11 +2,15 @@ import React from 'react';
 
 import styles from './Container.css';
 
-const Container = ({ children }) => (
-  <div className={styles.root}>
-    { children }
-  </div>
-);
+const Container = ({ children, center }) => {
+  const topStyle = center ? styles.center : styles.root;
+
+  return (
+    <div className={topStyle}>
+      { children }
+    </div>
+  );
+};
 
 export default Container;
 
@@ -15,4 +19,5 @@ Container.propTypes = {
     React.PropTypes.object,
     React.PropTypes.array,
   ]),
+  center: React.PropTypes.bool,
 };
