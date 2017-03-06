@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './Container.css';
 
 const Container = ({ children, center }) => {
-  const topStyle = center ? styles.center : styles.root
+  const topStyle = center ? styles.center : styles.root;
 
   return (
     <div className={topStyle}>
@@ -19,5 +19,5 @@ Container.propTypes = {
     React.PropTypes.object,
     React.PropTypes.array,
   ]),
-  center: React.PropTypes.bool
+  center: React.PropTypes.bool,
 };

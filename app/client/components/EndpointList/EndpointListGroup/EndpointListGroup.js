@@ -21,21 +21,20 @@ class EndpointListGroup extends React.Component {
   componentWillMount() {
     // TODO cache opened folders
     this.setState({
-      isOpen: false
+      isOpen: false,
     });
   }
 
   renderIcon() {
-
-    if(this.state.isOpen) {
-      return <Icon name="folder-open-o" size="lg" />
+    if (this.state.isOpen) {
+      return <Icon name="folder-open-o" size="lg" />;
     }
 
-    return <Icon name="folder-o" size="lg" />
+    return <Icon name="folder-o" size="lg" />;
   }
 
   renderEndpoint(endpoint) {
-    const { id, groupPath, isActive, selected } = this.props;
+    const { id, groupPath, selected } = this.props;
 
     return (
       <EndpointListItem
@@ -43,7 +42,8 @@ class EndpointListGroup extends React.Component {
         isSelected={(selected === `${endpoint.id}`)}
         groupId={id}
         path={groupPath}
-        {...endpoint} />
+        {...endpoint}
+      />
     );
   }
 
@@ -57,36 +57,36 @@ class EndpointListGroup extends React.Component {
         selected={selected}
         key={group.id}
         {...group}
-        groupPath={groupPath + group.groupPath} />
+        groupPath={groupPath + group.groupPath}
+      />
     );
   }
 
   renderEndpointList(endpoints) {
-    if(this.state.isOpen) {
-      return endpoints.map(endpoint => {
-
-        if(endpoint.method) {
-          return this.renderEndpoint(endpoint)
-        } else if(endpoint.groupPath) {
-          return this.renderEndpointGroup(endpoint)
+    if (this.state.isOpen) {
+      return endpoints.map((endpoint) => {
+        if (endpoint.method) {
+          return this.renderEndpoint(endpoint);
+        } else if (endpoint.groupPath) {
+          return this.renderEndpointGroup(endpoint);
         }
 
-        return null // do not render
+        return null; // do not render
       });
     }
 
     return [];
   }
 
-  toggleOpen(isActive, selected) {
-
+  toggleOpen() {
+    const { isActive, selected } = this.props;
     // Will not close when user wants to select open group
-    if((!isActive && this.state.isOpen) || (selected && this.state.isOpen)) {
+    if ((!isActive && this.state.isOpen) || (selected && this.state.isOpen)) {
       return;
     }
 
     this.setState({
-      isOpen: !this.state.isOpen
+      isOpen: !this.state.isOpen,
     });
   }
 
@@ -96,7 +96,7 @@ class EndpointListGroup extends React.Component {
 
     return (
       <div className={styles.root}>
-        <Link to={`/docs/${id}`} className={topStyle} onClick={this.toggleOpen.bind(this, isActive, selected)}>
+        <Link to={`/docs/${id}`} className={topStyle} onClick={this.toggleOpen}>
           <span>
             { this.renderIcon() }
             <span className={styles.groupName}>{ groupName }</span>

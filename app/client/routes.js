@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, IndexRoute, IndexRedirect, Redirect } from 'react-router';
+import { Route, IndexRoute, IndexRedirect } from 'react-router';
 
 import AppLayout from 'containers/AppLayout';
 import About from 'containers/About';

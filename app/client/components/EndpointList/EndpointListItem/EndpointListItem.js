@@ -4,11 +4,11 @@ import Icon from 'components/Icon/Icon';
 
 import styles from './EndpointListItem.css';
 
-const formatParams = params => {
+const formatParams = (params) => {
   if (params && params.length > 0) {
-    params = params.map(param => ':' + param);
+    const formatted = params.map(param => `:${param}`);
 
-    return '/(' + params.join(', ') + ')';
+    return `/(${formatted.join(', ')})`;
   }
 
   return '';

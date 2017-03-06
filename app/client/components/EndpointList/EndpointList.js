@@ -17,7 +17,8 @@ const EndpointList = (props) => {
               activeGroup={activeGroup}
               selected={selected}
               key={group.id}
-              {...group} />
+              {...group}
+            />
           ))
         }
       </div>
@@ -28,7 +29,7 @@ const EndpointList = (props) => {
 EndpointList.propTypes = {
   endpoints: React.PropTypes.array,
   activeGroup: React.PropTypes.string,
-  selected: React.PropTypes.string
+  selected: React.PropTypes.string,
 };
 
 export default EndpointList;

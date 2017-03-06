@@ -2,7 +2,7 @@ import React from 'react';
 
 import AppBar from 'components/AppBar/AppBar';
 import LayoutWrapper from 'components/LayoutWrapper/LayoutWrapper';
-import Container from 'components/Container/Container'
+import Container from 'components/Container/Container';
 import NavLink from 'components/NavigationLink/NavigationLink';
 import Select from 'components/Select/Select';
 
@@ -11,9 +11,9 @@ class DocManager extends React.Component {
   static propTypes = {
     children: React.PropTypes.oneOfType([
       React.PropTypes.arrayOf(React.PropTypes.node),
-      React.PropTypes.node
+      React.PropTypes.node,
     ]),
-    params: React.PropTypes.object // supplied by react-router
+    params: React.PropTypes.object, // supplied by react-router
   }
 
   render() {
@@ -31,7 +31,7 @@ class DocManager extends React.Component {
         </AppBar>
         { this.props.children }
       </LayoutWrapper>
-    )
+    );
   }
 }
 

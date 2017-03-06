@@ -5,14 +5,14 @@ const Icon = ({ name, size }) => {
   const newName = `fa fa-${name}`;
   let sizeClass = '';
 
-  if(size === 'lg') {
-    sizeClass = `fa-lg`
+  if (size === 'lg') {
+    sizeClass = 'fa-lg';
   } else if (size) {
-    sizeClass = `fa-${size}x`
+    sizeClass = `fa-${size}x`;
   }
 
-  return <i className={`${newName} ${sizeClass}`}></i>
-}
+  return <i className={`${newName} ${sizeClass}`} />;
+};
 
 Icon.propTypes = {
   name: React.PropTypes.string,
