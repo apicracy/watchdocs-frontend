@@ -6,7 +6,7 @@ import AppBar from 'components/AppBar/AppBar';
 import SideBar from 'components/SideBar/SideBar';
 import Content from 'components/Content/Content';
 
-import Container from 'components/Container/Container'
+import Container from 'components/Container/Container';
 import Brand from 'components/Brand/Brand';
 import NavLink from 'components/NavigationLink/NavigationLink';
 import UserMenu from 'components/UserMenu/UserMenu';
@@ -51,8 +51,12 @@ class AppLayout extends React.Component {
           </Container>
         </div>
       </div>
-    )
+    );
   }
 }
 
 export default AppLayout;
+
+AppLayout.propTypes = {
+  children: React.PropTypes.object,
+};

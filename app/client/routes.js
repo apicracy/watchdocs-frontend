@@ -8,7 +8,7 @@ import NoMatch from 'containers/NoMatch';
 /* import pages */
 import Documentation from 'containers/Documentation/Documentation';
 
-const routes = (
+const Routes = (
   <Route path="/" component={AppLayout}>
     <IndexRoute component={Documentation} />
     <Route path="about" component={About} />
@@ -16,4 +16,4 @@ const routes = (
   </Route>
 );
 
-export default routes;
+export default Routes;
