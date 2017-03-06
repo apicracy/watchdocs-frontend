@@ -1,17 +1,22 @@
-import React from 'react'
-import { Link } from 'react-router'
-import Icon from 'components/Icon/Icon'
+import React from 'react';
+import { Link } from 'react-router';
+import Icon from 'components/Icon/Icon';
 
-import styles from './EndpointListItem.css'
+import styles from './EndpointListItem.css';
+
+const formatParams = params => {
+  if (params && params.length > 0) {
+    params = params.map(param => ':' + param);
+
+    return '/(' + params.join(', ') + ')';
+  }
+
+  return '';
+};
 
 const EndpointListItem = ({ path, method, params, id, groupId, isSelected }) => {
-  let paramsFormated = ''
-  const topStyle = isSelected ? styles.selected : styles.root
-
-  if (params && params.length > 0) {
-    params = params.map(param => ':' + param)
-    paramsFormated = '/(' + params.join(', ') + ')'
-  }
+  const topStyle = isSelected ? styles.selected : styles.root;
+  const paramsFormated = formatParams(params);
 
   return (
     <Link to={`/docs/${groupId}/endpoint/${id}`} className={topStyle}>
@@ -21,7 +26,16 @@ const EndpointListItem = ({ path, method, params, id, groupId, isSelected }) => 
       </span>
       { isSelected && <Icon name="ellipsis-h" /> }
     </Link>
-  )
-}
+  );
+};
 
-export default EndpointListItem
+EndpointListItem.propTypes = {
+  path: React.PropTypes.string,
+  method: React.PropTypes.string,
+  params: React.PropTypes.array,
+  id: React.PropTypes.number,
+  groupId: React.PropTypes.number,
+  isSelected: React.PropTypes.bool,
+};
+
+export default EndpointListItem;

@@ -8,6 +8,14 @@ import Select from 'components/Select/Select';
 
 class DocManager extends React.Component {
 
+  static propTypes = {
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.node),
+      React.PropTypes.node
+    ]),
+    params: React.PropTypes.object // supplied by react-router
+  }
+
   render() {
     return (
       <LayoutWrapper>
@@ -15,7 +23,8 @@ class DocManager extends React.Component {
           <Container>
             <div>
               <Select options={['Project v1']} />
-              <NavLink url="/docs" text="API documentation" />
+              {/* To keep linkg highlighted when viewing docs */}
+              <NavLink url="/docs" index={!this.props.params.group_id} text="API documentation" />
               <NavLink url="/docs/wiki" text="Wiki pages" />
               <NavLink url="/docs/settings" text="Settings" />
             </div>

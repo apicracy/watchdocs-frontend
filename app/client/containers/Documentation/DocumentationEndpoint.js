@@ -6,7 +6,9 @@ import { connect } from 'react-redux';
   title: state.app.title,
 }))
 export default class DocumentationEndpoint extends React.Component {
+
   static propTypes = {
+    params: React.PropTypes.object // supplied by react-router
   }
 
   render() {

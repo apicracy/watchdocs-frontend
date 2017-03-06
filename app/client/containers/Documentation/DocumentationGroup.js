@@ -6,7 +6,13 @@ import { connect } from 'react-redux';
   title: state.app.title,
 }))
 export default class DocumentationGroup extends React.Component {
+
   static propTypes = {
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.node),
+      React.PropTypes.node
+    ]),
+    params: React.PropTypes.object // supplied by react-router
   }
 
   render() {

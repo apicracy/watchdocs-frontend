@@ -1,7 +1,7 @@
-import React from 'react'
-import styles from './EndpointList.css'
+import React from 'react';
+import styles from './EndpointList.css';
 
-import EndpointListGroup from './EndpointListGroup/EndpointListGroup'
+import EndpointListGroup from './EndpointListGroup/EndpointListGroup';
 
 const EndpointList = (props) => {
   const { endpoints, activeGroup, selected } = props;
@@ -22,7 +22,13 @@ const EndpointList = (props) => {
         }
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default EndpointList
+EndpointList.propTypes = {
+  endpoints: React.PropTypes.array,
+  activeGroup: React.PropTypes.string,
+  selected: React.PropTypes.string
+};
+
+export default EndpointList;

@@ -1,18 +1,26 @@
-import React from 'react'
+import React from 'react';
 
-import styles from './EndpointListGroup.css'
+import styles from './EndpointListGroup.css';
 
-import EndpointListItem from '../EndpointListItem/EndpointListItem'
-import Icon from 'components/Icon/Icon'
-import { Link } from 'react-router'
+import EndpointListItem from '../EndpointListItem/EndpointListItem';
+import Icon from 'components/Icon/Icon';
+import { Link } from 'react-router';
 
 class EndpointListGroup extends React.Component {
+
+  static propTypes = {
+    id: React.PropTypes.number,
+    groupPath: React.PropTypes.string,
+    isActive: React.PropTypes.bool,
+    activeGroup: React.PropTypes.string,
+    selected: React.PropTypes.string,
+  }
 
   componentWillMount() {
     // TODO cache opened folders
     this.setState({
       isOpen: false
-    })
+    });
   }
 
   renderIcon() {
@@ -25,7 +33,7 @@ class EndpointListGroup extends React.Component {
   }
 
   renderEndpoint(endpoint) {
-    const { id, groupPath, isActive, selected } = this.props
+    const { id, groupPath, isActive, selected } = this.props;
 
     return (
       <EndpointListItem
@@ -34,11 +42,11 @@ class EndpointListGroup extends React.Component {
         groupId={id}
         path={groupPath}
         {...endpoint} />
-    )
+    );
   }
 
   renderEndpointGroup(group) {
-    const { groupPath, selected, activeGroup } = this.props
+    const { groupPath, selected, activeGroup } = this.props;
 
     return (
       <EndpointListGroup
@@ -48,7 +56,7 @@ class EndpointListGroup extends React.Component {
         key={group.id}
         {...group}
         groupPath={groupPath + group.groupPath} />
-    )
+    );
   }
 
   renderEndpointList(endpoints) {
@@ -62,10 +70,10 @@ class EndpointListGroup extends React.Component {
         }
 
         return null // do not render
-      })
+      });
     }
 
-    return []
+    return [];
   }
 
   toggleOpen(isActive, selected) {
@@ -77,12 +85,12 @@ class EndpointListGroup extends React.Component {
 
     this.setState({
       isOpen: !this.state.isOpen
-    })
+    });
   }
 
   render() {
-    const { id, groupName, endpoints, isActive, selected } = this.props
-    const topStyle = (isActive && !selected) ? styles.selected : styles.link
+    const { id, groupName, endpoints, isActive, selected } = this.props;
+    const topStyle = (isActive && !selected) ? styles.selected : styles.link;
 
     return (
       <div className={styles.root}>
@@ -97,8 +105,8 @@ class EndpointListGroup extends React.Component {
           { this.renderEndpointList(endpoints) }
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default EndpointListGroup
+export default EndpointListGroup;
