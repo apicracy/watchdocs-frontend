@@ -23,7 +23,6 @@ class DocManager extends React.Component {
           <Container>
             <div>
               <Select options={['Project v1']} />
-              {/* To keep linkg highlighted when viewing docs */}
               <NavLink url="/docs" index={!this.props.params.group_id} text="API documentation" />
               <NavLink url="/docs/wiki" text="Wiki pages" />
               <NavLink url="/docs/settings" text="Settings" />
