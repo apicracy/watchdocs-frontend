@@ -21,7 +21,7 @@ class ApiDoc extends React.Component {
     ]),
     params: React.PropTypes.object // supplied by react-router
   }
-  
+
   render() {
     return (
       <Container>
