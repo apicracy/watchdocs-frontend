@@ -2,7 +2,7 @@ import React from 'react';
 import 'font-awesome-webpack';
 
 const Icon = ({ name }) => {
-  const newName = `fa fa-' + ${name}`;
+  const newName = `fa fa-${name}`;
 
   return (<i className={newName} />);
 };
