@@ -5,7 +5,7 @@ import styles from './Content.css';
 const Content = ({ children, justify }) => {
   let classes = styles.content;
 
-  if(justify) {
+  if (justify) {
     classes = styles.justify;
   }
 
@@ -13,7 +13,12 @@ const Content = ({ children, justify }) => {
     <section className={classes}>
       { children }
     </section>
-  )
-}
+  );
+};
 
-export default Content
+export default Content;
+
+Content.propTypes = {
+  children: React.PropTypes.object,
+  justify: React.PropTypes.bool,
+};

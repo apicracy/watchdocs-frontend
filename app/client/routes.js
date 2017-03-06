@@ -12,7 +12,7 @@ import ApiDoc from 'containers/ApiDoc/ApiDoc';
 import GroupDoc from 'containers/Documentation/DocumentationGroup';
 import EndpointDoc from 'containers/Documentation/DocumentationEndpoint';
 
-const routes = (
+const Routes = (
   <Route>
     <Route path="/" component={AppLayout}>
       <IndexRedirect to="/docs" />
@@ -37,4 +37,4 @@ const routes = (
   </Route>
 );
 
-export default routes;
+export default Routes;

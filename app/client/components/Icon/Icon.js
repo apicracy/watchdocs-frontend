@@ -1,16 +1,22 @@
-import React from 'react'
-import "font-awesome-webpack";
+import React from 'react';
+import 'font-awesome-webpack';
 
 const Icon = ({ name, size }) => {
-  name = 'fa fa-' + name
+  const newName = `fa fa-${name}`;
+  let sizeClass = '';
 
-  if(size && size === 'lg') {
-    name += ` fa-lg`
+  if(size === 'lg') {
+    sizeClass = `fa-lg`
   } else if (size) {
-    name += ` fa-${size}x`
+    sizeClass = `fa-${size}x`
   }
 
-  return <i className={name}></i>
+  return <i className={`${newName} ${sizeClass}`}></i>
 }
 
-export default Icon
+Icon.propTypes = {
+  name: React.PropTypes.string,
+  size: React.PropTypes.oneOf(['lg', 2, 3, 4]),
+};
+
+export default Icon;

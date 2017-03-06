@@ -9,6 +9,11 @@ import EndpointList from 'components/EndpointList/EndpointList'
 }))
 class SideBar extends React.Component {
 
+  static propTypes = {
+    params: React.PropTypes.object, // supplied by react-router
+    endpoints: React.PropTypes.arrayOf(React.PropTypes.object)
+  }
+
   render() {
     const { group_id, endpoint_id } = this.props.params
 

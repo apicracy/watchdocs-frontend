@@ -10,7 +10,9 @@ class EndpointListGroup extends React.Component {
 
   static propTypes = {
     id: React.PropTypes.number,
+    groupName: React.PropTypes.string,
     groupPath: React.PropTypes.string,
+    endpoints: React.PropTypes.arrayOf(React.PropTypes.object)
     isActive: React.PropTypes.bool,
     activeGroup: React.PropTypes.string,
     selected: React.PropTypes.string,

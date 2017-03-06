@@ -1,24 +1,27 @@
-import React from 'react'
-import { Link, IndexLink } from 'react-router'
+import React from 'react';
+import { Link, IndexLink } from 'react-router';
 
-import styles from './NavigationLink.css'
+import styles from './NavigationLink.css';
 
 const NavigationLink = ({url = "/", text, index}) => {
-  let component;
-  
+
   const props = {
     to: url,
     className: styles.navigationLink,
-    activeClassName: styles.navigationLinkActive
-  }
+    activeClassName: styles.navigationLinkActive,
+  };
 
   if(index) {
-    component = <IndexLink {...props}>{ text }</IndexLink>
-  } else {
-    component = <Link {...props}>{ text }</Link>
+    return <IndexLink {...props}>{ text }</IndexLink>;
   }
 
-  return component;
-}
+  return <Link {...props}>{ text }</Link>;
+};
 
-export default NavigationLink
+NavigationLink.propTypes = {
+  url: React.PropTypes.string,
+  text: React.PropTypes.string,
+  index: React.PropTypes.bool
+};
+
+export default NavigationLink;

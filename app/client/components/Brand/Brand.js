@@ -1,12 +1,14 @@
-import React from 'react'
-import styles from './Brand.css'
+import React from 'react';
+import styles from './Brand.css';
 
-import { Link } from 'react-router'
+import { Link } from 'react-router';
 
-const Brand = ({ href = '/' }) => {
-  return (
-    <Link to={href} className={styles.brand}>WatchDocs</Link>
-  )
-}
+const Brand = ({ href = '/' }) => (
+  <Link to={href} className={styles.brand}>WatchDocs</Link>
+);
 
-export default Brand
+export default Brand;
+
+Brand.propTypes = {
+  href: React.PropTypes.string,
+};
