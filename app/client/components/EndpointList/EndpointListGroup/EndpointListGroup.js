@@ -78,7 +78,7 @@ class EndpointListGroup extends React.Component {
     return [];
   }
 
-  toggleOpen() {
+  toggleOpen = () => {
     const { isActive, selected } = this.props;
     // Will not close when user wants to select open group
     if ((!isActive && this.state.isOpen) || (selected && this.state.isOpen)) {
