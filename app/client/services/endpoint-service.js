@@ -4,14 +4,20 @@ export const filterEndpoints = (endpoints, options) => {
 
   if (search && search.length > 0) {
     return endpoints.reduce((state, item) => {
-      const test = new RegExp(search, 'i');
+      const escaped = search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+      const test = new RegExp(escaped, 'i');
 
-      // If name matches
-      if (item.groupName && item.groupName.match(test)) {
+      const conditions = [
+        item.groupName && item.groupName.match(test),
+        item.groupPath && item.groupPath.match(test),
+      ];
+
+      // If have matches
+      if (conditions.some(e => e)) {
         // Display only subfolders that match the name
         const childItems = filterEndpoints(item.endpoints, options);
 
-        // If folder's matched, always display it's endpoints
+        // If folder's matched, always display its endpoints
         const childEndpoints = item.endpoints.filter(end => !!end.method);
 
         const openedItem = {
@@ -23,7 +29,7 @@ export const filterEndpoints = (endpoints, options) => {
         return [...state, openedItem];
       }
 
-      // if it has children check for matched elements leaving only folder icon
+      // if it has children check for matched elements inside leaving only folder icon
       if (item.endpoints) {
         const childGroups = item.endpoints.filter(child => !!child.endpoints);
 
