@@ -1,25 +1,45 @@
 import React from 'react';
 import styles from './Tabs.css';
 
-const TabLink = ({ title, active }) => {
-  const topStyle = active ? styles.active : styles.link;
+import TabLink from './TabLink/TabLink';
 
-  return <span className={topStyle}>{title}</span>;
-};
+class Tabs extends React.Component {
 
-TabLink.propTypes = {
-  title: React.PropTypes.string,
-  active: React.PropTypes.bool,
-};
+  static propTypes = {
+    data: React.PropTypes.array,
+    onChange: React.PropTypes.func,
+  }
 
-const Tabs = ({ data }) => (
-  <div className={styles.root}>
-    { data.map((v, i) => <TabLink key={i} active={(i === 0)} title={v.title} />)}
-  </div>
-);
+  componentWillMount() {
+    this.setState({ active: null });
+  }
 
-Tabs.propTypes = {
-  data: React.PropTypes.array,
-};
+  onLinkClick = (id) => {
+    this.setState({ active: id });
+    this.props.onChange(id);
+  }
+
+  render() {
+    const { data } = this.props;
+    const active = this.state.active || this.props.data[0].id;
+
+    return (
+      <div className={styles.root}>
+        {
+          data.map(v => (
+            <TabLink
+              key={v.id}
+              id={v.id}
+              onClick={this.onLinkClick}
+              active={v.id === active}
+              title={v.title}
+            />
+          ))
+        }
+      </div>
+    );
+  }
+}
+
 
 export default Tabs;

@@ -52,3 +52,13 @@ export const filterEndpoints = (endpoints, options) => {
 
   return endpoints;
 };
+
+export const filterByStatus = (endpoints, status) => {
+  if (status === 'valid') {
+    return [];
+  } else if (status === 'invalid') {
+    return [];
+  }
+
+  return endpoints;
+};

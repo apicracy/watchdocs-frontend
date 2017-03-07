@@ -1,6 +1,5 @@
 .root {
   display: flex;
-  color: #DDDDDD;
   border-bottom: 1px solid #DDDDDD;
   margin: 5px;
   margin-right: 10px;
@@ -13,6 +12,13 @@
   margin-right: 15px;
   padding-bottom: 5px;
   cursor: pointer;
+  background: none;
+  border: none;
+  color: #DDDDDD;
+}
+
+.link:focus {
+  outline: 0;
 }
 
 .active {

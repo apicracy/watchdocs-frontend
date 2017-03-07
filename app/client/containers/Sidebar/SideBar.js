@@ -7,7 +7,7 @@ import TextInput from 'components/TextInput/TextInput';
 import Icon from 'components/Icon/Icon';
 import Tabs from 'components/Tabs/Tabs';
 
-import { filterEndpoints } from 'services/endpoint-service';
+import { filterEndpoints, filterByStatus } from 'services/endpoint-service';
 
 @connect(store => ({
   endpoints: store.endpoints,
@@ -20,7 +20,11 @@ class SideBar extends React.Component {
   }
 
   componentWillMount() {
-    this.setState({ search: '' });
+    this.setState({ search: '', status: '' });
+  }
+
+  tabChange = (activeTab) => {
+    this.setState({ status: activeTab });
   }
 
   filter = ({ nativeEvent }) => {
@@ -30,12 +34,12 @@ class SideBar extends React.Component {
   render() {
     const { group_id: groupId, endpoint_id: endpointId } = this.props.params;
     const tabData = [
-      { title: 'All', handler: () => {} },
-      { title: 'Valid', handler: () => {} },
-      { title: 'Invalid', handler: () => {} },
+      { title: 'All', id: 'all' },
+      { title: 'Valid', id: 'valid' },
+      { title: 'Invalid', id: 'invalid' },
     ];
     const endpoints = filterEndpoints(
-      this.props.endpoints,
+      filterByStatus(this.props.endpoints, this.state.status),
       { search: this.state.search },
     );
 
@@ -47,7 +51,7 @@ class SideBar extends React.Component {
           iconRight={<Icon name="search" />}
           onChange={this.filter}
         />
-        <Tabs data={tabData} />
+        <Tabs data={tabData} onChange={this.tabChange} />
         <EndpointList
           endpoints={endpoints}
           activeGroup={groupId}
