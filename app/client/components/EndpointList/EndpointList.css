@@ -1,8 +1,10 @@
 .root {
   flex: 1;
   font-size: 14px;
+  margin-right: 10px;
+  overflow-x: hidden;
 }
 
 .list {
-
+  overflow: hidden;
 }

@@ -5,6 +5,7 @@ import styles from './SideBar.css';
 import EndpointList from 'components/EndpointList/EndpointList';
 import TextInput from 'components/TextInput/TextInput';
 import Icon from 'components/Icon/Icon';
+import Tabs from 'components/Tabs/Tabs';
 
 import { filterEndpoints } from 'services/endpoint-service';
 
@@ -28,6 +29,11 @@ class SideBar extends React.Component {
 
   render() {
     const { group_id: groupId, endpoint_id: endpointId } = this.props.params;
+    const tabData = [
+      { title: 'All', handler: () => {} },
+      { title: 'Valid', handler: () => {} },
+      { title: 'Invalid', handler: () => {} },
+    ];
     const endpoints = filterEndpoints(
       this.props.endpoints,
       { search: this.state.search },
@@ -41,6 +47,7 @@ class SideBar extends React.Component {
           iconRight={<Icon name="search" />}
           onChange={this.filter}
         />
+        <Tabs data={tabData} />
         <EndpointList
           endpoints={endpoints}
           activeGroup={groupId}

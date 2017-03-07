@@ -80,6 +80,54 @@ export const INITIAL_STATE = [
       },
     ],
   },
+  {
+    id: generateId(),
+    groupName: 'Products',
+    groupPath: '/products',
+    endpoints: [
+      { method: 'GET', params: [], id: generateId() },
+      { method: 'POST', params: [], id: generateId() },
+      { method: 'GET', params: ['product_id'], id: generateId() },
+      { method: 'DELETE', params: ['product_id'], id: generateId() },
+      { method: 'PUT', params: ['product_id'], id: generateId() },
+    ],
+  },
+  {
+    id: generateId(),
+    groupName: 'Articles',
+    groupPath: '/articles',
+    endpoints: [
+      { method: 'GET', params: [], id: generateId() },
+      { method: 'POST', params: [], id: generateId() },
+      { method: 'GET', params: ['article_id'], id: generateId() },
+      { method: 'DELETE', params: ['article_id'], id: generateId() },
+      { method: 'PUT', params: ['article_id'], id: generateId() },
+    ],
+  },
+  {
+    id: generateId(),
+    groupName: 'Documents',
+    groupPath: '/documents',
+    endpoints: [
+      { method: 'GET', params: [], id: generateId() },
+      { method: 'POST', params: [], id: generateId() },
+      { method: 'GET', params: ['document_id'], id: generateId() },
+      { method: 'DELETE', params: ['document_id'], id: generateId() },
+      { method: 'PUT', params: ['document_id'], id: generateId() },
+    ],
+  },
+  {
+    id: generateId(),
+    groupName: 'Models',
+    groupPath: '/models',
+    endpoints: [
+      { method: 'GET', params: [], id: generateId() }, // get all
+      { method: 'POST', params: [], id: generateId() },
+      { method: 'GET', params: ['model_id'], id: generateId() },
+      { method: 'DELETE', params: ['model_id'], id: generateId() },
+      { method: 'PUT', params: ['model_id'], id: generateId() },
+    ],
+  },
 ];
 
 const LOAD_ENDPOINTS = 'test';
