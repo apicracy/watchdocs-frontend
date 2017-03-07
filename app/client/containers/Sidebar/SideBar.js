@@ -36,6 +36,7 @@ class SideBar extends React.Component {
     return (
       <aside className={styles.sideBar}>
         <TextInput
+          value={this.state.search}
           placeholder="Filter"
           iconRight={<Icon name="search" />}
           onChange={this.filter}
