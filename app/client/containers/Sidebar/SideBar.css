@@ -1,5 +1,7 @@
 .sideBar {
   display: flex;
   flex-basis: 250px;
-  resize: both;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

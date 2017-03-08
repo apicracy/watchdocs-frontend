@@ -14,6 +14,7 @@ class EndpointListGroup extends React.Component {
     groupPath: React.PropTypes.string,
     endpoints: React.PropTypes.arrayOf(React.PropTypes.object),
     isActive: React.PropTypes.bool,
+    isOpen: React.PropTypes.bool,
     activeGroup: React.PropTypes.string,
     selected: React.PropTypes.string,
   }
@@ -22,11 +23,12 @@ class EndpointListGroup extends React.Component {
     // TODO cache opened folders
     this.setState({
       isOpen: false,
+      force: false,
     });
   }
 
   renderIcon() {
-    if (this.state.isOpen) {
+    if (this.state.isOpen || (!this.state.force && this.props.isOpen)) {
       return <Icon name="folder-open-o" size="lg" />;
     }
 
@@ -63,7 +65,7 @@ class EndpointListGroup extends React.Component {
   }
 
   renderEndpointList(endpoints) {
-    if (this.state.isOpen) {
+    if (this.state.isOpen || (!this.state.force && this.props.isOpen)) {
       return endpoints.map((endpoint) => {
         if (endpoint.method) {
           return this.renderEndpoint(endpoint);
@@ -79,7 +81,7 @@ class EndpointListGroup extends React.Component {
   }
 
   toggleOpen = () => {
-    const { isActive, selected } = this.props;
+    const { isActive, selected, isOpen } = this.props;
     // Will not close when user wants to select open group
     if ((!isActive && this.state.isOpen) || (selected && this.state.isOpen)) {
       return;
@@ -87,6 +89,7 @@ class EndpointListGroup extends React.Component {
 
     this.setState({
       isOpen: !this.state.isOpen,
+      force: isOpen,
     });
   }
 

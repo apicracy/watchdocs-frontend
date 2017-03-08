@@ -31,6 +31,7 @@ class EndpointList extends React.Component {
             endpoints.map(group => (
               <EndpointListGroup
                 isActive={(`${group.id}` === activeGroup)}
+                isOpen={!!group.isOpen}
                 activeGroup={activeGroup}
                 selected={selected}
                 key={group.id}
