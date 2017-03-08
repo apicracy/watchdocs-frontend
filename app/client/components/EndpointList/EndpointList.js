@@ -4,7 +4,7 @@ import styles from './EndpointList.css';
 import EndpointListGroup from './EndpointListGroup/EndpointListGroup';
 import Icon from 'components/Icon/Icon';
 
-import AddNewEndpointModal from './AddNewEndpointModal/AddNewEndpointModal';
+import AddNewModal from './AddNewModal/AddNewModal';
 
 class EndpointList extends React.Component {
   static propTypes = {
@@ -46,7 +46,7 @@ class EndpointList extends React.Component {
           Add New <span className={styles.plusButton}><Icon name="plus-circle" /></span>
         </button>
 
-        <AddNewEndpointModal
+        <AddNewModal
           isShow={this.state.isOpen}
           onSave={() => { this.setState({ isOpen: false }); }}
           onHide={() => { this.setState({ isOpen: false }); }}

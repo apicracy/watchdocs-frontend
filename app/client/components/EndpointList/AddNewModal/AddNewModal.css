@@ -1,21 +1,3 @@
-.addNewEndpointButton {
-  background: #ECEEFA;
-  outline: none;
-  width: 100%;
-  padding: 10px;
-  text-align: left;
-  border: 0;
-  border-radius: 5px;
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-}
-
-.plusButton {
-  font-size: 25px;
-  color: #6fb3e3;
-}
-
 .modalField {
   margin: 10px 0;
 }
@@ -36,12 +18,13 @@
 
 .modalSelect {
   width: 100%;
+  height: 50px;
   border: 1px solid #e5e5e5;
   border-radius: 0;
   padding: 10px;
   outline: none;
   background: linear-gradient(45deg, transparent 50%, black 50%), linear-gradient(135deg, black 50%, transparent 50%), linear-gradient(to right, white, white);
-  background-position: calc(100% - 21px) calc(1em + 2px), calc(100% - 16px) calc(1em + 2px), 100% 0;
+  background-position: calc(100% - 21px) calc(1em + 8px), calc(100% - 16px) calc(1em + 8px), 100% 0;
   background-size: 5px 5px, 5px 5px, 2.5em 2.5em;
   background-repeat: no-repeat;
   line-height: 1.5em;
@@ -54,12 +37,13 @@
 
 .modalEndpointSelect {
   width: 100px;
+  height: 50px;
   border: 1px solid #e5e5e5;
   border-radius: 0;
   padding: 10px;
   outline: none;
   background: linear-gradient(45deg, transparent 50%, black 50%), linear-gradient(135deg, black 50%, transparent 50%), linear-gradient(to right, white, white);
-  background-position: calc(100% - 21px) calc(1em + 2px), calc(100% - 16px) calc(1em + 2px), 100% 0;
+  background-position: calc(100% - 21px) calc(1em + 8px), calc(100% - 16px) calc(1em + 8px), 100% 0;
   background-size: 5px 5px, 5px 5px, 2.5em 2.5em;
   background-repeat: no-repeat;
   line-height: 1.5em;
@@ -71,6 +55,8 @@
 }
 
 .modalInput {
+  flex: 1;
+  height: 100%;
   padding: 10px;
   border: 1px solid #e5e5e5;
   border-radius: 0;
@@ -78,4 +64,9 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   outline: none;
+}
+
+.modalInputWrapper{
+  display: flex;
+  height: 50px;
 }
