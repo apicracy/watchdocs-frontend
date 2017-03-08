@@ -20,7 +20,27 @@ class Aside extends React.Component {
   }
 
   componentWillMount() {
-    this.setState({ search: '', status: '' });
+    // Load width from cache
+    this.setState({ search: '', status: '', width: 250, baseWidth: 250, dragStart: null });
+  }
+
+  onDragStart = ({ nativeEvent }) => {
+    this.setState({ dragStart: nativeEvent.pageX });
+  }
+
+  onDrag = ({ nativeEvent }) => {
+    if (this.state.width + (nativeEvent.pageX - this.state.dragStart) > 200) {
+      this.setState({
+        width: this.state.width + (nativeEvent.pageX - this.state.dragStart),
+        dragStart: nativeEvent.pageX,
+      });
+    }
+  }
+
+  onDragEnd = () => {
+    this.setState({
+      baseWidth: null,
+    });
   }
 
   tabChange = (activeTab) => {
@@ -48,7 +68,15 @@ class Aside extends React.Component {
     );
 
     return (
-      <aside className={styles.sideBar}>
+      <aside className={styles.sideBar} style={{ flexBasis: this.state.width }}>
+        <div
+          draggable
+          onDragStart={this.onDragStart}
+          onDrag={this.onDrag}
+          onDragEnd={this.onDragEnd}
+          className={styles.handle}
+        />
+
         <TextInput
           value={this.state.search}
           placeholder="Filter"

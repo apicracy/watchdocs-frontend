@@ -1,7 +1,17 @@
 .sideBar {
   display: flex;
-  flex-basis: 250px;
   flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: visible;
+  position: relative;
+}
+
+.handle {
+  width: 6px;
+  height: 20px;
+  background-color: black;
+  position: absolute;
+  z-index: 100;
+  right: -3px;
+  cursor: ew-resize;
+  top: calc(50% - 10px);
 }
