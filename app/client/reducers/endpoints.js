@@ -13,6 +13,33 @@ export const INITIAL_STATE = [
   },
   {
     id: generateId(),
+    groupName: 'Endpoints',
+    groupPath: '/endpoints',
+    endpoints: [
+      { method: 'GET', params: [], id: generateId() }, // get all
+      { method: 'GET', params: ['endpoint_id'], id: generateId() }, // get one
+      {
+        id: generateId(),
+        groupName: 'Inavtive',
+        groupPath: '/incative',
+        endpoints: [
+          { method: 'GET', params: [], id: generateId() }, // get all
+          { method: 'GET', params: ['endpoint_id'], id: generateId() }, // get one
+          {
+            id: generateId(),
+            groupName: 'Deleted',
+            groupPath: '/deleted',
+            endpoints: [
+              { method: 'GET', params: [], id: generateId() }, // get all
+              { method: 'GET', params: ['endpoint_id'], id: generateId() }, // get one
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: generateId(),
     groupName: 'Users',
     groupPath: '/users',
     endpoints: [
@@ -27,12 +54,18 @@ export const INITIAL_STATE = [
         groupPath: '/administrators',
         endpoints: [
           { method: 'GET', params: [], id: generateId() },
+          { method: 'POST', params: [], id: generateId() },
+          { method: 'DELETE', params: [], id: generateId() },
+          { method: 'PATCH', params: [], id: generateId() },
           {
             id: generateId(),
-            groupName: 'Another nested group',
-            groupPath: '/nested',
+            groupName: 'ProjectOwners',
+            groupPath: '/owners',
             endpoints: [
               { method: 'GET', params: [], id: generateId() },
+              { method: 'POST', params: [], id: generateId() },
+              { method: 'DELETE', params: [], id: generateId() },
+              { method: 'PATCH', params: [], id: generateId() },
             ],
           },
         ],
