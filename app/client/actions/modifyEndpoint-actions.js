@@ -1,0 +1,44 @@
+/**
+ * modifyEndpoint Actions
+ */
+
+export const SET_TYPE = 'setType@modifyEndpoint';
+export const SET_FOLDER_NAME = 'setFolderName@modifyEndpoint';
+export const SET_PARENT_FOLDER = 'setParentFolder@modifyEndpoint';
+export const SET_METHOD = 'setMethod@modifyEndpoint';
+export const SET_URL = 'setUrl@modifyEndpoint';
+export const RESET = 'reset@modifyEndpoint';
+
+export function setType(value) {
+  return {
+    type: SET_TYPE,
+    payload: value,
+  };
+}
+
+export function setFolderName(value) {
+  return {
+    type: SET_FOLDER_NAME,
+    payload: value,
+  };
+}
+
+export function setParentFolder(value) {
+  return {
+    type: SET_PARENT_FOLDER,
+    payload: value,
+  };
+}
+
+export function setMethod(value) {
+  return {
+    type: SET_METHOD,
+    payload: value,
+  };
+}
+
+export function reset() {
+  return {
+    type: RESET,
+  };
+}
