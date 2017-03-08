@@ -7,7 +7,7 @@ import TextInput from 'components/TextInput/TextInput';
 import Icon from 'components/Icon/Icon';
 import Tabs from 'components/Tabs/Tabs';
 
-import { filterEndpoints, filterByStatus } from 'services/endpoint-service';
+import { filterByName, filterByStatus } from 'services/endpoint-service';
 
 @connect(store => ({
   endpoints: store.endpoints,
@@ -38,7 +38,7 @@ class SideBar extends React.Component {
       { title: 'Valid', id: 'valid' },
       { title: 'Invalid', id: 'invalid' },
     ];
-    const endpoints = filterEndpoints(
+    const endpoints = filterByName(
       filterByStatus(this.props.endpoints, this.state.status),
       { search: this.state.search },
     );

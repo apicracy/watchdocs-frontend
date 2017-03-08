@@ -1,5 +1,5 @@
 
-export const filterEndpoints = (endpoints, options) => {
+export const filterByName = (endpoints, options) => {
   const { search } = options;
 
   if (search && search.length > 0) {
@@ -15,7 +15,7 @@ export const filterEndpoints = (endpoints, options) => {
       // If have matches
       if (conditions.some(e => e)) {
         // Display only subfolders that match the name
-        const childItems = filterEndpoints(item.endpoints, options);
+        const childItems = filterByName(item.endpoints, options);
 
         // If folder's matched, always display its endpoints
         const childEndpoints = item.endpoints.filter(end => !!end.method);
@@ -37,7 +37,7 @@ export const filterEndpoints = (endpoints, options) => {
           const group = {
             ...item,
             isOpen: true,
-            endpoints: filterEndpoints(item.endpoints, options),
+            endpoints: filterByName(item.endpoints, options),
           };
 
           if (group.endpoints.length > 0) {
