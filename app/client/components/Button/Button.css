@@ -1,0 +1,15 @@
+.button {
+  text-decoration: none;
+  outline: none;
+  border: none;
+  width: 150px;
+  padding: 10px;
+  background: none;
+  font-size: 16px;
+}
+
+.buttonBlue {
+  composes: button;
+  background: #337AB7;
+  color: white;
+}
