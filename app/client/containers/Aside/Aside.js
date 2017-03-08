@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styles from './SideBar.css';
+import styles from './Aside.css';
 
 import EndpointList from 'components/EndpointList/EndpointList';
 import TextInput from 'components/TextInput/TextInput';
@@ -12,7 +12,7 @@ import { filterEndpoints } from 'services/endpoint-service';
 @connect(store => ({
   endpoints: store.endpoints,
 }))
-class SideBar extends React.Component {
+class Aside extends React.Component {
 
   static propTypes = {
     params: React.PropTypes.object, // supplied by react-router
@@ -67,4 +67,4 @@ class SideBar extends React.Component {
 }
 
 
-export default SideBar;
+export default Aside;
