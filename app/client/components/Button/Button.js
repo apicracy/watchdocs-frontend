@@ -2,10 +2,8 @@ import React from 'react';
 import styles from './Button.css';
 
 const Button = ({ onClick, children, primary }) => {
-  let buttonStyle = styles.button;
-  if (primary) {
-    buttonStyle = styles.buttonBlue;
-  }
+  const buttonStyle = primary ? styles.buttonBlue : styles.button;
+
   return (
     <button
       onClick={onClick}
