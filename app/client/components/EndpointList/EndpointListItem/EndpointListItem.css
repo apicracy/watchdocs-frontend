@@ -2,13 +2,16 @@
   text-decoration: none;
   color: #7f7d94;
   display: flex;
+  flex-shrink: 1;
   padding: 5px;
   justify-content: space-between;
   align-items: center;
   font-size: 14px;
 }
 
-.root:hover {
+.root:hover,
+.root:focus,
+.root:active {
   color: #7f7d94;
 }
 
@@ -19,7 +22,7 @@
 
 .data {
   display: inline-flex;
-  flex: 1 1;
+  flex: 1 10;
   overflow: hidden;
   text-overflow: ellipsis;
 }

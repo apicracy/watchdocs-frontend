@@ -3,7 +3,6 @@ import React from 'react';
 import styles from './EndpointListGroup.css';
 
 import EndpointListItem from '../EndpointListItem/EndpointListItem';
-import Icon from 'components/Icon/Icon';
 import CustomIcon from 'components/Icon/CustomIcon';
 import { Link } from 'react-router';
 
@@ -116,7 +115,7 @@ class EndpointListGroup extends React.Component {
             { this.renderIcon() }
             <span className={styles.groupName}>{ groupName }</span>
           </span>
-          { (isActive && !selected) && <Icon name="ellipsis-h" /> }
+          { (isActive && !selected) && <CustomIcon name="dots" /> }
         </Link>
         <div className={styles.endpoints}>
           { this.renderEndpointList(endpoints) }

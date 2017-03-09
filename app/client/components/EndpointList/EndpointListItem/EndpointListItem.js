@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import Icon from 'components/Icon/Icon';
+import Icon from 'components/Icon/CustomIcon';
 
 import styles from './EndpointListItem.css';
 
@@ -24,7 +24,7 @@ const EndpointListItem = ({ path, method, params, id, groupId, isSelected }) => 
         <span className={styles.method}>{ method }</span>
         <span className={styles.path}>{ path }{ paramsFormated }</span>
       </span>
-      { isSelected && <span className={styles.moreIcon}><Icon name="ellipsis-h" /></span> }
+      { isSelected && <span className={styles.moreIcon}><Icon name="dots" /></span> }
     </Link>
   );
 };

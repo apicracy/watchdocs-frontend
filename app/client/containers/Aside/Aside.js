@@ -68,7 +68,7 @@ class Aside extends React.Component {
     );
 
     return (
-      <aside className={styles.sideBar} style={{ flexBasis: this.state.width }}>
+      <aside className={styles.sideBar} style={{ width: this.state.width }}>
         <div
           draggable
           onDragStart={this.onDragStart}
