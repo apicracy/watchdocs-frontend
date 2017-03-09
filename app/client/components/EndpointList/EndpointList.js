@@ -20,6 +20,10 @@ class EndpointList extends React.Component {
     });
   }
 
+  renderNoItems = () => (
+    <div className={styles.noResults}>There are no results matching your criteria</div>
+  );
+
   render() {
     const { endpoints, activeGroup, selected } = this.props;
 
@@ -39,6 +43,7 @@ class EndpointList extends React.Component {
               />
             ))
           }
+          { (!endpoints || endpoints.length === 0) && this.renderNoItems() }
         </div>
         <button
           onClick={() => { this.setState({ isOpen: true }); }}
