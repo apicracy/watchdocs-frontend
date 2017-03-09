@@ -3,14 +3,26 @@ import styles from './AddNewModal.css';
 
 class Endpoint extends React.Component {
   static propTypes = {
-    onSelectFolder: React.PropTypes.func,
+    selectedParentFolder: React.PropTypes.string,
+    inputValue: React.PropTypes.string,
+    endpointType: React.PropTypes.string,
+
+    onSelectParentFolder: React.PropTypes.func,
     onChangeInput: React.PropTypes.func,
     onChangeEndpointType: React.PropTypes.func,
   };
 
+  static defaultProps = {
+    selectedParentFolder: '',
+    endpointType: 'GET',
+  }
+
   render() {
     const {
-      onSelectFolder,
+      selectedParentFolder,
+      inputValue,
+      endpointType,
+      onSelectParentFolder,
       onChangeInput,
       onChangeEndpointType,
     } = this.props;
@@ -23,20 +35,30 @@ class Endpoint extends React.Component {
             Format query params to &quot;id&quot; notation (for example /user/:id)
           </text>
           <div className={styles.modalInputWrapper}>
-            <select className={styles.modalEndpointSelect} onChange={onChangeEndpointType}>
+            <select
+              value={endpointType}
+              className={styles.modalEndpointSelect}
+              onChange={onChangeEndpointType}
+            >
               <option>GET</option>
               <option>POST</option>
               <option>PUT</option>
               <option>PATCH</option>
               <option>DELETE</option>
             </select>
-            <input placeholder="URL endpoint" className={styles.modalInput} onChange={onChangeInput} />
+            <input value={inputValue} placeholder="URL endpoint" className={styles.modalInput} onChange={onChangeInput} />
           </div>
         </div>
         <div className={styles.modalField}>
           <text className={styles.modalLabel}>Parent folder</text>
-          <select defaultValue="" className={styles.modalSelect} onChange={onSelectFolder}>
+          <select
+            value={selectedParentFolder}
+            className={styles.modalSelect}
+            onChange={onSelectParentFolder}
+          >
             <option value="" disabled hidden>No parent folder</option>
+            <option >lder</option>
+            <option >Nopar</option>
           </select>
         </div>
       </div>

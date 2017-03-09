@@ -45,6 +45,13 @@ export function setMethod(value) {
   };
 }
 
+export function setUrl(value) {
+  return {
+    type: SET_URL,
+    payload: value,
+  };
+}
+
 export function reset() {
   return {
     type: RESET,

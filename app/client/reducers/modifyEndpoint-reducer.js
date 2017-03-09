@@ -18,7 +18,7 @@ export const INITIAL_STATE = {
 };
 
 
-export function endpoints(state = INITIAL_STATE, action) {
+export function modifyEndpoint(state = INITIAL_STATE, action) {
   const { type, payload } = action;
 
   switch (type) {

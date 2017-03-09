@@ -9,17 +9,27 @@ class AddNewEndpointModal extends React.Component {
     isShow: React.PropTypes.bool,
     onSave: React.PropTypes.func,
     onHide: React.PropTypes.func,
-  };
 
-  componentWillMount() {
-    this.setState({ type: 'Endpoint' });
-  }
+    selectedParentFolder: React.PropTypes.string,
+    inputValue: React.PropTypes.string,
+    endpointType: React.PropTypes.string,
+    type: React.PropTypes.string,
+
+    onSelectParentFolder: React.PropTypes.func,
+    onChangeInput: React.PropTypes.func,
+    onChangeEndpointType: React.PropTypes.func,
+    onChangeType: React.PropTypes.func,
+  };
 
   render() {
     const {
       isShow,
       onSave,
       onHide,
+      selectedParentFolder,
+      inputValue,
+      endpointType,
+      type,
     } = this.props;
 
     return (
@@ -28,7 +38,7 @@ class AddNewEndpointModal extends React.Component {
           <div className={styles.modalField}>
             <text className={styles.modalLabel}>Type</text>
             <select
-              defaultValue={this.state.type}
+              value={type}
               className={styles.modalSelect}
               onChange={this.onChangeType}
             >
@@ -36,10 +46,17 @@ class AddNewEndpointModal extends React.Component {
               <option>Folder</option>
             </select>
           </div>
-          { this.state.type === 'Endpoint' &&
-            <Endpoint />
+          { type === 'Endpoint' &&
+            <Endpoint
+              selectedParentFolder={selectedParentFolder}
+              inputValue={inputValue}
+              endpointType={endpointType}
+              onSelectParentFolder={this.onSelectParentFolder}
+              onChangeInput={this.onChangeInput}
+              onChangeEndpointType={this.onChangeEndpointType}
+            />
           }
-          { this.state.type === 'Folder' &&
+          { type === 'Folder' &&
             <Folder />
           }
         </div>
@@ -48,7 +65,17 @@ class AddNewEndpointModal extends React.Component {
   }
 
   onChangeType = (e) => {
-    this.setState({ type: e.target.value });
+    this.props.onChangeType(e.target.value);
+  }
+
+  onSelectParentFolder = (e) => {
+    this.props.onSelectParentFolder(e.target.value);
+  }
+  onChangeInput = (e) => {
+    this.props.onChangeInput(e.target.value);
+  }
+  onChangeEndpointType = (e) => {
+    this.props.onChangeEndpointType(e.target.value);
   }
 }
 
