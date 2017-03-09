@@ -14,7 +14,7 @@ export default class DocumentationEndpoint extends React.Component {
   render() {
     return (
       <div>
-        <h4>{`You're viewing documentation for endpoint ${this.props.params.endpoint_id}`}</h4>
+        <h3>{`You're viewing documentation for endpoint ${this.props.params.endpoint_id}`}</h3>
       </div>
     );
   }

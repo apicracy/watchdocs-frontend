@@ -1,54 +1,93 @@
 
 export const filterEndpoints = (endpoints, options) => {
-  const { search } = options;
+  const { search, status } = options;
+  const escaped = search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
 
-  if (search && search.length > 0) {
-    return endpoints.reduce((state, item) => {
-      const escaped = search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
-      const test = new RegExp(escaped, 'i');
+  const byStatus = [
+    status === 'valid',
+    status === 'invalid',
+  ];
 
-      const conditions = [
-        item.groupName && item.groupName.match(test),
-        item.groupPath && item.groupPath.match(test),
-      ];
+  const byName = [
+    search,
+    search.length > 0,
+  ];
 
-      // If have matches
-      if (conditions.some(e => e)) {
-        // Display only subfolders that match the name
-        const childItems = filterEndpoints(item.endpoints, options);
+  // First filter by status
+  const filtered = byStatus.some(e => e) ? filterByStatus(endpoints, status) : endpoints;
+  // Then by name
+  return byName.every(e => e) ? filterByName(filtered, escaped) : filtered;
+};
 
-        // If folder's matched, always display its endpoints
-        const childEndpoints = item.endpoints.filter(end => !!end.method);
+function filterByName(endpoints, search) {
+  return endpoints.reduce((state, item) => {
+    const test = new RegExp(search, 'i');
+    const conditions = [
+      item.groupName && item.groupName.match(test),
+      item.groupPath && item.groupPath.match(test),
+    ];
 
-        const openedItem = {
+    // Display only subfolders that match the name
+    const filteredChildren = item.endpoints ? filterByName(item.endpoints, search) : [];
+
+    // Get original folder endpoints
+    const childEndpoints = item.endpoints ? item.endpoints.filter(end => !!end.method) : [];
+
+    // Get original folder child folders
+    const childGroups = item.endpoints ? item.endpoints.filter(child => !!child.endpoints) : [];
+
+    // If have matches
+    if (conditions.some(e => e)) {
+      const matched = {
+        ...item,
+        endpoints: [...childEndpoints, ...filteredChildren],
+        isOpen: true,
+      };
+
+      return [...state, matched];
+    }
+
+    // if it has children check for matched elements inside leaving only folder icon
+    if (item.endpoints) {
+      if (childGroups.length > 0) {
+        const group = {
           ...item,
-          endpoints: [...childEndpoints, ...childItems],
           isOpen: true,
+          endpoints: filteredChildren,
         };
 
-        return [...state, openedItem];
-      }
-
-      // if it has children check for matched elements inside leaving only folder icon
-      if (item.endpoints) {
-        const childGroups = item.endpoints.filter(child => !!child.endpoints);
-
-        if (childGroups.length > 0) {
-          const group = {
-            ...item,
-            isOpen: true,
-            endpoints: filterEndpoints(item.endpoints, options),
-          };
-
-          if (group.endpoints.length > 0) {
-            return [...state, group];
-          }
+        if (group.endpoints.length > 0) {
+          return [...state, group];
         }
       }
+    }
 
-      return state;
-    }, []);
-  }
+    return state;
+  }, []);
+}
 
-  return endpoints;
-};
+function filterByStatus(endpoints, status) {
+  return endpoints.reduce((state, item) => {
+    const endConditions = [
+      item.status,
+      item.status === status,
+    ];
+
+    if (endConditions.every(e => e)) {
+      return [...state, item];
+    }
+
+    if (item.endpoints) {
+      const matched = {
+        ...item,
+        endpoints: filterByStatus(item.endpoints, status),
+      };
+
+      if (matched.endpoints.length > 0) {
+        return [...state, matched];
+      }
+    }
+
+    return state;
+  }, []);
+}
