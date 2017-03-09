@@ -13,8 +13,10 @@
 }
 
 .data {
-  display: flex;
-  flex: 1;
+  display: inline-flex;
+  flex: 1 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .method {
@@ -29,4 +31,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.moreIcon {
+  margin: 0 5px;
 }

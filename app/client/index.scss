@@ -6,6 +6,8 @@
 @import "./styles/_bootstrap";
 @import "fonts.scss";
 
+@import "./styles/_browser-specific";
+
 body, html {
   margin: 0;
   font-family: 'RobotoRegular', Helvetica, sans-serif;
