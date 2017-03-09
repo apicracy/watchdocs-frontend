@@ -24,6 +24,6 @@
 .active {
   composes: link;
   font-family: 'RobotoBold', Helvetica, sans-serif;
-  color: #4e4c88;
-  border-bottom: 3px solid #4e4c88;
+  color: #6C6AB8;
+  border-bottom: 3px solid #6C6AB8;
 }

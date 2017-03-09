@@ -4,6 +4,7 @@ import styles from './EndpointListGroup.css';
 
 import EndpointListItem from '../EndpointListItem/EndpointListItem';
 import Icon from 'components/Icon/Icon';
+import CustomIcon from 'components/Icon/CustomIcon';
 import { Link } from 'react-router';
 
 class EndpointListGroup extends React.Component {
@@ -29,10 +30,10 @@ class EndpointListGroup extends React.Component {
 
   renderIcon() {
     if (this.state.isOpen || (!this.state.force && this.props.isOpen)) {
-      return <Icon name="folder-open-o" size="lg" />;
+      return <CustomIcon name="folder-open" size="lg" />;
     }
 
-    return <Icon name="folder-o" size="lg" />;
+    return <CustomIcon name="folder-closed" size="lg" />;
   }
 
   renderEndpoint(endpoint) {
@@ -111,7 +112,7 @@ class EndpointListGroup extends React.Component {
     return (
       <div className={styles.root}>
         <Link to={`/docs/${id}`} className={topStyle} onClick={this.toggleOpen}>
-          <span>
+          <span className={styles.nameWrapper}>
             { this.renderIcon() }
             <span className={styles.groupName}>{ groupName }</span>
           </span>

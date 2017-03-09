@@ -8,6 +8,7 @@ const reappDevTools = require('reapp-dev-tools');
 
 module.exports = {
   devtool: 'sourcemaps',
+  context: path.join(process.cwd(), 'app/client'),
   entry: {
     app: [
       `webpack-dev-server/client?http://${reappConf.host}:${reappConf.port}`,
