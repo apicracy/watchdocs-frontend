@@ -4,13 +4,12 @@ import styles from './EndpointList.css';
 import EndpointListGroup from './EndpointListGroup/EndpointListGroup';
 import Icon from 'components/Icon/Icon';
 
-import AddNewModal from './AddNewModal/AddNewModal';
-
 class EndpointList extends React.Component {
   static propTypes = {
     endpoints: React.PropTypes.array,
     activeGroup: React.PropTypes.string,
     selected: React.PropTypes.string,
+    onAddNewEndpoint: React.PropTypes.func,
   };
 
   componentWillMount() {
@@ -21,7 +20,7 @@ class EndpointList extends React.Component {
   }
 
   render() {
-    const { endpoints, activeGroup, selected } = this.props;
+    const { endpoints, activeGroup, selected, onAddNewEndpoint } = this.props;
 
     return (
       <div className={styles.root}>
@@ -41,17 +40,13 @@ class EndpointList extends React.Component {
           }
         </div>
         <button
-          onClick={() => { this.setState({ isOpen: true }); }}
+          onClick={onAddNewEndpoint}
           className={styles.addNewEndpointButton}
         >
           Add New <span className={styles.plusButton}><Icon name="plus-circle" /></span>
         </button>
 
-        <AddNewModal
-          isShow={this.state.isOpen}
-          onSave={() => { this.setState({ isOpen: false }); }}
-          onHide={() => { this.setState({ isOpen: false }); }}
-        />
+
       </div>
     );
   }

@@ -1,4 +1,5 @@
 import {
+  SET_VISIBILITY,
   SET_TYPE,
   SET_FOLDER_NAME,
   SET_PARENT_FOLDER,
@@ -8,6 +9,7 @@ import {
 } from 'actions/modifyEndpoint-actions';
 
 export const INITIAL_STATE = {
+  isVisible: false,
   type: 'Endpoint',
   folderName: '',
   parentFolder: '',
@@ -20,6 +22,7 @@ export function endpoints(state = INITIAL_STATE, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case SET_VISIBILITY: return { ...state, isVisible: payload };
     case SET_TYPE: return { ...state, type: payload };
     case SET_FOLDER_NAME: return { ...state, folderName: payload };
     case SET_PARENT_FOLDER: return { ...state, parentFolder: payload };

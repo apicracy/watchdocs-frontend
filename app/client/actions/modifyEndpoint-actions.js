@@ -2,12 +2,20 @@
  * modifyEndpoint Actions
  */
 
+export const SET_VISIBILITY = 'setVisibility@modifyEndpoint';
 export const SET_TYPE = 'setType@modifyEndpoint';
 export const SET_FOLDER_NAME = 'setFolderName@modifyEndpoint';
 export const SET_PARENT_FOLDER = 'setParentFolder@modifyEndpoint';
 export const SET_METHOD = 'setMethod@modifyEndpoint';
 export const SET_URL = 'setUrl@modifyEndpoint';
 export const RESET = 'reset@modifyEndpoint';
+
+export function setVisibility(value) {
+  return {
+    type: SET_VISIBILITY,
+    payload: value,
+  };
+}
 
 export function setType(value) {
   return {
