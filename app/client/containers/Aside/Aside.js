@@ -5,6 +5,8 @@ import styles from './Aside.css';
 import EndpointList from 'components/EndpointList/EndpointList';
 import TextInput from 'components/TextInput/TextInput';
 import Icon from 'components/Icon/Icon';
+import CustomIcon from 'components/Icon/CustomIcon';
+import IconButton from 'components/Button/IconButton';
 import Tabs from 'components/Tabs/Tabs';
 
 import { filterEndpoints } from 'services/endpoint-service';
@@ -51,6 +53,8 @@ class Aside extends React.Component {
     this.setState({ search: nativeEvent.target.value });
   }
 
+  clearFilter = () => this.setState({ search: '' });
+
   render() {
     const { group_id: groupId, endpoint_id: endpointId } = this.props.params;
     const tabData = [
@@ -80,7 +84,9 @@ class Aside extends React.Component {
         <TextInput
           value={this.state.search}
           placeholder="Filter"
-          iconRight={<Icon name="search" />}
+          iconRight={this.state.search.length > 0 ? (
+            <IconButton icon={<Icon name="close" />} onClick={this.clearFilter} />
+          ) : <CustomIcon name="search" />}
           onChange={this.filter}
         />
         <Tabs data={tabData} onChange={this.tabChange} />

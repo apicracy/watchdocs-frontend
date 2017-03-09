@@ -15,3 +15,7 @@
   top: 0;
   bottom: 0;
 }
+
+.handle:focus {
+  cursor: ew-resize;
+}

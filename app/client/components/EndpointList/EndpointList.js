@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './EndpointList.css';
 
 import EndpointListGroup from './EndpointListGroup/EndpointListGroup';
-import Icon from 'components/Icon/Icon';
+import CustomIcon from 'components/Icon/CustomIcon';
 
 import AddNewModal from './AddNewModal/AddNewModal';
 
@@ -49,7 +49,7 @@ class EndpointList extends React.Component {
           onClick={() => { this.setState({ isOpen: true }); }}
           className={styles.addNewEndpointButton}
         >
-          Add New <span className={styles.plusButton}><Icon name="plus-circle" /></span>
+          Add New <CustomIcon name="plus-filled-blue" />
         </button>
 
         <AddNewModal
