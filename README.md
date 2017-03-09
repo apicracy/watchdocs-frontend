@@ -6,6 +6,15 @@
 
 ## First Setup
 
+Make sure that you have new version of `node.js`. Version <6 does not work.
+We use `dev` as main branch for development, so you need to:
+
+```
+git checkout dev
+```
+
+Then install npm packages:
+
 ```
 npm install
 ```
