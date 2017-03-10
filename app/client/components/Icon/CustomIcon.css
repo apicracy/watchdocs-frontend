@@ -12,14 +12,26 @@
   height: 24px;
 }
 
-.x2 {
+.xl {
   composes: icon;
   width: 32px;
   height: 32px;
 }
 
-.x3 {
+.xxl {
   composes: icon;
   width: 48px;
   height: 48px;
+}
+
+.xs {
+  composes: icon;
+  width: 8px;
+  height: 8px;
+}
+
+.sm {
+  composes: icon;
+  width: 12px;
+  height: 12px;
 }

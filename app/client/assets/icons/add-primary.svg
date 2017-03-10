@@ -1,0 +1,20 @@
+<svg id="Symbols_Arrows" data-name="Symbols &amp; Arrows" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 87 87">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #6fb3e3;
+        stroke: none;
+      }
+
+      .cls-2 {
+        stroke: #fff;
+        stroke-miterlimit: 10;
+        stroke-width:4px;
+      }
+    </style>
+  </defs>
+  <title>add-primary</title>
+  <circle class="cls-1" cx="43.5" cy="43.5" r="43.5"/>
+  <line class="cls-2" x1="21.5" y1="43.5" x2="65.5" y2="43.5"/>
+  <line class="cls-2" x1="43.5" y1="65.5" x2="43.5" y2="21.5"/>
+</svg>

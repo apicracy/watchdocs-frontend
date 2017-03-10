@@ -25,7 +25,7 @@ const CustomIcon = ({ name, ext, size, color }) => {
 CustomIcon.propTypes = {
   name: React.PropTypes.string.isRequired,
   ext: React.PropTypes.oneOf(['png', 'svg']),
-  size: React.PropTypes.oneOf(['lg', 'x2', 'x3']),
+  size: React.PropTypes.oneOf(['lg', 'xl', 'xxl', 'sm', 'sx']),
   color: React.PropTypes.string,
 };
 

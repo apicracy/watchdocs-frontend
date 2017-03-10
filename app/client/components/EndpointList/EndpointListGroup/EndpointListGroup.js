@@ -28,11 +28,10 @@ class EndpointListGroup extends React.Component {
   }
 
   renderIcon() {
-    if (this.state.isOpen || (!this.state.force && this.props.isOpen)) {
-      return <CustomIcon ext="svg" name="folder-open" size="lg" />;
-    }
+    const open = (this.state.isOpen || (!this.state.force && this.props.isOpen));
+    const icon = open ? 'folder-open' : 'folder-closed';
 
-    return <CustomIcon name="folder-closed" size="lg" />;
+    return <CustomIcon ext="svg" name={icon} size="lg" color="#828097" />;
   }
 
   renderEndpoint(endpoint) {
@@ -115,7 +114,7 @@ class EndpointListGroup extends React.Component {
             { this.renderIcon() }
             <span className={styles.groupName}>{ groupName }</span>
           </span>
-          { (isActive && !selected) && <CustomIcon name="dots" /> }
+          { (isActive && !selected) && <CustomIcon ext="svg" name="more-dots" /> }
         </Link>
         <div className={styles.endpoints}>
           { this.renderEndpointList(endpoints) }

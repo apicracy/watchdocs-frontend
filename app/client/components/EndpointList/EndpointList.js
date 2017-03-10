@@ -49,7 +49,7 @@ class EndpointList extends React.Component {
           onClick={() => { this.setState({ isOpen: true }); }}
           className={styles.addNewEndpointButton}
         >
-          Add New <CustomIcon name="plus-filled-blue" />
+          Add New <CustomIcon ext="svg" size="lg" name="add-primary" />
         </button>
 
         <AddNewModal

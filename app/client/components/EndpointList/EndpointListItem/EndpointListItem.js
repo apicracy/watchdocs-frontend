@@ -24,7 +24,7 @@ const EndpointListItem = ({ path, method, params, id, groupId, isSelected }) => 
         <span className={styles.method}>{ method }</span>
         <span className={styles.path}>{ path }{ paramsFormated }</span>
       </span>
-      { isSelected && <span className={styles.moreIcon}><CustomIcon name="dots" /></span> }
+      { isSelected && <span className={styles.moreIcon}><CustomIcon ext="svg" name="more-dots" /></span> }
     </Link>
   );
 };

@@ -86,7 +86,7 @@ class Aside extends React.Component {
           placeholder="Filter"
           iconRight={this.state.search.length > 0 ? (
             <IconButton icon={<Icon name="close" />} onClick={this.clearFilter} />
-          ) : <CustomIcon ext="svg" color="blue" name="search" />}
+          ) : <CustomIcon ext="svg" color="#6fb3e3" name="search" />}
           onChange={this.filter}
         />
         <Tabs data={tabData} onChange={this.tabChange} />
