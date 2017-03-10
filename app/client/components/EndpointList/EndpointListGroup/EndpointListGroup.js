@@ -17,6 +17,8 @@ class EndpointListGroup extends React.Component {
     isOpen: React.PropTypes.bool,
     activeGroup: React.PropTypes.string,
     selected: React.PropTypes.string,
+    onClickItemMore: React.PropTypes.func,
+    onClickGroupMore: React.PropTypes.func,
   }
 
   componentWillMount() {
@@ -36,7 +38,7 @@ class EndpointListGroup extends React.Component {
   }
 
   renderEndpoint(endpoint) {
-    const { id, groupPath, selected } = this.props;
+    const { id, groupPath, selected, onClickItemMore } = this.props;
 
     return (
       <EndpointListItem
@@ -45,12 +47,13 @@ class EndpointListGroup extends React.Component {
         groupId={id}
         path={groupPath}
         {...endpoint}
+        onClickMore={onClickItemMore}
       />
     );
   }
 
   renderEndpointGroup(group) {
-    const { groupPath, selected, activeGroup } = this.props;
+    const { groupPath, selected, activeGroup, onClickGroupMore, onClickItemMore } = this.props;
 
     return (
       <EndpointListGroup
@@ -60,8 +63,18 @@ class EndpointListGroup extends React.Component {
         key={group.id}
         {...group}
         groupPath={groupPath + group.groupPath}
+        onClickGroupMore={onClickGroupMore}
+        onClickItemMore={onClickItemMore}
       />
     );
+  }
+
+  onClickGroupMore = () => {
+    const {
+      id,
+      onClickGroupMore,
+    } = this.props;
+    onClickGroupMore(id);
   }
 
   renderEndpointList(endpoints) {
@@ -110,13 +123,15 @@ class EndpointListGroup extends React.Component {
 
     return (
       <div className={styles.root}>
-        <Link to={`/docs/${id}`} className={topStyle} onClick={this.toggleOpen}>
-          <span>
-            { this.renderIcon() }
-            <span className={styles.groupName}>{ groupName }</span>
-          </span>
-          { (isActive && !selected) && <Icon name="ellipsis-h" /> }
-        </Link>
+        <div className={topStyle}>
+          <Link to={`/docs/${id}`} className={styles.link} onClick={this.toggleOpen}>
+            <span>
+              { this.renderIcon() }
+              <span className={styles.groupName}>{ groupName }</span>
+            </span>
+          </Link>
+          { (isActive && !selected) && <button onClick={this.onClickGroupMore} className={styles.moreIcon}><Icon name="ellipsis-h" /></button> }
+        </div>
         <div className={styles.endpoints}>
           { this.renderEndpointList(endpoints) }
         </div>

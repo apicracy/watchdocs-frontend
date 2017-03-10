@@ -3,12 +3,20 @@
  */
 
 export const SET_VISIBILITY = 'setVisibility@modifyEndpoint';
+export const SET_EDIT_MODE = 'setEditMode@modifyEndpoint';
 export const SET_TYPE = 'setType@modifyEndpoint';
 export const SET_FOLDER_NAME = 'setFolderName@modifyEndpoint';
 export const SET_PARENT_FOLDER = 'setParentFolder@modifyEndpoint';
 export const SET_METHOD = 'setMethod@modifyEndpoint';
 export const SET_URL = 'setUrl@modifyEndpoint';
 export const RESET = 'reset@modifyEndpoint';
+
+export function setEditMode(value) {
+  return {
+    type: SET_EDIT_MODE,
+    payload: value,
+  };
+}
 
 export function setVisibility(value) {
   return {

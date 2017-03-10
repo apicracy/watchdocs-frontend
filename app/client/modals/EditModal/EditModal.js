@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styles from './AddNewModal.css';
 import Modal from 'components/Modal/Modal';
 import FolderForm from 'components/FolderForm/FolderForm';
 import EndpointForm from 'components/EndpointForm/EndpointForm';
@@ -12,18 +11,17 @@ import {
   setUrl,
   saveEndpoint,
   cancel,
-  setType,
 } from 'services/modifyEndpoint-service';
 
 @connect(state => ({
-  isVisible: state.modifyEndpoint.isVisible && !state.modifyEndpoint.isEdit,
+  isVisible: state.modifyEndpoint.isVisible && state.modifyEndpoint.isEdit,
   selectedParentFolder: state.modifyEndpoint.parentFolder,
   url: state.modifyEndpoint.url,
   folderName: state.modifyEndpoint.folderName,
   endpointType: state.modifyEndpoint.method,
   type: state.modifyEndpoint.type,
 }))
-class AddNewModal extends React.Component {
+class EditEndpointModal extends React.Component {
   static propTypes = {
     isVisible: React.PropTypes.bool,
     selectedParentFolder: React.PropTypes.string,
@@ -45,18 +43,7 @@ class AddNewModal extends React.Component {
     } = this.props;
 
     return (
-      <Modal isShow={isVisible} title="Add new..." onSave={this.onSave} onHide={this.onHide}>
-        <div className={styles.modalField}>
-          <text className={styles.modalLabel}>Type</text>
-          <select
-            value={type}
-            className={styles.modalSelect}
-            onChange={this.onChangeType}
-          >
-            <option>Endpoint</option>
-            <option>Folder</option>
-          </select>
-        </div>
+      <Modal isShow={isVisible} title="Edit..." saveButtonText="Save" onSave={this.onSave} onHide={this.onHide}>
         <div>
           { type === 'Endpoint' &&
             <EndpointForm
@@ -64,7 +51,7 @@ class AddNewModal extends React.Component {
               inputValue={url}
               endpointType={endpointType}
               onSelectParentFolder={this.onSelectParentFolder}
-              onChangeInput={this.onChangeInput}
+              onChangeInput={this.onChangeUrl}
               onChangeEndpointType={this.onChangeEndpointType}
             />
           }
@@ -93,7 +80,7 @@ class AddNewModal extends React.Component {
     this.props.dispatch(setParentFolder(folderName));
   }
 
-  onChangeInput = (url) => {
+  onChangeUrl = (url) => {
     this.props.dispatch(setUrl(url));
   }
 
@@ -104,10 +91,6 @@ class AddNewModal extends React.Component {
   onChangeEndpointType = (method) => {
     this.props.dispatch(setMethod(method));
   }
-
-  onChangeType = (e) => {
-    this.props.dispatch(setType(e.target.value));
-  }
 }
 
-export default AddNewModal;
+export default EditEndpointModal;

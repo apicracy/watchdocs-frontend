@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './AddNewModal.css';
+import styles from './EndpointForm.css';
 
-class Endpoint extends React.Component {
+class EndpointForm extends React.Component {
   static propTypes = {
     selectedParentFolder: React.PropTypes.string,
     inputValue: React.PropTypes.string,
@@ -22,9 +22,6 @@ class Endpoint extends React.Component {
       selectedParentFolder,
       inputValue,
       endpointType,
-      onSelectParentFolder,
-      onChangeInput,
-      onChangeEndpointType,
     } = this.props;
 
     return (
@@ -38,7 +35,7 @@ class Endpoint extends React.Component {
             <select
               value={endpointType}
               className={styles.modalEndpointSelect}
-              onChange={onChangeEndpointType}
+              onChange={this.onChangeEndpointType}
             >
               <option>GET</option>
               <option>POST</option>
@@ -46,7 +43,7 @@ class Endpoint extends React.Component {
               <option>PATCH</option>
               <option>DELETE</option>
             </select>
-            <input value={inputValue} placeholder="URL endpoint" className={styles.modalInput} onChange={onChangeInput} />
+            <input value={inputValue} placeholder="URL endpoint" className={styles.modalInput} onChange={this.onChangeInput} />
           </div>
         </div>
         <div className={styles.modalField}>
@@ -54,16 +51,26 @@ class Endpoint extends React.Component {
           <select
             value={selectedParentFolder}
             className={styles.modalSelect}
-            onChange={onSelectParentFolder}
+            onChange={this.onSelectParentFolder}
           >
             <option value="" disabled hidden>No parent folder</option>
-            <option >lder</option>
-            <option >Nopar</option>
           </select>
         </div>
       </div>
     );
   }
+
+  onChangeEndpointType = (e) => {
+    this.props.onChangeEndpointType(e.target.value);
+  }
+
+  onChangeInput = (e) => {
+    this.props.onChangeInput(e.target.value);
+  }
+
+  onSelectParentFolder = (e) => {
+    this.props.onSelectParentFolder(e.target.value);
+  }
 }
 
-export default Endpoint;
+export default EndpointForm;

@@ -9,7 +9,11 @@ import Tabs from 'components/Tabs/Tabs';
 
 import { filterEndpoints } from 'services/endpoint-service';
 
-import { setVisibility as setModalVisibility } from 'services/modifyEndpoint-service';
+import {
+  addNewEndpoint,
+  loadEndpoint,
+  loadFolder,
+} from 'services/modifyEndpoint-service';
 
 @connect(store => ({
   endpoints: store.endpoints,
@@ -55,7 +59,15 @@ class Aside extends React.Component {
   }
 
   addNewEndpoint = () => {
-    this.props.dispatch(setModalVisibility(true));
+    this.props.dispatch(addNewEndpoint());
+  }
+
+  onClickGroupMore = (id) => {
+    this.props.dispatch(loadFolder(id));
+  }
+
+  onClickItemMore = (id) => {
+    this.props.dispatch(loadEndpoint(id));
   }
 
   render() {
@@ -96,6 +108,8 @@ class Aside extends React.Component {
           activeGroup={groupId}
           selected={endpointId}
           onAddNewEndpoint={this.addNewEndpoint}
+          onClickItemMore={this.onClickItemMore}
+          onClickGroupMore={this.onClickGroupMore}
         />
       </aside>
     );

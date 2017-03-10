@@ -2,14 +2,20 @@ import {
   setVisibility as setVisibilityAction,
   setType as setTypeAction,
   setParentFolder as setParentFolderAction,
+  setFolderName as setFolderNameAction,
   setUrl as setUrlAction,
   setMethod as setMethodAction,
+  setEditMode as setEditModeAction,
   reset,
 } from 'actions/modifyEndpoint-actions';
+import {
+  filterById,
+} from 'services/endpoint-service';
 
-export function setVisibility(value) {
+export function addNewEndpoint() {
   return (dispatch /* , getState */) => {
-    dispatch(setVisibilityAction(value));
+    dispatch(setEditModeAction(false));
+    dispatch(setVisibilityAction(true));
   };
 }
 
@@ -18,6 +24,48 @@ export function saveEndpoint() {
     // TODO dispatch save action
     dispatch(setVisibilityAction(false));
     dispatch(reset());
+  };
+}
+
+const formatParams = (params) => {
+  if (params && params.length > 0) {
+    const formatted = params.map(param => `:${param}`);
+
+    return `/(${formatted.join(', ')})`;
+  }
+
+  return '';
+};
+
+export function loadEndpoint(id) {
+  return (dispatch, getState) => {
+    const { endpoints } = getState();
+    const newEndpoints = [].concat(endpoints);
+    const data = filterById(newEndpoints, id);
+    const params = formatParams(data.params);
+
+    dispatch(setUrlAction(params));
+    dispatch(setType('Endpoint'));
+    // TODO set parent Folder
+    // dispatch(setParentFolder(data.groupName));
+    dispatch(setMethodAction(data.method));
+    dispatch(setEditModeAction(true));
+    dispatch(setVisibilityAction(true));
+  };
+}
+
+export function loadFolder(id) {
+  return (dispatch, getState) => {
+    const { endpoints } = getState();
+    const newEndpoints = [].concat(endpoints);
+    const data = filterById(newEndpoints, id);
+
+    dispatch(setFolderNameAction(data.groupName));
+    // TODO set parent Folder
+    // dispatch(setParentFolder(data.groupName));
+    dispatch(setType('Folder'));
+    dispatch(setEditModeAction(true));
+    dispatch(setVisibilityAction(true));
   };
 }
 
@@ -43,6 +91,12 @@ export function setParentFolder(folderName) {
 export function setUrl(url) {
   return (dispatch /* getState */) => {
     dispatch(setUrlAction(url));
+  };
+}
+
+export function setFolderName(folderName) {
+  return (dispatch /* getState */) => {
+    dispatch(setFolderNameAction(folderName));
   };
 }
 
