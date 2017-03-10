@@ -67,7 +67,7 @@ module.exports = {
         loaders: ['style', 'css', 'less'],
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i,
+        test: /\.(jpe?g|png|gif)$/i,
         loader: 'url!img?optimizationLevel=7',
       },
       {
@@ -87,7 +87,16 @@ module.exports = {
         loader: 'url?mimetype=application/vnd.ms-fontobject',
       },
       {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        test: /\.svg$/,
+        loader: 'svg-inline',
+        query: {
+          removeTags: true,
+          removingTags: ['title', 'desc'],
+          classPrefix: true,
+        },
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)$/,
         loader: 'url?mimetype=image/svg+xml',
       },
     ],

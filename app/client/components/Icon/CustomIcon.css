@@ -1,4 +1,25 @@
 .icon {
   display: inline-flex;
   align-items: center;
+  width: 16px;
+  height: 16px;
+  stroke: black;
+}
+
+.lg {
+  composes: icon;
+  width: 24px;
+  height: 24px;
+}
+
+.x2 {
+  composes: icon;
+  width: 32px;
+  height: 32px;
+}
+
+.x3 {
+  composes: icon;
+  width: 48px;
+  height: 48px;
 }

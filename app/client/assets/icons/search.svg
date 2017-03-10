@@ -1,0 +1,18 @@
+<?xml version="1.0" standalone="yes"?>
+<!DOCTYPE svg>
+<svg id="Search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 58 58">
+  <defs>
+    <style>
+      .cls-1{
+        fill:none;
+        stroke: inherit;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-width:4px;
+      }
+    </style>
+  </defs>
+  <title>search</title>
+  <circle class="cls-1" cx="22" cy="22" r="20"/>
+  <line class="cls-1" x1="56" y1="56" x2="36.14" y2="36.14"/>
+</svg>

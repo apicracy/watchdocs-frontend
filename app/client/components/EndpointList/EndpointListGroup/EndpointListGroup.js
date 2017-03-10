@@ -29,7 +29,7 @@ class EndpointListGroup extends React.Component {
 
   renderIcon() {
     if (this.state.isOpen || (!this.state.force && this.props.isOpen)) {
-      return <CustomIcon name="folder-open" size="lg" />;
+      return <CustomIcon ext="svg" name="folder-open" size="lg" />;
     }
 
     return <CustomIcon name="folder-closed" size="lg" />;
