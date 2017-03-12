@@ -55,6 +55,14 @@ class Aside extends React.Component {
 
   clearFilter = () => this.setState({ search: '' });
 
+  renderIcon() {
+    if (this.state.search.length > 0) {
+      return <IconButton icon={<Icon name="close" />} onClick={this.clearFilter} />;
+    }
+
+    return <CustomIcon name="search" />;
+  }
+
   render() {
     const { group_id: groupId, endpoint_id: endpointId } = this.props.params;
     const tabData = [
@@ -84,9 +92,7 @@ class Aside extends React.Component {
         <TextInput
           value={this.state.search}
           placeholder="Filter"
-          iconRight={this.state.search.length > 0 ? (
-            <IconButton icon={<Icon name="close" />} onClick={this.clearFilter} />
-          ) : <CustomIcon ext="svg" color="#6fb3e3" name="search" />}
+          iconRight={this.renderIcon()}
           onChange={this.filter}
         />
         <Tabs data={tabData} onChange={this.tabChange} />

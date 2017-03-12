@@ -1,1 +1,15 @@
-<svg id="Symbols_Arrows" data-name="Symbols &amp; Arrows" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 26"><defs><style>.cls-1{fill:none;stroke: inherit;stroke-linecap:round;stroke-linejoin:round;stroke-width:4px;}</style></defs><title>arrow-down</title><polyline class="cls-1" points="2 2 24 24 46 2"/></svg>
+<svg id="Symbols_Arrows" data-name="Symbols &amp; Arrows" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 26">
+  <defs>
+    <style>
+      .cls-1{
+        fill:none;
+        stroke: currentColor;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-width:4px;
+      }
+    </style>
+  </defs>
+  <title>arrow-down</title>
+  <polyline class="cls-1" points="2 2 24 24 46 2"/>
+</svg>

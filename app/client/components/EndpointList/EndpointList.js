@@ -49,7 +49,7 @@ class EndpointList extends React.Component {
           onClick={() => { this.setState({ isOpen: true }); }}
           className={styles.addNewEndpointButton}
         >
-          Add New <CustomIcon ext="svg" size="lg" name="add-primary" />
+          Add New <span className={styles.buttonPlus}><CustomIcon size="lg" name="add-primary" /></span>
         </button>
 
         <AddNewModal
