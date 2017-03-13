@@ -4,13 +4,14 @@ import styles from './EndpointList.css';
 import EndpointListGroup from './EndpointListGroup/EndpointListGroup';
 import CustomIcon from 'components/Icon/CustomIcon';
 
-import AddNewModal from './AddNewModal/AddNewModal';
-
 class EndpointList extends React.Component {
   static propTypes = {
     endpoints: React.PropTypes.array,
     activeGroup: React.PropTypes.string,
     selected: React.PropTypes.string,
+    onAddNewEndpoint: React.PropTypes.func,
+    onClickItemMore: React.PropTypes.func,
+    onClickGroupMore: React.PropTypes.func,
   };
 
   componentWillMount() {
@@ -25,7 +26,9 @@ class EndpointList extends React.Component {
   );
 
   render() {
-    const { endpoints, activeGroup, selected } = this.props;
+    const { endpoints, activeGroup, selected,
+      onAddNewEndpoint, onClickItemMore, onClickGroupMore,
+    } = this.props;
 
     return (
       <div className={styles.root}>
@@ -40,23 +43,21 @@ class EndpointList extends React.Component {
                 selected={selected}
                 key={group.id}
                 {...group}
+                onClickGroupMore={onClickGroupMore}
+                onClickItemMore={onClickItemMore}
               />
             ))
           }
           { (!endpoints || endpoints.length === 0) && this.renderNoItems() }
         </div>
         <button
-          onClick={() => { this.setState({ isOpen: true }); }}
+          onClick={onAddNewEndpoint}
           className={styles.addNewEndpointButton}
         >
           Add New <span className={styles.buttonPlus}><CustomIcon size="lg" name="add-primary" /></span>
         </button>
 
-        <AddNewModal
-          isShow={this.state.isOpen}
-          onSave={() => { this.setState({ isOpen: false }); }}
-          onHide={() => { this.setState({ isOpen: false }); }}
-        />
+
       </div>
     );
   }

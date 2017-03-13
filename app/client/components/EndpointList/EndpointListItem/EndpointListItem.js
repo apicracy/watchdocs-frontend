@@ -14,18 +14,20 @@ const formatParams = (params) => {
   return '';
 };
 
-const EndpointListItem = ({ path, method, params, id, groupId, isSelected }) => {
+const EndpointListItem = ({ path, method, params, id, groupId, isSelected, onClickMore }) => {
   const topStyle = isSelected ? styles.selected : styles.root;
   const paramsFormated = formatParams(params);
 
   return (
-    <Link to={`/docs/${groupId}/endpoint/${id}`} className={topStyle}>
-      <span className={styles.data}>
-        <span className={styles.method}>{ method }</span>
-        <span className={styles.path}>{ path }{ paramsFormated }</span>
-      </span>
-      { isSelected && <span className={styles.moreIcon}><CustomIcon ext="svg" name="more-dots" /></span> }
-    </Link>
+    <div className={topStyle}>
+      <Link to={`/docs/${groupId}/endpoint/${id}`} className={styles.root}>
+        <span className={styles.data}>
+          <span className={styles.method}>{ method }</span>
+          <span className={styles.path}>{ path }{ paramsFormated }</span>
+        </span>
+      </Link>
+      { isSelected && <button onClick={() => { onClickMore(id); }} className={styles.moreIcon}><CustomIcon name="more-dots" /></button> }
+    </div>
   );
 };
 
@@ -36,6 +38,7 @@ EndpointListItem.propTypes = {
   id: React.PropTypes.number,
   groupId: React.PropTypes.number,
   isSelected: React.PropTypes.bool,
+  onClickMore: React.PropTypes.func,
 };
 
 export default EndpointListItem;

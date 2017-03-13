@@ -11,6 +11,12 @@ import Tabs from 'components/Tabs/Tabs';
 
 import { filterEndpoints } from 'services/endpoint-service';
 
+import {
+  addNewEndpoint,
+  loadEndpoint,
+  loadFolder,
+} from 'services/modifyEndpoint-service';
+
 @connect(store => ({
   endpoints: store.endpoints,
 }))
@@ -19,6 +25,7 @@ class Aside extends React.Component {
   static propTypes = {
     params: React.PropTypes.object, // supplied by react-router
     endpoints: React.PropTypes.arrayOf(React.PropTypes.object),
+    dispatch: React.PropTypes.func,
   }
 
   componentWillMount() {
@@ -63,6 +70,18 @@ class Aside extends React.Component {
     return <CustomIcon name="search" />;
   }
 
+  addNewEndpoint = () => {
+    this.props.dispatch(addNewEndpoint());
+  }
+
+  onClickGroupMore = (id) => {
+    this.props.dispatch(loadFolder(id));
+  }
+
+  onClickItemMore = (id) => {
+    this.props.dispatch(loadEndpoint(id));
+  }
+
   render() {
     const { group_id: groupId, endpoint_id: endpointId } = this.props.params;
     const tabData = [
@@ -100,6 +119,9 @@ class Aside extends React.Component {
           endpoints={endpoints}
           activeGroup={groupId}
           selected={endpointId}
+          onAddNewEndpoint={this.addNewEndpoint}
+          onClickItemMore={this.onClickItemMore}
+          onClickGroupMore={this.onClickGroupMore}
         />
       </aside>
     );
