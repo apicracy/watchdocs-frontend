@@ -91,3 +91,17 @@ function filterByStatus(endpoints, status) {
     return state;
   }, []);
 }
+
+export const filterById = (endpoints, id, parentId = null) => endpoints.reduce((state, item) => {
+  if (item.id === id) {
+    return {
+      ...item,
+      parentId,
+    };
+  } else if (item.endpoints) {
+    const subGroups = filterById(item.endpoints, id, item.id);
+    return subGroups ? { ...subGroups, parentId: item.id } : state;
+  }
+
+  return state;
+}, null);
