@@ -8,8 +8,8 @@
   text-decoration: none;
   display: flex;
   align-items: center;
-  padding: 5px;
-  justify-content: space-between;
+  padding: 2px;
+  justify-content: flex-start;
   width: 100%;
 }
 

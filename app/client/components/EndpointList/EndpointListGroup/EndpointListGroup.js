@@ -124,10 +124,8 @@ class EndpointListGroup extends React.Component {
       <div className={styles.root}>
         <div className={topStyle}>
           <Link to={`/docs/${id}`} className={styles.link} onClick={this.toggleOpen}>
-            <span>
-              { this.renderIcon() }
-              <span className={styles.groupName}>{ groupName }</span>
-            </span>
+            { this.renderIcon() }
+            <span className={styles.groupName}>{ groupName }</span>
           </Link>
           { (isActive && !selected) && <button onClick={this.onClickGroupMore} className={styles.moreIcon}><CustomIcon name="more-dots" /></button> }
         </div>
