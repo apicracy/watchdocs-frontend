@@ -13,11 +13,13 @@
 import { appReducer } from 'reducers/app-reducer';
 import { endpoints } from 'reducers/endpoints';
 import { modifyEndpoint } from 'reducers/modifyEndpoint-reducer';
+import { endpointView } from 'reducers/endpointView';
 /* reapp: import new reducer */
 
 export const reducers = {
   app: appReducer,
   endpoints,
   modifyEndpoint,
+  endpointView,
   /* reapp: append new reducer */
 };

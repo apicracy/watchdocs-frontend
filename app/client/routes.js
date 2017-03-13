@@ -7,10 +7,10 @@ import NoMatch from 'containers/NoMatch';
 
 /* import pages */
 import DocManager from 'containers/DocManager/DocManager';
-import Documentation from 'containers/Documentation/Documentation';
+
 import ApiDoc from 'containers/ApiDoc/ApiDoc';
-import GroupDoc from 'containers/Documentation/DocumentationGroup';
-import EndpointDoc from 'containers/Documentation/DocumentationEndpoint';
+import GroupDoc from 'containers/GroupDoc/GroupDoc';
+import EndpointDoc from 'containers/EndpointDoc/EndpointDoc';
 
 const Routes = (
   <Route>
@@ -18,13 +18,13 @@ const Routes = (
       <IndexRedirect to="/docs" />
 
       <Route path="docs" component={DocManager}>
-        <Route path="wiki" component={Documentation} />
+        <IndexRoute component={ApiDoc} />
+
+        <Route path="wiki" component={NoMatch} />
 
         <Route component={ApiDoc}>
-          <IndexRoute component={Documentation} />
-          <Route path=":group_id" component={GroupDoc}>
-            <Route path="endpoint/:endpoint_id" component={EndpointDoc} />
-          </Route>
+          <Route path=":group_id" component={GroupDoc} />
+          <Route path=":group_id/endpoint/:endpoint_id" component={EndpointDoc} />
         </Route>
       </Route>
 

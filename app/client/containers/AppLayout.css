@@ -14,7 +14,8 @@
   display: flex;
   flex: 1;
   position: relative;
-  padding: 25px 50px;
+  padding: 50px;
+  padding-right: 0;
 }
 
 .contentWrapper:after {
