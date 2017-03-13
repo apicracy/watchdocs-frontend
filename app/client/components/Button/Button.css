@@ -3,21 +3,43 @@
   outline: none;
   border: none;
   background: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  font-size: 14px;
 }
 
-.button {
-  composes: root;
+.icon {
+  margin-left: 40px;
+}
+
+/* variants */
+.rounded {
+  justify-content: space-between;
+  border-radius: 5px;
+}
+
+.body {
+  background: white;
+  color: #7f7d94;
+}
+
+.primary {
+  background: #337AB7;
+  color: white;
+}
+
+.link {
+  color: #6fb3e3;
+}
+
+.large {
   width: 150px;
   padding: 10px;
   font-size: 16px;
 }
 
-.buttonBlue {
-  composes: button;
-  background: #337AB7;
-  color: white;
-}
-
-.small {
-  composes: root;
+.spaceRight {
+  margin-right: 15px;
 }

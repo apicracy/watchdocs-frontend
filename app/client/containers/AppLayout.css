@@ -1,7 +1,8 @@
 .appLayout {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
 }
 
 .inner {
@@ -10,23 +11,12 @@
 }
 
 .contentWrapper {
-  background: #ECEEFA;
   display: flex;
   flex: 1;
   position: relative;
   padding: 50px;
-  padding-right: 0;
-}
-
-.contentWrapper:after {
-  background-color: #ECEEFA;
-  position: absolute;
-  display: block;
-  left: 100%;
-  top: 0;
-  bottom: 0;
-  content: '';
-  width: 1000px;
+  padding-right: 15px;
+  overflow-x: hidden;
 }
 
 .navigation {

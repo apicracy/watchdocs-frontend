@@ -1,6 +1,20 @@
 .content {
+  position: relative;
   display: flex;
   flex: 2;
+  background: #ECEEFA;
+  overflow: visible;
+}
+
+.content:after {
+  background-color: #ECEEFA;
+  position: absolute;
+  display: block;
+  left: 100%;
+  top: 0;
+  bottom: 0;
+  content: '';
+  width: 1000px;
 }
 
 .justify {
