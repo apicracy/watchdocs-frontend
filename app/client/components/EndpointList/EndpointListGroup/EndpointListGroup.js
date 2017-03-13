@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './EndpointListGroup.css';
 
 import EndpointListItem from '../EndpointListItem/EndpointListItem';
-import Icon from 'components/Icon/Icon';
+import CustomIcon from 'components/Icon/CustomIcon';
 import { Link } from 'react-router';
 
 class EndpointListGroup extends React.Component {
@@ -30,11 +30,10 @@ class EndpointListGroup extends React.Component {
   }
 
   renderIcon() {
-    if (this.state.isOpen || (!this.state.force && this.props.isOpen)) {
-      return <Icon name="folder-open-o" size="lg" />;
-    }
+    const open = (this.state.isOpen || (!this.state.force && this.props.isOpen));
+    const icon = open ? 'folder-open' : 'folder-closed';
 
-    return <Icon name="folder-o" size="lg" />;
+    return <CustomIcon ext="svg" name={icon} size="lg" color="#828097" />;
   }
 
   renderEndpoint(endpoint) {
@@ -125,12 +124,10 @@ class EndpointListGroup extends React.Component {
       <div className={styles.root}>
         <div className={topStyle}>
           <Link to={`/docs/${id}`} className={styles.link} onClick={this.toggleOpen}>
-            <span>
-              { this.renderIcon() }
-              <span className={styles.groupName}>{ groupName }</span>
-            </span>
+            { this.renderIcon() }
+            <span className={styles.groupName}>{ groupName }</span>
           </Link>
-          { (isActive && !selected) && <button onClick={this.onClickGroupMore} className={styles.moreIcon}><Icon name="ellipsis-h" /></button> }
+          { (isActive && !selected) && <button onClick={this.onClickGroupMore} className={styles.moreIcon}><CustomIcon name="more-dots" /></button> }
         </div>
         <div className={styles.endpoints}>
           { this.renderEndpointList(endpoints) }

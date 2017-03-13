@@ -10,11 +10,23 @@
 .list {
   overflow-x: hidden;
   overflow-y: auto;
-  margin-bottom: 20px;
+  margin: 10px 0 20px;
+}
+
+.noResults {
+  margin: 20px auto 10px;
+  color: #d1d0d7;
+  text-align: center;
+}
+
+.buttonPlus {
+  color: #6fb3e3;
 }
 
 .addNewEndpointButton {
   background: #ECEEFA;
+  color: #7f7d94;
+  font-family: 'RobotoBold', Helvetica, sans-serif;
   outline: none;
   width: 100%;
   padding: 10px;
@@ -26,9 +38,4 @@
   flex-shrink: 0;
   justify-content: space-between;
   margin-bottom: 15px;
-}
-
-.plusButton {
-  font-size: 25px;
-  color: #6fb3e3;
 }

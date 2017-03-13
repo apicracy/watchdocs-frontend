@@ -5,6 +5,8 @@ import styles from './Aside.css';
 import EndpointList from 'components/EndpointList/EndpointList';
 import TextInput from 'components/TextInput/TextInput';
 import Icon from 'components/Icon/Icon';
+import CustomIcon from 'components/Icon/CustomIcon';
+import IconButton from 'components/Button/IconButton';
 import Tabs from 'components/Tabs/Tabs';
 
 import { filterEndpoints } from 'services/endpoint-service';
@@ -58,6 +60,16 @@ class Aside extends React.Component {
     this.setState({ search: nativeEvent.target.value });
   }
 
+  clearFilter = () => this.setState({ search: '' });
+
+  renderIcon() {
+    if (this.state.search.length > 0) {
+      return <IconButton icon={<Icon name="close" />} onClick={this.clearFilter} />;
+    }
+
+    return <CustomIcon name="search" />;
+  }
+
   addNewEndpoint = () => {
     this.props.dispatch(addNewEndpoint());
   }
@@ -87,7 +99,7 @@ class Aside extends React.Component {
     );
 
     return (
-      <aside className={styles.sideBar} style={{ flexBasis: this.state.width }}>
+      <aside className={styles.sideBar} style={{ width: this.state.width }}>
         <div
           draggable
           onDragStart={this.onDragStart}
@@ -99,7 +111,7 @@ class Aside extends React.Component {
         <TextInput
           value={this.state.search}
           placeholder="Filter"
-          iconRight={<Icon name="search" />}
+          iconRight={this.renderIcon()}
           onChange={this.filter}
         />
         <Tabs data={tabData} onChange={this.tabChange} />

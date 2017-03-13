@@ -1,21 +1,29 @@
 .root {
   text-decoration: none;
-  color: #000000;
+  color: #7f7d94;
   display: flex;
-  padding: 5px;
+  flex-shrink: 1;
+  padding: 2px;
   justify-content: space-between;
   align-items: center;
+  font-size: 14px;
   width: 100%;
+}
+
+.root:hover,
+.root:focus,
+.root:active {
+  color: #7f7d94;
 }
 
 .selected {
   composes: root;
-  background-color: #EEEEEE;
+  background-color: #f7f7f7;
 }
 
 .data {
   display: inline-flex;
-  flex: 1 1;
+  flex: 1 10;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -24,7 +32,7 @@
   display: flex;
   flex-shrink: 0;
   flex-basis: 55px;
-  color: #4e4c88;
+  color: #6C6AB8;
   font-family: 'RobotoBold', Helvetica, sans-serif;
 }
 

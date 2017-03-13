@@ -10,7 +10,7 @@ const TextInput = ({ placeholder, value, onChange, iconRight }) => (
       className={styles.input}
       value={value}
     />
-    { iconRight }
+    <span className={styles.addon}>{ iconRight }</span>
   </div>
 );
 

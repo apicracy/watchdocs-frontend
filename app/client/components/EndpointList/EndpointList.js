@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './EndpointList.css';
 
 import EndpointListGroup from './EndpointListGroup/EndpointListGroup';
-import Icon from 'components/Icon/Icon';
+import CustomIcon from 'components/Icon/CustomIcon';
 
 class EndpointList extends React.Component {
   static propTypes = {
@@ -20,6 +20,10 @@ class EndpointList extends React.Component {
       isOpen: false,
     });
   }
+
+  renderNoItems = () => (
+    <div className={styles.noResults}>There are no results matching your criteria</div>
+  );
 
   render() {
     const { endpoints, activeGroup, selected,
@@ -44,12 +48,13 @@ class EndpointList extends React.Component {
               />
             ))
           }
+          { (!endpoints || endpoints.length === 0) && this.renderNoItems() }
         </div>
         <button
           onClick={onAddNewEndpoint}
           className={styles.addNewEndpointButton}
         >
-          Add New <span className={styles.plusButton}><Icon name="plus-circle" /></span>
+          Add New <span className={styles.buttonPlus}><CustomIcon size="lg" name="add-primary" /></span>
         </button>
 
 

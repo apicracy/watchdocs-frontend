@@ -1,13 +1,13 @@
 import React from 'react';
 import styles from './Select.css';
-import Icon from 'components/Icon/Icon';
+import CustomIcon from 'components/Icon/CustomIcon';
 
 /* eslint no-unused-vars: 0 */
 // TODO: in development
 const Select = ({ options, onSelect }) => (
   <span className={styles.selectWrapper}>
     <span className={styles.selectedOption}>{ options[0] }</span>
-    <Icon name="chevron-down" />
+    <CustomIcon ext="svg" color="white" size="sm" name="arrow-down" />
   </span>
 );
 

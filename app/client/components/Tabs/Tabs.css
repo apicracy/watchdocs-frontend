@@ -1,7 +1,7 @@
 .root {
   display: flex;
-  border-bottom: 1px solid #DDDDDD;
-  margin: 5px;
+  border-bottom: 1px solid #d1d0d7;
+  margin: 5px 0;
   margin-right: 10px;
 }
 
@@ -14,7 +14,7 @@
   cursor: pointer;
   background: none;
   border: none;
-  color: #DDDDDD;
+  color: #d1d0d7;
 }
 
 .link:focus {
@@ -24,6 +24,6 @@
 .active {
   composes: link;
   font-family: 'RobotoBold', Helvetica, sans-serif;
-  color: #4e4c88;
-  border-bottom: 3px solid #4e4c88;
+  color: #6C6AB8;
+  border-bottom: 3px solid #6C6AB8;
 }
