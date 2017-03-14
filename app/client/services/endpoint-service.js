@@ -96,7 +96,7 @@ export const filterById = (endpoints, id, parentId = null, fullPath = '') => end
   const path = item.groupPath ? fullPath + item.groupPath : fullPath;
 
   if (item.id === id) {
-    return { ...item, parentId, fullPath: path};
+    return { ...item, parentId, fullPath: path };
   } else if (item.endpoints) {
     const subGroups = filterById(item.endpoints, id, item.id, path);
     return subGroups ? { ...subGroups, parentId: item.id } : state;

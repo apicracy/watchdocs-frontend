@@ -8,6 +8,6 @@ export function loadGroup(id) {
     const group = filterById([...endpoints], id);
 
 
-    dispatch(loadGroupView(group))
+    dispatch(loadGroupView(group));
   };
 }

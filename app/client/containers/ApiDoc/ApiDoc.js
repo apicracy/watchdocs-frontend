@@ -6,9 +6,6 @@ import Aside from 'containers/Aside/Aside';
 import Content from 'components/Content/Content';
 import Container from 'components/Container/Container';
 
-import EndpointDoc from 'containers/EndpointDoc/EndpointDoc';
-import GroupDoc from 'containers/GroupDoc/GroupDoc';
-
 class ApiDoc extends React.Component {
 
   static propTypes = {
@@ -21,7 +18,6 @@ class ApiDoc extends React.Component {
 
   render() {
     const { children } = this.props;
-    const { group_id: groupId, endpoint_id: endpointId } = this.props.params;
 
     return (
       <Container>

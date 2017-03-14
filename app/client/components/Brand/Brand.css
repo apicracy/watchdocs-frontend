@@ -4,4 +4,11 @@
   text-decoration: none;
   display: inline-flex;
   align-items: center;
+  max-height: 40px;
+  max-width: 180px;
+}
+
+.img {
+  height: auto;
+  width: 100%;
 }

@@ -20,6 +20,6 @@ Select.propTypes = {
 
 Select.defaultProps = {
   options: [
-    'Option 1'
-  ]
-}
+    'Option 1',
+  ],
+};

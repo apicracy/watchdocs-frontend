@@ -34,14 +34,12 @@ MethodPicker.propTypes = {
   activeId: React.PropTypes.number,
   path: React.PropTypes.string,
   groupEndpoints: React.PropTypes.array,
-  params: React.PropTypes.array,
-}
+};
 
 MethodPicker.defaultProps = {
   activeId: 0,
   path: '',
   groupEndpoints: [],
-  params: [],
 };
 
 export default MethodPicker;

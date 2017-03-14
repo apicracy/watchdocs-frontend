@@ -28,8 +28,7 @@ const DocumentationBlock = ({ title, description, buttonAction, children, emptyM
       { !children && emptyMsg }
       { !children && buttonAction && <Button variants={['link']} onClick={buttonAction}>Add it now</Button> }
     </main>
-    <footer>
-    </footer>
+    <footer />
   </article>
 );
 
@@ -44,7 +43,6 @@ DocumentationBlock.propTypes = {
 DocumentationBlock.defaultProps = {
   emptyMsg: 'You don\'t have any setup yet.',
 };
-
 
 
 export default DocumentationBlock;

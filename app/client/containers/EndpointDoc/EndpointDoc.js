@@ -9,7 +9,6 @@ import MethodPicker from 'components/MethodPicker/MethodPicker';
 import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock';
 import Button from 'components/Button/Button';
 
-
 @connect(store => ({
   endpoint: store.endpointView,
   group: store.groupView,
@@ -18,6 +17,9 @@ class EndpointDoc extends React.Component {
 
   static propTypes = {
     params: React.PropTypes.object, // supplied by react-router
+    dispatch: React.PropTypes.func,
+    endpoint: React.PropTypes.object,
+    group: React.PropTypes.object,
   }
 
   componentDidMount() {
@@ -28,24 +30,24 @@ class EndpointDoc extends React.Component {
   componentDidUpdate() {
     const {
       endpoint_id: endpointId,
-      group_id: groupId
+      group_id: groupId,
     } = this.props.params;
 
-    if(this.props.endpoint.id !== parseInt(endpointId)) {
+    if (this.props.endpoint.id !== parseInt(endpointId, 10)) {
       this.loadEndpoint();
     }
 
-    if(this.props.group.id !== parseInt(groupId)) {
+    if (this.props.group.id !== parseInt(groupId, 10)) {
       this.loadGroup();
     }
   }
 
   loadEndpoint() {
-    this.props.dispatch(loadEndpoint(parseInt(this.props.params.endpoint_id)));
+    this.props.dispatch(loadEndpoint(parseInt(this.props.params.endpoint_id, 10)));
   }
 
   loadGroup() {
-    this.props.dispatch(loadGroup(parseInt(this.props.params.group_id)));
+    this.props.dispatch(loadGroup(parseInt(this.props.params.group_id, 10)));
   }
 
   render() {

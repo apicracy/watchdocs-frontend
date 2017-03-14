@@ -6,7 +6,7 @@ const Button = ({ onClick, children, icon, variants }) => {
   const variantStyles = variants.map(v => styles[v]);
   const buttonStyle = [
     styles.root,
-    ...variantStyles
+    ...variantStyles,
   ].join(' ');
 
   return (
@@ -14,7 +14,7 @@ const Button = ({ onClick, children, icon, variants }) => {
       onClick={onClick}
       className={buttonStyle}
     >
-    { children } { icon && <span className={styles.icon}>{ icon }</span> }
+      { children } { icon && <span className={styles.icon}>{ icon }</span> }
     </button>
   );
 };
@@ -30,6 +30,6 @@ Button.defaultProps = {
   onClick: () => {},
   icon: '',
   variants: [],
-}
+};
 
 export default Button;

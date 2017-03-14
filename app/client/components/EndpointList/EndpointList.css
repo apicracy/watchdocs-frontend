@@ -5,11 +5,10 @@
   font-size: 14px;
   margin-right: 10px;
   overflow: hidden;
+  min-height: min-content;
 }
 
 .list {
-  overflow-x: hidden;
-  overflow-y: auto;
   margin: 10px 0 20px;
 }
 

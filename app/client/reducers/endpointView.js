@@ -1,13 +1,13 @@
 import {
-  LOAD_ENDPOINT_VIEW
+  LOAD_ENDPOINT_VIEW,
 } from 'actions/endpointView';
 
 const INITIAL_STATE = {
   method: '',
-  params:[],
+  params: [],
   id: null,
   status: '',
-  parentId: null
+  parentId: null,
 };
 
 export function endpointView(state = INITIAL_STATE, action) {

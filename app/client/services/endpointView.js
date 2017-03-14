@@ -8,6 +8,6 @@ export function loadEndpoint(id) {
     const endpoint = filterById([...endpoints], id);
 
 
-    dispatch(loadEndpointView(endpoint))
+    dispatch(loadEndpointView(endpoint));
   };
 }

@@ -1,5 +1,5 @@
 import {
-  LOAD_GROUP_VIEW
+  LOAD_GROUP_VIEW,
 } from 'actions/groupView';
 
 const INITIAL_STATE = {
