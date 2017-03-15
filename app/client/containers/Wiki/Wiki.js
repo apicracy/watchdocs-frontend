@@ -9,12 +9,13 @@ import JSONSEditor from 'components/JSONSEditor/JSONSEditor';
 export default class Wiki extends React.Component {
   componentWillMount = () => {
     this.setState({
-      base: {},
+      base: undefined,
       baseString: '',
-      valid: true,
-      base2: {},
-      baseString2: '',
-      valid2: true,
+      baseValid: true,
+      draft: undefined,
+      draftString: '',
+      draftValid: true,
+      outputString: '',
     });
   }
 
@@ -22,10 +23,11 @@ export default class Wiki extends React.Component {
     const {
       base,
       baseString,
-      valid,
-      base2,
-      baseString2,
-      valid2,
+      baseValid,
+      draft,
+      draftString,
+      draftValid,
+      outputString,
     } = this.state;
 
     return (
@@ -33,13 +35,17 @@ export default class Wiki extends React.Component {
         <div className={styles.editorWrapper}>
           <div className={styles.textAreaWrapper}>
             <h1>Base</h1>
-            <textarea className={styles.textArea} value={baseString} onChange={this.onChange} />
-            { !valid && <p>JSON Schema is not valid</p> }
+            <textarea className={styles.textArea} value={baseString} onChange={this.onChangeBase} />
+            { !baseValid && <div className={styles.information} >JSON Schema is not valid</div> }
           </div>
           <div className={styles.textAreaWrapper}>
             <h1>New Draft</h1>
-            <textarea className={styles.textArea} value={baseString2} onChange={this.onChange2} />
-            { !valid2 && <p>JSON Schema is not valid</p> }
+            <textarea
+              className={styles.textArea}
+              value={draftString}
+              onChange={this.onChangeDraft}
+            />
+            { !draftValid && <div className={styles.information}>JSON Schema is not valid</div> }
           </div>
         </div>
         <div className={styles.outputWrapper}>
@@ -47,11 +53,12 @@ export default class Wiki extends React.Component {
           <div className={styles.outputContainer}>
             <JSONSEditor
               base={base}
-              newDraft={base2}
+              draft={draft}
+              onCompare={this.onCompare}
             />
-          <div className={styles.outputWrapper}>
+            <div className={styles.outputWrapper}>
               <p className={styles.outputText}>
-                {baseString}
+                {outputString}
               </p>
             </div>
           </div>
@@ -60,7 +67,7 @@ export default class Wiki extends React.Component {
     );
   }
 
-  onChange = (e) => {
+  onChangeBase = (e) => {
     this.setState({
       baseString: e.target.value,
     });
@@ -69,26 +76,31 @@ export default class Wiki extends React.Component {
       const obj = JSON.parse(e.target.value);
       this.setState({
         base: obj,
-        valid: true,
+        baseValid: true,
       });
     } catch (err) {
-      this.setState({ valid: false });
+      this.setState({ base: undefined, baseValid: false });
     }
   }
 
-  onChange2 = (e) => {
+  onChangeDraft = (e) => {
     this.setState({
-      baseString2: e.target.value,
+      draftString: e.target.value,
     });
 
     try {
       const obj = JSON.parse(e.target.value);
       this.setState({
-        base2: obj,
-        valid2: true,
+        draft: obj,
+        draftValid: true,
       });
     } catch (err) {
-      this.setState({ valid2: false });
+      this.setState({ draft: undefined, draftValid: false });
     }
+  }
+
+  onCompare = (output) => {
+    const outputString = JSON.stringify(output, null, 4);
+    this.setState({ outputString });
   }
 }

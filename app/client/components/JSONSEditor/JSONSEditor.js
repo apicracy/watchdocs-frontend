@@ -7,7 +7,9 @@ import { JSONStoJSON } from 'services/JSONSEditor';
 class JSONSEditor extends React.Component {
   static propTypes = {
     base: React.PropTypes.object,
-  };
+    draft: React.PropTypes.object,
+    onCompare: React.PropTypes.func,
+  }
 
   componentWillMount() {
     this.setState({ selectedLine: -1 });
@@ -15,6 +17,28 @@ class JSONSEditor extends React.Component {
 
   onSelect = (selectedLine) => {
     this.setState({ selectedLine });
+  }
+
+  compare = (base, draft) => {
+    if (draft) {
+      this.setState({ linesOfCode: JSONStoJSON(draft) });
+      this.props.onCompare(draft);
+    } else {
+      this.setState({ linesOfCode: JSONStoJSON(base) });
+      this.props.onCompare(base);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      base,
+      draft,
+    } = this.props;
+
+    if (prevProps.base !== base ||
+    prevProps.draft !== draft) {
+      this.compare(base, draft);
+    }
   }
 
   render() {
@@ -28,11 +52,13 @@ class JSONSEditor extends React.Component {
       </div>);
     }
 
-    const linesOfCode = JSONStoJSON(base);
+    const {
+      linesOfCode,
+    } = this.state;
 
     return (
       <div className={styles.container}>
-        {linesOfCode.map((object, index) => {
+        {linesOfCode && linesOfCode.map((object, index) => {
           const {
             selectedLine,
           } = this.state;
@@ -51,9 +77,6 @@ class JSONSEditor extends React.Component {
       </div>
     );
   }
-
-  static defaultProps = {
-  };
 }
 
 export default JSONSEditor;
