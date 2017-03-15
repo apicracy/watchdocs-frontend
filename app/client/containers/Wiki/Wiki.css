@@ -1,7 +1,12 @@
 .container {
   display: flex;
   flex: 1;
+  flex-direction: column;
   margin: 10px;
+}
+.editorWrapper {
+  display: flex;
+  flex: 1;
 }
 
 .textAreaWrapper {
@@ -10,11 +15,25 @@
   flex-direction: column;
 }
 .textArea {
+  padding-left: 70px;
   width: 100%;
   flex: 1;
   outline: none;
 }
+.outputWrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.outputContainer {
+  display: flex;
+}
 
-.editor {
-  flex: 1,
+.outputWrapper {
+  flex: 1;
+}
+
+.outputText {
+  white-space: pre;
+  padding: 0 50px;
 }
