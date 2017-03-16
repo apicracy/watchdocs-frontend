@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './JSONSEditor.css';
 
 import LineOfCode from './LineOfCode';
-import { JSONStoJSON } from 'services/JSONSEditor';
+import { JSONStoJSON, compareJSONS } from 'services/JSONSEditor';
 
 class JSONSEditor extends React.Component {
   static propTypes = {
@@ -50,6 +50,8 @@ class JSONSEditor extends React.Component {
     } else {
       this.props.onCompare(this.state.output);
     }
+
+    compareJSONS(base, draft);
   }
 
   componentDidUpdate(prevProps) {

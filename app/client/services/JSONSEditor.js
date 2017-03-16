@@ -3,6 +3,26 @@ export function JSONtoJSONS() {
   return {};
 }
 
+export function compareJSONS(base, draft) {
+  let output = {};
+  if (draft.type === 'object') {
+    const properties = Object.keys(draft.properties).map((prop) => {
+      if(draft.properties[prop] != base.properties[prop]) {
+
+        console.log(draft.properties[prop]);
+        console.log(base.properties[prop]);
+        console.log('nie so');
+      } else {
+        console.log(draft.properties[prop]);
+        console.log(base.properties[prop]);
+        console.log('so');
+      }
+      // return getLines(prop, draft.properties[prop], isReqProp, space + 2);
+    });
+  }
+  return output;
+}
+
 export function JSONStoJSON(schema) {
   let JSONObject = [];
   if (schema && typeof schema === 'object') {
