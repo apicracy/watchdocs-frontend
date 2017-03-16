@@ -7,7 +7,8 @@ import NoMatch from 'containers/NoMatch';
 
 /* import pages */
 import DocManager from 'containers/DocManager/DocManager';
-
+import Documentation from 'containers/Documentation/Documentation';
+import Wiki from 'containers/Wiki/Wiki';
 import ApiDoc from 'containers/ApiDoc/ApiDoc';
 import GroupDoc from 'containers/GroupDoc/GroupDoc';
 import EndpointDoc from 'containers/EndpointDoc/EndpointDoc';
@@ -19,8 +20,7 @@ const Routes = (
 
       <Route path="docs" component={DocManager}>
         <IndexRoute component={ApiDoc} />
-
-        <Route path="wiki" component={NoMatch} />
+        <Route path="wiki" component={Wiki} />
 
         <Route component={ApiDoc}>
           <Route path=":group_id" component={GroupDoc} />

@@ -22,8 +22,10 @@ export class Main extends React.Component {
 
     return (
       <Provider store={store}>
-        <Router history={history} routes={routes} />
-        <Modals />
+        <div>
+          <Router history={history} routes={routes} />
+          <Modals />
+        </div>
       </Provider>
     );
   }
