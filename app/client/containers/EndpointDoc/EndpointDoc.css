@@ -6,3 +6,9 @@
 .buttons {
   margin: 100px 0 50px;
 }
+
+.divider::after {
+  content: ' ';
+  border-right: 1px solid #d1d0d7;
+  margin-left: 5px;
+}

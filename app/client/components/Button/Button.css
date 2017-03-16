@@ -23,6 +23,7 @@
 .body {
   background: white;
   color: #7f7d94;
+  padding: 5px 15px;
 }
 
 .primary {
@@ -34,6 +35,11 @@
   color: #6fb3e3;
 }
 
+.linkPrimary {
+  font-family: 'RobotoBold', Helvetica, sans-serif;
+  color: #6C6AB8;
+}
+
 .large {
   width: 150px;
   padding: 10px;
@@ -42,4 +48,22 @@
 
 .spaceRight {
   margin-right: 15px;
+}
+
+.spaceLeft {
+  margin-left: 10px;
+}
+
+.iconLeft {
+  padding: 5px;
+  flex-direction: row-reverse;
+}
+
+.iconLeft > .icon {
+  margin: 0;
+  margin-right: 10px;
+}
+
+.highlight {
+  background-color: #dbddef;
 }

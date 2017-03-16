@@ -10,6 +10,7 @@
   flex-direction: row;
   padding-bottom: 5px;
   min-height: 60px;
+  flex-wrap: wrap;
 }
 
 .title {
@@ -19,6 +20,7 @@
 
 .description {
   color: #7f7d94;
+  flex: 0 0 100%;
 }
 
 .buttonWrapper {
@@ -36,4 +38,8 @@
   color: #d1d0d7;
   padding: 15px;
   background: white;
+}
+
+.footer {
+  padding: 15px 20px;
 }

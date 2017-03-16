@@ -1,4 +1,4 @@
-import { loadEndpointView } from 'actions/endpointView';
+import { setEndpointView } from 'actions/endpointView';
 
 import { filterById } from 'services/endpoint-service';
 
@@ -7,7 +7,6 @@ export function loadEndpoint(id) {
     const { endpoints } = getState();
     const endpoint = filterById([...endpoints], id);
 
-
-    dispatch(loadEndpointView(endpoint));
+    dispatch(setEndpointView(endpoint));
   };
 }

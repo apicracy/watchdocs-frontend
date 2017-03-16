@@ -1,5 +1,5 @@
 import {
-  LOAD_ENDPOINT_VIEW,
+  SET_ENDPOINT_VIEW,
 } from 'actions/endpointView';
 
 const INITIAL_STATE = {
@@ -14,11 +14,11 @@ export function endpointView(state = INITIAL_STATE, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case LOAD_ENDPOINT_VIEW: return loadEndpointView(payload);
+    case SET_ENDPOINT_VIEW: return setEndpointView(payload);
     default: return state;
   }
 }
 
-function loadEndpointView(payload) {
+function setEndpointView(payload) {
   return { ...payload };
 }

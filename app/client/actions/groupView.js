@@ -2,11 +2,11 @@
  * endpointView Actions
  */
 
-export const LOAD_GROUP_VIEW = 'load@groupView';
+export const SET_GROUP_VIEW = 'set@groupView';
 
-export function loadGroupView(groupData) {
+export function setGroupView(groupData) {
   return {
-    type: LOAD_GROUP_VIEW,
+    type: SET_GROUP_VIEW,
     payload: groupData,
   };
 }

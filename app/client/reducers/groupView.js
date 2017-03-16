@@ -1,5 +1,5 @@
 import {
-  LOAD_GROUP_VIEW,
+  SET_GROUP_VIEW,
 } from 'actions/groupView';
 
 const INITIAL_STATE = {
@@ -14,11 +14,11 @@ export function groupView(state = INITIAL_STATE, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case LOAD_GROUP_VIEW: return loadGroupView(payload);
+    case SET_GROUP_VIEW: return setGroupView(payload);
     default: return state;
   }
 }
 
-function loadGroupView(payload) {
+function setGroupView(payload) {
   return { ...payload };
 }

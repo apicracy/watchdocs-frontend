@@ -29,9 +29,7 @@ class AppLayout extends React.Component {
         { this.props.children }
         <AppBar footer>
           <Container center>
-            <span style={{ margin: '0 auto' }}>
-              <Brand />
-            </span>
+            <Brand center />
           </Container>
         </AppBar>
       </div>

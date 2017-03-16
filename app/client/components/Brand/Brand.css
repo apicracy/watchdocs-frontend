@@ -8,6 +8,11 @@
   max-width: 180px;
 }
 
+.center {
+  composes: brand;
+  margin: 0 auto;
+}
+
 .img {
   height: auto;
   width: 100%;

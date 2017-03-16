@@ -2,11 +2,11 @@
  * endpointView Actions
  */
 
-export const LOAD_ENDPOINT_VIEW = 'load@endpointView';
+export const SET_ENDPOINT_VIEW = 'set@endpointView';
 
-export function loadEndpointView(endpointData) {
+export function setEndpointView(endpointData) {
   return {
-    type: LOAD_ENDPOINT_VIEW,
+    type: SET_ENDPOINT_VIEW,
     payload: endpointData,
   };
 }
