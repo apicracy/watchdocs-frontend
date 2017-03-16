@@ -1,3 +1,8 @@
+export function JSONtoJSONS() {
+  // console.log(JSONLines);
+  return {};
+}
+
 export function JSONStoJSON(schema) {
   let JSONObject = [];
   if (schema && typeof schema === 'object') {
@@ -28,6 +33,7 @@ const getObjectLine = (name, schema, isReq, space) => {
     newLine = {
       isOpt: !isReq,
       isReq,
+      type: 'object',
       line: `${pre}"${name}": {`,
     };
   }
@@ -58,6 +64,7 @@ const getStringLine = (name, schema, isReq, space) => {
   return {
     isOpt: !isReq,
     isReq,
+    type: 'string',
     line: `${pre}"${name}": "LOREM IPSUM"`,
   };
 };
@@ -67,6 +74,7 @@ const getIntegerLine = (name, schema, isReq, space) => {
   return {
     isOpt: !isReq,
     isReq,
+    type: 'integer',
     line: `${pre}"${name}": 12353`,
   };
 };
@@ -77,6 +85,7 @@ const getArrayLine = (name, schema, isReq, space) => {
   lines.push({
     isOpt: !isReq,
     isReq,
+    type: 'array',
     line: `${pre}"${name}": [`,
   });
 
@@ -89,7 +98,7 @@ const getArrayLine = (name, schema, isReq, space) => {
   lines = lines.concat(merged2);
 
   lines.push({
-    line: `${pre}`,
+    line: `${pre}]`,
   });
 
   return lines;

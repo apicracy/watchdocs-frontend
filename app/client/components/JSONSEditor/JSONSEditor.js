@@ -13,19 +13,42 @@ class JSONSEditor extends React.Component {
 
   componentWillMount() {
     this.setState({ selectedLine: -1 });
+    this.setState({ linesOfCode: [] });
+    this.setState({ output: {} });
   }
 
   onSelect = (selectedLine) => {
     this.setState({ selectedLine });
   }
 
+  onSwitchReq = () => {
+    // const {
+    //   linesOfCode,
+    // } = this.state;
+    //
+    // const newLinesOfCode = [].concat(...linesOfCode);
+    // if (typeof newLinesOfCode[index].isReq === 'boolean') {
+    //   newLinesOfCode[index].isReq = !newLinesOfCode[index].isReq;
+    //   newLinesOfCode[index].isOpt = !newLinesOfCode[index].isOpt;
+    // }
+    //
+    // const newOutput = JSONtoJSONS(newLinesOfCode);
+    // this.props.onCompare(newOutput);
+  }
+
   compare = (base, draft) => {
     if (draft) {
       this.setState({ linesOfCode: JSONStoJSON(draft) });
-      this.props.onCompare(draft);
-    } else {
+      const newOutput = draft;
+      this.setState({ output: newOutput });
+      this.props.onCompare(newOutput);
+    } else if (base) {
       this.setState({ linesOfCode: JSONStoJSON(base) });
-      this.props.onCompare(base);
+      const newOutput = base;
+      this.setState({ output: newOutput });
+      this.props.onCompare(newOutput);
+    } else {
+      this.props.onCompare(this.state.output);
     }
   }
 
@@ -71,6 +94,7 @@ class JSONSEditor extends React.Component {
               isOpt={object.isOpt}
               code={object.line}
               onClick={() => { this.onSelect(index); }}
+              onSwitchReq={() => { this.onSwitchReq(index); }}
             />
           );
         })}

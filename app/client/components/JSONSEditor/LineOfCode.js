@@ -7,6 +7,7 @@ class LineOfCode extends React.Component {
     isOpt: React.PropTypes.bool,
     code: React.PropTypes.string,
     onClick: React.PropTypes.func,
+    onSwitchReq: React.PropTypes.func,
     isSelected: React.PropTypes.bool,
   };
 
@@ -17,6 +18,7 @@ class LineOfCode extends React.Component {
       code,
       onClick,
       isSelected,
+      onSwitchReq,
     } = this.props;
 
     const lineStyle = isSelected ? styles.oneLineSelected : styles.oneLine;
@@ -35,7 +37,7 @@ class LineOfCode extends React.Component {
     /* eslint jsx-a11y/no-static-element-interactions: 0 */
     return (
       <div onClick={onClick} className={lineStyle}>
-        <div className={attributeStyle}>{attribute}</div>
+        <div onClick={onSwitchReq} className={attributeStyle}>{attribute}</div>
         <div className={styles.code}>{code}</div>
       </div>
     );
