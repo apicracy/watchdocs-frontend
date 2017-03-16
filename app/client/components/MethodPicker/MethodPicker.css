@@ -1,0 +1,21 @@
+.root {
+  display: flex;
+  background: white;
+  border-radius: 5px;
+}
+
+.path {
+  padding: 10px;
+  color: #7f7d94;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  border-left: 1px #ECEEFA solid;
+}
+
+.select {
+  display: flex;
+  color: #6C6AB8;
+  font-family: 'RobotoBold', Helvetica, sans-serif;
+  padding: 10px;
+}

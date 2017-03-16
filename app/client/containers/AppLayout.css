@@ -1,31 +1,18 @@
 .appLayout {
   display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
-.inner {
-  display: flex;
   flex: 1;
+  flex-direction: column;
+  height: min-content;
+  min-height: 100%;
 }
 
 .contentWrapper {
-  background: #ECEEFA;
   display: flex;
   flex: 1;
   position: relative;
-  padding: 25px 50px;
-}
-
-.contentWrapper:after {
-  background-color: #ECEEFA;
-  position: absolute;
-  display: block;
-  left: 100%;
-  top: 0;
-  bottom: 0;
-  content: '';
-  width: 1000px;
+  padding: 50px;
+  padding-right: 15px;
+  overflow-x: hidden;
 }
 
 .navigation {

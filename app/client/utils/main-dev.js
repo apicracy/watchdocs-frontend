@@ -69,7 +69,7 @@ export class Main extends React.Component {
 
     return (
       <Provider store={store}>
-        <div>
+        <div id="root">
           <Router history={history} routes={routes} />
           {showDebug ? <DevTools /> : null}
           <Modals />

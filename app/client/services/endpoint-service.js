@@ -92,14 +92,13 @@ function filterByStatus(endpoints, status) {
   }, []);
 }
 
-export const filterById = (endpoints, id, parentId = null) => endpoints.reduce((state, item) => {
+export const filterById = (endpoints, id, parentId = null, fullPath = '') => endpoints.reduce((state, item) => {
+  const path = item.groupPath ? fullPath + item.groupPath : fullPath;
+
   if (item.id === id) {
-    return {
-      ...item,
-      parentId,
-    };
+    return { ...item, parentId, fullPath: path };
   } else if (item.endpoints) {
-    const subGroups = filterById(item.endpoints, id, item.id);
+    const subGroups = filterById(item.endpoints, id, item.id, path);
     return subGroups ? { ...subGroups, parentId: item.id } : state;
   }
 

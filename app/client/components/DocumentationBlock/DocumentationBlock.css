@@ -1,0 +1,45 @@
+.root {
+  margin-top: 40px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  flex-direction: row;
+  padding-bottom: 5px;
+  min-height: 60px;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-size: 20px;
+  color: #6C6AB8;
+}
+
+.description {
+  color: #7f7d94;
+  flex: 0 0 100%;
+}
+
+.buttonWrapper {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.iconWrapper {
+  color: #6fb3e3;
+}
+
+.block {
+  border-left: 10px solid #d1d0d7;
+  color: #d1d0d7;
+  padding: 15px;
+  background: white;
+}
+
+.footer {
+  padding: 15px 20px;
+}
