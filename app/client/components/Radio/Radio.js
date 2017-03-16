@@ -40,7 +40,7 @@ Radio.propTypes = {
   ]),
   options: React.PropTypes.array.isRequired,
   onChange: React.PropTypes.func.isRequired,
-  activeId: React.PropTypes.node.isRequired,
+  activeId: React.PropTypes.node,
 };
 
 export default Radio;
