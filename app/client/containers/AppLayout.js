@@ -27,6 +27,11 @@ class AppLayout extends React.Component {
           </Container>
         </AppBar>
         { this.props.children }
+        <AppBar footer>
+          <Container center>
+            <Brand center />
+          </Container>
+        </AppBar>
       </div>
     );
   }

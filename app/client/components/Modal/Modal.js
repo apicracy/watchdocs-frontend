@@ -15,8 +15,8 @@ const Modal = ({ title, isShow, onHide, onSave, saveButtonText, cancelButtonText
         { children }
       </div>
       <div className={styles.buttons}>
-        <Button primary onClick={onSave}>{saveButtonText}</Button>
-        <Button onClick={onHide}>{cancelButtonText}</Button>
+        <Button variants={['primary', 'large']} onClick={onSave}>{saveButtonText}</Button>
+        <Button variants={['large']} onClick={onHide}>{cancelButtonText}</Button>
       </div>
     </ModalBootstrap.Body>
 

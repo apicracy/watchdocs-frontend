@@ -17,12 +17,14 @@ class ApiDoc extends React.Component {
   }
 
   render() {
+    const { children } = this.props;
+
     return (
       <Container>
         <Aside params={this.props.params} />
         <Content>
           <div className={styles.contentWrapper}>
-            { this.props.children }
+            { children }
           </div>
         </Content>
       </Container>

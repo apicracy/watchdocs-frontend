@@ -17,3 +17,9 @@ Select.propTypes = {
   options: React.PropTypes.array,
   onSelect: React.PropTypes.bool,
 };
+
+Select.defaultProps = {
+  options: [
+    'Option 1',
+  ],
+};
