@@ -15,6 +15,7 @@ import { endpoints } from 'reducers/endpoints';
 import { modifyEndpoint } from 'reducers/modifyEndpoint-reducer';
 import { endpointView } from 'reducers/endpointView';
 import { groupView } from 'reducers/groupView';
+import { projects } from 'reducers/projects';
 /* reapp: import new reducer */
 
 export const reducers = {
@@ -23,5 +24,6 @@ export const reducers = {
   modifyEndpoint,
   endpointView,
   groupView,
+  projects,
   /* reapp: append new reducer */
 };

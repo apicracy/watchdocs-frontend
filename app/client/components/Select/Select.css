@@ -1,11 +1,22 @@
 .selectWrapper {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  padding: 3px 5px;
   padding-left: 0;
   cursor: pointer;
 }
 
 .selectedOption {
-  margin-right: 10px;
+
+}
+
+.optionList {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background: #6C6AB8;
+  z-index: 1000;
+
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }

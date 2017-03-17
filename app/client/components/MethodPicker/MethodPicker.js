@@ -14,9 +14,12 @@ const formatParams = (params) => {
 };
 
 const MethodPicker = ({ activeId, path, groupEndpoints }) => {
-  const currentEndpoint = groupEndpoints.filter(v => v.id === activeId)[0];
-  const currentMethod = currentEndpoint ? currentEndpoint.method : null;
-  const options = [currentMethod, ...groupEndpoints.map(v => v.method)].filter(v => v);
+  const currentEndpoint = groupEndpoints.filter(v => v.id === activeId);
+  const options = currentEndpoint.map(v => ({
+    ...v,
+    active: true,
+    name: v.method,
+  }));
 
   return (
     <div className={styles.root}>
@@ -24,7 +27,7 @@ const MethodPicker = ({ activeId, path, groupEndpoints }) => {
         <Select options={options} />
       </div>
       <div className={styles.path}>
-        { path }{ formatParams(currentEndpoint ? currentEndpoint.params : [])}
+        { path }{ formatParams(currentEndpoint[0] ? currentEndpoint[0].params : [])}
       </div>
     </div>
   );
