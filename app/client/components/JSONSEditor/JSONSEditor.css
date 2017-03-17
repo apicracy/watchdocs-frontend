@@ -11,11 +11,42 @@
   color: #c9c9c9;
 }
 
+.greenLine {
+  composes: code;
+  background: #4A9154;
+}
+.yellowLine {
+  composes: code;
+  background: #93784B;
+}
+.redLine {
+  composes: code;
+  background: #924A4B;
+}
+
 .attribute {
   width: 50px;
   display: inline-block;
   background: #464646;
   height: 100%;
+  text-align: center;
+}
+
+.redAttributeSpan {
+  composes: attribute;
+  background: #B05C5C;
+}
+.greenAttributeSpan {
+  composes: attribute;
+  background: #5BB16A;
+}
+
+.yellowAttributeSpan {
+  composes: attribute;
+  background: #AF915F;
+}
+
+.attributeSpan {
   color: #848484;
   text-align: center;
   -webkit-user-select: none; /* Chrome/Safari */
@@ -28,8 +59,8 @@
   cursor: pointer;
 }
 
-.attributeReq {
-  composes: attribute;
+.attributeSpanReq {
+  composes: attributeSpan;
   color: #c9c9c9;
 }
 

@@ -22,36 +22,13 @@ class JSONSEditor extends React.Component {
   }
 
   onSwitchReq = () => {
-    // const {
-    //   linesOfCode,
-    // } = this.state;
-    //
-    // const newLinesOfCode = [].concat(...linesOfCode);
-    // if (typeof newLinesOfCode[index].isReq === 'boolean') {
-    //   newLinesOfCode[index].isReq = !newLinesOfCode[index].isReq;
-    //   newLinesOfCode[index].isOpt = !newLinesOfCode[index].isOpt;
-    // }
-    //
-    // const newOutput = JSONtoJSONS(newLinesOfCode);
-    // this.props.onCompare(newOutput);
   }
 
   compare = (base, draft) => {
-    if (draft) {
-      this.setState({ linesOfCode: JSONStoJSON(draft) });
-      const newOutput = draft;
-      this.setState({ output: newOutput });
-      this.props.onCompare(newOutput);
-    } else if (base) {
-      this.setState({ linesOfCode: JSONStoJSON(base) });
-      const newOutput = base;
-      this.setState({ output: newOutput });
-      this.props.onCompare(newOutput);
-    } else {
-      this.props.onCompare(this.state.output);
-    }
-
-    compareJSONS(base, draft);
+    const output = compareJSONS(base, draft);
+    this.setState({ linesOfCode: JSONStoJSON(output) });
+    this.setState({ output });
+    this.props.onCompare(output);
   }
 
   componentDidUpdate(prevProps) {
@@ -87,13 +64,16 @@ class JSONSEditor extends React.Component {
           const {
             selectedLine,
           } = this.state;
-
           return (
             <LineOfCode
               key={index}
               isSelected={selectedLine === index}
               isReq={object.isReq}
               isOpt={object.isOpt}
+              toAdd={object.toAdd}
+              toRemove={object.toRemove}
+              typeChanged={object.typeChanged}
+              toChange={object.toChange}
               code={object.line}
               onClick={() => { this.onSelect(index); }}
               onSwitchReq={() => { this.onSwitchReq(index); }}
