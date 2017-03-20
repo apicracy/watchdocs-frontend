@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Modal.css';
 import Button from 'components/Button/Button';
+import CustomIcon from 'components/Icon/CustomIcon';
 
 class Modal extends React.Component {
   static propTypes = {
@@ -15,6 +16,7 @@ class Modal extends React.Component {
     onSave: React.PropTypes.func.isRequired,
     saveButtonText: React.PropTypes.string,
     cancelButtonText: React.PropTypes.string,
+    message: React.PropTypes.object,
   }
 
   static defaultProps = {
@@ -24,6 +26,7 @@ class Modal extends React.Component {
     title: 'Add New',
     saveButtonText: 'Add New',
     cancelButtonText: 'Cancel',
+    message: null,
   }
 
   onOverlayClick = ({ nativeEvent }) => {
@@ -33,7 +36,7 @@ class Modal extends React.Component {
   }
 
   render() {
-    const { isVisible, title, children } = this.props;
+    const { isVisible, title, children, message } = this.props;
 
     if (!isVisible) return null;
 
@@ -41,14 +44,20 @@ class Modal extends React.Component {
       <div className={styles.overlay} onClick={this.onOverlayClick} data-dismiss>
         <section className={styles.root}>
           <header className={styles.header}>
-            { title } <Button onClick={this.props.onHide}>X</Button>
+            { title } <Button onClick={this.props.onHide} icon={<CustomIcon name="close-button" />} />
           </header>
+          { message && (
+            <div className={styles.message}>
+              <h3 className={styles.message__title}> { message.title }</h3>
+              <p className={styles.message__content}> {message.content }</p>
+            </div>
+          )}
           <main className={styles.body}>
             { children }
           </main>
           <footer className={styles.buttons}>
             <Button variants={['primary', 'large']} onClick={this.props.onSave}>{this.props.saveButtonText}</Button>
-            <Button variants={['large']} onClick={this.props.onHide}>{this.props.cancelButtonText}</Button>
+            <Button variants={['large', 'lightBorder', 'spaceLeft']} onClick={this.props.onHide}>{this.props.cancelButtonText}</Button>
           </footer>
         </section>
       </div>

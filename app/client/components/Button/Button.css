@@ -27,7 +27,7 @@
 }
 
 .primary {
-  background: #337AB7;
+  background: #61b8f4;
   color: white;
 }
 
@@ -48,6 +48,10 @@
 
 .spaceRight {
   margin-right: 15px;
+}
+
+.lightBorder {
+  border: 1px solid #f0f0f0;
 }
 
 .spaceLeft {

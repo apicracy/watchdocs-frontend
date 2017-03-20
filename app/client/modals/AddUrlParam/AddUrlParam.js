@@ -5,7 +5,13 @@ import Modal from 'components/Modal/Modal';
 
 import { closeModal } from 'actions/modals';
 
-const MODAL_NAME = 'addUrlParam';
+export const MODAL_NAME = 'addUrlParam';
+
+const warningMessage = {
+  type: 'warning',
+  title: 'Doc Missing!',
+  content: 'We have found that you miss description in your documentation. Please fill it in to make it easily accessible by end users.',
+};
 
 @connect(store => ({
   isVisible: !!store.modals[MODAL_NAME],
@@ -26,6 +32,7 @@ class AddUrlParam extends React.Component {
         onHide={this.onHide}
         saveButtonText="Save"
         cancelButtonText="Preview"
+        message={warningMessage}
       >
         Hello World!
       </Modal>
