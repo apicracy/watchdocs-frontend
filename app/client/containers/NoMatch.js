@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { connect } from 'react-redux';
 import img404 from 'assets/404.jpg';
 
 const STYLES = {
@@ -10,7 +9,6 @@ const STYLES = {
   },
 };
 
-@connect(s => s.app)
 export default class NoMatch extends React.Component {
 
   render() {
