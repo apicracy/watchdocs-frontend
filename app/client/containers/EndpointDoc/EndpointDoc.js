@@ -10,6 +10,8 @@ import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock
 import Button from 'components/Button/Button';
 import Radio from 'components/Radio/Radio';
 
+import { openModal } from 'actions/modals';
+
 @connect(store => ({
   endpoint: store.endpointView,
   group: store.groupView,
@@ -90,7 +92,9 @@ class EndpointDoc extends React.Component {
             <Button variants={['linkPrimary']}>Edit base url</Button>,
           ]}
           emptyMsg="You don't have any URL params set up yet."
-          buttonAction={() => {}}
+          buttonAction={() => {
+            this.props.dispatch(openModal('addUrlParam'))
+          }}
         />
 
         <DocumentationBlock
@@ -100,7 +104,11 @@ class EndpointDoc extends React.Component {
           buttonAction={() => {}}
           content={(
             <Radio
-              title={['Select applicable authentications mechanisms.', <span className={styles.divider} />, <Button variants={['linkPrimary']}>Edit secure schemes</Button>]}
+              title={[
+                'Select applicable authentications mechanisms.',
+                <span className={styles.divider} />,
+                <Button variants={['linkPrimary']}>Edit secure schemes</Button>
+              ]}
               activeId={this.state.security}
               options={[
                 { id: 0, text: 'JWT' },

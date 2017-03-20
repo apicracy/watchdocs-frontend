@@ -1,3 +1,44 @@
+@value def-padding: 20px;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  background-color: white;
+  min-height: 300px;
+}
+
+.overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  background: rgba(0, 0, 0, .8);
+}
+
+.header {
+  display: flex;
+  flex: 0 0 60px;
+  padding: def-padding;
+  font-size: 24px;
+  color: #6C6AB8;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.body {
+  padding: def-padding;
+  flex: 1 0;
+}
+
 .buttons {
+  padding: def-padding;
   margin-top: 10px;
+  flex: 0 0;
 }
