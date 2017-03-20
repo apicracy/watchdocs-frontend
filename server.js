@@ -2,9 +2,23 @@
 const express = require('express');
 const path = require('path');
 const compression = require('compression');
+const fs = require('fs');
 
 const app = express();
 app.use(compression());
+
+/*
+ * Middleware applied to serve static json files to mock data on prod server.
+ * To be removed once we have real API
+ */
+const mockServer = fs.readdirSync('app/server');
+mockServer.forEach((resource) => {
+  if (resource === '.gitkeep') return;
+  const resourcePath = `/${resource.replace('.js', '')}`;
+  /* eslint-disable */
+  app.use(resourcePath, require(`./app/server/${resource}`));
+  /* eslint-enable */
+});
 
 // serve our static stuff like index.css
 app.use(express.static(path.join(__dirname, 'dist')));

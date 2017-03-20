@@ -1,25 +1,59 @@
 import React from 'react';
 import styles from './Select.css';
 import CustomIcon from 'components/Icon/CustomIcon';
+import Button from 'components/Button/Button';
 
 /* eslint no-unused-vars: 0 */
 // TODO: in development
-const Select = ({ options, onSelect }) => (
-  <span className={styles.selectWrapper}>
-    <span className={styles.selectedOption}>{ options[0] }</span>
-    <CustomIcon ext="svg" color="white" size="sm" name="arrow-down" />
-  </span>
-);
+class Select extends React.Component {
+
+  static propTypes = {
+    options: React.PropTypes.array,
+    onSelect: React.PropTypes.func,
+  }
+
+  static defaultProps = {
+    options: [],
+    onSelect: () => {},
+  }
+
+  componentWillMount() {
+    this.setState({ isOpen: false });
+  }
+
+  handleOptionClick = id => () => {
+    this.setState({ isOpen: false });
+    this.props.onSelect(id);
+  }
+
+  toggleOpen = () => {
+    this.setState({ isOpen: !this.state.isOpen });
+  }
+
+  render() {
+    const { options, onSelect } = this.props;
+    const selectedOption = options.filter(v => v.active);
+
+    return (
+      <div className={styles.selectWrapper}>
+        <div className={styles.selectedOption}>
+          <Button
+            onClick={this.toggleOpen}
+            icon={<CustomIcon ext="svg" color="white" size="sm" name="arrow-down" />}
+          >
+            { selectedOption[0] && selectedOption[0].name }
+          </Button>
+        </div>
+        { this.state.isOpen && (
+          <div className={styles.optionList}>
+            { options.map(o => (
+              <Button key={o.id} onClick={this.handleOptionClick(o.id)}>{o.name}</Button>
+            )) }
+          </div>
+        )}
+      </div>
+    );
+  }
+}
 
 export default Select;
-
-Select.propTypes = {
-  options: React.PropTypes.array,
-  onSelect: React.PropTypes.bool,
-};
-
-Select.defaultProps = {
-  options: [
-    'Option 1',
-  ],
-};
