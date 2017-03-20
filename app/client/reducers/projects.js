@@ -1,5 +1,5 @@
 import {
-  LOAD_PROJECTS,
+  FETCH_PROJECTS,
   SET_ACTIVE_PROJECT,
 } from 'actions/projects';
 
@@ -9,13 +9,13 @@ export function projects(state = INITIAL_STATE, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case LOAD_PROJECTS: return loadProjects(payload);
+    case FETCH_PROJECTS: return fetchProjects(payload);
     case SET_ACTIVE_PROJECT: return setActive(payload);
     default: return state;
   }
 }
 
-function loadProjects(payload) {
+function fetchProjects(payload) {
   return [...payload];
 }
 

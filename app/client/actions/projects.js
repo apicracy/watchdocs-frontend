@@ -2,12 +2,12 @@
  * endpointView Actions
  */
 
-export const LOAD_PROJECTS = 'load@projects';
+export const FETCH_PROJECTS = 'fetch@projects';
 export const SET_ACTIVE_PROJECT = 'setActive@projects';
 
-export function loadProjects(projects) {
+export function fetchProjects(projects) {
   return {
-    type: LOAD_PROJECTS,
+    type: FETCH_PROJECTS,
     payload: projects,
   };
 }

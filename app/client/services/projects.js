@@ -1,31 +1,20 @@
 import {
-  loadProjects as load,
+  fetchProjects as load,
   setActive,
  } from 'actions/projects';
 
-import { loadEndpoints } from 'services/endpoints';
+import { fetchEndpoints } from 'services/endpoints';
 
-import Axios from 'axios';
-
-export function loadProjects() {
+export function fetchProjects() {
   return (dispatch) => {
-    Axios
-      .get('/projects')
-      .then((response) => {
-        const cachedActiveId = parseInt(localStorage.getItem('activeProject'), 10) || response.data.reduce((v, i) => {
-          if (v < i.id) return i.id;
-
-          return v;
-        }, 0);
-
-        const projects = response.data.map(project => ({
-          ...project,
-          name: `${project.name} ${project.version}`,
-          active: (project.id === cachedActiveId),
-        }));
+    fetch('/projects')
+      .then(response => response.json())
+      .then((data) => {
+        const cachedActiveId = getActiveProject(data);
+        const projects = parseProjects(data, cachedActiveId);
 
         dispatch(load(projects));
-        dispatch(loadEndpoints(cachedActiveId));
+        dispatch(fetchEndpoints(cachedActiveId));
       });
   };
 }
@@ -39,6 +28,22 @@ export function setActiveProject(id) {
     }));
 
     dispatch(setActive(state));
-    dispatch(loadEndpoints(id));
+    dispatch(fetchEndpoints(id));
   };
+}
+
+function getActiveProject(data) {
+  return parseInt(localStorage.getItem('activeProject'), 10) || data.reduce((v, i) => {
+    if (v < i.id) return i.id;
+
+    return v;
+  }, 0);
+}
+
+function parseProjects(data, activeId) {
+  return data.map(project => ({
+    ...project,
+    name: `${project.name} ${project.version}`,
+    active: (project.id === activeId),
+  }));
 }

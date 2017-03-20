@@ -19,14 +19,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 
 let history;
 
-export function start(targetEl, payload) {
-  // apply the host's page payload
-  if (payload.title) {
-    initialState.app = {
-      title: payload.title,
-    };
-  }
-
+export function start(targetEl) {
   // create the application Redux store
   const appStore = makeStore(initialState);
   history = syncHistoryWithStore(browserHistory, appStore);

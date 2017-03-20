@@ -10,7 +10,6 @@
  *
  */
 
-import { appReducer } from 'reducers/app-reducer';
 import { endpoints } from 'reducers/endpoints';
 import { modifyEndpoint } from 'reducers/modifyEndpoint-reducer';
 import { endpointView } from 'reducers/endpointView';
@@ -19,7 +18,6 @@ import { projects } from 'reducers/projects';
 /* reapp: import new reducer */
 
 export const reducers = {
-  app: appReducer,
   endpoints,
   modifyEndpoint,
   endpointView,

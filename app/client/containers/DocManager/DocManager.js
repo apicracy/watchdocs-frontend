@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { loadProjects, setActiveProject } from 'services/projects';
+import { fetchProjects, setActiveProject } from 'services/projects';
 
 import AppBar from 'components/AppBar/AppBar';
 import LayoutWrapper from 'components/LayoutWrapper/LayoutWrapper';
@@ -15,7 +15,7 @@ import Select from 'components/Select/Select';
 class DocManager extends React.Component {
 
   componentWillMount() {
-    this.props.dispatch(loadProjects());
+    this.props.dispatch(fetchProjects());
   }
 
   static propTypes = {

@@ -1,12 +1,11 @@
-import Axios from 'axios';
-import { loadEndpoints as load } from 'actions/endpoints';
+import { fetchEndpoints as load } from 'actions/endpoints';
 
-export function loadEndpoints(projectId) {
+export function fetchEndpoints(projectId) {
   return (dispatch) => {
-    Axios
-      .get(`/endpoints/${projectId}`)
-      .then((response) => {
-        dispatch(load(response.data));
+    fetch(`/endpoints/${projectId}`)
+      .then(response => response.json())
+      .then((data) => {
+        dispatch(load(data));
       });
   };
 }

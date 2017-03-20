@@ -1,8 +1,8 @@
-export const LOAD_ENDPOINTS = 'load@endpoints';
+export const FETCH_ENDPOINTS = 'fetch@endpoints';
 
-export function loadEndpoints(endpoints) {
+export function fetchEndpoints(endpoints) {
   return {
-    type: LOAD_ENDPOINTS,
+    type: FETCH_ENDPOINTS,
     payload: endpoints,
   };
 }
