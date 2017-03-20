@@ -59,7 +59,8 @@ export function compareJSONS(base, draft) {
     if (!deepEqual(draft.required, base.required)) {
       if (draft.required) {
         draft.required.map((reqField) => {
-          if (!base.required || base.required.indexOf(reqField) === -1) {
+          if ((!base.required || base.required.indexOf(reqField) === -1)
+            && output.properties[reqField].toAdd === false) {
             output.properties[reqField].toChange = true;
           }
           return null;
@@ -68,8 +69,9 @@ export function compareJSONS(base, draft) {
 
       if (base.required) {
         base.required.map((reqField) => {
-          if (output.properties[reqField] &&
-            (!draft.required || draft.required.indexOf(reqField) === -1)) {
+          if ((output.properties[reqField] &&
+            (!draft.required || draft.required.indexOf(reqField) === -1))
+            && output.properties[reqField].toAdd === false) {
             output.properties[reqField].toChange = true;
           }
           return null;
@@ -99,6 +101,7 @@ function getLines(name, schema, isReq, space, toAdd, typeChanged, toRemove) {
     case 'object': return getObjectLine(name, schema, isReq, space, toAdd, typeChanged, toRemove);
     case 'string': return getStringLine(name, schema, isReq, space, toAdd, typeChanged, toRemove);
     case 'integer': return getIntegerLine(name, schema, isReq, space, toAdd, typeChanged, toRemove);
+    case 'number': return getNumberLine(name, schema, isReq, space, toAdd, typeChanged, toRemove);
     case 'array': return getArrayLine(name, schema, isReq, space, toAdd, typeChanged, toRemove);
     default: return [];
   }
@@ -121,6 +124,9 @@ const getObjectLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove)
       toRemove: toRemove || schema.toRemove,
       typeChanged: typeChanged || schema.typeChanged,
       toChange: schema.toChange,
+      addAction: schema.toAdd,
+      removeAction: schema.toRemove,
+      changeAction: schema.typeChanged || schema.toChange,
       type: 'object',
       line: `${pre}"${name}": {`,
     };
@@ -160,6 +166,9 @@ const getStringLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove)
     typeChanged: typeChanged || schema.typeChanged,
     toChange: schema.toChange,
     type: 'string',
+    addAction: schema.toAdd,
+    removeAction: schema.toRemove,
+    changeAction: schema.typeChanged || schema.toChange,
     line: `${pre}"${name}": "LOREM IPSUM"`,
   };
 };
@@ -174,7 +183,27 @@ const getIntegerLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove
     typeChanged: typeChanged || schema.typeChanged,
     toChange: schema.toChange,
     type: 'integer',
+    addAction: schema.toAdd,
+    removeAction: schema.toRemove,
+    changeAction: schema.typeChanged || schema.toChange,
     line: `${pre}"${name}": 12353`,
+  };
+};
+
+const getNumberLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove) => {
+  const pre = ' '.repeat(space);
+  return {
+    isOpt: !isReq,
+    isReq,
+    toAdd: toAdd || schema.toAdd,
+    toRemove: toRemove || schema.toRemove,
+    typeChanged: typeChanged || schema.typeChanged,
+    toChange: schema.toChange,
+    type: 'number',
+    addAction: schema.toAdd,
+    removeAction: schema.toRemove,
+    changeAction: schema.typeChanged || schema.toChange,
+    line: `${pre}"${name}": 23`,
   };
 };
 
@@ -189,8 +218,17 @@ const getArrayLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove) 
     toRemove: toRemove || schema.toRemove,
     toChange: schema.toChange,
     toAdd: toAdd || schema.toAdd,
+    addAction: schema.toAdd,
+    removeAction: schema.toRemove,
+    changeAction: schema.typeChanged || schema.toChange,
     line: `${pre}"${name}": [`,
   });
+  console.log('schemaz', schema);
+  console.log(lines);
+  console.log('-----');
+  console.log('toAdd', toAdd);
+  console.log('schema.toAdd', schema.toAdd);
+  console.log('-----');
 
   const item1 = getLines('', schema.items, false, space + 2, (toAdd || schema.toAdd), (typeChanged || schema.typeChanged), (toRemove || schema.toRemove));
   const item2 = getLines('', schema.items, false, space + 2, (toAdd || schema.toAdd), (typeChanged || schema.typeChanged), (toRemove || schema.toRemove));

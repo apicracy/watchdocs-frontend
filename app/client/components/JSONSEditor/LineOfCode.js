@@ -45,9 +45,9 @@ class LineOfCode extends React.Component {
 
     let codeStyle = styles.code;
     let attributeStyle = styles.attribute;
-    if (toAdd) {
-      codeStyle = styles.greenLine;
-      attributeStyle = styles.greenAttributeSpan;
+    if (toChange) {
+      codeStyle = styles.yellowLine;
+      attributeStyle = styles.yellowAttributeSpan;
     }
 
     if (typeChanged) {
@@ -55,15 +55,16 @@ class LineOfCode extends React.Component {
       attributeStyle = styles.yellowAttributeSpan;
     }
 
-    if (toChange) {
-      codeStyle = styles.yellowLine;
-      attributeStyle = styles.yellowAttributeSpan;
+    if (toAdd) {
+      codeStyle = styles.greenLine;
+      attributeStyle = styles.greenAttributeSpan;
     }
 
     if (toRemove) {
       codeStyle = styles.redLine;
       attributeStyle = styles.redAttributeSpan;
     }
+
     /* eslint jsx-a11y/no-static-element-interactions: 0 */
     return (
       <div onClick={onClick} className={lineStyle}>
