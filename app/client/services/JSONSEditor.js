@@ -29,19 +29,17 @@ export function cleanJSONS(output) {
         delete newOutput[prop];
       }
 
-      // if (prop === 'toChange') {
-      //   delete newOutput[prop];
-      // }
-      //
-      // if (prop === 'typeChanged') {
-      //   delete newOutput[prop];
-      // }
+      if (prop === 'toChange') {
+        delete newOutput[prop];
+      }
+
+      if (prop === 'typeChanged') {
+        delete newOutput[prop];
+      }
 
       return null;
     });
   }
-
-  // console.log(output)
 
   if (output && output.toAdd) {
     if (!output.isAccepted) {
@@ -140,7 +138,7 @@ export function compare(base, draft) {
       i += 1;
     } else {
       output.typeChanged = true;
-      output.items.index = i;
+      output.index = i;
       i += 1;
     }
   }
