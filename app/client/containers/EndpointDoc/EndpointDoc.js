@@ -70,8 +70,8 @@ class EndpointDoc extends React.Component {
     this.setState({ security: activatedItem.id });
   }
 
-  renderParams = () => {
-    if (!this.props.endpoint || !this.props.endpoint.params) return;
+  renderParams() {
+    if (!this.props.endpoint || !this.props.endpoint.params) return [];
 
     return this.props.endpoint.params.map((param, key) => (
       <Row
@@ -79,11 +79,11 @@ class EndpointDoc extends React.Component {
         data={[
           <Button variants={['linkPrimary']}>{param.name}</Button>,
           param.type,
-          param.required ? ', required' : ', optional'
+          param.required ? ', required' : ', optional',
         ]}
         actions={[
           <IconButton icon={<Icon name="pencil" size="lg" />} />,
-          !param.main && <IconButton icon={<Icon name="trash" size="lg" />} />
+          !param.main && <IconButton icon={<Icon name="trash" size="lg" />} />,
         ]}
       />
     ));
@@ -115,7 +115,7 @@ class EndpointDoc extends React.Component {
           ]}
           emptyMsg="You don't have any URL params set up yet."
           buttonAction={() => {
-            this.props.dispatch(openModal('addUrlParam'))
+            this.props.dispatch(openModal('addUrlParam'));
           }}
         >
           { this.renderParams() }
@@ -131,7 +131,7 @@ class EndpointDoc extends React.Component {
               title={[
                 'Select applicable authentications mechanisms.',
                 <span className={styles.divider} />,
-                <Button variants={['linkPrimary']}>Edit secure schemes</Button>
+                <Button variants={['linkPrimary']}>Edit secure schemes</Button>,
               ]}
               activeId={this.state.security}
               options={[

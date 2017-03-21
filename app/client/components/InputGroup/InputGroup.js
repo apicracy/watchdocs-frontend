@@ -11,4 +11,10 @@ const InputGroup = ({ title, description, children }) => (
   </section>
 );
 
+InputGroup.propTypes = {
+  title: React.PropTypes.string,
+  description: React.PropTypes.string,
+  children: React.PropTypes.node,
+};
+
 export default InputGroup;

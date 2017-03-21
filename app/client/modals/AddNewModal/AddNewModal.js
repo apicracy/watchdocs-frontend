@@ -87,6 +87,7 @@ class AddNewModal extends React.Component {
 
   onSave = () => {
     this.props.dispatch(saveEndpoint());
+    this.props.dispatch(closeModal(MODAL_NAME));
   }
 
   onHide = () => {

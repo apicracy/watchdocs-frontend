@@ -27,13 +27,15 @@ TextInput.propTypes = {
   value: React.PropTypes.string,
   iconRight: React.PropTypes.node,
   onChange: React.PropTypes.func,
+  validation: React.PropTypes.object,
+  validationErrorMsg: React.PropTypes.string,
 };
 
 TextInput.defaultProps = {
   placeholder: '',
   value: '',
   onChange: () => {},
-  validation: new RegExp(/./g)
+  validation: new RegExp(/./g),
 };
 
 export default TextInput;

@@ -16,7 +16,6 @@ import { MODAL_NAME as ADD_NEW_MODAL } from 'modals/AddNewModal/AddNewModal';
 import { MODAL_NAME as EDIT_MODAL } from 'modals/EditModal/EditModal';
 
 import {
-  addNewEndpoint,
   loadEndpoint,
   loadFolder,
 } from 'services/modifyEndpoint-service';

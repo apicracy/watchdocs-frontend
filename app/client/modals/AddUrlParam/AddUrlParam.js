@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styles from './AddNewModal.css';
 import Modal from 'components/Modal/Modal';
-import InputGroup from 'components/InputGroup/InputGroup';
-import TextInput from 'components/TextInput/TextInput';
-import TextArea from 'components/TextArea/TextArea';
-import CheckBox from 'components/CheckBox/CheckBox';
+import InputGroup from 'components/Form/InputGroup/InputGroup';
+import TextInput from 'components/Form/TextInput/TextInput';
+import TextArea from 'components/Form/TextArea/TextArea';
+import CheckBox from 'components/Form/CheckBox/CheckBox';
+import Select from 'components/Form/Select/Select';
 
 import { closeModal } from 'actions/modals';
 import { addEndpointParam } from 'actions/endpointView';
@@ -24,14 +24,26 @@ const warningMessage = {
 }))
 class AddUrlParam extends React.Component {
 
+  static propTypes = {
+    isVisible: React.PropTypes.bool,
+    dispatch: React.PropTypes.func,
+  }
+
   componentWillMount() {
     this.reset();
+
+    this.paramTypes = [
+      { id: 1, name: 'Number'},
+      { id: 2, name: 'String'},
+      { id: 3, name: 'Array'},
+    ];
   }
 
   reset = () => this.setState({
     name: '',
     isRequired: false,
     description: '',
+    type: '',
     example: '',
   });
 
@@ -84,11 +96,15 @@ class AddUrlParam extends React.Component {
           />
         </InputGroup>
 
+        <InputGroup title="Type" description="Give user more information about data type of param">
+          <Select options={this.paramTypes} active={null} />
+        </InputGroup>
+
         <InputGroup title="Description" description="Give user more context info about the param itself">
           <TextArea
-            rows={4}
+            rows={3}
             value={this.state.description}
-            placeholder="Example of param value"
+            placeholder="Param description"
             onChange={this.onFieldChange('description')}
           />
         </InputGroup>

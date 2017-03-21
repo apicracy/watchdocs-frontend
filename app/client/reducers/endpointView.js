@@ -24,7 +24,7 @@ export function endpointView(state = INITIAL_STATE, action) {
 
 function setEndpointView(payload) {
   return {
-    ...payload
+    ...payload,
   };
 }
 
@@ -39,7 +39,7 @@ function addEndpointParam(state, payload) {
         required: payload.isRequired,
         type: 'string',
         main: false,
-      }
-    ]
+      },
+    ],
   };
 }

@@ -11,7 +11,7 @@ class Modal extends React.Component {
       React.PropTypes.object,
       React.PropTypes.array,
     ]),
-    isShow: React.PropTypes.bool,
+    isVisible: React.PropTypes.bool,
     onHide: React.PropTypes.func.isRequired,
     onSave: React.PropTypes.func.isRequired,
     saveButtonText: React.PropTypes.string,
@@ -39,7 +39,7 @@ class Modal extends React.Component {
     const { isVisible, title, children, message } = this.props;
 
     if (!isVisible) return null;
-
+    /* eslint-disable jsx-a11y/no-static-element-interactions */
     return (
       <div className={styles.overlay} onClick={this.onOverlayClick} data-dismiss>
         <section className={styles.root}>
@@ -62,7 +62,8 @@ class Modal extends React.Component {
         </section>
       </div>
     );
-  };
+    /* eslint-enable jsx-a11y/no-static-element-interactions */
+  }
 }
 
 export default Modal;

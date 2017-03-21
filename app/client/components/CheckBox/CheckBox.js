@@ -47,6 +47,6 @@ CheckBox.propTypes = {
 
 CheckBox.defaultProps = {
   title: '',
-}
+};
 
 export default CheckBox;

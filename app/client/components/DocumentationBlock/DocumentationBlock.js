@@ -18,7 +18,8 @@ const DocumentationBlock = ({ title, description, buttonAction, children, emptyM
   ) : description;
 
   const rows = (!children || !children.length) ? (
-    <DocumentationRow empty
+    <DocumentationRow
+      empty
       data={[
         emptyMsg,
         <Button variants={['link']} onClick={buttonAction}>Add it now</Button>,
@@ -67,7 +68,7 @@ DocumentationBlock.defaultProps = {
 };
 
 export {
-  DocumentationRow as Row
+  DocumentationRow as Row,
 };
 
 export default DocumentationBlock;
