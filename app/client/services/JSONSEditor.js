@@ -1,6 +1,116 @@
 import deepEqual from 'deep-equal';
 
+let i = 0;
+
+export function cleanJSONS(output) {
+  const newOutput = Array.isArray(output) ? [].concat(output) : Object.assign({}, output);
+  if (typeof newOutput === 'object') {
+    Object.keys(newOutput).map((prop) => {
+      if (typeof newOutput[prop] === 'object') {
+        newOutput[prop] = cleanJSONS(newOutput[prop]);
+      }
+      if (newOutput[prop] === null) {
+        delete newOutput[prop];
+      }
+
+      if (prop === 'index') {
+        delete newOutput[prop];
+      }
+
+      if (prop === 'toRemove') {
+        delete newOutput[prop];
+      }
+
+      if (prop === 'toAdd') {
+        delete newOutput[prop];
+      }
+
+      if (prop === 'isAccepted') {
+        delete newOutput[prop];
+      }
+
+      // if (prop === 'toChange') {
+      //   delete newOutput[prop];
+      // }
+      //
+      // if (prop === 'typeChanged') {
+      //   delete newOutput[prop];
+      // }
+
+      return null;
+    });
+  }
+
+  // console.log(output)
+
+  if (output && output.toAdd) {
+    if (!output.isAccepted) {
+      return null;
+    }
+  }
+
+  if (output && output.toRemove) {
+    if (output.isAccepted) {
+      return null;
+    }
+  }
+
+  return newOutput;
+}
+
+export function acceptJSONS(output, index) {
+  const newOutput = output;
+  if (output.index && (output.index === index)) {
+    newOutput.isAccepted = true;
+  }
+
+  if (typeof output === 'object') {
+    Object.keys(output).map((prop) => {
+      if (typeof output[prop] === 'object') {
+        acceptJSONS(output[prop], index);
+      }
+
+      if (prop === 'index' && (newOutput[prop] === index)) {
+        newOutput.isAccepted = true;
+      }
+
+      return null;
+    });
+  }
+
+  return newOutput;
+}
+
+export function rejectJSONS(output, index) {
+  const newOutput = output;
+  if (output.index && (output.index === index)) {
+    newOutput.isAccepted = false;
+  }
+
+  if (typeof output === 'object') {
+    Object.keys(output).map((prop) => {
+      if (typeof output[prop] === 'object') {
+        rejectJSONS(output[prop], index);
+      }
+
+      if (prop === 'index' && (newOutput[prop] === index)) {
+        newOutput.isAccepted = false;
+      }
+
+      return null;
+    });
+  }
+
+  return newOutput;
+}
+
 export function compareJSONS(base, draft) {
+  i = 0;
+  const output = compare(base, draft);
+  return output;
+}
+
+export function compare(base, draft) {
   // if one of them is empty
   if (base && !draft) {
     const newBase = base;
@@ -22,11 +132,17 @@ export function compareJSONS(base, draft) {
   if (base.type !== draft.type) {
     if (draft.type === 'object') {
       output.properties.toAdd = true;
-    }
-    if (draft.type === 'array') {
+      output.properties.index = i;
+      i += 1;
+    } else if (draft.type === 'array') {
       output.items.toAdd = true;
+      output.items.index = i;
+      i += 1;
+    } else {
+      output.typeChanged = true;
+      output.items.index = i;
+      i += 1;
     }
-    output.typeChanged = true;
   }
 
   if (draft.type === 'object') {
@@ -35,8 +151,10 @@ export function compareJSONS(base, draft) {
       if (!deepEqual(draft.properties[prop], base.properties[prop])) {
         if (!base.properties[prop]) {
           output.properties[prop].toAdd = true;
+          output.properties[prop].index = i;
+          i += 1;
         } else {
-          output.properties[prop] = compareJSONS(base.properties[prop], draft.properties[prop]);
+          output.properties[prop] = compare(base.properties[prop], draft.properties[prop]);
         }
       }
 
@@ -48,8 +166,10 @@ export function compareJSONS(base, draft) {
         if (!draft.properties[prop]) {
           output.properties[prop] = base.properties[prop];
           output.properties[prop].toRemove = true;
+          output.properties[prop].index = i;
+          i += 1;
         } else {
-          output.properties[prop] = compareJSONS(base.properties[prop], draft.properties[prop]);
+          output.properties[prop] = compare(base.properties[prop], draft.properties[prop]);
         }
       }
 
@@ -62,6 +182,8 @@ export function compareJSONS(base, draft) {
           if ((!base.required || base.required.indexOf(reqField) === -1)
             && output.properties[reqField].toAdd === false) {
             output.properties[reqField].toChange = true;
+            output.properties[reqField].index = i;
+            i += 1;
           }
           return null;
         });
@@ -73,6 +195,8 @@ export function compareJSONS(base, draft) {
             (!draft.required || draft.required.indexOf(reqField) === -1))
             && output.properties[reqField].toAdd === false) {
             output.properties[reqField].toChange = true;
+            output.properties[reqField].index = i;
+            i += 1;
           }
           return null;
         });
@@ -81,7 +205,7 @@ export function compareJSONS(base, draft) {
   }
 
   if (draft.type === 'array') {
-    output.items = compareJSONS(base.items, draft.items);
+    output.items = compare(base.items, draft.items);
   }
 
   return output;
@@ -127,6 +251,8 @@ const getObjectLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove)
       addAction: schema.toAdd,
       removeAction: schema.toRemove,
       changeAction: schema.typeChanged || schema.toChange,
+      isAccepted: schema.isAccepted,
+      index: schema.index,
       type: 'object',
       line: `${pre}"${name}": {`,
     };
@@ -169,7 +295,9 @@ const getStringLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove)
     addAction: schema.toAdd,
     removeAction: schema.toRemove,
     changeAction: schema.typeChanged || schema.toChange,
+    index: schema.index,
     line: `${pre}"${name}": "LOREM IPSUM"`,
+    isAccepted: schema.isAccepted,
   };
 };
 
@@ -186,7 +314,9 @@ const getIntegerLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove
     addAction: schema.toAdd,
     removeAction: schema.toRemove,
     changeAction: schema.typeChanged || schema.toChange,
+    index: schema.index,
     line: `${pre}"${name}": 12353`,
+    isAccepted: schema.isAccepted,
   };
 };
 
@@ -203,7 +333,9 @@ const getNumberLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove)
     addAction: schema.toAdd,
     removeAction: schema.toRemove,
     changeAction: schema.typeChanged || schema.toChange,
+    index: schema.index,
     line: `${pre}"${name}": 23`,
+    isAccepted: schema.isAccepted,
   };
 };
 
@@ -221,14 +353,10 @@ const getArrayLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove) 
     addAction: schema.toAdd,
     removeAction: schema.toRemove,
     changeAction: schema.typeChanged || schema.toChange,
+    index: schema.index,
     line: `${pre}"${name}": [`,
+    isAccepted: schema.isAccepted,
   });
-  console.log('schemaz', schema);
-  console.log(lines);
-  console.log('-----');
-  console.log('toAdd', toAdd);
-  console.log('schema.toAdd', schema.toAdd);
-  console.log('-----');
 
   const item1 = getLines('', schema.items, false, space + 2, (toAdd || schema.toAdd), (typeChanged || schema.typeChanged), (toRemove || schema.toRemove));
   const item2 = getLines('', schema.items, false, space + 2, (toAdd || schema.toAdd), (typeChanged || schema.typeChanged), (toRemove || schema.toRemove));

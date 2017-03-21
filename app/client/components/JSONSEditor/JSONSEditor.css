@@ -65,6 +65,7 @@
 }
 
 .oneLine {
+  flex: 1;
   height: 20px;
   display: flex;
 }
@@ -72,4 +73,49 @@
 .oneLineSelected {
   composes: oneLine;
   opacity: 0.8;
+}
+
+.lineContainer {
+  display: flex;
+}
+
+.inactiveActionButton {
+  width: 160px;
+  height: 20px;
+  visibility: hidden;
+}
+
+.containerButtons {
+  height: 20px;
+  width: 160px;
+  display: inline-block;
+}
+
+.button {
+  height: 20px;
+  width: 70px;
+  border: 1px solid gray;
+  padding: 0;
+  background: none;
+  margin: 0 5px;
+}
+
+.addButton {
+  composes: button;
+  color: #5BB16A;
+}
+
+.removeButton {
+  composes: button;
+  color: #B05C5C;
+}
+
+.changeButton {
+  composes: button;
+  color: #AF915F;
+}
+
+.rejectButton {
+  composes: button;
+  color: gray;
 }

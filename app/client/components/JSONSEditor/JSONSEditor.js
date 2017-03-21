@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './JSONSEditor.css';
 
 import LineOfCode from './LineOfCode';
-import { JSONStoJSON, compareJSONS } from 'services/JSONSEditor';
+import { JSONStoJSON, compareJSONS, acceptJSONS, rejectJSONS, cleanJSONS } from 'services/JSONSEditor';
 
 class JSONSEditor extends React.Component {
   static propTypes = {
@@ -14,6 +14,7 @@ class JSONSEditor extends React.Component {
   componentWillMount() {
     this.setState({ selectedLine: -1 });
     this.setState({ linesOfCode: [] });
+    this.setState({ temp: {} });
     this.setState({ output: {} });
   }
 
@@ -25,10 +26,37 @@ class JSONSEditor extends React.Component {
   }
 
   compare = (base, draft) => {
-    const output = compareJSONS(base, draft);
-    this.setState({ linesOfCode: JSONStoJSON(output) });
-    this.setState({ output });
-    this.props.onCompare(output);
+    const temp = compareJSONS(base, draft);
+    this.setState({ linesOfCode: JSONStoJSON(temp) });
+    this.setState({ output: base });
+    this.setState({ temp });
+    this.props.onCompare(cleanJSONS(base));
+  }
+
+  onAccept = (index) => {
+    const {
+      temp,
+    } = this.state;
+
+    const newOutput = acceptJSONS(temp, index);
+
+    this.setState({ linesOfCode: JSONStoJSON(newOutput) });
+    this.setState({ output: newOutput });
+    this.setState({ temp: newOutput });
+    this.props.onCompare(cleanJSONS(newOutput));
+  }
+
+  onReject = (index) => {
+    const {
+      temp,
+    } = this.state;
+
+    const newOutput = rejectJSONS(temp, index);
+
+    this.setState({ linesOfCode: JSONStoJSON(newOutput) });
+    this.setState({ output: newOutput });
+    this.setState({ temp: newOutput });
+    this.props.onCompare(cleanJSONS(newOutput));
   }
 
   componentDidUpdate(prevProps) {
@@ -64,6 +92,7 @@ class JSONSEditor extends React.Component {
           const {
             selectedLine,
           } = this.state;
+
           return (
             <LineOfCode
               key={index}
@@ -74,6 +103,13 @@ class JSONSEditor extends React.Component {
               toRemove={object.toRemove}
               typeChanged={object.typeChanged}
               toChange={object.toChange}
+              addAction={object.addAction ? () => { this.onAccept(object.index); } : undefined}
+              removeAction={object.removeAction ?
+                () => { this.onAccept(object.index); } : undefined}
+              changeAction={object.changeAction ?
+                () => { this.onAccept(object.index); } : undefined}
+              onReject={() => { this.onReject(object.index); }}
+              isAccepted={object.isAccepted}
               code={object.line}
               onClick={() => { this.onSelect(index); }}
               onSwitchReq={() => { this.onSwitchReq(index); }}

@@ -27,6 +27,7 @@
   width: 100%;
   flex: 1;
   outline: none;
+  height: 300px;
 }
 .outputWrapper {
   display: flex;
