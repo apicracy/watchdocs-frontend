@@ -10,6 +10,10 @@
   font-size: 14px;
 }
 
+.small {
+  composes: root;
+}
+
 .icon {
   margin-left: 40px;
 }

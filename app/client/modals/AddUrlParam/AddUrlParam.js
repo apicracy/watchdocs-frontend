@@ -8,6 +8,7 @@ import TextArea from 'components/TextArea/TextArea';
 import CheckBox from 'components/CheckBox/CheckBox';
 
 import { closeModal } from 'actions/modals';
+import { addEndpointParam } from 'actions/endpointView';
 
 export const MODAL_NAME = 'addUrlParam';
 
@@ -34,9 +35,16 @@ class AddUrlParam extends React.Component {
     example: '',
   });
 
-  onSave = () => this.props.dispatch(closeModal(MODAL_NAME));
+  onSave = () => {
+    this.props.dispatch(addEndpointParam({ ...this.state }));
+    this.props.dispatch(closeModal(MODAL_NAME));
+    this.reset();
+  }
 
-  onHide = () => this.props.dispatch(closeModal(MODAL_NAME));
+  onHide = () => {
+    this.props.dispatch(closeModal(MODAL_NAME));
+    this.reset();
+  }
 
   onFieldChange = fieldName => ({ nativeEvent }) => {
     this.setState({ [fieldName]: nativeEvent.target.value });

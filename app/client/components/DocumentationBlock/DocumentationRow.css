@@ -1,0 +1,50 @@
+.root {
+  position: relative;
+  color: #7f7d94;
+  padding: 15px;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.root::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  background: #6fb3e3;
+  content: '';
+}
+
+.root:not(:first-of-type) {
+  margin-top: 1px;
+}
+
+.root:not(:first-of-type):before {
+  top: -1px;
+}
+
+.root:nth-of-type(2n)::before {
+  background: #96CFF7;
+}
+
+.empty {
+  composes: root;
+
+  color: #d1d0d7;
+}
+
+.empty::before {
+  background: #d1d0d7;
+}
+
+.data {
+  padding: 0 10px;
+}
+
+.actions {
+  color: #d1d0d7;
+}

@@ -4,6 +4,8 @@ import styles from './DocumentationBlock.css';
 import Button from 'components/Button/Button';
 import CustomIcon from 'components/Icon/CustomIcon';
 
+import DocumentationRow from './DocumentationRow';
+
 const buttonIcon = (
   <span className={styles.iconWrapper}>
     <CustomIcon name="add-primary" size="lg" />
@@ -14,6 +16,16 @@ const DocumentationBlock = ({ title, description, buttonAction, children, emptyM
   const parsedDescription = description && description.map ? (
     description.map((v, k) => <span key={k}>{v}</span>)
   ) : description;
+
+  const rows = (!children || !children.length) ? (
+    <DocumentationRow empty
+      data={[
+        emptyMsg,
+        <Button variants={['link']} onClick={buttonAction}>Add it now</Button>,
+      ]}
+      actions={[]}
+    />
+  ) : children;
 
   return (
     <article className={styles.root}>
@@ -28,10 +40,8 @@ const DocumentationBlock = ({ title, description, buttonAction, children, emptyM
           <div className={styles.description}>{ parsedDescription }</div>
         )}
       </header>
-      <main className={styles.block}>
-        { children }
-        { !children && emptyMsg }
-        { !children && buttonAction && <Button variants={['link']} onClick={buttonAction}>Add it now</Button> }
+      <main className={styles.blockWrapper}>
+        { rows }
       </main>
       <footer className={styles.footer}>
         { content }
@@ -56,5 +66,8 @@ DocumentationBlock.defaultProps = {
   emptyMsg: 'You don\'t have any setup yet.',
 };
 
+export {
+  DocumentationRow as Row
+};
 
 export default DocumentationBlock;

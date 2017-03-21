@@ -5,9 +5,17 @@ import Select from 'components/Select/Select';
 
 const formatParams = (params) => {
   if (params && params.length > 0) {
-    const formatted = params.map(param => `:${param}`);
+    const formatted = params.reduce((state, param) => {
+      if (param.main) {
+        return [`/:${param.name}`, ...state];
+      }
 
-    return `/(${formatted.join(', ')})`;
+      const divider = state.length < 2 ? '?' : '&';
+
+      return [...state, divider, `${param.name}`];
+    }, []);
+
+    return formatted.join('');
   }
 
   return '';
