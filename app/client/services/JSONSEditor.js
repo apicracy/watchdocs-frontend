@@ -5,6 +5,7 @@ let i = 0;
 export function cleanJSONS(output) {
   const newOutput = Array.isArray(output) ? [].concat(output) : Object.assign({}, output);
   if (typeof newOutput === 'object') {
+
     Object.keys(newOutput).map((prop) => {
       if (typeof newOutput[prop] === 'object') {
         newOutput[prop] = cleanJSONS(newOutput[prop]);
@@ -36,6 +37,12 @@ export function cleanJSONS(output) {
       if (prop === 'typeChanged') {
         delete newOutput[prop];
       }
+      if (prop === 'newType') {
+        delete newOutput[prop];
+      }
+      if (prop === 'toChangeRequired') {
+        delete newOutput[prop];
+      }
 
       return null;
     });
@@ -51,6 +58,10 @@ export function cleanJSONS(output) {
     if (output.isAccepted) {
       return null;
     }
+  }
+
+  if (output && output.isAccepted === false) {
+    return null;
   }
 
   return newOutput;
@@ -76,29 +87,55 @@ export function acceptJSONS(output, index) {
     });
   }
 
+  if (output.toChangeRequired) {
+    output.toChangeRequired.map((object) => {
+      if (output.properties[object].toChange) {
+        const indexOfObject = output.required.indexOf(object);
+        if (indexOfObject === -1) {
+          output.required.push(object);
+        } else {
+          output.required.splice(indexOfObject, 1);
+        }
+      }
+      return null;
+    });
+  }
+
+  if (newOutput.newType) {
+    if (newOutput.isAccepted) {
+      newOutput.type = newOutput.newType;
+    }
+  }
+
   return newOutput;
 }
 
-export function rejectJSONS(output, index) {
-  const newOutput = output;
+export function rejectJSONS(output, index, base) {
+  let newOutput = Array.isArray(output) ? [].concat(output) : Object.assign({}, output);
   if (output.index && (output.index === index)) {
-    newOutput.isAccepted = false;
+    newOutput = Object.assign({}, base);
+    console.log('ho!');
+    newOutput.isAccepted = typeof newOutput.isAccepted !== "undefined";
+    console.log(newOutput)
   }
 
   if (typeof output === 'object') {
     Object.keys(output).map((prop) => {
       if (typeof output[prop] === 'object') {
-        rejectJSONS(output[prop], index);
+        newOutput[prop] = rejectJSONS(output[prop], index, base[prop]);
       }
 
       if (prop === 'index' && (newOutput[prop] === index)) {
-        newOutput.isAccepted = false;
+        console.log('hej!');
+
+        newOutput = Object.assign({}, base);
+        newOutput.isAccepted = typeof newOutput.isAccepted !== "undefined";
       }
 
       return null;
     });
   }
-
+  // console.log(newOutput)
   return newOutput;
 }
 
@@ -125,7 +162,7 @@ export function compare(base, draft) {
   }
 
   // if we have two of them
-  const output = draft;
+  const output = Object.assign({}, draft);
 
   if (base.type !== draft.type) {
     if (draft.type === 'object') {
@@ -137,6 +174,8 @@ export function compare(base, draft) {
       output.items.index = i;
       i += 1;
     } else {
+      output.type = base.type;
+      output.newType = draft.type;
       output.typeChanged = true;
       output.index = i;
       i += 1;
@@ -174,13 +213,19 @@ export function compare(base, draft) {
       return null;
     });
 
+    /* eslint no-array-constructor: 0 */
+    output.required = [].concat(base.required);
+
+    output.toChangeRequired = new Array();
+
+    // check required
     if (!deepEqual(draft.required, base.required)) {
       if (draft.required) {
         draft.required.map((reqField) => {
-          if ((!base.required || base.required.indexOf(reqField) === -1)
-            && output.properties[reqField].toAdd === false) {
+          if ((!base.required || base.required.indexOf(reqField) === -1)) {
             output.properties[reqField].toChange = true;
             output.properties[reqField].index = i;
+            output.toChangeRequired.push(reqField);
             i += 1;
           }
           return null;
@@ -190,10 +235,10 @@ export function compare(base, draft) {
       if (base.required) {
         base.required.map((reqField) => {
           if ((output.properties[reqField] &&
-            (!draft.required || draft.required.indexOf(reqField) === -1))
-            && output.properties[reqField].toAdd === false) {
+            (!draft.required || draft.required.indexOf(reqField) === -1))) {
             output.properties[reqField].toChange = true;
             output.properties[reqField].index = i;
+            output.toChangeRequired.push(reqField);
             i += 1;
           }
           return null;

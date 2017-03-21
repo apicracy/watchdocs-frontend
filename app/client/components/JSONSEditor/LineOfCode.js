@@ -42,6 +42,7 @@ class LineOfCode extends React.Component {
 
     const lineStyle = isSelected ? styles.oneLineSelected : styles.oneLine;
     let attributeSpan = styles.attributeSpan;
+    let lineContainerStyles = styles.lineContainer;
 
     let attribute;
     if (isOpt) {
@@ -74,6 +75,17 @@ class LineOfCode extends React.Component {
     if (toRemove) {
       codeStyle = styles.redLine;
       attributeStyle = styles.redAttributeSpan;
+      // isAccepted could be also undefined;
+      if (isAccepted === true || isAccepted === false) {
+        lineContainerStyles = styles.lineContainerHidden;
+      }
+    }
+    console.log(code);
+    console.log(isAccepted);
+    // if accepted, restart styles
+    if (isAccepted === true || isAccepted === false) {
+      codeStyle = styles.code;
+      attributeStyle = styles.attribute;
     }
 
     /* eslint jsx-a11y/no-static-element-interactions: 0 */
@@ -107,7 +119,7 @@ class LineOfCode extends React.Component {
     }
 
     return (
-      <div className={styles.lineContainer}>
+      <div className={lineContainerStyles}>
         <div onClick={onClick} className={lineStyle}>
           <div onClick={onSwitchReq} className={attributeStyle}>
             <span className={attributeSpan}>{attribute}</span>

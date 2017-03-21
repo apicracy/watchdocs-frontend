@@ -29,6 +29,7 @@ class JSONSEditor extends React.Component {
     const temp = compareJSONS(base, draft);
     this.setState({ linesOfCode: JSONStoJSON(temp) });
     this.setState({ output: base });
+    this.setState({ base });
     this.setState({ temp });
     this.props.onCompare(cleanJSONS(base));
   }
@@ -39,6 +40,7 @@ class JSONSEditor extends React.Component {
     } = this.state;
 
     const newOutput = acceptJSONS(temp, index);
+    console.log(newOutput);
 
     this.setState({ linesOfCode: JSONStoJSON(newOutput) });
     this.setState({ output: newOutput });
@@ -49,10 +51,11 @@ class JSONSEditor extends React.Component {
   onReject = (index) => {
     const {
       temp,
+      base,
     } = this.state;
 
-    const newOutput = rejectJSONS(temp, index);
-
+    const newOutput = rejectJSONS(temp, index, base);
+    console.log(newOutput);
     this.setState({ linesOfCode: JSONStoJSON(newOutput) });
     this.setState({ output: newOutput });
     this.setState({ temp: newOutput });
