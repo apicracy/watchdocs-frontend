@@ -3,6 +3,7 @@
   flex-direction: column;
   overflow: visible;
   position: relative;
+  padding-right: 10px;
 }
 
 .handle {
