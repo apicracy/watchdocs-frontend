@@ -80,8 +80,7 @@ class LineOfCode extends React.Component {
         lineContainerStyles = styles.lineContainerHidden;
       }
     }
-    console.log(code);
-    console.log(isAccepted);
+
     // if accepted, restart styles
     if (isAccepted === true || isAccepted === false) {
       codeStyle = styles.code;

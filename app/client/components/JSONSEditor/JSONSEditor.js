@@ -40,7 +40,6 @@ class JSONSEditor extends React.Component {
     } = this.state;
 
     const newOutput = acceptJSONS(temp, index);
-    console.log(newOutput);
 
     this.setState({ linesOfCode: JSONStoJSON(newOutput) });
     this.setState({ output: newOutput });
@@ -55,7 +54,6 @@ class JSONSEditor extends React.Component {
     } = this.state;
 
     const newOutput = rejectJSONS(temp, index, base);
-    console.log(newOutput);
     this.setState({ linesOfCode: JSONStoJSON(newOutput) });
     this.setState({ output: newOutput });
     this.setState({ temp: newOutput });

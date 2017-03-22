@@ -5,7 +5,6 @@ let i = 0;
 export function cleanJSONS(output) {
   const newOutput = Array.isArray(output) ? [].concat(output) : Object.assign({}, output);
   if (typeof newOutput === 'object') {
-
     Object.keys(newOutput).map((prop) => {
       if (typeof newOutput[prop] === 'object') {
         newOutput[prop] = cleanJSONS(newOutput[prop]);
@@ -114,9 +113,7 @@ export function rejectJSONS(output, index, base) {
   let newOutput = Array.isArray(output) ? [].concat(output) : Object.assign({}, output);
   if (output.index && (output.index === index)) {
     newOutput = Object.assign({}, base);
-    console.log('ho!');
-    newOutput.isAccepted = typeof newOutput.isAccepted !== "undefined";
-    console.log(newOutput)
+    newOutput.isAccepted = typeof newOutput.isAccepted !== 'undefined';
   }
 
   if (typeof output === 'object') {
@@ -126,10 +123,8 @@ export function rejectJSONS(output, index, base) {
       }
 
       if (prop === 'index' && (newOutput[prop] === index)) {
-        console.log('hej!');
-
         newOutput = Object.assign({}, base);
-        newOutput.isAccepted = typeof newOutput.isAccepted !== "undefined";
+        newOutput.isAccepted = typeof newOutput.isAccepted !== 'undefined';
       }
 
       return null;
