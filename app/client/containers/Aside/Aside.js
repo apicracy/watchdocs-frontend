@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styles from './Aside.css';
 
 import EndpointList from 'components/EndpointList/EndpointList';
-import TextInput from 'components/TextInput/TextInput';
+import TextInput from 'components/Form/TextInput/TextInput';
 import Icon from 'components/Icon/Icon';
 import CustomIcon from 'components/Icon/CustomIcon';
 import IconButton from 'components/Button/IconButton';

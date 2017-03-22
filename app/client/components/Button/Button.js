@@ -21,7 +21,11 @@ const Button = ({ onClick, children, icon, variants }) => {
 
 Button.propTypes = {
   onClick: React.PropTypes.func,
-  children: React.PropTypes.string,
+  children: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.array,
+    React.PropTypes.node,
+  ]),
   icon: React.PropTypes.node,
   variants: React.PropTypes.array,
 };

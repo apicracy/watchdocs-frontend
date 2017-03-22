@@ -5,7 +5,6 @@ import InputGroup from 'components/Form/InputGroup/InputGroup';
 import TextInput from 'components/Form/TextInput/TextInput';
 import TextArea from 'components/Form/TextArea/TextArea';
 import CheckBox from 'components/Form/CheckBox/CheckBox';
-import Select from 'components/Form/Select/Select';
 
 import { closeModal } from 'actions/modals';
 import { addEndpointParam } from 'actions/endpointView';
@@ -33,9 +32,9 @@ class AddUrlParam extends React.Component {
     this.reset();
 
     this.paramTypes = [
-      { id: 1, name: 'Number'},
-      { id: 2, name: 'String'},
-      { id: 3, name: 'Array'},
+      { id: 1, name: 'Number' },
+      { id: 2, name: 'String' },
+      { id: 3, name: 'Array' },
     ];
   }
 
@@ -94,10 +93,6 @@ class AddUrlParam extends React.Component {
             ]}
             onChange={this.onRequiredChange}
           />
-        </InputGroup>
-
-        <InputGroup title="Type" description="Give user more information about data type of param">
-          <Select options={this.paramTypes} active={null} />
         </InputGroup>
 
         <InputGroup title="Description" description="Give user more context info about the param itself">

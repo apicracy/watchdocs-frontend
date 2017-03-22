@@ -9,6 +9,7 @@ class Select extends React.Component {
 
   static propTypes = {
     options: React.PropTypes.array,
+    activeId: React.PropTypes.number,
     onSelect: React.PropTypes.func,
   }
 
@@ -31,8 +32,8 @@ class Select extends React.Component {
   }
 
   render() {
-    const { options, onSelect } = this.props;
-    const selectedOption = options.filter(v => v.active);
+    const { options, onSelect, activeId } = this.props;
+    const selectedOption = options.filter(v => v.id === activeId);
 
     return (
       <div className={styles.selectWrapper}>
@@ -42,6 +43,7 @@ class Select extends React.Component {
             icon={<CustomIcon ext="svg" color="white" size="sm" name="arrow-down" />}
           >
             { selectedOption[0] && selectedOption[0].name }
+            { selectedOption.length === 0 && 'Please Choose' }
           </Button>
         </div>
         { this.state.isOpen && (

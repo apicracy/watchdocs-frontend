@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './MethodPicker.css';
 
-import Select from 'components/Select/Select';
+import Select from 'components/Form/Select/Select';
 
 const formatParams = (params) => {
   if (params && params.length > 0) {
@@ -22,20 +22,16 @@ const formatParams = (params) => {
 };
 
 const MethodPicker = ({ activeId, path, groupEndpoints }) => {
-  const currentEndpoint = groupEndpoints.filter(v => v.id === activeId);
-  const options = currentEndpoint.map(v => ({
-    ...v,
-    active: true,
-    name: v.method,
-  }));
+  const currentEndpoint = groupEndpoints.find(v => v.id === activeId);
+  const options = currentEndpoint ? [{ ...currentEndpoint, name: currentEndpoint.method }] : [];
 
   return (
     <div className={styles.root}>
       <div className={styles.select}>
-        <Select options={options} />
+        <Select options={options} activeId={currentEndpoint ? currentEndpoint.id : 0} />
       </div>
       <div className={styles.path}>
-        { path }{ formatParams(currentEndpoint[0] ? currentEndpoint[0].params : [])}
+        { path }{ formatParams(currentEndpoint ? currentEndpoint.params : [])}
       </div>
     </div>
   );

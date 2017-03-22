@@ -8,7 +8,7 @@ import { loadGroup } from 'services/groupView';
 import MethodPicker from 'components/MethodPicker/MethodPicker';
 import DocumentationBlock, { Row } from 'components/DocumentationBlock/DocumentationBlock';
 import Button from 'components/Button/Button';
-import Radio from 'components/Radio/Radio';
+import Radio from 'components/Form/Radio/Radio';
 
 import Icon from 'components/Icon/Icon';
 import IconButton from 'components/Button/IconButton';
