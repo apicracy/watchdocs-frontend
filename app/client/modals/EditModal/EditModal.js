@@ -4,6 +4,8 @@ import Modal from 'components/Modal/Modal';
 import FolderForm from 'components/FolderForm/FolderForm';
 import EndpointForm from 'components/EndpointForm/EndpointForm';
 
+import { closeModal } from 'actions/modals';
+
 import {
   setParentFolder,
   setFolderName,
@@ -13,8 +15,10 @@ import {
   cancel,
 } from 'services/modifyEndpoint-service';
 
+export const MODAL_NAME = 'EditEndpointModal';
+
 @connect(state => ({
-  isVisible: state.modifyEndpoint.isVisible && state.modifyEndpoint.isEdit,
+  isVisible: state.modals[MODAL_NAME],
   selectedParentFolder: state.modifyEndpoint.parentFolder,
   url: state.modifyEndpoint.url,
   folderName: state.modifyEndpoint.folderName,
@@ -43,7 +47,7 @@ class EditEndpointModal extends React.Component {
     } = this.props;
 
     return (
-      <Modal isShow={isVisible} title="Edit..." saveButtonText="Save" onSave={this.onSave} onHide={this.onHide}>
+      <Modal isVisible={isVisible} title="Edit..." saveButtonText="Save" onSave={this.onSave} onHide={this.onHide}>
         <div>
           { type === 'Endpoint' &&
             <EndpointForm
@@ -70,10 +74,12 @@ class EditEndpointModal extends React.Component {
 
   onSave = () => {
     this.props.dispatch(saveEndpoint());
+    this.props.dispatch(closeModal(MODAL_NAME));
   }
 
   onHide = () => {
     this.props.dispatch(cancel());
+    this.props.dispatch(closeModal(MODAL_NAME));
   }
 
   onSelectParentFolder = (folderName) => {

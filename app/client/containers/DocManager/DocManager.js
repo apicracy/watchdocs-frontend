@@ -7,7 +7,7 @@ import AppBar from 'components/AppBar/AppBar';
 import LayoutWrapper from 'components/LayoutWrapper/LayoutWrapper';
 import Container from 'components/Container/Container';
 import NavLink from 'components/NavigationLink/NavigationLink';
-import Select from 'components/Select/Select';
+import Select from 'components/Form/Select/Select';
 
 @connect(store => ({
   projects: store.projects,
@@ -33,12 +33,19 @@ class DocManager extends React.Component {
   }
 
   render() {
+    const { projects } = this.props;
+    const activeProject = projects.find(p => p.active);
+
     return (
       <LayoutWrapper>
         <AppBar secondary>
           <Container>
             <div>
-              <Select options={this.props.projects} onSelect={this.switchProject} />
+              <Select
+                options={projects}
+                onSelect={this.switchProject}
+                activeId={activeProject ? activeProject.id : null}
+              />
               <NavLink url="/docs" index={!this.props.params.group_id} text="API documentation" />
               <NavLink url="/docs/wiki" text="Wiki pages" />
               <NavLink url="/docs/settings" text="Settings" />

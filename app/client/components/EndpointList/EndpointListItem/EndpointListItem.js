@@ -6,7 +6,7 @@ import styles from './EndpointListItem.css';
 
 const formatParams = (params) => {
   if (params && params.length > 0) {
-    const formatted = params.map(param => `:${param}`);
+    const formatted = params.filter(p => p.main).map(param => `:${param.name}`);
 
     return `/(${formatted.join(', ')})`;
   }

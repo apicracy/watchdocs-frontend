@@ -5,6 +5,8 @@ import Modal from 'components/Modal/Modal';
 import FolderForm from 'components/FolderForm/FolderForm';
 import EndpointForm from 'components/EndpointForm/EndpointForm';
 
+import { closeModal } from 'actions/modals';
+
 import {
   setParentFolder,
   setFolderName,
@@ -15,8 +17,10 @@ import {
   setType,
 } from 'services/modifyEndpoint-service';
 
+export const MODAL_NAME = 'AddNewEndpoint';
+
 @connect(state => ({
-  isVisible: state.modifyEndpoint.isVisible && !state.modifyEndpoint.isEdit,
+  isVisible: state.modals[MODAL_NAME],
   selectedParentFolder: state.modifyEndpoint.parentFolder,
   url: state.modifyEndpoint.url,
   folderName: state.modifyEndpoint.folderName,
@@ -45,7 +49,7 @@ class AddNewModal extends React.Component {
     } = this.props;
 
     return (
-      <Modal isShow={isVisible} title="Add new..." onSave={this.onSave} onHide={this.onHide}>
+      <Modal isVisible={isVisible} title="Add new..." onSave={this.onSave} onHide={this.onHide}>
         <div className={styles.modalField}>
           <text className={styles.modalLabel}>Type</text>
           <select
@@ -83,9 +87,11 @@ class AddNewModal extends React.Component {
 
   onSave = () => {
     this.props.dispatch(saveEndpoint());
+    this.props.dispatch(closeModal(MODAL_NAME));
   }
 
   onHide = () => {
+    this.props.dispatch(closeModal(MODAL_NAME));
     this.props.dispatch(cancel());
   }
 

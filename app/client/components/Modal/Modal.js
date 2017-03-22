@@ -1,48 +1,69 @@
 import React from 'react';
 import styles from './Modal.css';
 import Button from 'components/Button/Button';
-import {
-  Modal as ModalBootstrap,
-} from 'react-bootstrap';
+import CustomIcon from 'components/Icon/CustomIcon';
 
-const Modal = ({ title, isShow, onHide, onSave, saveButtonText, cancelButtonText, children }) => (
-  <ModalBootstrap show={isShow} backdrop onHide={onHide}>
-    <ModalBootstrap.Header closeButton>
-      <ModalBootstrap.Title>{title}</ModalBootstrap.Title>
-    </ModalBootstrap.Header>
-    <ModalBootstrap.Body>
-      <div>
-        { children }
-      </div>
-      <div className={styles.buttons}>
-        <Button variants={['primary', 'large']} onClick={onSave}>{saveButtonText}</Button>
-        <Button variants={['large']} onClick={onHide}>{cancelButtonText}</Button>
-      </div>
-    </ModalBootstrap.Body>
+class Modal extends React.Component {
+  static propTypes = {
+    title: React.PropTypes.string,
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.object,
+      React.PropTypes.array,
+    ]),
+    isVisible: React.PropTypes.bool,
+    onHide: React.PropTypes.func.isRequired,
+    onSave: React.PropTypes.func.isRequired,
+    saveButtonText: React.PropTypes.string,
+    cancelButtonText: React.PropTypes.string,
+    message: React.PropTypes.object,
+  }
 
-  </ModalBootstrap>
-);
+  static defaultProps = {
+    onHide: () => {},
+    onSave: () => {},
+    isVisible: false,
+    title: 'Add New',
+    saveButtonText: 'Add New',
+    cancelButtonText: 'Cancel',
+    message: null,
+  }
+
+  onOverlayClick = ({ nativeEvent }) => {
+    if (nativeEvent.target.attributes['data-dismiss']) {
+      this.props.onHide();
+    }
+  }
+
+  render() {
+    const { isVisible, title, children, message } = this.props;
+
+    if (!isVisible) return null;
+    /* eslint-disable jsx-a11y/no-static-element-interactions */
+    return (
+      <div className={styles.overlay} onClick={this.onOverlayClick} data-dismiss>
+        <section className={styles.root}>
+          <header className={styles.header}>
+            { title } <Button onClick={this.props.onHide} icon={<CustomIcon name="close-button" />} />
+          </header>
+          { message && (
+            <div className={styles.message}>
+              <h3 className={styles.message__title}> { message.title }</h3>
+              <p className={styles.message__content}> {message.content }</p>
+            </div>
+          )}
+          <main className={styles.body}>
+            { children }
+          </main>
+          <footer className={styles.buttons}>
+            <Button variants={['primary', 'large']} onClick={this.props.onSave}>{this.props.saveButtonText}</Button>
+            <Button variants={['large', 'lightBorder', 'spaceLeft']} onClick={this.props.onHide}>{this.props.cancelButtonText}</Button>
+          </footer>
+        </section>
+      </div>
+    );
+    /* eslint-enable jsx-a11y/no-static-element-interactions */
+  }
+}
 
 export default Modal;
-
-Modal.propTypes = {
-  title: React.PropTypes.string,
-  children: React.PropTypes.oneOfType([
-    React.PropTypes.object,
-    React.PropTypes.array,
-  ]),
-  isShow: React.PropTypes.bool,
-  onHide: React.PropTypes.func.isRequired,
-  onSave: React.PropTypes.func.isRequired,
-  saveButtonText: React.PropTypes.string,
-  cancelButtonText: React.PropTypes.string,
-};
-
-Modal.defaultProps = {
-  onHide: () => {},
-  onSave: () => {},
-  isShow: true,
-  title: 'Add New',
-  saveButtonText: 'Add New',
-  cancelButtonText: 'Cancel',
-};

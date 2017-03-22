@@ -1,5 +1,4 @@
 import {
-  setVisibility as setVisibilityAction,
   setType as setTypeAction,
   setParentFolder as setParentFolderAction,
   setFolderName as setFolderNameAction,
@@ -15,14 +14,12 @@ import {
 export function addNewEndpoint() {
   return (dispatch /* , getState */) => {
     dispatch(setEditModeAction(false));
-    dispatch(setVisibilityAction(true));
   };
 }
 
 export function saveEndpoint() {
   return (dispatch /* , getState */) => {
     // TODO dispatch save action
-    dispatch(setVisibilityAction(false));
     dispatch(reset());
   };
 }
@@ -50,7 +47,6 @@ export function loadEndpoint(id) {
     // dispatch(setParentFolder(data.groupName));
     dispatch(setMethodAction(data.method));
     dispatch(setEditModeAction(true));
-    dispatch(setVisibilityAction(true));
   };
 }
 
@@ -65,13 +61,11 @@ export function loadFolder(id) {
     // dispatch(setParentFolder(data.groupName));
     dispatch(setType('Folder'));
     dispatch(setEditModeAction(true));
-    dispatch(setVisibilityAction(true));
   };
 }
 
 export function cancel() {
   return (dispatch /* , getState */) => {
-    dispatch(setVisibilityAction(false));
     dispatch(reset());
   };
 }

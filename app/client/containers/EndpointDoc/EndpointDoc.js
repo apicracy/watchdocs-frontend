@@ -6,9 +6,14 @@ import { loadEndpoint } from 'services/endpointView';
 import { loadGroup } from 'services/groupView';
 
 import MethodPicker from 'components/MethodPicker/MethodPicker';
-import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock';
+import DocumentationBlock, { Row } from 'components/DocumentationBlock/DocumentationBlock';
 import Button from 'components/Button/Button';
-import Radio from 'components/Radio/Radio';
+import Radio from 'components/Form/Radio/Radio';
+
+import Icon from 'components/Icon/Icon';
+import IconButton from 'components/Button/IconButton';
+
+import { openModal } from 'actions/modals';
 
 @connect(store => ({
   endpoint: store.endpointView,
@@ -39,7 +44,7 @@ class EndpointDoc extends React.Component {
     } = this.props.params;
 
     if ((
-      prevProps.endpoint.id !== this.props.endpoint.id) &&
+      prevProps.endpoint.id !== parseInt(endpointId, 10)) &&
       this.props.endpoint.id !== parseInt(endpointId, 10)
     ) {
       this.loadEndpoint();
@@ -63,6 +68,25 @@ class EndpointDoc extends React.Component {
 
   onSecutityChange = (activatedItem) => {
     this.setState({ security: activatedItem.id });
+  }
+
+  renderParams() {
+    if (!this.props.endpoint || !this.props.endpoint.params) return [];
+
+    return this.props.endpoint.params.map((param, key) => (
+      <Row
+        key={key}
+        data={[
+          <Button variants={['linkPrimary']}>{param.name}</Button>,
+          param.type,
+          param.required ? ', required' : ', optional',
+        ]}
+        actions={[
+          <IconButton icon={<Icon name="pencil" size="lg" />} />,
+          !param.main && <IconButton icon={<Icon name="trash" size="lg" />} />,
+        ]}
+      />
+    ));
   }
 
   render() {
@@ -90,8 +114,12 @@ class EndpointDoc extends React.Component {
             <Button variants={['linkPrimary']}>Edit base url</Button>,
           ]}
           emptyMsg="You don't have any URL params set up yet."
-          buttonAction={() => {}}
-        />
+          buttonAction={() => {
+            this.props.dispatch(openModal('addUrlParam'));
+          }}
+        >
+          { this.renderParams() }
+        </DocumentationBlock>
 
         <DocumentationBlock
           title="Request"
@@ -100,7 +128,11 @@ class EndpointDoc extends React.Component {
           buttonAction={() => {}}
           content={(
             <Radio
-              title={['Select applicable authentications mechanisms.', <span className={styles.divider} />, <Button variants={['linkPrimary']}>Edit secure schemes</Button>]}
+              title={[
+                'Select applicable authentications mechanisms.',
+                <span className={styles.divider} />,
+                <Button variants={['linkPrimary']}>Edit secure schemes</Button>,
+              ]}
               activeId={this.state.security}
               options={[
                 { id: 0, text: 'JWT' },

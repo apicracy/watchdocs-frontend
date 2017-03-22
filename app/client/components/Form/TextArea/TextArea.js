@@ -1,31 +1,31 @@
 import React from 'react';
-import styles from './TextInput.css';
+import styles from './TextArea.css';
 
-const TextInput = ({ placeholder, value, onChange, iconRight }) => (
+const TextArea = ({ placeholder, value, onChange, rows }) => (
   <div className={styles.root}>
-    <input
-      type="text"
+    <textarea
+      rows={rows}
       placeholder={placeholder}
       onChange={onChange}
       className={styles.input}
       value={value}
     />
-    <span className={styles.addon}>{ iconRight }</span>
   </div>
 );
 
 
-TextInput.propTypes = {
+TextArea.propTypes = {
   placeholder: React.PropTypes.string,
   value: React.PropTypes.string,
-  iconRight: React.PropTypes.node,
+  rows: React.PropTypes.number,
   onChange: React.PropTypes.func,
 };
 
-TextInput.defaultProps = {
+TextArea.defaultProps = {
   placeholder: '',
+  rows: 3,
   value: '',
   onChange: () => {},
 };
 
-export default TextInput;
+export default TextArea;

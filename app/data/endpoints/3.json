@@ -5,7 +5,16 @@
     "groupPath": "/example",
     "endpoints": [
       { "method": "GET", "params": [], "id": 2020, "status": "valid" },
-      { "method": "GET", "params": ["page_id"], "id": 3030, "status": "valid" }
+      { "method": "GET",
+        "params": [
+          {"name": "page_id", "type": "int", "required": true, "main": true},
+          {"name": "token", "type": "string", "required": true, "main": false},
+          {"name": "testParam", "type": "string", "required": false, "main": false},
+          {"name": "itemCount", "type": "int", "required": false, "main": false}
+        ],
+        "id": 3030,
+        "status": "valid"
+      }
     ]
   }
 ]

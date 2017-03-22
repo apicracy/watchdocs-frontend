@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styles from './Aside.css';
 
 import EndpointList from 'components/EndpointList/EndpointList';
-import TextInput from 'components/TextInput/TextInput';
+import TextInput from 'components/Form/TextInput/TextInput';
 import Icon from 'components/Icon/Icon';
 import CustomIcon from 'components/Icon/CustomIcon';
 import IconButton from 'components/Button/IconButton';
@@ -11,8 +11,11 @@ import Tabs from 'components/Tabs/Tabs';
 
 import { filterEndpoints } from 'services/endpoint-service';
 
+import { openModal } from 'actions/modals';
+import { MODAL_NAME as ADD_NEW_MODAL } from 'modals/AddNewModal/AddNewModal';
+import { MODAL_NAME as EDIT_MODAL } from 'modals/EditModal/EditModal';
+
 import {
-  addNewEndpoint,
   loadEndpoint,
   loadFolder,
 } from 'services/modifyEndpoint-service';
@@ -71,15 +74,17 @@ class Aside extends React.Component {
   }
 
   addNewEndpoint = () => {
-    this.props.dispatch(addNewEndpoint());
+    this.props.dispatch(openModal(ADD_NEW_MODAL));
   }
 
   onClickGroupMore = (id) => {
     this.props.dispatch(loadFolder(id));
+    this.props.dispatch(openModal(EDIT_MODAL));
   }
 
   onClickItemMore = (id) => {
     this.props.dispatch(loadEndpoint(id));
+    this.props.dispatch(openModal(EDIT_MODAL));
   }
 
   render() {
