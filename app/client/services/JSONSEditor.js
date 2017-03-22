@@ -59,7 +59,7 @@ export function cleanJSONS(output) {
     }
   }
 
-  if (output && output.isAccepted === false) {
+  if (output && !output.toRemove && output.isAccepted === false) {
     return null;
   }
 
@@ -209,7 +209,9 @@ export function compare(base, draft) {
     });
 
     /* eslint no-array-constructor: 0 */
-    output.required = [].concat(base.required);
+    if (base.required) {
+      output.required = [].concat(base.required);
+    }
 
     output.toChangeRequired = new Array();
 

@@ -76,7 +76,7 @@ class LineOfCode extends React.Component {
       codeStyle = styles.redLine;
       attributeStyle = styles.redAttributeSpan;
       // isAccepted could be also undefined;
-      if (isAccepted === true || isAccepted === false) {
+      if (isAccepted === true) {
         lineContainerStyles = styles.lineContainerHidden;
       }
     }
