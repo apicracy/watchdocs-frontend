@@ -119,7 +119,7 @@ export function rejectJSONS(output, index, base) {
   if (typeof output === 'object') {
     Object.keys(output).map((prop) => {
       if (typeof output[prop] === 'object') {
-        newOutput[prop] = rejectJSONS(output[prop], index, base[prop]);
+        newOutput[prop] = rejectJSONS(output[prop], index, (base ? base[prop] : {}));
       }
 
       if (prop === 'index' && (newOutput[prop] === index)) {
