@@ -336,7 +336,7 @@ const getStringLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove)
     removeAction: schema.toRemove,
     changeAction: schema.typeChanged || schema.toChange,
     index: schema.index,
-    line: `${pre}"${name}": "LOREM IPSUM"`,
+    line: (name !== '') ? `${pre}"${name}": "LOREM IPSUM"` : `${pre}"LOREM IPSUM"`,
     isAccepted: schema.isAccepted,
   };
 };
@@ -355,7 +355,7 @@ const getIntegerLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove
     removeAction: schema.toRemove,
     changeAction: schema.typeChanged || schema.toChange,
     index: schema.index,
-    line: `${pre}"${name}": 12353`,
+    line: (name !== '') ? `${pre}"${name}": 12353` : `${pre}12353`,
     isAccepted: schema.isAccepted,
   };
 };
@@ -374,7 +374,7 @@ const getNumberLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove)
     removeAction: schema.toRemove,
     changeAction: schema.typeChanged || schema.toChange,
     index: schema.index,
-    line: `${pre}"${name}": 23`,
+    line: (name !== '') ? `${pre}"${name}": 23` : `${pre}23`,
     isAccepted: schema.isAccepted,
   };
 };
@@ -401,10 +401,8 @@ const getArrayLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove) 
   const item1 = getLines('', schema.items, false, space + 2, (toAdd || schema.toAdd), (typeChanged || schema.typeChanged), (toRemove || schema.toRemove));
   const item2 = getLines('', schema.items, false, space + 2, (toAdd || schema.toAdd), (typeChanged || schema.typeChanged), (toRemove || schema.toRemove));
 
-  const merged = [].concat(...item1);
-  lines = lines.concat(merged);
-  const merged2 = [].concat(...item2);
-  lines = lines.concat(merged2);
+  lines = lines.concat(item1);
+  lines = lines.concat(item2);
 
   lines.push({
     line: `${pre}]`,
