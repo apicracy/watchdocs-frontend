@@ -3,104 +3,47 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import styles from './Wiki.css';
-import JSONSEditor from 'components/JSONSEditor/JSONSEditor';
+import Button from 'components/Button/Button';
 
 @connect(state => state)
 export default class Wiki extends React.Component {
-  componentWillMount = () => {
-    this.setState({
-      base: undefined,
-      baseString: '',
-      baseValid: true,
-      draft: undefined,
-      draftString: '',
-      draftValid: true,
-      outputString: '',
-    });
-  }
-
   render() {
-    const {
-      base,
-      baseString,
-      baseValid,
-      draft,
-      draftString,
-      draftValid,
-      outputString,
-    } = this.state;
-
+    /* eslint no-undef: 0 */
+    // imported in index.html
+    /* eslint react/no-unescaped-entities: 0 */
+    tinymce.init({ selector: 'textarea' });
     return (
-      <div className={styles.container}>
-        <div className={styles.editorWrapper}>
-          <div className={styles.textAreaWrapper}>
-            <h1>Base</h1>
-            <textarea className={styles.textArea} value={baseString} onChange={this.onChangeBase} />
-            { !baseValid && <div className={styles.information} >JSON Schema is not valid</div> }
-          </div>
-          <div className={styles.textAreaWrapper}>
-            <h1>New Draft</h1>
-            <textarea
-              className={styles.textArea}
-              value={draftString}
-              onChange={this.onChangeDraft}
-            />
-            { !draftValid && <div className={styles.information}>JSON Schema is not valid</div> }
-          </div>
-        </div>
-        <div className={styles.outputWrapper}>
-          <h1>Output</h1>
-          <div className={styles.outputContainer}>
-            <JSONSEditor
-              base={base}
-              draft={draft}
-              onCompare={this.onCompare}
-            />
-            <div className={styles.outputWrapper}>
-              <p className={styles.outputText}>
-                {outputString}
-              </p>
+      <div>
+        <article className={styles.root}>
+          <header className={styles.header}>
+            <div className={styles.title}>Wiki title</div>
+            <div className={styles.description}>This is title of the section we're going
+              to display in documentation and in navigation</div>
+          </header>
+          <main className={styles.blockWrapper}>
+            <div className={styles.gettingStarted}>
+              Getting started
             </div>
-          </div>
+          </main>
+        </article>
+        <article className={styles.root}>
+          <header className={styles.header}>
+            <div className={styles.title}>Content</div>
+            <div className={styles.description}>This description will
+              appear on your generated public documentation</div>
+          </header>
+          <main className={styles.blockWrapper}>
+            <div className={styles.textarea}>
+              <textArea />
+            </div>
+          </main>
+        </article>
+        <div className={styles.buttons}>
+          <Button variants={['primary', 'large', 'spaceRight']}>Save</Button>
+          <Button variants={['body', 'large']}>Preview</Button>
         </div>
       </div>
+
     );
-  }
-
-  onChangeBase = (e) => {
-    this.setState({
-      baseString: e.target.value,
-    });
-
-    try {
-      const obj = JSON.parse(e.target.value);
-      this.setState({
-        base: obj,
-        baseValid: true,
-      });
-    } catch (err) {
-      this.setState({ base: undefined, baseValid: false });
-    }
-  }
-
-  onChangeDraft = (e) => {
-    this.setState({
-      draftString: e.target.value,
-    });
-
-    try {
-      const obj = JSON.parse(e.target.value);
-      this.setState({
-        draft: obj,
-        draftValid: true,
-      });
-    } catch (err) {
-      this.setState({ draft: undefined, draftValid: false });
-    }
-  }
-
-  onCompare = (output) => {
-    const outputString = JSON.stringify(output, null, 4);
-    this.setState({ outputString });
   }
 }

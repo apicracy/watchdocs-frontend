@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin: 10px;
+}
+.editorWrapper {
+  display: flex;
+  flex: 1;
+}
+
+.textAreaWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+/*.textArea {
+  border-left: 50px solid #464646;
+  padding-left: 20px;
+  width: 100%;
+  flex: 1;
+  outline: none;
+  background: #3c3c3c;
+  color: #c9c9c9;
+}*/
+.textArea {
+  width: 100%;
+  flex: 1;
+  outline: none;
+  height: 300px;
+}
+.outputWrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.outputContainer {
+  display: flex;
+}
+
+.outputWrapper {
+  flex: 1;
+}
+
+/*.outputText {
+  white-space: pre;
+  border-left: 50px solid #464646;
+  padding-left: 20px;
+  background: #3c3c3c;
+  color: #c9c9c9;
+}*/
+.outputText {
+  white-space: pre;
+}
+
+/*.information {
+  padding-left: 70px;
+  background: #924A4B;
+  color: #c9c9c9;
+}*/

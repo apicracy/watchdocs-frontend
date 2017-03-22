@@ -12,6 +12,7 @@ import Wiki from 'containers/Wiki/Wiki';
 import ApiDoc from 'containers/ApiDoc/ApiDoc';
 import GroupDoc from 'containers/GroupDoc/GroupDoc';
 import EndpointDoc from 'containers/EndpointDoc/EndpointDoc';
+import JSONSEditor from 'containers/JSONSEditor/JSONSEditor';
 
 const Routes = (
   <Route>
@@ -21,9 +22,10 @@ const Routes = (
       <Route path="docs" component={DocManager}>
         <IndexRoute component={ApiDoc} />
 
-        <Route path="wiki" component={Wiki} />
+        <Route path="jsonseditor" component={JSONSEditor} />
 
         <Route component={ApiDoc}>
+          <Route path="wiki" component={Wiki} />
           <Route path=":group_id" component={GroupDoc} />
           <Route path=":group_id/endpoint/:endpoint_id" component={EndpointDoc} />
         </Route>
