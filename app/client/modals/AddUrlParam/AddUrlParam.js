@@ -5,6 +5,7 @@ import InputGroup from 'components/Form/InputGroup/InputGroup';
 import TextInput from 'components/Form/TextInput/TextInput';
 import TextArea from 'components/Form/TextArea/TextArea';
 import CheckBox from 'components/Form/CheckBox/CheckBox';
+import Select from 'components/Form/Select/Select';
 
 import { closeModal } from 'actions/modals';
 import { addEndpointParam } from 'actions/endpointView';
@@ -42,7 +43,7 @@ class AddUrlParam extends React.Component {
     name: '',
     isRequired: false,
     description: '',
-    type: '',
+    type: null,
     example: '',
   });
 
@@ -61,9 +62,9 @@ class AddUrlParam extends React.Component {
     this.setState({ [fieldName]: nativeEvent.target.value });
   }
 
-  onRequiredChange = () => {
-    this.setState({ isRequired: !this.state.isRequired });
-  }
+  onTypeChange = id => this.setState({ type: id });
+
+  onRequiredChange = () => this.setState({ isRequired: !this.state.isRequired });
 
   render() {
     return (
@@ -92,6 +93,15 @@ class AddUrlParam extends React.Component {
               { id: 1, text: 'Param required' },
             ]}
             onChange={this.onRequiredChange}
+          />
+        </InputGroup>
+
+        <InputGroup title="Type" description="Give user more information about data type of param">
+          <Select
+            variants={['fullWidth', 'bordered']}
+            options={this.paramTypes}
+            activeId={this.state.type}
+            onSelect={this.onTypeChange}
           />
         </InputGroup>
 

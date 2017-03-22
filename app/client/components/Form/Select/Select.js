@@ -11,11 +11,13 @@ class Select extends React.Component {
     options: React.PropTypes.array,
     activeId: React.PropTypes.number,
     onSelect: React.PropTypes.func,
+    variants: React.PropTypes.array,
   }
 
   static defaultProps = {
     options: [],
     onSelect: () => {},
+    variants: [],
   }
 
   componentWillMount() {
@@ -27,16 +29,33 @@ class Select extends React.Component {
     this.props.onSelect(id);
   }
 
+  onOutsideClick = (e) => {
+    const currentTarget = e.currentTarget;
+
+    setTimeout(() => {
+      if (!currentTarget.contains(document.activeElement)) {
+        this.toggleOpen();
+      }
+    });
+  }
+
   toggleOpen = () => {
     this.setState({ isOpen: !this.state.isOpen });
   }
 
   render() {
-    const { options, onSelect, activeId } = this.props;
+    const { options, onSelect, activeId, variants } = this.props;
+    const variantStyles = variants.map(v => styles[v]);
     const selectedOption = options.filter(v => v.id === activeId);
 
+    const selectStyle = [
+      styles.selectWrapper,
+      ...variantStyles,
+      this.state.isOpen && styles.open,
+    ].join(' ');
+
     return (
-      <div className={styles.selectWrapper}>
+      <div className={selectStyle} tabIndex="0" onBlur={this.onOutsideClick}>
         <div className={styles.selectedOption}>
           <Button
             onClick={this.toggleOpen}
