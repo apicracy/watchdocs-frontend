@@ -29,10 +29,10 @@ class EndpointList extends React.Component {
   );
 
   render() {
+    /* eslint no-unused-vars: 0 */
     const { endpoints, activeGroup, selected,
       onAddNewEndpoint, onAddNewGroup, onClickItemMore, onClickGroupMore,
     } = this.props;
-
     return (
       <div className={styles.root}>
         <div className={styles.list}>
