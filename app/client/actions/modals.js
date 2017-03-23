@@ -5,10 +5,10 @@
 export const OPEN_MODAL = 'open@modals';
 export const CLOSE_MODAL = 'close@modals';
 
-export function openModal(id) {
+export function openModal(id, refId = null) {
   return {
     type: OPEN_MODAL,
-    payload: id,
+    payload: { id, refId },
   };
 }
 

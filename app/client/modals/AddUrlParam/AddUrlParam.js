@@ -8,7 +8,7 @@ import CheckBox from 'components/Form/CheckBox/CheckBox';
 import Select from 'components/Form/Select/Select';
 
 import { closeModal } from 'actions/modals';
-import { addEndpointParam } from 'actions/endpointView';
+import { addEndpointParam, updateEndpointParam } from 'actions/endpointView';
 
 export const MODAL_NAME = 'addUrlParam';
 
@@ -21,42 +21,75 @@ const warningMessage = {
 @connect(store => ({
   isVisible: !!store.modals[MODAL_NAME],
   endpoint: store.endpointView,
+  modals: store.modals,
 }))
 class AddUrlParam extends React.Component {
 
   static propTypes = {
     isVisible: React.PropTypes.bool,
     dispatch: React.PropTypes.func,
+    modals: React.PropTypes.object,
+    endpoint: React.PropTypes.object,
   }
 
   componentWillMount() {
     this.reset();
 
     this.paramTypes = [
-      { id: 1, name: 'Number' },
-      { id: 2, name: 'String' },
-      { id: 3, name: 'Array' },
+      { id: 1, name: 'number' },
+      { id: 2, name: 'string' },
+      { id: 3, name: 'array' },
     ];
   }
 
+  getSelectedId = (value) => {
+    const record = this.paramTypes.find(p => p.name === value);
+
+    return record ? record.id : null;
+  }
+
+  getSelectedValue = (id) => {
+    const record = this.paramTypes.find(p => p.id === id);
+
+    return record ? record.name : null;
+  }
+
+  componentDidUpdate(prevProps) {
+    const { modals, endpoint } = this.props;
+
+    if (modals.refId && prevProps.modals.refId !== modals.refId) {
+      const currentParam = endpoint.params.find(param => param.id === modals.refId);
+
+      if (currentParam) {
+        this.setState({ ...currentParam });
+      }
+    }
+  }
+
   reset = () => this.setState({
+    id: null,
+    main: false,
     name: '',
-    isRequired: false,
+    required: false,
     description: '',
     type: null,
     example: '',
   });
 
   onSave = () => {
-
     // TODO validate
+    // if id is not specified create new record
+    if (!this.state.id) {
+      const data = {
+        ...this.state,
+        id: (new Date()).getTime(),
+      };
 
-    const data = {
-      ...this.state,
-      type: this.paramTypes.find(p => p.id === this.state.type).name,
-    };
+      this.props.dispatch(addEndpointParam(data));
+    } else {
+      this.props.dispatch(updateEndpointParam({ ...this.state }));
+    }
 
-    this.props.dispatch(addEndpointParam(data));
     this.props.dispatch(closeModal(MODAL_NAME));
     this.reset();
   }
@@ -70,9 +103,9 @@ class AddUrlParam extends React.Component {
     this.setState({ [fieldName]: nativeEvent.target.value });
   }
 
-  onTypeChange = id => this.setState({ type: id });
+  onTypeChange = id => this.setState({ type: this.getSelectedValue(id) });
 
-  onRequiredChange = () => this.setState({ isRequired: !this.state.isRequired });
+  onRequiredChange = () => this.setState({ required: !this.state.required });
 
   render() {
     return (
@@ -96,7 +129,7 @@ class AddUrlParam extends React.Component {
           />
 
           <CheckBox
-            activeIds={[this.state.isRequired ? 1 : null]}
+            activeIds={[this.state.required ? 1 : null]}
             options={[
               { id: 1, text: 'Param required' },
             ]}
@@ -108,7 +141,7 @@ class AddUrlParam extends React.Component {
           <Select
             variants={['fullWidth', 'bordered']}
             options={this.paramTypes}
-            activeId={this.state.type}
+            activeId={this.getSelectedId(this.state.type)}
             onSelect={this.onTypeChange}
           />
         </InputGroup>

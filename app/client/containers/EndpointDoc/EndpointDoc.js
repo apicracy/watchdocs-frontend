@@ -19,6 +19,7 @@ import { openModal } from 'actions/modals';
 @connect(store => ({
   endpoint: store.endpointView,
   group: store.groupView,
+  endpointList: store.endpoints,
 }))
 class EndpointDoc extends React.Component {
 
@@ -27,6 +28,7 @@ class EndpointDoc extends React.Component {
     dispatch: React.PropTypes.func,
     endpoint: React.PropTypes.object,
     group: React.PropTypes.object,
+    endpointList: React.PropTypes.array,
   }
 
   componentWillMount() {
@@ -44,15 +46,21 @@ class EndpointDoc extends React.Component {
       group_id: groupId,
     } = this.props.params;
 
-    if ((
-      prevProps.endpoint.id !== parseInt(endpointId, 10)) &&
+    // Reload view when endpoints are loaded
+    if (prevProps.endpointList !== this.props.endpointList) {
+      this.loadEndpoint();
+      this.loadGroup();
+    }
+
+    if (
+      prevProps.params.endpoint_id !== endpointId &&
       this.props.endpoint.id !== parseInt(endpointId, 10)
     ) {
       this.loadEndpoint();
     }
 
-    if ((
-      prevProps.group.id !== this.props.endpoint.id) &&
+    if (
+      prevProps.params.group_id !== groupId &&
       this.props.group.id !== parseInt(groupId, 10)
     ) {
       this.loadGroup();
@@ -71,20 +79,26 @@ class EndpointDoc extends React.Component {
     this.setState({ security: activatedItem.id });
   }
 
+  editParam = id => () => this.props.dispatch(openModal('addUrlParam', id));
+
   renderParams() {
     if (!this.props.endpoint || !this.props.endpoint.params) return [];
 
-    return this.props.endpoint.params.map((param, key) => (
+    // to keep order.
+    // TODO create 'order' field in model to allow ordering
+    const params = this.props.endpoint.params.sort((a, b) => a.id > b.id);
+
+    return params.map((param, key) => (
       <Row
         key={key}
         data={[
           <Button variants={['linkPrimary']}>{param.name}</Button>,
           param.type,
           param.required ? ', required' : ', optional',
-          (!param.description || !param.example) ? <WarningLabel /> : ''
+          (!param.description || !param.example) ? <WarningLabel /> : '',
         ]}
         actions={[
-          <IconButton icon={<Icon name="pencil" size="lg" />} />,
+          <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editParam(param.id)} />,
           !param.main && <IconButton icon={<Icon name="trash" size="lg" />} />,
         ]}
       />

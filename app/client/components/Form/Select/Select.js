@@ -17,7 +17,7 @@ class Select extends React.Component {
     options: [],
     onSelect: () => {},
     variants: [],
-    emptyMsg: 'Please choose'
+    emptyMsg: 'Please choose',
   }
 
   componentWillMount() {
@@ -48,7 +48,7 @@ class Select extends React.Component {
   }
 
   render() {
-    const { options, onSelect, activeId, variants, emptyMsg } = this.props;
+    const { options, activeId, variants, emptyMsg } = this.props;
     const variantStyles = variants.map(v => styles[v]);
     const selectedOption = options.filter(v => v.id === activeId);
 

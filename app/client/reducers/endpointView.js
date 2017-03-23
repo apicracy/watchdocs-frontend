@@ -1,6 +1,7 @@
 import {
   SET_ENDPOINT_VIEW,
   ADD_ENDPOINT_PARAM,
+  UPDATE_ENDPOINT_PARAM,
 } from 'actions/endpointView';
 
 const INITIAL_STATE = {
@@ -18,6 +19,7 @@ export function endpointView(state = INITIAL_STATE, action) {
   switch (type) {
     case SET_ENDPOINT_VIEW: return setEndpointView(payload);
     case ADD_ENDPOINT_PARAM: return addEndpointParam(state, payload);
+    case UPDATE_ENDPOINT_PARAM: return updateEndpointParam(state, payload);
     default: return state;
   }
 }
@@ -35,12 +37,21 @@ function addEndpointParam(state, payload) {
     params: [
       ...state.params,
       {
-        name: payload.name,
-        required: payload.isRequired,
-        type: payload.type,
-        description: payload.description,
-        example: payload.example,
-        main: false,
+        ...payload,
+      },
+    ],
+  };
+}
+
+function updateEndpointParam(state, payload) {
+  const params = state.params.filter(p => p.id !== payload.id);
+  return {
+    ...state,
+    isDirty: true,
+    params: [
+      ...params,
+      {
+        ...payload,
       },
     ],
   };
