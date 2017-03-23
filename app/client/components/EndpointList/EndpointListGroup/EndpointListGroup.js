@@ -4,6 +4,7 @@ import styles from './EndpointListGroup.css';
 
 import EndpointListItem from '../EndpointListItem/EndpointListItem';
 import CustomIcon from 'components/Icon/CustomIcon';
+import Icon from 'components/Icon/Icon';
 import { Link } from 'react-router';
 
 class EndpointListGroup extends React.Component {
@@ -31,9 +32,9 @@ class EndpointListGroup extends React.Component {
 
   renderIcon() {
     const open = (this.state.isOpen || (!this.state.force && this.props.isOpen));
-    const icon = open ? 'folder-open' : 'folder-closed';
+    const icon = open ? 'caret-down' : 'caret-right';
 
-    return <CustomIcon ext="svg" name={icon} size="lg" color="#828097" />;
+    return <Icon name={icon} />;
   }
 
   renderEndpoint(endpoint) {

@@ -1,6 +1,5 @@
 .appBar {
   display: flex;
-  padding: 15px;
   background: #6C6AB8;
   color: white;
   justify-content: space-between;
@@ -14,5 +13,6 @@
 .footer {
   composes: appBar;
   background: #6fb3e3;
+  padding: 15px;
   text-align: center;
 }

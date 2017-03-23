@@ -1,0 +1,17 @@
+<svg version="1.1"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+	 x="0px" y="0px" width="25px" height="35px" viewBox="0 -1 25 35" style="enable-background:new 0 -1 25 35;" xml:space="preserve"
+	>
+<defs>
+	<style>
+		.cls {
+			stroke: currentColor;
+			fill: none;
+			stroke-width: 2px;
+		}
+	</style>
+</defs>
+<path class="cls" d="M24.453,16.141l-23.199-16C1.008-0.027,0.691-0.046,0.43,0.091C0.164,0.23,0,0.5,0,0.802v32c0,0.296,0.164,0.57,0.43,0.707
+	c0.113,0.062,0.242,0.089,0.371,0.089c0.16,0,0.316-0.046,0.453-0.14l23.199-16c0.219-0.149,0.348-0.395,0.348-0.656
+	C24.801,16.536,24.672,16.29,24.453,16.141L24.453,16.141z M1.602,31.277V2.325L22.59,16.802L1.602,31.277z M1.602,31.277"/>
+</svg>
