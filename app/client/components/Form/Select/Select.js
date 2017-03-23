@@ -3,19 +3,21 @@ import styles from './Select.css';
 import CustomIcon from 'components/Icon/CustomIcon';
 import Button from 'components/Button/Button';
 
-/* eslint no-unused-vars: 0 */
-// TODO: in development
 class Select extends React.Component {
 
   static propTypes = {
     options: React.PropTypes.array,
     activeId: React.PropTypes.number,
     onSelect: React.PropTypes.func,
+    variants: React.PropTypes.array,
+    emptyMsg: React.PropTypes.string,
   }
 
   static defaultProps = {
     options: [],
     onSelect: () => {},
+    variants: [],
+    emptyMsg: 'Please choose',
   }
 
   componentWillMount() {
@@ -27,23 +29,44 @@ class Select extends React.Component {
     this.props.onSelect(id);
   }
 
-  toggleOpen = () => {
-    this.setState({ isOpen: !this.state.isOpen });
+  onOutsideClick = (e) => {
+    const currentTarget = e.currentTarget;
+
+    setTimeout(() => {
+      if (!currentTarget.contains(document.activeElement)) {
+        this.toggleOpen(true);
+      }
+    });
+  }
+
+  toggleOpen = (forceHide) => {
+    if (forceHide === true) {
+      this.setState({ isOpen: false });
+    } else {
+      this.setState({ isOpen: !this.state.isOpen });
+    }
   }
 
   render() {
-    const { options, onSelect, activeId } = this.props;
+    const { options, activeId, variants, emptyMsg } = this.props;
+    const variantStyles = variants.map(v => styles[v]);
     const selectedOption = options.filter(v => v.id === activeId);
 
+    const selectStyle = [
+      styles.selectWrapper,
+      ...variantStyles,
+      this.state.isOpen && styles.open,
+    ].join(' ');
+
     return (
-      <div className={styles.selectWrapper}>
+      <div className={selectStyle} tabIndex="0" onBlur={this.onOutsideClick}>
         <div className={styles.selectedOption}>
           <Button
             onClick={this.toggleOpen}
             icon={<CustomIcon ext="svg" color="white" size="sm" name="arrow-down" />}
           >
             { selectedOption[0] && selectedOption[0].name }
-            { selectedOption.length === 0 && 'Please Choose' }
+            { selectedOption.length === 0 && emptyMsg }
           </Button>
         </div>
         { this.state.isOpen && (

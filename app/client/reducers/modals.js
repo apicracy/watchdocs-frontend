@@ -3,7 +3,9 @@ import {
   CLOSE_MODAL,
 } from 'actions/modals';
 
-const INITIAL_STATE = {};
+const INITIAL_STATE = {
+  refId: null,
+};
 
 export function modals(state = INITIAL_STATE, action) {
   const { type, payload } = action;
@@ -15,10 +17,11 @@ export function modals(state = INITIAL_STATE, action) {
   }
 }
 
-function openModal(state, id) {
+function openModal(state, payload) {
   return {
     ...state,
-    [id]: true,
+    [payload.id]: true,
+    refId: payload.refId,
   };
 }
 
@@ -26,5 +29,6 @@ function closeModal(state, id) {
   return {
     ...state,
     [id]: false,
+    refId: null,
   };
 }

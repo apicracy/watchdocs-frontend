@@ -4,6 +4,7 @@
 
 export const SET_ENDPOINT_VIEW = 'set@endpointView';
 export const ADD_ENDPOINT_PARAM = 'addParam@endpointView';
+export const UPDATE_ENDPOINT_PARAM = 'updateParam@endpointView';
 
 export function setEndpointView(endpointData) {
   return {
@@ -15,6 +16,13 @@ export function setEndpointView(endpointData) {
 export function addEndpointParam(paramData) {
   return {
     type: ADD_ENDPOINT_PARAM,
+    payload: paramData,
+  };
+}
+
+export function updateEndpointParam(paramData) {
+  return {
+    type: UPDATE_ENDPOINT_PARAM,
     payload: paramData,
   };
 }
