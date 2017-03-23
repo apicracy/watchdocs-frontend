@@ -17,7 +17,7 @@ const DocumentationBlock = ({ title, description, buttonAction, children, emptyM
     description.map((v, k) => <span key={k}>{v}</span>)
   ) : description;
 
-  const rows = (!children || !children.length) ? (
+  const rows = (!children || (Array.isArray(children) && !children.length)) ? (
     <DocumentationRow
       empty
       data={[
@@ -60,7 +60,10 @@ DocumentationBlock.propTypes = {
   content: React.PropTypes.node,
   emptyMsg: React.PropTypes.node,
   buttonAction: React.PropTypes.func,
-  children: React.PropTypes.array,
+  children: React.PropTypes.oneOfType([
+    React.PropTypes.array,
+    React.PropTypes.object,
+  ]),
 };
 
 DocumentationBlock.defaultProps = {
