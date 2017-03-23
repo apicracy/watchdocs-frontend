@@ -1,6 +1,6 @@
 .userMenuWrapper {
   display: inline-flex;
-  padding: 5px 15px;
+  padding: 5px;
   cursor: pointer;
   align-items: center;
 }

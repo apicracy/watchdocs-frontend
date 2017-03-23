@@ -47,6 +47,8 @@ class AppLayout extends React.Component {
             <div className={styles.navigation}>
               <Brand />
               <Select
+                variants={['appBar']}
+                additionalInfo={'Saved 5 minutes ago'}
                 options={projects}
                 onSelect={this.switchProject}
                 activeId={activeProject ? activeProject.id : null}
@@ -56,6 +58,8 @@ class AppLayout extends React.Component {
               <NavLink url="/docs/settings" text="Settings" icon={<CustomIcon name="settings" size="sm" />} />
             </div>
             <div className={styles.right}>
+              <CustomIcon name="notifications" size="lg" />
+              <CustomIcon name="help" size="lg" />
               <UserMenu username="WatchDocs User" />
             </div>
           </Container>

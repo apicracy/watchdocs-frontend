@@ -20,5 +20,10 @@
 }
 
 .right {
+  display: inline-flex;
   align-items: center;
+}
+
+.right > svg {
+  margin-left: 15px;
 }

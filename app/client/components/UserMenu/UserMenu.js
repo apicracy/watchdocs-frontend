@@ -2,13 +2,13 @@ import React from 'react';
 
 import styles from './UserMenu.css';
 
-import Icon from 'components/Icon/Icon';
+import CustomIcon from 'components/Icon/CustomIcon';
+import Avatar from 'components/Avatar/Avatar';
 
-const UserMenu = ({ username }) => (
+const UserMenu = () => (
   <span className={styles.userMenuWrapper}>
-    <Icon name="user-circle-o" />
-    <span className={styles.username}>{ username }</span>
-    <Icon name="chevron-down" />
+    <Avatar circle src="watchdocs-user.jpg" />
+    <CustomIcon name="arrow-down" size="xs" />
   </span>
 );
 

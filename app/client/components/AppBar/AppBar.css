@@ -1,4 +1,5 @@
 .appBar {
+  position: relative;
   display: flex;
   background: #6C6AB8;
   color: white;
