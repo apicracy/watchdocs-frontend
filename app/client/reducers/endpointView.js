@@ -37,7 +37,9 @@ function addEndpointParam(state, payload) {
       {
         name: payload.name,
         required: payload.isRequired,
-        type: 'string',
+        type: payload.type,
+        description: payload.description,
+        example: payload.example,
         main: false,
       },
     ],

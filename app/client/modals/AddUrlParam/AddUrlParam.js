@@ -48,7 +48,15 @@ class AddUrlParam extends React.Component {
   });
 
   onSave = () => {
-    this.props.dispatch(addEndpointParam({ ...this.state }));
+
+    // TODO validate
+
+    const data = {
+      ...this.state,
+      type: this.paramTypes.find(p => p.id === this.state.type).name,
+    };
+
+    this.props.dispatch(addEndpointParam(data));
     this.props.dispatch(closeModal(MODAL_NAME));
     this.reset();
   }
@@ -75,7 +83,7 @@ class AddUrlParam extends React.Component {
         onHide={this.onHide}
         saveButtonText="Save"
         cancelButtonText="Preview"
-        message={warningMessage}
+        message={null}
       >
 
         <InputGroup title="Name" description="Write here param name as it apears inside URL">
@@ -83,7 +91,7 @@ class AddUrlParam extends React.Component {
             value={this.state.name}
             placeholder="Param name"
             onChange={this.onFieldChange('name')}
-            validation={new RegExp(/([0-9A-Za-z])/ig)}
+            validation={new RegExp(/(^[a-zA-Z_$][a-zA-Z_$0-9]*$)/ig)}
             validationErrorMsg={'URL parameter should include only allowed URL characters.'}
           />
 

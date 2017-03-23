@@ -34,6 +34,7 @@
   color: #6C6AB8;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid #EEEEEE;
 }
 
 .message {
@@ -60,7 +61,7 @@
 }
 
 .body {
-  padding: 0 def-padding;
+  padding: 15px def-padding 0;
   flex: 1 0;
 }
 

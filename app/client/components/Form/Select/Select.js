@@ -3,8 +3,6 @@ import styles from './Select.css';
 import CustomIcon from 'components/Icon/CustomIcon';
 import Button from 'components/Button/Button';
 
-/* eslint no-unused-vars: 0 */
-// TODO: in development
 class Select extends React.Component {
 
   static propTypes = {
@@ -12,12 +10,14 @@ class Select extends React.Component {
     activeId: React.PropTypes.number,
     onSelect: React.PropTypes.func,
     variants: React.PropTypes.array,
+    emptyMsg: React.PropTypes.string,
   }
 
   static defaultProps = {
     options: [],
     onSelect: () => {},
     variants: [],
+    emptyMsg: 'Please choose'
   }
 
   componentWillMount() {
@@ -34,17 +34,21 @@ class Select extends React.Component {
 
     setTimeout(() => {
       if (!currentTarget.contains(document.activeElement)) {
-        this.toggleOpen();
+        this.toggleOpen(true);
       }
     });
   }
 
-  toggleOpen = () => {
-    this.setState({ isOpen: !this.state.isOpen });
+  toggleOpen = (forceHide) => {
+    if (forceHide === true) {
+      this.setState({ isOpen: false });
+    } else {
+      this.setState({ isOpen: !this.state.isOpen });
+    }
   }
 
   render() {
-    const { options, onSelect, activeId, variants } = this.props;
+    const { options, onSelect, activeId, variants, emptyMsg } = this.props;
     const variantStyles = variants.map(v => styles[v]);
     const selectedOption = options.filter(v => v.id === activeId);
 
@@ -62,7 +66,7 @@ class Select extends React.Component {
             icon={<CustomIcon ext="svg" color="white" size="sm" name="arrow-down" />}
           >
             { selectedOption[0] && selectedOption[0].name }
-            { selectedOption.length === 0 && 'Please Choose' }
+            { selectedOption.length === 0 && emptyMsg }
           </Button>
         </div>
         { this.state.isOpen && (

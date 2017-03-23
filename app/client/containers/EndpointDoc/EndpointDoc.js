@@ -6,12 +6,13 @@ import { loadEndpoint } from 'services/endpointView';
 import { loadGroup } from 'services/groupView';
 
 import MethodPicker from 'components/MethodPicker/MethodPicker';
-import DocumentationBlock, { Row } from 'components/DocumentationBlock/DocumentationBlock';
 import Button from 'components/Button/Button';
 import Radio from 'components/Form/Radio/Radio';
-
 import Icon from 'components/Icon/Icon';
 import IconButton from 'components/Button/IconButton';
+
+import DocumentationBlock, { Row } from 'components/DocumentationBlock/DocumentationBlock';
+import WarningLabel from 'components/DocumentationBlock/Labels/WarningLabel';
 
 import { openModal } from 'actions/modals';
 
@@ -80,6 +81,7 @@ class EndpointDoc extends React.Component {
           <Button variants={['linkPrimary']}>{param.name}</Button>,
           param.type,
           param.required ? ', required' : ', optional',
+          (!param.description || !param.example) ? <WarningLabel /> : ''
         ]}
         actions={[
           <IconButton icon={<Icon name="pencil" size="lg" />} />,
