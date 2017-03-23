@@ -127,7 +127,6 @@ class EndpointListGroup extends React.Component {
             { this.renderIcon() }
             <span className={styles.groupName}>{ groupName }</span>
           </Link>
-          { (isActive && !selected) && <button onClick={this.onClickGroupMore} className={styles.moreIcon}><CustomIcon name="more-dots" /></button> }
         </div>
         <div className={styles.endpoints}>
           { this.renderEndpointList(endpoints) }

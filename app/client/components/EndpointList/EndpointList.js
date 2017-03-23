@@ -3,6 +3,8 @@ import styles from './EndpointList.css';
 
 import EndpointListGroup from './EndpointListGroup/EndpointListGroup';
 import CustomIcon from 'components/Icon/CustomIcon';
+import Select from 'components/Form/Select/AddNewSelect';
+import Button from 'components/Button/Button';
 
 class EndpointList extends React.Component {
   static propTypes = {
@@ -10,6 +12,7 @@ class EndpointList extends React.Component {
     activeGroup: React.PropTypes.string,
     selected: React.PropTypes.string,
     onAddNewEndpoint: React.PropTypes.func,
+    onAddNewGroup: React.PropTypes.func,
     onClickItemMore: React.PropTypes.func,
     onClickGroupMore: React.PropTypes.func,
   };
@@ -27,7 +30,7 @@ class EndpointList extends React.Component {
 
   render() {
     const { endpoints, activeGroup, selected,
-      onAddNewEndpoint, onClickItemMore, onClickGroupMore,
+      onAddNewEndpoint, onAddNewGroup, onClickItemMore, onClickGroupMore,
     } = this.props;
 
     return (
@@ -50,14 +53,19 @@ class EndpointList extends React.Component {
           }
           { (!endpoints || endpoints.length === 0) && this.renderNoItems() }
         </div>
-        <button
-          onClick={onAddNewEndpoint}
-          className={styles.addNewEndpointButton}
-        >
-          Add New <span className={styles.buttonPlus}><CustomIcon size="lg" name="add-primary" /></span>
-        </button>
-
-
+        <div>
+          <Select
+            emptyMsg="Add New"
+            variants={['addNew']}
+            customIcon={<div className={styles.buttonPlus}><CustomIcon size="lg" name="add-primary" /></div>}
+            options={[
+              (<Button key={1} onClick={onAddNewGroup}>
+                <CustomIcon ext="svg" name="folder-closed" size="lg" color="white" />
+                <span className={styles.addNewItem}>Group</span>
+              </Button>),
+            ]}
+          />
+        </div>
       </div>
     );
   }

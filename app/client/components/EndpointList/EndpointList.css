@@ -18,7 +18,7 @@
 }
 
 .buttonPlus {
-  color: #6fb3e3;
+  color: #69BBF3;
 }
 
 .addNewEndpointButton {
@@ -36,4 +36,8 @@
   flex-shrink: 0;
   justify-content: space-between;
   margin-bottom: 15px;
+}
+
+.addNewItem {
+  margin-left: 10px;
 }
