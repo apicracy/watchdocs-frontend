@@ -5,7 +5,7 @@
 		<rect id="SVGID_1_" width="52" height="52"/>
 		<style>
 			.cls {
-				stroke: currentColor;
+				stroke: white;
 				fill: none;
 				stroke-width: 2px;
 				stroke-opacity: 0.4;
