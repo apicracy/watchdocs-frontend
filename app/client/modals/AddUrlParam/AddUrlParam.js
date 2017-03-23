@@ -15,7 +15,7 @@ export const MODAL_NAME = 'addUrlParam';
 const warningMessage = {
   type: 'warning',
   title: 'Doc Missing!',
-  content: 'We have found that you miss description in your documentation. Please fill it in to make it easily accessible by end users.',
+  content: 'We have found that you miss description and/or example in your documentation. Please fill it in to make it easily accessible by end users.',
 };
 
 @connect(store => ({
@@ -54,11 +54,11 @@ class AddUrlParam extends React.Component {
     return record ? record.name : null;
   }
 
-  componentDidUpdate(prevProps) {
+  componentWillReceiveProps(nextProps) {
     const { modals, endpoint } = this.props;
 
-    if (modals.refId && prevProps.modals.refId !== modals.refId) {
-      const currentParam = endpoint.params.find(param => param.id === modals.refId);
+    if (nextProps.modals.refId && modals.refId !== nextProps.modals.refId) {
+      const currentParam = endpoint.params.find(param => param.id === nextProps.modals.refId);
 
       if (currentParam) {
         this.setState({ ...currentParam });
@@ -99,13 +99,18 @@ class AddUrlParam extends React.Component {
     this.reset();
   }
 
-  onFieldChange = fieldName => ({ nativeEvent }) => {
-    this.setState({ [fieldName]: nativeEvent.target.value });
-  }
+  onFieldChange = fieldName => ({ nativeEvent }) => (
+    this.setState({ [fieldName]: nativeEvent.target.value })
+  );
 
   onTypeChange = id => this.setState({ type: this.getSelectedValue(id) });
 
   onRequiredChange = () => this.setState({ required: !this.state.required });
+
+  shouldDisplayMessage = () => {
+    const { id, description, example } = this.state;
+    return (id && (!description || !example));
+  }
 
   render() {
     return (
@@ -116,7 +121,7 @@ class AddUrlParam extends React.Component {
         onHide={this.onHide}
         saveButtonText="Save"
         cancelButtonText="Preview"
-        message={null}
+        message={this.shouldDisplayMessage() ? warningMessage : null}
       >
 
         <InputGroup title="Name" description="Write here param name as it apears inside URL">

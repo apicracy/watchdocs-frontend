@@ -1,0 +1,26 @@
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="52px" height="52px" viewBox="0 0 52 52" enable-background="new 0 0 52 52" xml:space="preserve">
+<g>
+	<defs>
+		<rect id="SVGID_1_" width="52" height="52"/>
+		<style>
+			.cls {
+				stroke: white;
+				fill: none;
+				stroke-width: 2px;
+				stroke-opacity: 0.4;
+			}
+		</style>
+	</defs>
+	<clipPath id="SVGID_2_">
+		<use xlink:href="#SVGID_1_"  overflow="visible"/>
+	</clipPath>
+
+		<circle class="cls" clip-path="url(#SVGID_2_)" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="26" cy="26" r="25"/>
+
+		<path class="cls" clip-path="url(#SVGID_2_)"  stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M26,29l-3.509-11.228C21.751,15.405,23.52,13,26,13c2.48,0,4.249,2.405,3.509,4.772L26,29z"/>
+
+		<circle class="cls" clip-path="url(#SVGID_2_)" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="26" cy="36" r="3"/>
+</g>
+</svg>

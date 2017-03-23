@@ -93,8 +93,8 @@ class EndpointDoc extends React.Component {
         key={key}
         data={[
           <Button variants={['linkPrimary']}>{param.name}</Button>,
-          param.type,
-          param.required ? ', required' : ', optional',
+          param.type ? `${param.type}, ${String.fromCharCode(160)}` : null,
+          param.required ? 'required' : 'optional',
           (!param.description || !param.example) ? <WarningLabel /> : '',
         ]}
         actions={[

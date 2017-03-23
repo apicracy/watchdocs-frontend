@@ -8,7 +8,7 @@
   background-color: white;
   min-height: 300px;
   color: #7f7d94;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .overlay {
@@ -30,7 +30,7 @@
   display: flex;
   flex: 0 0 60px;
   padding: def-padding;
-  font-size: 24px;
+  font-size: 20px;
   color: #6C6AB8;
   justify-content: space-between;
   align-items: center;
@@ -39,11 +39,11 @@
 
 .message {
   font-family: 'RobotoRegular', Helvetica, sans-serif;
-  background: url('assets/icons/warning-circle.svg?v=0.0.0') no-repeat;
+  background: url('assets/icons/warning-circle-white.svg?v=0.0.0') no-repeat;
+  stroke: currentColor;
   background-size: 120px;
   background-position: 10px center;
   background-color: #fdb300;
-  margin-bottom: def-padding;
   color: white;
   padding: calc(def-padding / 2);
   padding-left: 150px;
@@ -52,12 +52,12 @@
 .message__title {
   margin: 0;
   margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .message__content {
   margin: 0;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .body {
