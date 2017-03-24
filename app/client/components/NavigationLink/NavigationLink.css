@@ -7,6 +7,10 @@
   letter-spacing: 0.5px;
 }
 
+.navigationLink:hover {
+  background-color: #7978be;
+}
+
 .navigationLinkActive {
   font-family: 'RobotoBlack', Helvetica, sans-serif;
 }

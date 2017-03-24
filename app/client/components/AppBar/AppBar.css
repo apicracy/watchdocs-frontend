@@ -4,6 +4,7 @@
   background: #6C6AB8;
   color: white;
   justify-content: space-between;
+  align-items: stretch;
 }
 
 .secondary {
