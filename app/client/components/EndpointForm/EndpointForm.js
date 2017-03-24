@@ -3,11 +3,9 @@ import styles from './EndpointForm.css';
 
 class EndpointForm extends React.Component {
   static propTypes = {
-    selectedParentFolder: React.PropTypes.string,
     inputValue: React.PropTypes.string,
     endpointType: React.PropTypes.string,
 
-    onSelectParentFolder: React.PropTypes.func,
     onChangeInput: React.PropTypes.func,
     onChangeEndpointType: React.PropTypes.func,
   };
@@ -19,7 +17,6 @@ class EndpointForm extends React.Component {
 
   render() {
     const {
-      selectedParentFolder,
       inputValue,
       endpointType,
     } = this.props;
@@ -46,16 +43,6 @@ class EndpointForm extends React.Component {
             <input value={inputValue} placeholder="URL endpoint" className={styles.modalInput} onChange={this.onChangeInput} />
           </div>
         </div>
-        <div className={styles.modalField}>
-          <text className={styles.modalLabel}>Parent folder</text>
-          <select
-            value={selectedParentFolder}
-            className={styles.modalSelect}
-            onChange={this.onSelectParentFolder}
-          >
-            <option value="" disabled hidden>No parent folder</option>
-          </select>
-        </div>
       </div>
     );
   }
@@ -66,10 +53,6 @@ class EndpointForm extends React.Component {
 
   onChangeInput = (e) => {
     this.props.onChangeInput(e.target.value);
-  }
-
-  onSelectParentFolder = (e) => {
-    this.props.onSelectParentFolder(e.target.value);
   }
 }
 

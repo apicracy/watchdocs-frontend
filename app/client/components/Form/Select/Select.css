@@ -79,8 +79,8 @@
 /* Add new variant */
 
 .addNew {
-  background: #83C5F3;
-  color: white;
+  background: #EEEEEE;
+  color: #828097;
   font-family: 'RobotoBold', Helvetica, sans-serif;
   outline: none;
   width: 100%;
@@ -96,6 +96,14 @@
   position: relative;
 }
 
+.addNew.open {
+  background: #83C5F3;
+  color: white;
+  margin-bottom: 50px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
 .addNew > .selectedOption > button {
   flex: 1;
   width: 100%;
@@ -104,14 +112,17 @@
 
 .addNew > .optionList {
   border: none;
-  border-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
   background: #69BBF3;
   display: flex;
   flex-direction: column;
   z-index: 0;
+  padding: 5px 0;
 }
 
 .addNew > .optionList > button {
   justify-content: flex-start;
   color: white;
+  padding: 10px 10px;
 }

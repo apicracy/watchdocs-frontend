@@ -19,6 +19,7 @@ import {
   loadEndpoint,
   loadFolder,
   addNewGroup,
+  addNewEndpoint,
 } from 'services/modifyEndpoint-service';
 
 @connect(store => ({
@@ -75,6 +76,7 @@ class Aside extends React.Component {
   }
 
   addNewEndpoint = () => {
+    this.props.dispatch(addNewEndpoint());
     this.props.dispatch(openModal(ADD_NEW_MODAL));
   }
 
