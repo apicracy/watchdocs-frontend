@@ -35,7 +35,6 @@ export default class Wiki extends React.Component {
           <Button variants={['body', 'large']}>Preview</Button>
         </div>
       </div>
-
     );
   }
 }

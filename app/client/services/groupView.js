@@ -6,7 +6,6 @@ export function loadGroup(id) {
   return (dispatch, getState) => {
     const { endpoints } = getState();
     const group = filterById([...endpoints], id);
-
     dispatch(setGroupView(group));
   };
 }
