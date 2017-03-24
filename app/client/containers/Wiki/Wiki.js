@@ -1,6 +1,7 @@
 
 import React from 'react';
 // import { connect } from 'react-redux';
+import TinyMCE from 'react-tinymce';
 
 import styles from './Wiki.css';
 import Button from 'components/Button/Button';
@@ -9,9 +10,6 @@ import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock
 // @connect(state => state)
 export default class Wiki extends React.Component {
   render() {
-    /* eslint no-undef: 0 */
-    // imported in index.html
-    tinymce.init({ selector: 'textarea' });
     return (
       <div>
         <DocumentationBlock
@@ -29,7 +27,7 @@ export default class Wiki extends React.Component {
           description="This description will
             appear on your generated public documentation."
         >
-          <textArea />
+          <TinyMCE />
         </DocumentationBlock>
 
         <div className={styles.buttons}>
