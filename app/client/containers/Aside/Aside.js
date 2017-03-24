@@ -34,7 +34,7 @@ class Aside extends React.Component {
 
   componentWillMount() {
     // Load width from cache
-    this.setState({ search: '', status: '', width: 250, baseWidth: 250, dragStart: null });
+    this.setState({ search: '', status: '', width: 300, baseWidth: 300, dragStart: null });
   }
 
   onDragStart = ({ nativeEvent }) => {
@@ -99,6 +99,7 @@ class Aside extends React.Component {
       { title: 'All', id: 'all' },
       { title: 'Valid', id: 'valid' },
       { title: 'Invalid', id: 'invalid' },
+      { title: 'Outdated', id: 'outdated' },
     ];
 
     const endpoints = filterEndpoints(

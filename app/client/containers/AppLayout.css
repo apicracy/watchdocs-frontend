@@ -11,7 +11,6 @@
   flex: 1;
   position: relative;
   padding: 50px;
-  padding-right: 15px;
   overflow-x: hidden;
 }
 
@@ -21,5 +20,10 @@
 }
 
 .right {
+  display: inline-flex;
   align-items: center;
+}
+
+.right > svg {
+  margin-left: 15px;
 }

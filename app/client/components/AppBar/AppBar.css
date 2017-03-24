@@ -1,9 +1,10 @@
 .appBar {
+  position: relative;
   display: flex;
-  padding: 15px;
   background: #6C6AB8;
   color: white;
   justify-content: space-between;
+  align-items: stretch;
 }
 
 .secondary {
@@ -14,5 +15,6 @@
 .footer {
   composes: appBar;
   background: #6fb3e3;
+  height: 30px;
   text-align: center;
 }

@@ -21,6 +21,22 @@
   border: 1px solid black;
 }
 
+.innerSelected {
+  display: flex;
+  flex-direction: column;
+}
+
+.main,
+.additional {
+  display: inline-flex;
+}
+
+.optionList > button {
+  width: 100%;
+  text-align: left;
+  justify-content: flex-start;
+}
+
 /* Variants */
 
 /* Full Width Variant */
@@ -76,6 +92,49 @@
 .bordered > .optionList > button:hover {
   background: #EEEEEE;
 }
+
+
+/* appBar Variant */
+
+.appBar {
+  background: #4e4c88;
+  height: 100%;
+  margin: 0;
+  margin-left: 15px;
+  padding: 0 15px;
+  height: 75px;
+}
+
+.appBar:hover,
+.appBar.open {
+  background: #46447A;
+}
+
+.appBar > .optionList {
+  border: none;
+  background: #4e4c88;
+  color: white;
+}
+
+.appBar > .optionList > button {
+  padding: 10px;
+}
+
+.appBar > .optionList > button:hover {
+  background-color: #6C6AB8;
+}
+
+.appBar > .selectedOption > button {
+  display: flex;
+  font-size: 16px;
+  justify-content: flex-start;
+}
+
+.appBar .additional {
+  font-size: 12px;
+  color: #c9c8eb;
+}
+
 /* Add new variant */
 
 .addNew {

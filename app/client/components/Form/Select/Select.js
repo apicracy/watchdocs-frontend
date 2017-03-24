@@ -11,6 +11,7 @@ class Select extends React.Component {
     onSelect: React.PropTypes.func,
     variants: React.PropTypes.array,
     emptyMsg: React.PropTypes.string,
+    additionalInfo: React.PropTypes.string,
   }
 
   static defaultProps = {
@@ -48,7 +49,7 @@ class Select extends React.Component {
   }
 
   render() {
-    const { options, activeId, variants, emptyMsg } = this.props;
+    const { options, activeId, variants, emptyMsg, additionalInfo } = this.props;
     const variantStyles = variants.map(v => styles[v]);
     const selectedOption = options.filter(v => v.id === activeId);
 
@@ -65,8 +66,15 @@ class Select extends React.Component {
             onClick={this.toggleOpen}
             icon={<CustomIcon ext="svg" color="white" size="sm" name="arrow-down" />}
           >
-            { selectedOption[0] && selectedOption[0].name }
-            { selectedOption.length === 0 && emptyMsg }
+            <span className={styles.innerSelected}>
+              <span className={styles.main}>
+                { selectedOption[0] && selectedOption[0].name }
+                { selectedOption.length === 0 && emptyMsg }
+              </span>
+              <span className={styles.additional}>
+                { additionalInfo }
+              </span>
+            </span>
           </Button>
         </div>
         { this.state.isOpen && (

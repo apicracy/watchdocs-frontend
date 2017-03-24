@@ -6,8 +6,6 @@ import About from 'containers/About';
 import NoMatch from 'containers/NoMatch';
 
 /* import pages */
-import DocManager from 'containers/DocManager/DocManager';
-
 import Wiki from 'containers/Wiki/Wiki';
 import ApiDoc from 'containers/ApiDoc/ApiDoc';
 import GroupDoc from 'containers/GroupDoc/GroupDoc';
@@ -19,7 +17,7 @@ const Routes = (
     <Route path="/" component={AppLayout}>
       <IndexRedirect to="/docs" />
 
-      <Route path="docs" component={DocManager}>
+      <Route path="docs">
         <IndexRoute component={ApiDoc} />
 
         <Route path="jsonseditor" component={JSONSEditor} />
