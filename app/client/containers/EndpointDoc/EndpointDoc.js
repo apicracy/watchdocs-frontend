@@ -105,6 +105,26 @@ class EndpointDoc extends React.Component {
     ));
   }
 
+  getFullLink = () => {
+    const { group, endpoint } = this.props;
+    const basePath = `http://startjoin.com/api/v1${group.fullPath}`;
+
+    if (endpoint.params) {
+      const mainParam = endpoint.params.find(p => p.main);
+      const params = endpoint.params.filter(p => !p.main).map((param) => {
+        const value = param.example ? `=${param.example}` : '';
+        return `${param.name}${value}`;
+      });
+
+      const formattedParams = params.length > 0 ? `?${params.join('&')}` : '';
+      const pathParam = mainParam ? `/:${mainParam.name}` : '';
+
+      return `${basePath}${pathParam}${formattedParams}`;
+    }
+
+    return basePath;
+  }
+
   render() {
     return (
       <div className={styles.root}>
@@ -126,7 +146,7 @@ class EndpointDoc extends React.Component {
           title="URL params"
           description={[
             'Full link',
-            <Button variants={['linkPrimary', 'highlight', 'spaceLeft']}>{`http://startjoin.com/api/v1${this.props.group.fullPath}`}</Button>,
+            <Button variants={['linkPrimary', 'highlight', 'spaceLeft']}>{ this.getFullLink() }</Button>,
             <Button variants={['linkPrimary']}>Edit base url</Button>,
           ]}
           emptyMsg="You don't have any URL params set up yet."

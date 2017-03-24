@@ -98,9 +98,15 @@
 .appBar {
   background: #4e4c88;
   height: 100%;
-  margin: 0 15px;
+  margin: 0;
+  margin-left: 15px;
   padding: 0 15px;
   height: 75px;
+}
+
+.appBar:hover,
+.appBar.open {
+  background: #46447A;
 }
 
 .appBar > .optionList {

@@ -3,27 +3,10 @@ import styles from './MethodPicker.css';
 
 import Select from 'components/Form/Select/Select';
 
-const formatParams = (params) => {
-  if (params && params.length > 0) {
-    const formatted = params.reduce((state, param) => {
-      if (param.main) {
-        return [`/:${param.name}`, ...state];
-      }
-
-      const divider = state.length < 2 ? '?' : '&';
-
-      return [...state, divider, `${param.name}`];
-    }, []);
-
-    return formatted.join('');
-  }
-
-  return '';
-};
-
 const MethodPicker = ({ activeId, path, groupEndpoints }) => {
   const currentEndpoint = groupEndpoints.find(v => v.id === activeId);
   const options = currentEndpoint ? [{ ...currentEndpoint, name: currentEndpoint.method }] : [];
+  const mainParam = currentEndpoint ? currentEndpoint.params.find(p => p.main) : false;
 
   return (
     <div className={styles.root}>
@@ -31,7 +14,7 @@ const MethodPicker = ({ activeId, path, groupEndpoints }) => {
         <Select options={options} activeId={currentEndpoint ? currentEndpoint.id : 0} />
       </div>
       <div className={styles.path}>
-        { path }{ formatParams(currentEndpoint ? currentEndpoint.params : [])}
+        { path }{ mainParam ? `/:${mainParam.name}` : '' }
       </div>
     </div>
   );
