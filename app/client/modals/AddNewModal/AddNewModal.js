@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styles from './AddNewModal.css';
 import Modal from 'components/Modal/Modal';
 import FolderForm from 'components/FolderForm/FolderForm';
 import EndpointForm from 'components/EndpointForm/EndpointForm';
@@ -50,17 +49,6 @@ class AddNewModal extends React.Component {
 
     return (
       <Modal isVisible={isVisible} title="Add new..." onSave={this.onSave} onHide={this.onHide}>
-        <div className={styles.modalField}>
-          <text className={styles.modalLabel}>Type</text>
-          <select
-            value={type}
-            className={styles.modalSelect}
-            onChange={this.onChangeType}
-          >
-            <option>Endpoint</option>
-            <option>Folder</option>
-          </select>
-        </div>
         <div>
           { type === 'Endpoint' &&
             <EndpointForm
@@ -74,9 +62,7 @@ class AddNewModal extends React.Component {
           }
           { type === 'Folder' &&
             <FolderForm
-              selectedParentFolder={selectedParentFolder}
               inputValue={folderName}
-              onSelectParentFolder={this.onSelectParentFolder}
               onChangeInput={this.onChangeFolderName}
             />
           }
