@@ -21,10 +21,6 @@ class GroupDoc extends React.Component {
     endpointList: React.PropTypes.array,
   }
 
-  componentWillMount() {
-    this.setState({ security: null });
-  }
-
   componentDidMount() {
     this.loadGroup();
   }
@@ -32,10 +28,6 @@ class GroupDoc extends React.Component {
   loadGroup() {
     const groupId = parseInt(this.props.params.group_id, 10);
     this.props.dispatch(loadGroup(groupId));
-  }
-
-  onSecutityChange = (activatedItem) => {
-    this.setState({ security: activatedItem.id });
   }
 
   componentDidUpdate(prevProps) {

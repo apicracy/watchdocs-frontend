@@ -14,8 +14,6 @@ class EndpointList extends React.Component {
     selected: React.PropTypes.string,
     onAddNewEndpoint: React.PropTypes.func,
     onAddNewGroup: React.PropTypes.func,
-    onClickItemMore: React.PropTypes.func,
-    onClickGroupMore: React.PropTypes.func,
   };
 
   componentWillMount() {
@@ -32,7 +30,7 @@ class EndpointList extends React.Component {
   render() {
     /* eslint no-unused-vars: 0 */
     const { endpoints, activeGroup, selected,
-      onAddNewEndpoint, onAddNewGroup, onClickItemMore, onClickGroupMore,
+      onAddNewEndpoint, onAddNewGroup,
     } = this.props;
     return (
       <div className={styles.root}>
@@ -47,8 +45,6 @@ class EndpointList extends React.Component {
                 selected={selected}
                 key={group.id}
                 {...group}
-                onClickGroupMore={onClickGroupMore}
-                onClickItemMore={onClickItemMore}
               />
             ))
           }

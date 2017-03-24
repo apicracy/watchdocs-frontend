@@ -53,7 +53,7 @@ class AppLayout extends React.Component {
                 onSelect={this.switchProject}
                 activeId={activeProject ? activeProject.id : null}
               />
-              <NavLink url="/docs" text="Editor" icon={<Icon name="edit" />} />
+              <NavLink url="/docs/jsonseditor" text="Editor" icon={<Icon name="edit" />} />
               <NavLink url="/docs/view" index={!this.props.params.group_id} text="Documentation" icon={<CustomIcon name="documentation" size="sm" />} />
               <NavLink url="/docs/settings" text="Settings" icon={<CustomIcon name="settings" size="sm" />} />
             </div>
