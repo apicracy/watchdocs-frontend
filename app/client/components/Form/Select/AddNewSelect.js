@@ -57,7 +57,7 @@ class Select extends React.Component {
       ...variantStyles,
       this.state.isOpen && styles.open,
     ].join(' ');
-
+    /* eslint jsx-a11y/no-static-element-interactions: 0 */
     return (
       <div className={selectStyle} tabIndex="0" onBlur={this.onOutsideClick}>
         <div className={styles.selectedOption}>
@@ -69,7 +69,10 @@ class Select extends React.Component {
           </Button>
         </div>
         { this.state.isOpen && (
-          <div className={styles.optionList}>
+          <div
+            className={styles.optionList}
+            onClick={() => { this.setState({ isOpen: false }); }}
+          >
             { options }
           </div>
         )}
