@@ -18,6 +18,7 @@ import { MODAL_NAME as EDIT_MODAL } from 'modals/EditModal/EditModal';
 import {
   loadEndpoint,
   loadFolder,
+  addNewGroup,
 } from 'services/modifyEndpoint-service';
 
 @connect(store => ({
@@ -77,6 +78,11 @@ class Aside extends React.Component {
     this.props.dispatch(openModal(ADD_NEW_MODAL));
   }
 
+  addNewGroup = () => {
+    this.props.dispatch(addNewGroup());
+    this.props.dispatch(openModal(ADD_NEW_MODAL));
+  }
+
   onClickGroupMore = (id) => {
     this.props.dispatch(loadFolder(id));
     this.props.dispatch(openModal(EDIT_MODAL));
@@ -125,6 +131,7 @@ class Aside extends React.Component {
           endpoints={endpoints}
           activeGroup={groupId}
           selected={endpointId}
+          onAddNewGroup={this.addNewGroup}
           onAddNewEndpoint={this.addNewEndpoint}
           onClickItemMore={this.onClickItemMore}
           onClickGroupMore={this.onClickGroupMore}

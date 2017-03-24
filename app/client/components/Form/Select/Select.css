@@ -93,6 +93,7 @@
   background: #EEEEEE;
 }
 
+
 /* appBar Variant */
 
 .appBar {
@@ -132,4 +133,44 @@
 .appBar .additional {
   font-size: 12px;
   color: #c9c8eb;
+}
+
+/* Add new variant */
+
+.addNew {
+  background: #83C5F3;
+  color: white;
+  font-family: 'RobotoBold', Helvetica, sans-serif;
+  outline: none;
+  width: 100%;
+  padding: 10px;
+  text-align: left;
+  border: 0;
+  border-radius: 5px;
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.addNew > .selectedOption > button {
+  flex: 1;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.addNew > .optionList {
+  border: none;
+  border-radius: 5px;
+  background: #69BBF3;
+  display: flex;
+  flex-direction: column;
+  z-index: 0;
+}
+
+.addNew > .optionList > button {
+  justify-content: flex-start;
+  color: white;
 }

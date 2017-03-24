@@ -3,7 +3,6 @@ import React from 'react';
 import styles from './EndpointListGroup.css';
 
 import EndpointListItem from '../EndpointListItem/EndpointListItem';
-import CustomIcon from 'components/Icon/CustomIcon';
 import Icon from 'components/Icon/Icon';
 import { Link } from 'react-router';
 
@@ -128,7 +127,6 @@ class EndpointListGroup extends React.Component {
             { this.renderIcon() }
             <span className={styles.groupName}>{ groupName }</span>
           </Link>
-          { (isActive && !selected) && <button onClick={this.onClickGroupMore} className={styles.moreIcon}><CustomIcon name="more-dots" /></button> }
         </div>
         <div className={styles.endpoints}>
           { this.renderEndpointList(endpoints) }

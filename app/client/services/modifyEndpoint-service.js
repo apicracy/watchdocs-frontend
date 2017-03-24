@@ -17,6 +17,13 @@ export function addNewEndpoint() {
   };
 }
 
+export function addNewGroup() {
+  return (dispatch /* , getState */) => {
+    dispatch(setType('Folder'));
+    dispatch(setEditModeAction(false));
+  };
+}
+
 export function saveEndpoint() {
   return (dispatch /* , getState */) => {
     // TODO dispatch save action
