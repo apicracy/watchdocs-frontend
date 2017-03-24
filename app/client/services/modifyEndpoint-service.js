@@ -13,6 +13,7 @@ import {
 
 export function addNewEndpoint() {
   return (dispatch /* , getState */) => {
+    dispatch(setType('Endpoint'));
     dispatch(setEditModeAction(false));
   };
 }

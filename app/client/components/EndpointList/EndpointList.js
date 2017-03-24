@@ -3,6 +3,7 @@ import styles from './EndpointList.css';
 
 import EndpointListGroup from './EndpointListGroup/EndpointListGroup';
 import CustomIcon from 'components/Icon/CustomIcon';
+import Icon from 'components/Icon/Icon';
 import Select from 'components/Form/Select/AddNewSelect';
 import Button from 'components/Button/Button';
 
@@ -62,6 +63,10 @@ class EndpointList extends React.Component {
               (<Button key={1} onClick={onAddNewGroup}>
                 <CustomIcon ext="svg" name="folder-closed" size="lg" color="white" />
                 <span className={styles.addNewItem}>Group</span>
+              </Button>),
+              (<Button key={2} onClick={onAddNewEndpoint}>
+                <span className={styles.endpointIcon}><Icon name="link" size="lg" /></span>
+                <span className={styles.addNewItem}>Endpoint</span>
               </Button>),
             ]}
           />
