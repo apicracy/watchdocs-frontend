@@ -24,7 +24,7 @@ class EndpointForm extends React.Component {
     return (
       <div>
         <div className={styles.modalField}>
-          <text className={styles.modalLabel}>Endpoint</text>
+          <text className={styles.modalLabel}>Endpoint URL</text>
           <text className={styles.modalSmallLabel}>
             Format query params to &quot;id&quot; notation (for example /user/:id)
           </text>

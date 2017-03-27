@@ -47,8 +47,10 @@ class AddNewModal extends React.Component {
       type,
     } = this.props;
 
+    const title = (type === 'Endpoint' ? 'Add endpoint' : 'Add folder');
+
     return (
-      <Modal isVisible={isVisible} title="Add new..." onSave={this.onSave} onHide={this.onHide}>
+      <Modal isVisible={isVisible} title={title} onSave={this.onSave} onHide={this.onHide}>
         <div>
           { type === 'Endpoint' &&
             <EndpointForm

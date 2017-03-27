@@ -11,6 +11,7 @@
   flex: 1;
   align-items: center;
   border-left: 1px #ECEEFA solid;
+  font-size: 1.2em;
 }
 
 .select {

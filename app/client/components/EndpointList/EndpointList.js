@@ -57,7 +57,7 @@ class EndpointList extends React.Component {
             customIcon={<div className={styles.buttonPlus}><CustomIcon size="lg" name="add-primary" /></div>}
             options={[
               (<Button key={1} onClick={onAddNewGroup}>
-                <CustomIcon ext="svg" name="folder-closed" size="lg" color="white" />
+                <span className={styles.endpointIcon}><Icon name="folder-o" size="lg" /></span>
                 <span className={styles.addNewItem}>Group</span>
               </Button>),
               (<Button key={2} onClick={onAddNewEndpoint}>

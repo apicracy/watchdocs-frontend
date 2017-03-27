@@ -1,7 +1,7 @@
 @value def-padding: 20px;
 
 .root {
-  font-family: 'RobotoMedium', Helvetica, sans-serif;
+  font-family: 'RobotoRegular', Helvetica, sans-serif;
   display: flex;
   flex-direction: column;
   width: 550px;
