@@ -6,6 +6,7 @@ import TinyMCE from 'react-tinymce';
 import styles from './Wiki.css';
 import Button from 'components/Button/Button';
 import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock';
+import TextInput from 'components/Form/TextInput/TextInput';
 
 // @connect(state => state)
 export default class Wiki extends React.Component {
@@ -17,9 +18,7 @@ export default class Wiki extends React.Component {
           description="This is title of the section we're going
             to display in documentation and in navigation."
         >
-          <div className={styles.gettingStarted}>
-          Getting started
-          </div>
+          <TextInput value="Getting started" variant="white" />
         </DocumentationBlock>
 
         <DocumentationBlock
@@ -35,7 +34,6 @@ export default class Wiki extends React.Component {
           <Button variants={['body', 'large']}>Preview</Button>
         </div>
       </div>
-
     );
   }
 }

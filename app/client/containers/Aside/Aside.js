@@ -13,11 +13,8 @@ import { filterEndpoints } from 'services/endpoint-service';
 
 import { openModal } from 'actions/modals';
 import { MODAL_NAME as ADD_NEW_MODAL } from 'modals/AddNewModal/AddNewModal';
-import { MODAL_NAME as EDIT_MODAL } from 'modals/EditModal/EditModal';
 
 import {
-  loadEndpoint,
-  loadFolder,
   addNewGroup,
   addNewEndpoint,
 } from 'services/modifyEndpoint-service';
@@ -85,16 +82,6 @@ class Aside extends React.Component {
     this.props.dispatch(openModal(ADD_NEW_MODAL));
   }
 
-  onClickGroupMore = (id) => {
-    this.props.dispatch(loadFolder(id));
-    this.props.dispatch(openModal(EDIT_MODAL));
-  }
-
-  onClickItemMore = (id) => {
-    this.props.dispatch(loadEndpoint(id));
-    this.props.dispatch(openModal(EDIT_MODAL));
-  }
-
   render() {
     const { group_id: groupId, endpoint_id: endpointId } = this.props.params;
     const tabData = [
@@ -135,8 +122,6 @@ class Aside extends React.Component {
           selected={endpointId}
           onAddNewGroup={this.addNewGroup}
           onAddNewEndpoint={this.addNewEndpoint}
-          onClickItemMore={this.onClickItemMore}
-          onClickGroupMore={this.onClickGroupMore}
         />
       </aside>
     );
