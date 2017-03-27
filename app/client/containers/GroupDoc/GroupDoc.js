@@ -6,6 +6,7 @@ import styles from './GroupDoc.css';
 import { loadGroup } from 'services/groupView';
 import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock';
 import Button from 'components/Button/Button';
+import TextInput from 'components/Form/TextInput/TextInput';
 import TinyMCE from 'react-tinymce';
 
 @connect(store => ({
@@ -60,9 +61,7 @@ class GroupDoc extends React.Component {
           description="This is title of the section we're going
             to display in documentation and in navigation."
         >
-          <div className={styles.gettingStarted}>
-            {group.groupName}
-          </div>
+          <TextInput value={group.groupName} variant="white" />
         </DocumentationBlock>
 
         <DocumentationBlock

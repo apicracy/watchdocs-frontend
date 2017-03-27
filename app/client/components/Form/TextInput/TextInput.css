@@ -11,9 +11,19 @@
   width: 100%;
 }
 
+.rootWhite{
+  composes: root;
+  background: white;
+}
+
 .rootError {
   composes: root;
   border-color: red;
+}
+
+.rootErrorWhite{
+  composes: rootError;
+  background: white;
 }
 
 .wrapper {
