@@ -45,6 +45,11 @@
   padding-right: 10px !important; /* do not let to override this */
 }
 
+.linkWhite {
+  font-family: 'RobotoBold', Helvetica, sans-serif;
+  color: white;
+}
+
 .large {
   width: 120px;
   padding: 10px;

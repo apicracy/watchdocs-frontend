@@ -1,4 +1,5 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import styles from './EndpointDoc.css';
 
@@ -25,6 +26,7 @@ import { MODAL_NAME as EDIT_DESC_MODAL } from 'modals/EditEndpointDescription/Ed
   endpoint: store.endpointView,
   group: store.groupView,
   endpointList: store.endpoints,
+  responses: store.endpointView.responses,
 }))
 class EndpointDoc extends React.Component {
 
@@ -34,6 +36,7 @@ class EndpointDoc extends React.Component {
     endpoint: React.PropTypes.object,
     group: React.PropTypes.object,
     endpointList: React.PropTypes.array,
+    responses: React.PropTypes.array,
   }
 
   componentWillMount() {
@@ -109,6 +112,8 @@ class EndpointDoc extends React.Component {
 
   /* Params section */
   editParam = id => () => this.props.dispatch(openModal('addUrlParam', id));
+  editResponse = id => () => browserHistory.push(`/docs/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/response/${id}`);
+  editRequest = id => () => browserHistory.push(`/docs/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/request/${id}`);
 
   renderParams() {
     if (!this.props.endpoint || !this.props.endpoint.params) return [];
@@ -128,6 +133,49 @@ class EndpointDoc extends React.Component {
         ]}
         actions={[
           <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editParam(param.id)} />,
+          !param.main && <IconButton icon={<Icon name="trash" size="lg" />} />,
+        ]}
+      />
+    ));
+  }
+
+  renderResponses() {
+    // to keep order.
+    // TODO create 'order' field in model to allow ordering
+    const responses = this.props.responses.sort((a, b) => a.id > b.id);
+
+    return responses.map((param, key) => (
+      <Row
+        key={key}
+        data={[
+          <div>Status <span className={styles.responseParam}>{`${param.status.name}`}</span></div>,
+        ]}
+        actions={[
+          <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editResponse(param.id)} />,
+          !param.main && <IconButton icon={<Icon name="trash" size="lg" />} />,
+        ]}
+      />
+    ));
+  }
+
+  renderRequests() {
+    if (!this.props.endpoint || !this.props.endpoint.requests) return [];
+
+    // to keep order.
+    // TODO create 'order' field in model to allow ordering
+    const requests = this.props.endpoint.requests.sort((a, b) => a.id > b.id);
+
+    return requests.map((param, key) => (
+      <Row
+        key={key}
+        data={[
+          <Button variants={['linkPrimary']}>{param.name}</Button>,
+          param.type ? `${param.type}, ${String.fromCharCode(160)}` : null,
+          param.required ? 'required' : 'optional',
+          (!param.description || !param.example) ? <WarningLabel /> : '',
+        ]}
+        actions={[
+          <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editRequest(param.id)} />,
           !param.main && <IconButton icon={<Icon name="trash" size="lg" />} />,
         ]}
       />
@@ -192,7 +240,9 @@ class EndpointDoc extends React.Component {
           title="Request"
           description="API's methods can support or require various HTTP headers."
           emptyMsg="You don't have request set up yet."
-          buttonAction={() => {}}
+          buttonAction={() => {
+            browserHistory.push(`/docs/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/request`);
+          }}
           content={(
             <Radio
               title={[
@@ -208,13 +258,19 @@ class EndpointDoc extends React.Component {
               onChange={this.onSecutityChange}
             />
           )}
-        />
+        >
+          { this.renderRequests() }
+        </DocumentationBlock>
 
         <DocumentationBlock
           title="Responses Available"
           emptyMsg="You don't have any responses set up yet."
-          buttonAction={() => {}}
-        />
+          buttonAction={() => {
+            browserHistory.push(`/docs/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/response`);
+          }}
+        >
+          { this.renderResponses() }
+        </DocumentationBlock>
 
         <div className={styles.buttons}>
           <Button variants={['primary', 'large', 'spaceRight']}>Save</Button>

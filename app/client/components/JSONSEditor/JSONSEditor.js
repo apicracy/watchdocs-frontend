@@ -16,6 +16,7 @@ class JSONSEditor extends React.Component {
     this.setState({ linesOfCode: [] });
     this.setState({ temp: {} });
     this.setState({ output: {} });
+    this.compare(this.props.base, this.props.draft);
   }
 
   onSelect = (selectedLine) => {
@@ -65,7 +66,6 @@ class JSONSEditor extends React.Component {
       base,
       draft,
     } = this.props;
-
     if (prevProps.base !== base ||
     prevProps.draft !== draft) {
       this.compare(base, draft);
@@ -93,7 +93,6 @@ class JSONSEditor extends React.Component {
           const {
             selectedLine,
           } = this.state;
-
           return (
             <LineOfCode
               key={index}

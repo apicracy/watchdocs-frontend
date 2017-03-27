@@ -31,6 +31,41 @@
   background: #96cff7;
 }
 
+/* Variants */
+.isNew {
+  position: relative;
+  color: white;
+  padding: 15px;
+  background: #5CB16A;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.isNew::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  background: #78D688;
+  content: '';
+}
+
+.isNew:not(:first-of-type) {
+  margin-top: 1px;
+}
+
+.isNew:not(:first-of-type):before {
+  top: -1px;
+}
+
+/*.isNew:nth-of-type(2n)::before {
+  background: #5CC16A;
+}*/
+/**/
+
 .empty {
   composes: root;
 
