@@ -43,6 +43,12 @@
   font-size: 14px;
 }
 
+.inputWhite {
+  composes: input;
+  color: #7f7d94;
+  font-size: 1.2em;
+}
+
 .input:focus {
   outline: 0;
   border: 0;

@@ -55,7 +55,7 @@ class GroupDoc extends React.Component {
     } = this.props;
 
     return (
-      <div>
+      <div className={styles.container}>
         <DocumentationBlock
           title="Group title"
           description="This is title of the section we're going
