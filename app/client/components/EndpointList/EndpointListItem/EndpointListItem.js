@@ -19,7 +19,7 @@ const EndpointListItem = ({ path, method, params, id, groupId, isSelected }) => 
 
   return (
     <div className={topStyle}>
-      <Link to={`/docs/${groupId}/endpoint/${id}`} className={styles.root}>
+      <Link to={`/editor/${groupId}/endpoint/${id}`} className={styles.root}>
         <span className={styles.data}>
           <span className={styles.method}>{ method }</span>
           <span className={styles.path}>{ path }{ paramsFormated }</span>
