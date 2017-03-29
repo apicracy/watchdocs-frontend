@@ -14,7 +14,12 @@ import IconButton from 'components/Button/IconButton';
 import DocumentationBlock, { Row } from 'components/DocumentationBlock/DocumentationBlock';
 import WarningLabel from 'components/DocumentationBlock/Labels/WarningLabel';
 
+/* Actions */
+import { updateEndpointDescription } from 'actions/endpointView';
+
+/* Modals */
 import { openModal } from 'actions/modals';
+import { MODAL_NAME as EDIT_DESC_MODAL } from 'modals/EditEndpointDescription/EditEndpointDescription';
 
 @connect(store => ({
   endpoint: store.endpointView,
@@ -79,6 +84,30 @@ class EndpointDoc extends React.Component {
     this.setState({ security: activatedItem.id });
   }
 
+  /* Description section */
+  editDescription = () => this.props.dispatch(openModal(EDIT_DESC_MODAL));
+
+  renderDescription = () => {
+    const { description } = this.props.endpoint;
+
+    if (!this.props.endpoint || !description) return [];
+
+    return [
+      <Row
+        key={1}
+        data={[
+          <Button key={1} variants={['linkPrimary', 'block', 'textLeft', 'noPaddingLeft']}>{ description.title }</Button>,
+          description.content,
+        ]}
+        actions={[
+          <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editDescription} />,
+          <IconButton icon={<Icon name="trash" size="lg" />} onClick={() => this.props.dispatch(updateEndpointDescription(null))} />,
+        ]}
+      />,
+    ];
+  }
+
+  /* Params section */
   editParam = id => () => this.props.dispatch(openModal('addUrlParam', id));
 
   renderParams() {
@@ -92,7 +121,7 @@ class EndpointDoc extends React.Component {
       <Row
         key={key}
         data={[
-          <Button variants={['linkPrimary']}>{param.name}</Button>,
+          <Button variants={['linkPrimary', 'noPadding']}>{param.name}</Button>,
           param.type ? `${param.type}, ${String.fromCharCode(160)}` : null,
           param.required ? 'required' : 'optional',
           (!param.description || !param.example) ? <WarningLabel /> : '',
@@ -139,8 +168,10 @@ class EndpointDoc extends React.Component {
           title="Description"
           description="This description will appear on your generated public documentation."
           emptyMsg="Your endpoint does not have any description yet."
-          buttonAction={() => {}}
-        />
+          buttonAction={this.props.endpoint.description ? null : this.editDescription}
+        >
+          { this.renderDescription() }
+        </DocumentationBlock>
 
         <DocumentationBlock
           title="URL params"
