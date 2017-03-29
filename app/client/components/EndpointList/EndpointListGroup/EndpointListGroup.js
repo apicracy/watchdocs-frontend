@@ -110,7 +110,7 @@ class EndpointListGroup extends React.Component {
     return (
       <div className={styles.root}>
         <div className={topStyle}>
-          <Link to={`/docs/${id}`} className={styles.link} onClick={this.toggleOpen}>
+          <Link to={`/editor/${id}`} className={styles.link} onClick={this.toggleOpen}>
             { this.renderIcon() }
             <span className={styles.groupName}>{ groupName }</span>
           </Link>
