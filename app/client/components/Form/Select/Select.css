@@ -19,6 +19,7 @@
   z-index: 1000;
   color: black;
   border: 1px solid black;
+  border-radius: 0 0 5px 5px;
 }
 
 .innerSelected {

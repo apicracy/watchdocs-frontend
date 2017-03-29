@@ -15,9 +15,9 @@ import JSONSEditor from 'containers/JSONSEditor/JSONSEditor';
 const Routes = (
   <Route>
     <Route path="/" component={AppLayout}>
-      <IndexRedirect to="/docs" />
+      <IndexRedirect to="/editor" />
 
-      <Route path="docs">
+      <Route path="editor">
         <IndexRoute component={ApiDoc} />
 
         <Route path="jsonseditor" component={JSONSEditor} />
