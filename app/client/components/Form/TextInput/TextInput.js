@@ -6,6 +6,7 @@ const TextInput = ({ placeholder, value, onChange, iconRight,
   const isValid = (value.replace(validation, '').length === 0);
   const variantStyle = (variant === 'white') ? styles.rootWhite : styles.root;
   const variantErrorStyle = (variant === 'white') ? styles.rootErrorWhite : styles.rootError;
+  const variantInputStyle = (variant === 'white') ? styles.inputWhite : styles.input;
 
   return (
     <div className={styles.wrapper}>
@@ -14,7 +15,7 @@ const TextInput = ({ placeholder, value, onChange, iconRight,
           type="text"
           placeholder={placeholder}
           onChange={onChange}
-          className={styles.input}
+          className={variantInputStyle}
           value={value}
         />
         <span className={styles.addon}>{ iconRight }</span>
