@@ -21,8 +21,8 @@ export function fetchProjects(urlParam) {
           activeProjectFromUrl = getActiveProjectFromUrl(data, urlParam);
         }
 
-        const projects = parseProjects(data);
-        const activeProject = activeProjectFromUrl ? activeProjectFromUrl : activeProjectFromCache;
+        const projects = { ...data };
+        const activeProject = activeProjectFromUrl || activeProjectFromCache;
 
         dispatch(load(projects));
 
@@ -31,9 +31,7 @@ export function fetchProjects(urlParam) {
         } else {
           // project does not exist
           browserHistory.push(`/project-manager?not_found=${urlParam}`);
-          console.error(`Project ${urlParam} does not exist.`);
         }
-
       });
   };
 }
@@ -65,7 +63,7 @@ function getActiveProjectFromCache(data) {
     activeProject = data.find(project => project.id === cached);
   }
 
-  return activeProject ? activeProject : data.reduce((v, project) => {
+  return activeProject || data.reduce((v, project) => {
     if (v.id < project.id) return project;
 
     return v;
@@ -78,10 +76,4 @@ function getActiveProjectFromUrl(data, name) {
 
     return v;
   }, null);
-}
-
-function parseProjects(data) {
-  return data.map(project => ({
-    ...project,
-  }));
 }

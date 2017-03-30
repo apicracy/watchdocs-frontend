@@ -5,7 +5,7 @@ import {
 
 const INITIAL_STATE = {
   activeProject: {},
-  projectList: []
+  projectList: [],
 };
 
 export function projects(state = INITIAL_STATE, action) {
@@ -30,6 +30,6 @@ function setActive(state, payload) {
     ...state,
     activeProject: {
       ...payload,
-    }
+    },
   };
 }

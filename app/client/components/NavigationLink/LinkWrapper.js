@@ -8,6 +8,7 @@ import { Link } from 'react-router';
 class LinkWrapper extends React.Component {
   static propTypes = {
     projectName: React.PropTypes.string,
+    to: React.PropTypes.string,
   }
 
   render() {
@@ -18,7 +19,13 @@ class LinkWrapper extends React.Component {
       projectName: null,
     };
 
-    return <Link to={props.to} className={props.className} onClick={props.onClick} children={props.children} />;
+    return (
+      <Link
+        to={props.to}
+        className={props.className}
+        onClick={props.onClick}
+      > { props.children } </Link>
+    );
   }
 }
 
