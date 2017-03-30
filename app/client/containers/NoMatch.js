@@ -1,6 +1,6 @@
 import React from 'react';
 import img404 from 'assets/404.jpg';
-import Container from 'components/COntainer/Container';
+import Container from 'components/Container/Container';
 
 const STYLES = {
   container: {

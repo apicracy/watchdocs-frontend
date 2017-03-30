@@ -20,7 +20,7 @@ const Routes = (
       <IndexRoute component={Loading} />
     </Route>
 
-    <Route path="/projects" component={ProjectNotFound} />
+    <Route path="/project-manager" component={Projects} />
 
     <Route path=":project_name" component={AppLayout}>
       <IndexRedirect to="editor" />

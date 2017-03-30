@@ -30,7 +30,7 @@ export function fetchProjects(urlParam) {
           activateProject(dispatch, activeProject);
         } else {
           // project does not exist
-          browserHistory.push(`/projects?not_found=${urlParam}`);
+          browserHistory.push(`/project-manager?not_found=${urlParam}`);
           console.error(`Project ${urlParam} does not exist.`);
         }
 
