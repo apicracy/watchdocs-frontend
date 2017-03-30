@@ -1,13 +1,15 @@
 import React from 'react';
 import styles from './DocumentationRow.css';
 
+function render(v, k) {
+  return React.isValidElement(v) ? { ...v, key: k } : <span key={k}>{v}</span>;
+}
+
 const DocumentationRow = ({ empty, data, actions }) => (
   <article className={empty ? styles.empty : styles.root}>
     <div className={styles.data}>
       {
-        data.map((v, k) => (
-          <span key={k}>{v}</span>
-        ))
+        data.map(render)
       }
     </div>
     <div className={styles.actions}>

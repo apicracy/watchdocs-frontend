@@ -4,7 +4,16 @@
     "groupName": "Example Group",
     "groupPath": "/example",
     "endpoints": [
-      { "method": "GET", "params": [], "id": 2020, "status": "valid" },
+      {
+        "method": "GET",
+        "params": [],
+        "id": 2020,
+        "status": "valid",
+        "description": {
+          "title": "Description Title",
+          "content": "Endpoint description lorem ipsum sit amet dolor"
+        }
+      },
       { "method": "GET",
         "params": [
           {"id": 1231, "name": "page_id", "type": "number", "description": "Id of page to be displayed", "example": "1", "required": true, "main": true},

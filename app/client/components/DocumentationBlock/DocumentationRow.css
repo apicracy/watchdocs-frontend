@@ -43,10 +43,14 @@
 
 .data {
   display: inline-flex;
+  flex-wrap: wrap;
   align-items: center;
   padding: 0 10px;
 }
 
 .actions {
+  flex-basis: 75px;
+  text-align: right;
+  flex-shrink: 0;
   color: #d1d0d7;
 }

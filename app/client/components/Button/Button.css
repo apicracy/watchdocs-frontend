@@ -42,6 +42,7 @@
 .linkPrimary {
   font-family: 'RobotoBold', Helvetica, sans-serif;
   color: #6C6AB8;
+  padding-right: 10px !important; /* do not let to override this */
 }
 
 .large {
@@ -60,6 +61,19 @@
 
 .spaceLeft {
   margin-left: 10px;
+}
+
+.block {
+  display: block;
+  width: 100%;
+}
+
+.textLeft {
+  text-align: left;
+}
+
+.noPaddingLeft {
+  padding-left: 0;
 }
 
 .iconLeft {
