@@ -27,6 +27,9 @@ module.exports = {
     new webpack.DefinePlugin(Object.assign({}, reappDevTools.json2env(appEnv), {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     })),
+    new webpack.ProvidePlugin({
+      fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch',
+    }),
   ],
   resolve: {
     extensions: ['', '.js', 'css'],
@@ -39,6 +42,7 @@ module.exports = {
     alias: {
       'utils/main': 'utils/main-dev',
       'utils/store': 'utils/store-dev',
+      fetch: path.join('/node_modules', 'whatwg-fetch', 'fetch.js'),
     },
   },
   module: {
