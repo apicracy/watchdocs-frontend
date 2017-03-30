@@ -21,7 +21,6 @@ import {
 
 @connect(store => ({
   endpoints: store.endpoints,
-  projectName: store.projects.activeProject.name,
 }))
 class Aside extends React.Component {
 
@@ -84,7 +83,6 @@ class Aside extends React.Component {
   }
 
   render() {
-    const { projectName } = this.props;
     const { group_id: groupId, endpoint_id: endpointId } = this.props.params;
     const tabData = [
       { title: 'All', id: 'all' },
@@ -119,7 +117,6 @@ class Aside extends React.Component {
         />
         <Tabs data={tabData} onChange={this.tabChange} />
         <EndpointList
-          projectName={projectName}
           endpoints={endpoints}
           activeGroup={groupId}
           selected={endpointId}
