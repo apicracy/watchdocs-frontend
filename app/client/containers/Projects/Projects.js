@@ -31,7 +31,7 @@ class Projects extends React.Component {
               <h1>404 Project Not Found</h1>
               <h3>
                 We are sorry, but project
-                <span className={styles.projectName}>{ notFound }</span>
+                <span className={styles.projectName}>{ ` ${notFound} ` }</span>
                 either does not exist or you do not have access to it.
               </h3>
               <h4>
