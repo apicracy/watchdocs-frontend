@@ -4,7 +4,7 @@ import styles from './EndpointListGroup.css';
 
 import EndpointListItem from '../EndpointListItem/EndpointListItem';
 import Icon from 'components/Icon/Icon';
-import { Link } from 'react-router';
+import Link from 'components/NavigationLink/LinkWrapper';
 
 class EndpointListGroup extends React.Component {
 

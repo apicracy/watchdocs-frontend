@@ -14,12 +14,19 @@ import Icon from 'components/Icon/Icon';
 import CustomIcon from 'components/Icon/CustomIcon';
 
 @connect(store => ({
-  projects: store.projects,
+  projects: store.projects.projectList,
+  activeProject: store.projects.activeProject,
 }))
 class AppLayout extends React.Component {
 
   componentWillMount() {
-    this.props.dispatch(fetchProjects());
+    this.props.dispatch(fetchProjects(this.props.params.project_name));
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params.project_name !== this.props.params.project_name) {
+      this.props.dispatch(fetchProjects(nextProps.params.project_name));
+    }
   }
 
   static propTypes = {
@@ -30,6 +37,7 @@ class AppLayout extends React.Component {
     params: React.PropTypes.object, // supplied by react-router
     dispatch: React.PropTypes.func,
     projects: React.PropTypes.array,
+    activeProject: React.PropTypes.object,
   }
 
   switchProject = (id) => {
@@ -37,8 +45,7 @@ class AppLayout extends React.Component {
   }
 
   render() {
-    const { projects } = this.props;
-    const activeProject = projects.find(p => p.active);
+    const { projects, activeProject } = this.props;
 
     return (
       <div className={styles.appLayout}>

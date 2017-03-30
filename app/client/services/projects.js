@@ -1,3 +1,5 @@
+import { browserHistory } from 'react-router';
+
 import {
   fetchProjects as load,
   setActive,
@@ -5,45 +7,73 @@ import {
 
 import { fetchEndpoints } from 'services/endpoints';
 
-export function fetchProjects() {
+export function fetchProjects(urlParam) {
   return (dispatch) => {
     fetch('/projects')
       .then(response => response.json())
       .then((data) => {
-        const cachedActiveId = getActiveProject(data);
-        const projects = parseProjects(data, cachedActiveId);
+        let activeProjectFromCache = null;
+        let activeProjectFromUrl = null;
+
+        if (!urlParam) {
+          activeProjectFromCache = getActiveProjectFromCache(data);
+        } else {
+          activeProjectFromUrl = getActiveProjectFromUrl(data, urlParam);
+        }
+
+        const projects = [...data];
+        const activeProject = activeProjectFromUrl || activeProjectFromCache;
 
         dispatch(load(projects));
-        dispatch(fetchEndpoints(cachedActiveId));
+
+        if (activeProject) {
+          activateProject(dispatch, activeProject);
+        } else {
+          // project does not exist
+          browserHistory.push(`/project-manager?not_found=${urlParam}`);
+        }
       });
   };
 }
 
 export function setActiveProject(id) {
   return (dispatch, getState) => {
-    localStorage.setItem('activeProject', id);
-    const state = getState().projects.map(v => ({
-      ...v,
-      active: (v.id === id),
-    }));
-
-    dispatch(setActive(state));
-    dispatch(fetchEndpoints(id));
+    const activeProject = getState().projects.projectList.find(p => p.id === id);
+    activateProject(dispatch, activeProject);
   };
 }
 
-function getActiveProject(data) {
-  return parseInt(localStorage.getItem('activeProject'), 10) || data.reduce((v, i) => {
-    if (v < i.id) return i.id;
+function activateProject(dispatch, project) {
+  localStorage.setItem('activeProject', project.id);
+  const currentPath = browserHistory.getCurrentLocation().pathname;
 
-    return v;
-  }, 0);
+  if (!currentPath.includes(project.name)) {
+    browserHistory.push(`${project.name}`);
+  }
+
+  dispatch(setActive(project));
+  dispatch(fetchEndpoints(project.id));
 }
 
-function parseProjects(data, activeId) {
-  return data.map(project => ({
-    ...project,
-    name: `${project.name} ${project.version}`,
-    active: (project.id === activeId),
-  }));
+function getActiveProjectFromCache(data) {
+  const cached = parseInt(localStorage.getItem('activeProject'), 10);
+  let activeProject = null;
+
+  if (cached) {
+    activeProject = data.find(project => project.id === cached);
+  }
+
+  return activeProject || data.reduce((v, project) => {
+    if (v.id < project.id) return project;
+
+    return v;
+  }, { id: 0 });
+}
+
+function getActiveProjectFromUrl(data, name) {
+  return data.reduce((v, project) => {
+    if (project.name === name) return project;
+
+    return v;
+  }, null);
 }

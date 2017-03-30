@@ -3,22 +3,33 @@ import {
   SET_ACTIVE_PROJECT,
 } from 'actions/projects';
 
-const INITIAL_STATE = [];
+const INITIAL_STATE = {
+  activeProject: {},
+  projectList: [],
+};
 
 export function projects(state = INITIAL_STATE, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case FETCH_PROJECTS: return fetchProjects(payload);
-    case SET_ACTIVE_PROJECT: return setActive(payload);
+    case FETCH_PROJECTS: return fetchProjects(state, payload);
+    case SET_ACTIVE_PROJECT: return setActive(state, payload);
     default: return state;
   }
 }
 
-function fetchProjects(payload) {
-  return [...payload];
+function fetchProjects(state, payload) {
+  return {
+    ...state,
+    projectList: [...payload],
+  };
 }
 
-function setActive(payload) {
-  return [...payload];
+function setActive(state, payload) {
+  return {
+    ...state,
+    activeProject: {
+      ...payload,
+    },
+  };
 }

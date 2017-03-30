@@ -7,6 +7,8 @@ import NoMatch from 'containers/NoMatch';
 
 /* import pages */
 import Wiki from 'containers/Wiki/Wiki';
+import Loading from 'containers/Loading/Loading';
+import Projects from 'containers/Projects/Projects';
 import ApiDoc from 'containers/ApiDoc/ApiDoc';
 import GroupDoc from 'containers/GroupDoc/GroupDoc';
 import EndpointDoc from 'containers/EndpointDoc/EndpointDoc';
@@ -14,8 +16,16 @@ import JSONSEditor from 'containers/JSONSEditor/JSONSEditor';
 
 const Routes = (
   <Route>
-    <Route path="/" component={AppLayout}>
-      <IndexRedirect to="/editor" />
+    <Route exact path="/" component={AppLayout} >
+      <IndexRoute component={Loading} />
+    </Route>
+
+    <Route path="/project-manager" component={Projects} />
+
+    <Route path=":project_name" component={AppLayout}>
+      <IndexRedirect to="editor" />
+
+      <Route path="project-not-found" component={NoMatch} />
 
       <Route path="editor">
         <IndexRoute component={ApiDoc} />
