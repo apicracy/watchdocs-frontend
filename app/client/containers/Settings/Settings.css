@@ -1,6 +1,7 @@
 .root {
   display: block;
   width: 100%;
+  display: flex;
 }
 
 .buttons {
@@ -16,7 +17,28 @@
 .row {
   display: flex;
   width: 100%;
+  justify-content: space-between;
 }
 .column {
-  flex: 1;
+  width: 49%;
+}
+
+.aside {
+  width: 300px;
+}
+
+.active {
+  font-weight: bold;
+}
+
+.menu {
+  margin-top: 50px;
+  margin-left: 80px;
+}
+
+.container {
+  background: #EDEFF4;
+  width: 100%;
+  padding: 50px;
+  padding-top: 0;
 }
