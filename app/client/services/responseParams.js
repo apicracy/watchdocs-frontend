@@ -61,8 +61,22 @@ export function setResponseParam(id) {
     const {
       responses,
     } = getState().endpointView;
-
+    dispatch(reset());
     const elem = responses.find(param => param.id.toString() === id);
     dispatch(setResponseAction(elem));
+  };
+}
+
+
+export function addParam(id) {
+  return (dispatch, getState) => {
+    const {
+      headers,
+    } = getState().responseParams;
+
+    const elem = headers.find(param => param.id === id);
+    const newHeaders = headers
+      .map(param => ((param.id === id) ? { ...elem, isNew: false } : param));
+    dispatch(setHeadersAction(newHeaders));
   };
 }

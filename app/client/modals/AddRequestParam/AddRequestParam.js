@@ -21,7 +21,7 @@ const warningMessage = {
   isVisible: !!store.modals[MODAL_NAME],
   modals: store.modals,
 
-  headers: store.responseParams.headers,
+  headers: store.requestParams.headers,
 }))
 class addRequestParam extends React.Component {
 

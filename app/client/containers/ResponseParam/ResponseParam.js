@@ -18,7 +18,7 @@ import Select from 'components/Form/Select/Select';
 import CustomIcon from 'components/Icon/CustomIcon';
 
 import { openModal } from 'actions/modals';
-import { setStatus, addHeader, saveResponseParam, setResponseParam } from 'services/responseParams';
+import { setStatus, addHeader, saveResponseParam, setResponseParam, addParam } from 'services/responseParams';
 
 @connect(store => ({
   endpoint: store.endpointView,
@@ -58,7 +58,6 @@ class ResponseParam extends React.Component {
       { id: 409, name: '409 - Conflict' },
       { id: 500, name: '500 - Internal Server Error' },
     ];
-    // this.props.dispatch(setStatus(this.paramTypes[0]));
   }
 
   componentDidMount() {
@@ -124,6 +123,7 @@ class ResponseParam extends React.Component {
   }
 
   editParam = id => () => this.props.dispatch(openModal('addResponseParam', id));
+  addParam = id => () => this.props.dispatch(addParam(id));
 
   renderParams() {
     // to keep order.
@@ -139,9 +139,11 @@ class ResponseParam extends React.Component {
           param.required ? 'required' : 'optional',
           (!param.description || !param.example) && !param.isNew ? <WarningLabel /> : '',
         ]}
-        actions={[
+        actions={!param.isNew ? [
           <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editParam(param.id)} />,
           !param.main && <IconButton icon={<Icon name="trash" size="lg" />} />,
+        ] : [
+          <IconButton icon={<Icon name="plus" size="lg" />} onClick={this.addParam(param.id)} />,
         ]}
       />
     ));
@@ -199,8 +201,7 @@ class ResponseParam extends React.Component {
         <BackLink onClick={browserHistory.goBack}><b>{endpoint.method} {`"${endpoint.fullPath}"`}</b></BackLink>
         <div className={styles.title}>Add Response</div>
         <div className={styles.description}>Your request for endpoint
-          <b> {endpoint.method} {endpoint.fullPath}</b>
-          is outdated. Please
+          <b> {endpoint.method} {endpoint.fullPath}</b> is outdated. Please
           fix issues below <b>Last check performed 2 hours ago.</b></div>
         <DocumentationBlock
           title="Response status"

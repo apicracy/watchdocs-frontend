@@ -1,5 +1,4 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import styles from './EndpointDoc.css';
 
@@ -36,6 +35,7 @@ class EndpointDoc extends React.Component {
     endpoint: React.PropTypes.object,
     group: React.PropTypes.object,
     endpointList: React.PropTypes.array,
+    router: React.PropTypes.object,
     responses: React.PropTypes.array,
   }
 
@@ -112,8 +112,8 @@ class EndpointDoc extends React.Component {
 
   /* Params section */
   editParam = id => () => this.props.dispatch(openModal('addUrlParam', id));
-  editResponse = id => () => browserHistory.push(`/docs/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/response/${id}`);
-  editRequest = id => () => browserHistory.push(`/docs/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/request/${id}`);
+  editResponse = id => () => this.props.router.push(`/docs/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/response/${id}`);
+  editRequest = id => () => this.props.router.push(`/docs/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/request/${id}`);
 
   renderParams() {
     if (!this.props.endpoint || !this.props.endpoint.params) return [];
@@ -241,7 +241,7 @@ class EndpointDoc extends React.Component {
           description="API's methods can support or require various HTTP headers."
           emptyMsg="You don't have request set up yet."
           buttonAction={() => {
-            browserHistory.push(`/docs/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/request`);
+            this.props.router.push(`/docs/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/request`);
           }}
           content={(
             <Radio
@@ -266,7 +266,7 @@ class EndpointDoc extends React.Component {
           title="Responses Available"
           emptyMsg="You don't have any responses set up yet."
           buttonAction={() => {
-            browserHistory.push(`/docs/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/response`);
+            this.props.router.push(`/docs/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/response`);
           }}
         >
           { this.renderResponses() }

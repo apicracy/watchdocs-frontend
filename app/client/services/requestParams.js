@@ -62,7 +62,22 @@ export function setRequestParam(id) {
       requests,
     } = getState().endpointView;
 
+    dispatch(reset());
+
     const elem = requests.find(param => param.id.toString() === id);
     dispatch(setRequestAction(elem));
+  };
+}
+
+export function addParam(id) {
+  return (dispatch, getState) => {
+    const {
+      headers,
+    } = getState().requestParams;
+
+    const elem = headers.find(param => param.id === id);
+    const newHeaders = headers
+      .map(param => ((param.id === id) ? { ...elem, isNew: false } : param));
+    dispatch(setHeadersAction(newHeaders));
   };
 }

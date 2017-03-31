@@ -17,7 +17,7 @@ import JSONSEditor from 'components/JSONSEditor/JSONSEditor';
 import CustomIcon from 'components/Icon/CustomIcon';
 
 import { openModal } from 'actions/modals';
-import { setStatus, addHeader, saveRequestParam, setRequestParam } from 'services/requestParams';
+import { setStatus, addHeader, saveRequestParam, setRequestParam, addParam } from 'services/requestParams';
 
 @connect(store => ({
   endpoint: store.endpointView,
@@ -40,9 +40,6 @@ class RequestParam extends React.Component {
     baseJSONSchema: React.PropTypes.object,
     draftJSONSchema: React.PropTypes.object,
     headers: React.PropTypes.array,
-  }
-
-  componentWillMount() {
   }
 
   componentDidMount() {
@@ -108,6 +105,7 @@ class RequestParam extends React.Component {
   }
 
   editParam = id => () => this.props.dispatch(openModal('addRequestParam', id));
+  addParam = id => () => this.props.dispatch(addParam(id));
 
   renderParams() {
     // to keep order.
@@ -123,9 +121,11 @@ class RequestParam extends React.Component {
           param.required ? 'required' : 'optional',
           (!param.description || !param.example) && !param.isNew ? <WarningLabel /> : '',
         ]}
-        actions={[
+        actions={!param.isNew ? [
           <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editParam(param.id)} />,
           !param.main && <IconButton icon={<Icon name="trash" size="lg" />} />,
+        ] : [
+          <IconButton icon={<Icon name="plus" size="lg" />} onClick={this.addParam(param.id)} />,
         ]}
       />
     ));
@@ -182,11 +182,10 @@ class RequestParam extends React.Component {
         <BackLink onClick={browserHistory.goBack}><b>{endpoint.method} {`"${endpoint.fullPath}"`}</b></BackLink>
         <div className={styles.title}>Add Request</div>
         <div className={styles.description}>Your request for endpoint
-          <b> {endpoint.method} {endpoint.fullPath}</b>
-          is outdated. Please
+          <b> {endpoint.method} {endpoint.fullPath}</b> is outdated. Please
           fix issues below <b>Last check performed 2 hours ago.</b></div>
         <DocumentationBlock
-          title="Requests Body"
+          title="Request Body"
           description="This is title of the section we're going
             to display in documentation and in navigation."
         >

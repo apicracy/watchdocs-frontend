@@ -61,11 +61,6 @@
   top: -1px;
 }
 
-/*.isNew:nth-of-type(2n)::before {
-  background: #5CC16A;
-}*/
-/**/
-
 .empty {
   composes: root;
 
