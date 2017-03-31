@@ -113,8 +113,8 @@ class EndpointDoc extends React.Component {
 
   /* Params section */
   editParam = id => () => this.props.dispatch(openModal('addUrlParam', id));
-  editResponse = id => () => this.props.router.push(`/docs/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/response/${id}`);
-  editRequest = id => () => this.props.router.push(`/docs/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/request/${id}`);
+  editResponse = id => () => this.props.router.push(`/${this.props.params.project_name}/editor/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/response/${id}`);
+  editRequest = id => () => this.props.router.push(`/${this.props.params.project_name}/editor/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/request/${id}`);
 
   renderParams() {
     if (!this.props.endpoint || !this.props.endpoint.params) return [];
@@ -227,7 +227,7 @@ class EndpointDoc extends React.Component {
           description="API's methods can support or require various HTTP headers."
           emptyMsg="You don't have request set up yet."
           buttonAction={() => {
-            this.props.router.push(`/docs/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/request`);
+            this.props.router.push(`/${this.props.params.project_name}/editor/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/request`);
           }}
           content={(
             <Radio
@@ -252,7 +252,7 @@ class EndpointDoc extends React.Component {
           title="Responses Available"
           emptyMsg="You don't have any responses set up yet."
           buttonAction={() => {
-            this.props.router.push(`/docs/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/response`);
+            this.props.router.push(`/${this.props.params.project_name}/editor/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/response`);
           }}
         >
           { this.renderResponses() }
