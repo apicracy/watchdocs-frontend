@@ -1,0 +1,22 @@
+.root {
+  display: block;
+  width: 100%;
+}
+
+.buttons {
+  margin: 50px 0;
+}
+
+.divider::after {
+  content: ' ';
+  border-right: 1px solid #d1d0d7;
+  margin-left: 5px;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+}
+.column {
+  flex: 1;
+}

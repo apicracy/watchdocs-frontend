@@ -15,6 +15,7 @@ import EndpointDoc from 'containers/EndpointDoc/EndpointDoc';
 import RequestParam from 'containers/RequestParam/RequestParam';
 import ResponseParam from 'containers/ResponseParam/ResponseParam';
 import JSONSEditor from 'containers/JSONSEditor/JSONSEditor';
+import Settings from 'containers/Settings/Settings';
 
 const Routes = (
   <Route>
@@ -46,6 +47,8 @@ const Routes = (
       </Route>
 
       <Route path="about" component={About} />
+
+      <Route path="settings" component={Settings} />
     </Route>
 
     <Route path="*" component={AppLayout}>
