@@ -12,6 +12,8 @@ import Projects from 'containers/Projects/Projects';
 import ApiDoc from 'containers/ApiDoc/ApiDoc';
 import GroupDoc from 'containers/GroupDoc/GroupDoc';
 import EndpointDoc from 'containers/EndpointDoc/EndpointDoc';
+import RequestParam from 'containers/RequestParam/RequestParam';
+import ResponseParam from 'containers/ResponseParam/ResponseParam';
 import JSONSEditor from 'containers/JSONSEditor/JSONSEditor';
 
 const Routes = (
@@ -36,6 +38,10 @@ const Routes = (
           <Route path="wiki" component={Wiki} />
           <Route path=":group_id" component={GroupDoc} />
           <Route path=":group_id/endpoint/:endpoint_id" component={EndpointDoc} />
+          <Route path=":group_id/endpoint/:endpoint_id/request" component={RequestParam} />
+          <Route path=":group_id/endpoint/:endpoint_id/request/:request_id" component={RequestParam} />
+          <Route path=":group_id/endpoint/:endpoint_id/response" component={ResponseParam} />
+          <Route path=":group_id/endpoint/:endpoint_id/response/:response_id" component={ResponseParam} />
         </Route>
       </Route>
 

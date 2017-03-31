@@ -12,3 +12,8 @@
   border-right: 1px solid #d1d0d7;
   margin-left: 5px;
 }
+
+.responseParam {
+  color: #6C6AB8;
+  font-family: 'RobotoBold', Helvetica, sans-serif;
+}

@@ -12,7 +12,8 @@ const buttonIcon = (
   </span>
 );
 
-const DocumentationBlock = ({ title, description, buttonAction, children, emptyMsg, content }) => {
+const DocumentationBlock = ({ title, titleElement, description,
+  buttonAction, children, emptyMsg, content }) => {
   const parsedDescription = description && description.map ? (
     description.map((v, k) => <span key={k}>{v}</span>)
   ) : description;
@@ -31,7 +32,7 @@ const DocumentationBlock = ({ title, description, buttonAction, children, emptyM
   return (
     <article className={styles.root}>
       <header className={styles.header}>
-        <div className={styles.title}>{ title }</div>
+        <div className={styles.title}>{title} {titleElement}</div>
         { buttonAction && (
           <div className={styles.buttonWrapper}>
             <Button variants={['rounded', 'body']} icon={buttonIcon} onClick={buttonAction}>Add new</Button>
@@ -53,6 +54,7 @@ const DocumentationBlock = ({ title, description, buttonAction, children, emptyM
 
 DocumentationBlock.propTypes = {
   title: React.PropTypes.string.isRequired,
+  titleElement: React.PropTypes.object,
   description: React.PropTypes.oneOfType([
     React.PropTypes.node,
     React.PropTypes.arrayOf(React.PropTypes.node),

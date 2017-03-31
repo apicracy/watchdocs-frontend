@@ -3,12 +3,20 @@ import {
   ADD_ENDPOINT_PARAM,
   UPDATE_ENDPOINT_PARAM,
   UPDATE_ENDPOINT_DESCRIPTION,
+  ADD_RESPONSE,
+  UPDATE_RESPONSE,
+  ADD_REQUEST,
+  UPDATE_REQUEST,
+  SET_RESPONSES,
+  SET_REQUESTS,
 } from 'actions/endpointView';
 
 const INITIAL_STATE = {
   isDirty: false,
   method: '',
   params: [],
+  responses: [],
+  requests: [],
   id: null,
   status: '',
   parentId: null,
@@ -19,17 +27,40 @@ export function endpointView(state = INITIAL_STATE, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case SET_ENDPOINT_VIEW: return setEndpointView(payload);
+    case SET_ENDPOINT_VIEW: return setEndpointView(state, payload);
     case ADD_ENDPOINT_PARAM: return addEndpointParam(state, payload);
     case UPDATE_ENDPOINT_PARAM: return updateEndpointParam(state, payload);
     case UPDATE_ENDPOINT_DESCRIPTION: return updateEndpointDescription(state, payload);
+    case ADD_RESPONSE: return addResponse(state, payload);
+    case UPDATE_RESPONSE: return updateResponse(state, payload);
+    case ADD_REQUEST: return addRequest(state, payload);
+    case UPDATE_REQUEST: return updateRequest(state, payload);
+    case SET_RESPONSES: return setResponses(state, payload);
+    case SET_REQUESTS: return setRequests(state, payload);
     default: return state;
   }
 }
 
-function setEndpointView(payload) {
+function setRequests(state, payload) {
   return {
-    ...payload,
+    ...state,
+    requests: payload,
+  };
+}
+
+function setResponses(state, payload) {
+  return {
+    ...state,
+    responses: payload,
+  };
+}
+
+function setEndpointView(state, payload) {
+  const newEndpointView = payload || {};
+
+  return {
+    ...state,
+    ...newEndpointView,
   };
 }
 
@@ -60,10 +91,65 @@ function updateEndpointParam(state, payload) {
   };
 }
 
+
 function updateEndpointDescription(state, payload) {
   return {
     ...state,
     isDirty: true,
     description: payload,
+  };
+}
+
+function addResponse(state, payload) {
+  return {
+    ...state,
+    isDirty: true,
+    responses: [
+      ...state.responses,
+      {
+        ...payload,
+      },
+    ],
+  };
+}
+
+function updateResponse(state, payload) {
+  const responses = state.responses.filter(p => p.id !== payload.id);
+  return {
+    ...state,
+    isDirty: true,
+    responses: [
+      ...responses,
+      {
+        ...payload,
+      },
+    ],
+  };
+}
+
+function addRequest(state, payload) {
+  return {
+    ...state,
+    isDirty: true,
+    requests: [
+      ...state.requests,
+      {
+        ...payload,
+      },
+    ],
+  };
+}
+
+function updateRequest(state, payload) {
+  const requests = state.requests.filter(p => p.id !== payload.id);
+  return {
+    ...state,
+    isDirty: true,
+    requests: [
+      ...requests,
+      {
+        ...payload,
+      },
+    ],
   };
 }
