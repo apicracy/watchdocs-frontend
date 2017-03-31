@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styles from './Aside.css';
 
 import EndpointList from 'components/EndpointList/EndpointList';
 import TextInput from 'components/Form/TextInput/TextInput';
@@ -8,6 +7,7 @@ import Icon from 'components/Icon/Icon';
 import CustomIcon from 'components/Icon/CustomIcon';
 import IconButton from 'components/Button/IconButton';
 import Tabs from 'components/Tabs/Tabs';
+import Sidebar from 'components/Sidebar/Sidebar';
 
 import { filterEndpoints } from 'services/endpoint-service';
 
@@ -32,26 +32,7 @@ class Aside extends React.Component {
 
   componentWillMount() {
     // Load width from cache
-    this.setState({ search: '', status: '', width: 300, baseWidth: 300, dragStart: null });
-  }
-
-  onDragStart = ({ nativeEvent }) => {
-    this.setState({ dragStart: nativeEvent.pageX });
-  }
-
-  onDrag = ({ nativeEvent }) => {
-    if (this.state.width + (nativeEvent.pageX - this.state.dragStart) > 200) {
-      this.setState({
-        width: this.state.width + (nativeEvent.pageX - this.state.dragStart),
-        dragStart: nativeEvent.pageX,
-      });
-    }
-  }
-
-  onDragEnd = () => {
-    this.setState({
-      baseWidth: null,
-    });
+    this.setState({ search: '', status: '' });
   }
 
   tabChange = (activeTab) => {
@@ -100,15 +81,7 @@ class Aside extends React.Component {
     );
 
     return (
-      <aside className={styles.sideBar} style={{ width: this.state.width }}>
-        <div
-          draggable
-          onDragStart={this.onDragStart}
-          onDrag={this.onDrag}
-          onDragEnd={this.onDragEnd}
-          className={styles.handle}
-        />
-
+      <Sidebar>
         <TextInput
           value={this.state.search}
           placeholder="Filter"
@@ -123,7 +96,7 @@ class Aside extends React.Component {
           onAddNewGroup={this.addNewGroup}
           onAddNewEndpoint={this.addNewEndpoint}
         />
-      </aside>
+      </Sidebar>
     );
   }
 }

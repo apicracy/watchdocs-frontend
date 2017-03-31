@@ -8,6 +8,7 @@ import NoMatch from 'containers/NoMatch';
 /* import pages */
 import Wiki from 'containers/Wiki/Wiki';
 import Loading from 'containers/Loading/Loading';
+import DocumentationViewer from 'containers/DocumentationViewer/DocumentationViewer';
 import Projects from 'containers/Projects/Projects';
 import ApiDoc from 'containers/ApiDoc/ApiDoc';
 import GroupDoc from 'containers/GroupDoc/GroupDoc';
@@ -38,6 +39,8 @@ const Routes = (
           <Route path=":group_id/endpoint/:endpoint_id" component={EndpointDoc} />
         </Route>
       </Route>
+
+      <Route path="documentation" component={DocumentationViewer} />
 
       <Route path="about" component={About} />
     </Route>
