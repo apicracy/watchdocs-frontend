@@ -20,6 +20,7 @@ import { updateEndpointDescription } from 'actions/endpointView';
 /* Modals */
 import { openModal } from 'actions/modals';
 import { MODAL_NAME as EDIT_DESC_MODAL } from 'modals/EditEndpointDescription/EditEndpointDescription';
+import { getFullLink } from 'services/helpers';
 
 @connect(store => ({
   endpoint: store.endpointView,
@@ -184,22 +185,7 @@ class EndpointDoc extends React.Component {
 
   getFullLink = () => {
     const { group, endpoint } = this.props;
-    const basePath = `http://startjoin.com/api/v1${group.fullPath}`;
-
-    if (endpoint.params) {
-      const mainParam = endpoint.params.find(p => p.main);
-      const params = endpoint.params.filter(p => !p.main).map((param) => {
-        const value = param.example ? `=${param.example}` : '';
-        return `${param.name}${value}`;
-      });
-
-      const formattedParams = params.length > 0 ? `?${params.join('&')}` : '';
-      const pathParam = mainParam ? `/:${mainParam.name}` : '';
-
-      return `${basePath}${pathParam}${formattedParams}`;
-    }
-
-    return basePath;
+    return getFullLink(endpoint, group);
   }
 
   render() {

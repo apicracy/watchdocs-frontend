@@ -19,6 +19,7 @@ import CustomIcon from 'components/Icon/CustomIcon';
 
 import { openModal } from 'actions/modals';
 import { setStatus, addHeader, saveResponseParam, setResponseParam, addParam } from 'services/responseParams';
+import { getFullLink } from 'services/helpers';
 
 @connect(store => ({
   endpoint: store.endpointView,
@@ -152,22 +153,7 @@ class ResponseParam extends React.Component {
 
   getFullLink = () => {
     const { group, endpoint } = this.props;
-    const basePath = `http://startjoin.com/api/v1${group.fullPath}`;
-
-    if (endpoint.params) {
-      const mainParam = endpoint.params.find(p => p.main);
-      const params = endpoint.params.filter(p => !p.main).map((param) => {
-        const value = param.example ? `=${param.example}` : '';
-        return `${param.name}${value}`;
-      });
-
-      const formattedParams = params.length > 0 ? `?${params.join('&')}` : '';
-      const pathParam = mainParam ? `/:${mainParam.name}` : '';
-
-      return `${basePath}${pathParam}${formattedParams}`;
-    }
-
-    return basePath;
+    return getFullLink(endpoint, group);
   }
 
   onTypeChange = (id) => {
