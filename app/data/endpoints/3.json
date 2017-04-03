@@ -18,7 +18,7 @@
       {
         "method": "GET",
         "params": [
-          {"id": 1231, "name": "page_id", "type": "number", "description": "Id of page to be displayed", "example": "1", "required": true, "main": true},
+          {"id": 1231, "name": "page_id", "type": "number", "description": "Id of page to be displayed", "example": "12342", "required": true, "main": true},
           {"id": 1232, "name": "token", "type": "string", "required": true, "main": false},
           {"id": 1233, "name": "testParam", "type": "string", "required": false, "main": false},
           {"id": 1234, "name": "itemCount", "type": "number", "required": false, "main": false}
@@ -33,7 +33,7 @@
       {
         "method": "DELETE",
         "params": [
-          {"id": 1231, "name": "page_id", "type": "number", "description": "Id of page to be deleted", "example": "1", "required": true, "main": true},
+          {"id": 1231, "name": "page_id", "type": "number", "description": "Id of page to be deleted", "example": "123321", "required": true, "main": true},
           {"id": 1232, "name": "token", "type": "string", "required": true, "main": false},
           {"id": 1233, "name": "testParam", "type": "string", "required": false, "main": false},
           {"id": 1234, "name": "itemCount", "type": "number", "required": false, "main": false}

@@ -15,3 +15,13 @@ body, html, #app, #root {
   height: 100%;
   min-height: min-content;
 }
+
+
+/* syntax higlight TODO: move to separate file */
+.sh-string,
+.sh-bool,
+.sh-null,
+.sh-number,
+ {
+  color: #63AEE3;
+}

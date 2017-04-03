@@ -16,13 +16,13 @@
   flex: 7 7;
 }
 
-.content > p {
+.bodyContent {
   padding: 15px 30px;
 }
 
 .code {
   font-family: 'RobotoMedium', Helvetica, sans-serif;
-  flex: 4 4;
+  flex: 4 0;
   padding: 15px 0;
   position: relative;
   background-color: #3F4258;

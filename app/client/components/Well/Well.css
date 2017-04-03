@@ -1,0 +1,20 @@
+.root {
+  padding: 5px 10px;
+  background-color: #CDCFE7;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+span.root {
+  display: inline-block;
+}
+
+/* Variants */
+.body {
+  color: #6C6AB8;
+}
+
+.code {
+  background-color: #454961;
+  padding: 25px;
+}

@@ -1,8 +1,19 @@
 import React from 'react';
 import styles from './DocLayout.css';
 import FolderDoc from './FolderDoc';
+import EndpointDoc from './EndpointDoc';
 
 const DocLayout = ({ topLevel, doc, children }) => {
+
+  const renderBody = (type) => {
+    switch(type) {
+      case 'endpoint':
+        return <EndpointDoc doc={doc} />
+
+      default:
+        return <FolderDoc doc={doc} />
+    }
+  };
 
   return (
     <section className={styles.root} id={doc.section}>
@@ -13,7 +24,7 @@ const DocLayout = ({ topLevel, doc, children }) => {
         </article>
         <article className={styles.code}></article>
       </div>
-      <FolderDoc doc={doc} />
+      { renderBody(doc.type) }
 
       { children }
     </section>

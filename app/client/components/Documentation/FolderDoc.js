@@ -5,7 +5,9 @@ const FolderDoc = ({ doc }) => {
   return (
     <div className={styles.top} >
       <article className={styles.content}>
-        <p>{ doc.description }</p>
+        <div className={styles.bodyContent}>
+          { doc.description }
+        </div>
       </article>
       <article className={styles.code}>
         {` `}
