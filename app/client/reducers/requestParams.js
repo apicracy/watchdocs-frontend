@@ -28,6 +28,7 @@ const INITIAL_STATE = {
     properties: {
       username: {
         type: 'integer',
+        default: 1234,
       },
       streetAddress: {
         type: 'string',
