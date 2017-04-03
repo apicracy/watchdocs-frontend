@@ -1,0 +1,33 @@
+.root {
+  display: block;
+  width: 100%;
+}
+
+.buttons {
+  margin: 50px 0;
+}
+
+.divider::after {
+  content: ' ';
+  border-right: 1px solid #d1d0d7;
+  margin-left: 5px;
+}
+
+.title {
+  font-size: 25px;
+  color: #6C6AB8;
+}
+
+.description {
+  color: #7f7d94;
+  flex: 0 0 100%;
+}
+
+.headerDetected {
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  color: #FA6465;
+  justify-content: space-between;
+  margin: 0 15px;
+}

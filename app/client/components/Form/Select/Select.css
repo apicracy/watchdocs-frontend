@@ -39,7 +39,11 @@
 }
 
 /* Variants */
-
+.whiteBackground {
+  background: white;
+  color: #6C6AB8;
+  font-family: 'RobotoBold', Helvetica, sans-serif;
+}
 /* Full Width Variant */
 .fullWidth {
   width: 100%;
