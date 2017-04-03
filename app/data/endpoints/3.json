@@ -22,7 +22,75 @@
           {"id": 1234, "name": "itemCount", "type": "number", "required": false, "main": false}
         ],
         "id": 3030,
-        "status": "valid"
+        "status": "valid",
+        "responses": [
+          {
+            "status": { "id": 200, "name": "200 - OK" },
+            "base": {
+              "id": "User",
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "integer"
+                },
+                "streetAddress": {
+                  "type": "string"
+                }
+              },
+              "required": ["username"]
+            },
+            "draft": {
+              "id": "User",
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "integer"
+                },
+                "streetAddress": {
+                  "type": "string"
+                }
+              },
+              "required": ["username"]
+            },
+            "headers": [
+              {"id": 1234, "name": "live", "type": "string", "required": false, "main": false}
+            ]
+          }
+        ],
+        "requests": [
+          {
+            "status": { "id": 200, "name": "200 - OK" },
+            "base": {
+              "id": "User",
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "integer"
+                },
+                "streetAddress": {
+                  "type": "string"
+                }
+              },
+              "required": ["username"]
+            },
+            "draft": {
+              "id": "User",
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "integer"
+                },
+                "streetAddress": {
+                  "type": "string"
+                }
+              },
+              "required": ["username"]
+            },
+            "headers": [
+              {"id": 1234, "name": "id", "type": "string", "required": false, "main": false}
+            ]
+          }
+        ]
       }
     ]
   }
