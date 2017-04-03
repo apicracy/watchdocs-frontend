@@ -23,9 +23,7 @@ class ApiDoc extends React.Component {
       <Container>
         <Aside params={this.props.params} />
         <Content>
-          <div className={styles.contentWrapper}>
-            { children }
-          </div>
+          { children }
         </Content>
       </Container>
     );

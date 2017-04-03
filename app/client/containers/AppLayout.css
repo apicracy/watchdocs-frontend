@@ -6,14 +6,6 @@
   min-height: 100%;
 }
 
-.contentWrapper {
-  display: flex;
-  flex: 1;
-  position: relative;
-  padding: 50px;
-  overflow-x: hidden;
-}
-
 .navigation {
   display: inline-flex;
   align-items: center;
