@@ -1,0 +1,44 @@
+.root {
+  display: block;
+  width: 100%;
+  display: flex;
+}
+
+.buttons {
+  margin: 50px 0;
+}
+
+.divider::after {
+  content: ' ';
+  border-right: 1px solid #d1d0d7;
+  margin-left: 5px;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.column {
+  width: 49%;
+}
+
+.aside {
+  width: 300px;
+}
+
+.active {
+  font-weight: bold;
+}
+
+.menu {
+  margin-top: 50px;
+  margin-left: 80px;
+}
+
+.container {
+  background: #EDEFF4;
+  width: 100%;
+  padding: 50px;
+  padding-top: 0;
+}
