@@ -16,3 +16,10 @@ export function getFullLink(endpoint, group) {
 
   return basePath;
 }
+
+export function curlBuilder(data) {
+  const method = data.method.toUpperCase();
+  const url = `https://startjoin.com/api/v1${data.path}`;
+
+  return `curl ${method} "${url}"\n  -H "Authorization: meowmeow"`;
+}

@@ -14,16 +14,35 @@ class ScrollSpyLink extends React.Component {
     this.context.scrollSpy.registerLink(this.props.section)
   }
 
+  isActive = (doc) => doc.section === this.context.scrollSpy.currentSection;
+
   render() {
-    const { section, className, children, ...restProps } = this.props
-    const isCurrent = (section === this.context.scrollSpy.currentSection);
+    const { section, className, subitems, children, isTop, ...restProps } = this.props
+    const isCurrent = this.isActive({ section: section });
+    const hasActiveChildren = subitems && subitems.find(this.isActive);
+    const isExpanded = (hasActiveChildren || isCurrent );
+
     const classes = [
+      'root',
       className || '',
+      isTop && 'topLink',
       isCurrent && 'active',
     ].map(v => styles[v]).join(' ');
 
+    const wrapperClasses = [
+      'wrapper',
+      isExpanded && 'expanded',
+    ].map(v => styles[v]).join(' ');
+
     return (
-      <a href={`#${section}`} className={classes} >{children}</a>
+      <div className={wrapperClasses}>
+        <a href={`#${section}`} className={classes}>{children}</a>
+        { isExpanded && (
+          <div className={this.subitems}>
+            { subitems && subitems.map((v, i) => <ScrollSpyLink key={i} {...v}>{v.title}</ScrollSpyLink>) }
+          </div>
+        )}
+      </div>
     );
   }
 }

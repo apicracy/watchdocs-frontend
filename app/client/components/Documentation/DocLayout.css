@@ -50,6 +50,10 @@
   font-size: 22px;
 }
 
+.section {
+  margin-bottom: 30px;
+}
+
 .addHeader {
   font-family: 'RobotoMedium', Helvetica, sans-serif;
   padding: 0 30px;

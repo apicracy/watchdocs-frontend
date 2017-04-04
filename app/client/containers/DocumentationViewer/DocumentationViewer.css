@@ -10,7 +10,10 @@
   flex: 1;
   justify-content: space-between;
   margin: 0;
-  margin-left: 15px;
   height: auto;
   min-height: min-content;
+}
+
+.marginLeft {
+  margin-left: 10px;
 }

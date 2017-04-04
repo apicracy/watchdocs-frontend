@@ -11,7 +11,7 @@ const Cell = ({ data, flex }) => {
 
 const renderCells = (keys, data) => {
   return keys.map((c, i) =>
-    <Cell data={data ? data[c.name] : c} flex={c.flex} key={i} />
+    <Cell data={data ? data[c.key] : c} flex={c.flex} key={i} />
   );
 }
 

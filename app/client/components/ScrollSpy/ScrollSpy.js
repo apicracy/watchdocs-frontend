@@ -39,15 +39,19 @@ class ScrollSpy extends React.Component {
     this.setState({ sections });
   }
 
-  setCurrentSection = () => {
-    const { sections } = this.state
-    const sectionCount = sections.length
-
+  floatingMenu = () => {
     if(this.elem.getBoundingClientRect().top < 0) {
       this.setState({ position: 'fixed' });
     } else {
       this.setState({ position: 'relative' });
     }
+  }
+
+  setCurrentSection = () => {
+    const { sections } = this.state
+    const sectionCount = sections.length
+
+    this.floatingMenu();
 
     if (!sectionCount) return;
 
@@ -62,6 +66,7 @@ class ScrollSpy extends React.Component {
       }
     });
 
+    location.hash = `#${currentSection}`;
     this.setState({ currentSection })
   }
 

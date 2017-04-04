@@ -49,8 +49,12 @@ class DocumentationViewer extends React.Component {
     ));
   }
 
-  renderMenu(documentation) {
-    return documentation.map((v, i) => <Link key={i} section={v.section}>{v.title}</Link>)
+  renderMenu(documentation, isTop) {
+    return documentation.map((v, i) => (
+      <Link key={i} isTop={isTop} subitems={v.children} section={v.section}>
+        {v.title}
+      </Link>
+    ))
   }
 
   render() {
@@ -59,14 +63,16 @@ class DocumentationViewer extends React.Component {
     return (
       <div className={styles.container}>
         <Sidebar>
-          <TextInput
-            value={this.state.search}
-            placeholder="Search"
-            iconRight={this.renderIcon()}
-            onChange={this.filter}
-          />
+          <div className={styles.marginLeft}>
+            <TextInput
+              value={this.state.search}
+              placeholder="Search"
+              iconRight={this.renderIcon()}
+              onChange={this.filter}
+            />
+          </div>
           <ScrollSpy>
-            { this.renderMenu(documentation) }
+            { this.renderMenu(documentation, true) }
           </ScrollSpy>
         </Sidebar>
         <div className={styles.docView}>

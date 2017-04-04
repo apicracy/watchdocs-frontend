@@ -1,5 +1,6 @@
 .wrapper {
-  display: relative;
+  position: relative;
+  width: inherit;
 }
 
 .root {
@@ -10,4 +11,6 @@
 .fixed {
   position: fixed;
   top: 10px;
+  width: inherit;
+  z-index: -10;
 }
