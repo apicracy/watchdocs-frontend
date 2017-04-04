@@ -24,12 +24,7 @@ class JSONSEditor extends React.Component {
     this.setState({ selectedLine });
   }
 
-  onSwitchReq = (index) => {
-    const {
-      linesOfCode,
-    } = this.state;
-
-    console.log(linesOfCode[index]);
+  onSwitchReq = () => {
   }
 
   compare = (base, draft) => {
@@ -89,7 +84,7 @@ class JSONSEditor extends React.Component {
   getLines = (linesOfCode) => {
     let lines = '';
     linesOfCode.map((line) => {
-      lines += line.line + '\n';
+      lines += `${line.line}\n`;
       return null;
     });
 

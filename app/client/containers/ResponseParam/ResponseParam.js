@@ -205,7 +205,7 @@ class ResponseParam extends React.Component {
           description="This is title of the section we're going
             to display in documentation and in navigation."
         >
-          <JSONSEditor base={baseJSONSchema} draft={draftJSONSchema} onCompare={(jsons) => {console.log(jsons)}} />
+          <JSONSEditor base={baseJSONSchema} draft={draftJSONSchema} onCompare={() => { }} />
         </DocumentationBlock>
         <DocumentationBlock
           title="Response Headers"
