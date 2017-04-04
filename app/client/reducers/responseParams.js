@@ -30,7 +30,7 @@ const INITIAL_STATE = {
         type: 'integer',
       },
       streetAddress: {
-        type: 'string',
+        type: 'integer',
       },
     },
     required: ['username'],

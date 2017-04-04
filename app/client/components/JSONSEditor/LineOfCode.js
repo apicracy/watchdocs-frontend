@@ -123,7 +123,6 @@ class LineOfCode extends React.Component {
           <div onClick={onSwitchReq} className={attributeStyle}>
             <span className={attributeSpan}>{attribute}</span>
           </div>
-          <div className={codeStyle}>{code}</div>
         </div>
         <div className={containerButtonStyles}>
           <button className={actionButton} onClick={action}>{actionText}</button>
