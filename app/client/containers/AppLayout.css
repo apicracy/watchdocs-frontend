@@ -10,7 +10,7 @@
   display: flex;
   flex: 1;
   position: relative;
-  padding: 50px;
+  padding: 25px 50px;
   overflow-x: hidden;
 }
 
