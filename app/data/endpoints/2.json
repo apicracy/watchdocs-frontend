@@ -1,128 +1,19 @@
 [
   {
     "id": 1010,
-    "groupName": "Projects",
-    "groupPath": "/projects",
+    "groupName": "WatchdocsTest",
+    "groupPath": "/watchdocs",
     "endpoints": [
-      { "method": "GET", "params": [], "id": 2020, "status": "valid" },
-      { "method": "GET", "params": [{"name": "project_id", "type": "int", "required": true, "main": true}], "id": 3030, "status": "valid" }
-    ]
-  },
-  {
-    "id": 4040,
-    "groupName": "Endpoints",
-    "groupPath": "/endpoints",
-    "endpoints": [
-      { "method": "GET", "params": [], "id": 5050, "status": "valid" },
-      { "method": "GET", "params": [{"name": "endpoint_id", "type": "int", "required": true, "main": true}], "id": 6060, "status": "invalid" },
       {
-        "id": 7070,
-        "groupName": "Inactive",
-        "groupPath": "/incative",
-        "endpoints": [
-          { "method": "GET", "params": [], "id": 8080, "status": "invalid" },
-          { "method": "GET", "params": [{"name": "endpoint_id", "type": "int", "required": true, "main": true}], "id": 9090, "status": "valid" },
-          {
-            "id": 100100,
-            "groupName": "Deleted",
-            "groupPath": "/deleted",
-            "endpoints": [
-              { "method": "GET", "params": [], "id": 110110, "status": "valid" },
-              { "method": "GET", "params": [{"name": "endpoint_id", "type": "int", "required": true, "main": true}], "id": 120120, "status": "valid" }
-            ]
-          }
-        ]
+        "method": "GET",
+        "params": [],
+        "id": 2020,
+        "status": "valid",
+        "description": {
+          "title": "Watchdocs test call",
+          "content": "This entry indicated that you have successfully connected your app with Watchdocs. You can remove it now"
+        }
       }
-    ]
-  },
-  {
-    "id": 130130,
-    "groupName": "Users",
-    "groupPath": "/users",
-    "endpoints": [
-      { "method": "GET", "params": [], "id": 140140, "status": "valid" },
-      { "method": "POST", "params": [], "id": 150150, "status": "invalid" },
-      { "method": "GET", "params": [{"name": "user_id", "type": "int", "required": true, "main": true}], "id": 160160, "status": "invalid" },
-      { "method": "DELETE", "params": [{"name": "user_id", "type": "int", "required": true, "main": true}], "id": 170170, "status": "invalid" },
-      { "method": "PUT", "params": [{"name": "user_id", "type": "int", "required": true, "main": true}], "id": 180180, "status": "valid" },
-      {
-        "id": 190190,
-        "groupName": "Administrators",
-        "groupPath": "/administrators",
-        "endpoints": [
-          { "method": "GET", "params": [], "id": 200200, "status": "valid" },
-          { "method": "POST", "params": [], "id": 210210, "status": "invalid" },
-          { "method": "DELETE", "params": [], "id": 220220, "status": "valid" },
-          { "method": "PATCH", "params": [], "id": 230230, "status": "valid" },
-          {
-            "id": 240240,
-            "groupName": "ProjectOwners",
-            "groupPath": "/owners",
-            "endpoints": [
-              { "method": "GET", "params": [], "id": 250250, "status": "valid" },
-              { "method": "POST", "params": [], "id": 260260, "status": "invalid" },
-              { "method": "DELETE", "params": [], "id": 270270, "status": "valid" },
-              { "method": "PATCH", "params": [], "id": 280280, "status": "valid" }
-            ]
-          }
-        ]
-      },
-      {
-        "id": 290290,
-        "groupName": "Inactive",
-        "groupPath": "/inavtive",
-        "endpoints": [
-          { "method": "GET", "params": [], "id": 300300, "status": "invalid" }
-        ]
-      }
-    ]
-  },
-  {
-    "id": 310310,
-    "groupName": "Products",
-    "groupPath": "/products",
-    "endpoints": [
-      { "method": "GET", "params": [], "id": 320320, "status": "valid" },
-      { "method": "POST", "params": [], "id": 330330, "status": "valid" },
-      { "method": "GET", "params": [{"name": "product_id", "type": "int", "required": true, "main": true}], "id": 340340, "status": "invalid" },
-      { "method": "DELETE", "params": [{"name": "product_id", "type": "int", "required": true, "main": true}], "id": 350350, "status": "invalid" },
-      { "method": "PUT", "params": [{"name": "product_id", "type": "int", "required": true, "main": true}], "id": 360360, "status": "invalid" }
-    ]
-  },
-  {
-    "id": 370370,
-    "groupName": "Articles",
-    "groupPath": "/articles",
-    "endpoints": [
-      { "method": "GET", "params": [], "id": 380380, "status": "invalid" },
-      { "method": "POST", "params": [], "id": 390390, "status": "invalid" },
-      { "method": "GET", "params": [{"name": "article_id", "type": "int", "required": true, "main": true}], "id": 400400, "status": "invalid" },
-      { "method": "DELETE", "params": [{"name": "article_id", "type": "int", "required": true, "main": true}], "id": 410410, "status": "invalid" },
-      { "method": "PUT", "params": [{"name": "article_id", "type": "int", "required": true, "main": true}], "id": 420420, "status": "valid" }
-    ]
-  },
-  {
-    "id": 430430,
-    "groupName": "Documents",
-    "groupPath": "/documents",
-    "endpoints": [
-      { "method": "GET", "params": [], "id": 440440, "status": "valid" },
-      { "method": "POST", "params": [], "id": 450450, "status": "invalid" },
-      { "method": "GET", "params": [{"name": "document_id", "type": "int", "required": true, "main": true}], "id": 460460, "status": "invalid" },
-      { "method": "DELETE", "params": [{"name": "document_id", "type": "int", "required": true, "main": true}], "id": 470470, "status": "invalid" },
-      { "method": "PUT", "params": [{"name": "document_id", "type": "int", "required": true, "main": true}], "id": 480480, "status": "valid" }
-    ]
-  },
-  {
-    "id": 490490,
-    "groupName": "Models",
-    "groupPath": "/models",
-    "endpoints": [
-      { "method": "GET", "params": [], "id": 500500, "status": "invalid" },
-      { "method": "POST", "params": [], "id": 510510, "status": "invalid" },
-      { "method": "GET", "params": [{"name": "model_id", "type": "int", "required": true, "main": true}], "id": 520520, "status": "invalid" },
-      { "method": "DELETE", "params": [{"name": "model_id", "type": "int", "required": true, "main": true}], "id": 530530, "status": "valid" },
-      { "method": "PUT", "params": [{"name": "model_id", "type": "int", "required": true, "main": true}], "id": 540540, "status": "valid" }
     ]
   }
 ]

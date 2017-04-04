@@ -1,5 +1,5 @@
 [
-  { "id": 1, "name": "Watchdocs", "version": "v1" },
-  { "id": 2, "name": "Kittens", "version": "v2" },
-  { "id": 3, "name": "Narwhals", "version": "v3" }
+  { "id": 1, "name": "GeoAPI v1", "version": "v1" },
+  { "id": 2, "name": "Tutapi", "version": "v1" },
+  { "id": 3, "name": "HireMe v1", "version": "v3" }
 ]
