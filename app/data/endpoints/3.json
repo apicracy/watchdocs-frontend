@@ -110,5 +110,117 @@
         ]
       }
     ]
+  },
+  {
+    "id": 1010,
+    "groupName": "Test Group",
+    "groupPath": "/test",
+    "description": "An example endpoint group. It might be used as an example for doc generating",
+    "endpoints": [
+      {
+        "method": "GET",
+        "params": [],
+        "id": 2020,
+        "status": "valid",
+        "description": {
+          "title": "List all tests",
+          "content": "Endpoint description lorem ipsum sit amet dolor"
+        }
+      },
+      {
+        "method": "GET",
+        "params": [
+          {"id": 1231, "name": "page_id", "type": "number", "description": "Id of page to be displayed", "example": "12342", "required": true, "main": true},
+          {"id": 1232, "name": "token", "type": "string", "required": true, "main": false},
+          {"id": 1233, "name": "testParam", "type": "string", "required": false, "main": false},
+          {"id": 1234, "name": "itemCount", "type": "number", "required": false, "main": false}
+        ],
+        "id": 3030,
+        "status": "valid",
+        "description": {
+          "title": "Get an specific test",
+          "content": "Endpoint description lorem ipsum sit amet dolor"
+        }
+      },
+      {
+        "method": "DELETE",
+        "params": [
+          {"id": 1231, "name": "page_id", "type": "number", "description": "Id of page to be deleted", "example": "123321", "required": true, "main": true},
+          {"id": 1232, "name": "token", "type": "string", "required": true, "main": false},
+          {"id": 1233, "name": "testParam", "type": "string", "required": false, "main": false},
+          {"id": 1234, "name": "itemCount", "type": "number", "required": false, "main": false}
+        ],
+        "id": 3030,
+        "status": "valid",
+        "responses": [
+          {
+            "status": { "id": 200, "name": "200 - OK" },
+            "base": {
+              "id": "User",
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "integer"
+                },
+                "streetAddress": {
+                  "type": "string"
+                }
+              },
+              "required": ["username"]
+            },
+            "draft": {
+              "id": "User",
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "integer"
+                },
+                "streetAddress": {
+                  "type": "string"
+                }
+              },
+              "required": ["username"]
+            },
+            "headers": [
+              {"id": 1234, "name": "live", "type": "string", "required": false, "main": false}
+            ]
+          }
+        ],
+        "requests": [
+          {
+            "status": { "id": 200, "name": "200 - OK" },
+            "base": {
+              "id": "User",
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "integer"
+                },
+                "streetAddress": {
+                  "type": "string"
+                }
+              },
+              "required": ["username"]
+            },
+            "draft": {
+              "id": "User",
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "integer"
+                },
+                "streetAddress": {
+                  "type": "string"
+                }
+              },
+              "required": ["username"]
+            },
+            "headers": [
+              {"id": 1234, "name": "id", "type": "string", "required": false, "main": false}
+            ]
+          }
+        ]
+      }
+    ]
   }
 ]

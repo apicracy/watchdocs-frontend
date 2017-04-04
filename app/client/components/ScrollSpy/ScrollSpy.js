@@ -4,7 +4,6 @@ import styles from './ScrollSpy.css';
 
 class ScrollSpy extends React.Component {
   static propTypes = {
-    defaultSection: React.PropTypes.node,
     children: React.PropTypes.node,
   }
 
@@ -52,6 +51,15 @@ class ScrollSpy extends React.Component {
     }
   }
 
+  isInView = rect => ((Math.abs(rect.top) + Math.abs(rect.bottom)) - 100) <= rect.height;
+
+  getVisibleSections = sections => sections.filter((section) => {
+    if (!section) return false;
+    const bounds = section.getBoundingClientRect();
+
+    return this.isInView(bounds);
+  });
+
   setCurrentSection = () => {
     const { sections } = this.state;
     const sectionCount = sections.length;
@@ -60,19 +68,23 @@ class ScrollSpy extends React.Component {
 
     if (!sectionCount) return;
 
-    let currentSection = this.props.defaultSection ? sections[0] : null;
     const sectionNodes = sections.map(v => document.getElementById(v));
-
-    sectionNodes.forEach((section) => {
-      if (!section) return;
-
-      if (window.pageYOffset > (section.offsetTop - 100)) {
-        currentSection = section.id;
-      }
-    });
+    const inView = this.getVisibleSections(sectionNodes);
+    const selected = this.getTopmostSection(inView);
+    const currentSection = selected ? selected.id : null;
 
     this.setState({ currentSection });
   }
+
+  getTopmostSection = active => active.reduce((state, section) => {
+    const stateTop = state ? state.getBoundingClientRect().top : null;
+    const sectionTop = section.getBoundingClientRect().top;
+
+    if (stateTop === 0) return state;
+    if (!stateTop) return section;
+
+    return (stateTop > sectionTop) ? state : section;
+  }, null);
 
   render() {
     const classes = [
