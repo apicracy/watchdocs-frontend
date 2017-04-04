@@ -234,7 +234,7 @@ class EndpointDoc extends React.Component {
               title={[
                 'Select applicable authentications mechanisms.',
                 <span className={styles.divider} />,
-                <Button variants={['linkPrimary']}>Edit secure schemes</Button>,
+                <Button variants={['linkPrimary']}>Edit secure schemas</Button>,
               ]}
               activeId={this.state.security}
               options={[
@@ -249,7 +249,8 @@ class EndpointDoc extends React.Component {
         </DocumentationBlock>
 
         <DocumentationBlock
-          title="Responses Available"
+          title="Responses"
+          description="List of all available responses for given endpoint"
           emptyMsg="You don't have any responses set up yet."
           buttonAction={() => {
             this.props.router.push(`/${this.props.params.project_name}/editor/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/response`);
@@ -260,7 +261,7 @@ class EndpointDoc extends React.Component {
 
         <div className={styles.buttons}>
           <Button variants={['primary', 'large', 'spaceRight']}>Save</Button>
-          <Button variants={['body', 'large']}>Preview</Button>
+          <Button variants={['body', 'large']}>Cancel</Button>
         </div>
 
       </div>

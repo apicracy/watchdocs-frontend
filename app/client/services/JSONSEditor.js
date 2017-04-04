@@ -336,7 +336,7 @@ const getStringLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove)
     removeAction: schema.toRemove,
     changeAction: schema.typeChanged || schema.toChange,
     index: schema.index,
-    line: (name !== '') ? `${pre}"${name}": "LOREM IPSUM"` : `${pre}"LOREM IPSUM"`,
+    line: (name !== '') ? `${pre}"${name}": "${schema.default || 'LOREM IPSUM'}"` : `${pre}"${schema.default || 'LOREM IPSUM'}"`,
     isAccepted: schema.isAccepted,
   };
 };
@@ -355,7 +355,7 @@ const getIntegerLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove
     removeAction: schema.toRemove,
     changeAction: schema.typeChanged || schema.toChange,
     index: schema.index,
-    line: (name !== '') ? `${pre}"${name}": 12353` : `${pre}12353`,
+    line: (name !== '') ? `${pre}"${name}": ${schema.default || '7262325'}` : `${pre}${schema.default || '7262325'}`,
     isAccepted: schema.isAccepted,
   };
 };
