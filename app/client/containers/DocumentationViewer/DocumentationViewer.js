@@ -13,27 +13,17 @@ import { ScrollSpy, Link } from 'components/ScrollSpy/ScrollSpy';
 import { buildDocumentation } from 'services/documentation';
 
 @connect(store => ({
-  endpoints: store.endpoints,
+  documentation: buildDocumentation(store.endpoints),
 }))
 class DocumentationViewer extends React.Component {
   static propTypes = {
-    endpoints: React.PropTypes.array,
+    documentation: React.PropTypes.array,
   }
 
   componentWillMount() {
     this.setState({
       search: '',
-      documentation: buildDocumentation(this.props.endpoints),
     });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // Prevent building docs all the time
-    if (JSON.stringify(nextProps.endpoints) !== JSON.stringify(this.props.endpoints)) {
-      this.setState({
-        documentation: buildDocumentation(nextProps.endpoints),
-      });
-    }
   }
 
   renderIcon() {
@@ -63,7 +53,7 @@ class DocumentationViewer extends React.Component {
   }
 
   renderMenu() {
-    return this.state.documentation.map((v, i) => (
+    return this.props.documentation.map((v, i) => (
       <Link key={i} isTop subitems={v.children} section={v.section}>
         {v.title}
       </Link>
@@ -87,7 +77,7 @@ class DocumentationViewer extends React.Component {
           </ScrollSpy>
         </Sidebar>
         <div className={styles.docView}>
-          { this.renderDoc(this.state.documentation, true) }
+          { this.renderDoc(this.props.documentation, true) }
         </div>
       </div>
     );

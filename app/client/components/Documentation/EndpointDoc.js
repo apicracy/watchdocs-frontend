@@ -31,24 +31,6 @@ const EndpointDoc = ({ doc }) => (
           </div>
         )}
 
-        { doc.queryParams && (
-          <div className={styles.section}>
-            <Heading>Query parameters</Heading>
-            <ParamTable
-              data={Object.keys(doc.queryParams.properties).map(v => ({
-                ...doc.queryParams.properties[v],
-                name: v,
-                required: `${!!doc.queryParams.required.find(x => x === v)}`,
-              }))}
-              headers={[
-                { key: 'name', text: 'Parameter', flex: 1 },
-                { key: 'required', text: 'Required', flex: 1 },
-                { key: 'description', text: 'Description', flex: 4 },
-              ]}
-            />
-          </div>
-        )}
-
       </div>
     </article>
     <article className={styles.code}>
