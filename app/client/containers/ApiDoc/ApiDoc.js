@@ -1,7 +1,5 @@
 import React from 'react';
 
-import styles from '../AppLayout.css';
-
 import Aside from 'containers/Aside/Aside';
 import Content from 'components/Content/Content';
 import Container from 'components/Container/Container';
@@ -23,9 +21,7 @@ class ApiDoc extends React.Component {
       <Container>
         <Aside params={this.props.params} />
         <Content>
-          <div className={styles.contentWrapper}>
-            { children }
-          </div>
+          { children }
         </Content>
       </Container>
     );

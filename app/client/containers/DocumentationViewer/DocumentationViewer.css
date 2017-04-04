@@ -1,0 +1,19 @@
+.docView {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+  background-color: #eceff3;
+}
+
+.container {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  margin: 0;
+  height: auto;
+  min-height: min-content;
+}
+
+.marginLeft {
+  margin-left: 10px;
+}

@@ -75,6 +75,7 @@
     "img-loader": "^1.2.x",
     "imports-loader": "^0.7.1",
     "json-loader": "^0.5.x",
+    "json-schema-faker": "^0.4.1",
     "less": "^2.7.2",
     "less-loader": "^2.2.3",
     "node-sass": "^3.4.x",

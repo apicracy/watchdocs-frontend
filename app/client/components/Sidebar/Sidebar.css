@@ -1,7 +1,7 @@
 .sideBar {
   display: flex;
   flex-direction: column;
-  overflow: visible;
+  overflow: hidden;
   position: relative;
   padding-right: 10px;
   border-right: solid 1px #dcdee1;
