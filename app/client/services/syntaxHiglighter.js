@@ -1,3 +1,5 @@
+import { sanitize } from 'dompurify';
+
 // Rules
 const rules = /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g;
 
@@ -22,6 +24,6 @@ export const higlightSyntax = (code) => {
     });
 
   return {
-    __html: syntax,
+    __html: sanitize(syntax),
   };
 };
