@@ -1,11 +1,10 @@
 // Rules
-const rules = /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g;
-
+const rules = /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g;
 
 export const higlightSyntax = (code) => {
   const syntax = code
     .replace(rules, (match) => {
-      var cls = 'sh-number';
+      let cls = 'sh-number';
 
       if (/^"/.test(match)) {
         if (/:$/.test(match)) {
@@ -25,4 +24,4 @@ export const higlightSyntax = (code) => {
   return {
     __html: syntax,
   };
-}
+};

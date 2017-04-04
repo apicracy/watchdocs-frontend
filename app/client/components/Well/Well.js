@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Well.css';
 
-const Well = ({ type, variants, children}) => {
+const Well = ({ type, variants, children }) => {
   const classes = [
     styles.root,
     ...variants.map(s => styles[s]),
@@ -11,7 +11,7 @@ const Well = ({ type, variants, children}) => {
     {
       className: classes,
     },
-    children
+    children,
   );
 };
 
@@ -23,7 +23,7 @@ Well.propTypes = {
   children: React.PropTypes.node,
 };
 
-Well.defaultProps ={
+Well.defaultProps = {
   type: 'div',
   variants: [],
 };

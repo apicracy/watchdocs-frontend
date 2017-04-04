@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styles from './DocumentationViewer.css';
 
-import Container from 'components/Container/Container';
-import Content from 'components/Content/Content';
 import Sidebar from 'components/Sidebar/Sidebar';
 import TextInput from 'components/Form/TextInput/TextInput';
 import Icon from 'components/Icon/Icon';
@@ -18,6 +16,9 @@ import { buildDocumentation } from 'services/documentation';
   endpoints: store.endpoints,
 }))
 class DocumentationViewer extends React.Component {
+  static propTypes = {
+    endpoints: React.PropTypes.array,
+  }
 
   componentWillMount() {
     this.setState({
@@ -28,7 +29,7 @@ class DocumentationViewer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     // Prevent building docs all the time
-    if(JSON.stringify(nextProps.endpoints) !== JSON.stringify(this.props.endpoints)) {
+    if (JSON.stringify(nextProps.endpoints) !== JSON.stringify(this.props.endpoints)) {
       this.setState({
         documentation: buildDocumentation(nextProps.endpoints),
       });
@@ -61,12 +62,12 @@ class DocumentationViewer extends React.Component {
     ));
   }
 
-  renderMenu(documentation, isTop) {
-    return documentation.map((v, i) => (
-      <Link key={i} isTop={isTop} subitems={v.children} section={v.section}>
+  renderMenu() {
+    return this.state.documentation.map((v, i) => (
+      <Link key={i} isTop subitems={v.children} section={v.section}>
         {v.title}
       </Link>
-    ))
+    ));
   }
 
   render() {
@@ -82,7 +83,7 @@ class DocumentationViewer extends React.Component {
             />
           </div>
           <ScrollSpy>
-            { this.renderMenu(this.state.documentation, true) }
+            { this.renderMenu() }
           </ScrollSpy>
         </Sidebar>
         <div className={styles.docView}>

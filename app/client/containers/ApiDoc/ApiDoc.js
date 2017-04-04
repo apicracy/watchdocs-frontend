@@ -1,7 +1,5 @@
 import React from 'react';
 
-import styles from '../AppLayout.css';
-
 import Aside from 'containers/Aside/Aside';
 import Content from 'components/Content/Content';
 import Container from 'components/Container/Container';

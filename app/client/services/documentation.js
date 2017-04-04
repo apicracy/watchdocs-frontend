@@ -46,7 +46,7 @@ function createEndpoint(item, path) {
 
   return {
     type: 'endpoint',
-    section: section,
+    section,
     title: (item.description && item.description.title) ? item.description.title : item.method,
     description: (item.description && item.description.content) ? item.description.content : '',
     method: item.method,
@@ -59,6 +59,6 @@ function createEndpoint(item, path) {
 }
 
 function generateResponse(schema) {
-  schema.required = Object.keys(schema.properties);
-  return jsf(schema);
+  const newSchema = { ...schema, required: Object.keys(schema.properties) };
+  return jsf(newSchema);
 }

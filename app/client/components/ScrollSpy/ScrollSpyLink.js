@@ -3,24 +3,35 @@ import styles from './ScrollSpyLink.css';
 
 class ScrollSpyLink extends React.Component {
   static contextTypes = {
-    scrollSpy: React.PropTypes.object
+    scrollSpy: React.PropTypes.object,
   }
 
   static propTypes = {
-    section: React.PropTypes.string.isRequired
+    section: React.PropTypes.string.isRequired,
+    className: React.PropTypes.string,
+    subitems: React.PropTypes.array,
+    children: React.PropTypes.node,
+    isTop: React.PropTypes.bool,
   }
 
   componentDidMount() {
-    this.context.scrollSpy.registerLink(this.props.section)
+    this.context.scrollSpy.registerLink(this.props.section);
   }
 
-  isActive = (doc) => doc.section === this.context.scrollSpy.currentSection;
+  isActive = doc => doc.section === this.context.scrollSpy.currentSection;
 
   render() {
-    const { section, className, subitems, children, isTop, ...restProps } = this.props
-    const isCurrent = this.isActive({ section: section });
+    const {
+      section,
+      className,
+      subitems,
+      children,
+      isTop,
+    } = this.props;
+
+    const isCurrent = this.isActive({ section });
     const hasActiveChildren = subitems && subitems.find(this.isActive);
-    const isExpanded = (hasActiveChildren || isCurrent );
+    const isExpanded = hasActiveChildren || isCurrent;
 
     const classes = [
       'root',
@@ -39,7 +50,9 @@ class ScrollSpyLink extends React.Component {
         <a href={`#${section}`} className={classes}>{children}</a>
         { isExpanded && (
           <div className={this.subitems}>
-            { subitems && subitems.map((v, i) => <ScrollSpyLink key={i} {...v}>{v.title}</ScrollSpyLink>) }
+            { subitems && subitems.map((v, i) => (
+              <ScrollSpyLink key={i} {...v}>{v.title}</ScrollSpyLink>
+            )) }
           </div>
         )}
       </div>

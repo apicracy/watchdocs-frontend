@@ -2,6 +2,9 @@ import React from 'react';
 import styles from './Sidebar.css';
 
 class Sidebar extends React.Component {
+  static propTypes = {
+    children: React.PropTypes.node,
+  }
 
   componentWillMount() {
     // Load width from cache
@@ -40,7 +43,7 @@ class Sidebar extends React.Component {
         />
         { children }
       </aside>
-    )
+    );
   }
 }
 

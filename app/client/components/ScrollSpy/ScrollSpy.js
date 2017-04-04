@@ -3,6 +3,11 @@ import Link from './ScrollSpyLink';
 import styles from './ScrollSpy.css';
 
 class ScrollSpy extends React.Component {
+  static propTypes = {
+    defaultSection: React.PropTypes.node,
+    children: React.PropTypes.node,
+  }
+
   static childContextTypes = {
     scrollSpy: React.PropTypes.object,
   }
@@ -40,7 +45,7 @@ class ScrollSpy extends React.Component {
   }
 
   floatingMenu = () => {
-    if(this.elem.getBoundingClientRect().top < 0) {
+    if (this.elem.getBoundingClientRect().top < 0) {
       this.setState({ position: 'fixed' });
     } else {
       this.setState({ position: 'relative' });
@@ -48,25 +53,25 @@ class ScrollSpy extends React.Component {
   }
 
   setCurrentSection = () => {
-    const { sections } = this.state
-    const sectionCount = sections.length
+    const { sections } = this.state;
+    const sectionCount = sections.length;
 
     this.floatingMenu();
 
     if (!sectionCount) return;
 
-    let currentSection = this.props.defaultSection ? sections[0] : null
+    let currentSection = this.props.defaultSection ? sections[0] : null;
     const sectionNodes = sections.map(v => document.getElementById(v));
 
-    sectionNodes.forEach(section => {
-      if(!section) return;
+    sectionNodes.forEach((section) => {
+      if (!section) return;
 
       if (window.pageYOffset > (section.offsetTop - 100)) {
-        currentSection = section.id
+        currentSection = section.id;
       }
     });
 
-    this.setState({ currentSection })
+    this.setState({ currentSection });
   }
 
   render() {
@@ -81,7 +86,7 @@ class ScrollSpy extends React.Component {
           {this.props.children}
         </div>
       </div>
-    )
+    );
   }
 }
 
