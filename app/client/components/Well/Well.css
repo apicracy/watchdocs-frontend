@@ -18,3 +18,7 @@ span.root {
   background-color: #454961;
   padding: 25px;
 }
+
+.bold {
+  font-family: 'RobotoMedium', Helvetica, sans-serif;
+}

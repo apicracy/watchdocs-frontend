@@ -66,7 +66,6 @@ class ScrollSpy extends React.Component {
       }
     });
 
-    location.hash = `#${currentSection}`;
     this.setState({ currentSection })
   }
 

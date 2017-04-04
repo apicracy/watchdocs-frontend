@@ -48,7 +48,7 @@
 .headerRow {
   composes: row;
   background: transparent;
-  height: 30px;
+  height: 40px;
   align-items: center;
   font-family: 'RobotoBold', Helvetica, sans-serif;
 }

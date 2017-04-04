@@ -1,3 +1,5 @@
+import jsf from 'json-schema-faker';
+
 // hopefully TODO on backend
 export function buildDocumentation(endpointList, currentPath = '') {
   return endpointList.reduce((state, item) => {
@@ -42,7 +44,6 @@ function createEndpoint(item, path) {
     buildSectionId(`${path}-${item.description.title}`)
   ) : buildSectionId(`${path}-${item.method}`);
 
-
   return {
     type: 'endpoint',
     section: section,
@@ -51,5 +52,13 @@ function createEndpoint(item, path) {
     method: item.method,
     path: endpointPath,
     urlParams: params,
+    queryParams: item.requests ? item.requests[0].base : null,
+    headers: item.requests ? item.requests[0].headers : [],
+    exampleResponse: item.responses ? generateResponse(item.responses[0].base) : null,
   };
+}
+
+function generateResponse(schema) {
+  schema.required = Object.keys(schema.properties);
+  return jsf(schema);
 }

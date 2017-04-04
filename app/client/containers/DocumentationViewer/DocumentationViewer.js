@@ -20,7 +20,19 @@ import { buildDocumentation } from 'services/documentation';
 class DocumentationViewer extends React.Component {
 
   componentWillMount() {
-    this.setState({ search: '' });
+    this.setState({
+      search: '',
+      documentation: buildDocumentation(this.props.endpoints),
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // Prevent building docs all the time
+    if(JSON.stringify(nextProps.endpoints) !== JSON.stringify(this.props.endpoints)) {
+      this.setState({
+        documentation: buildDocumentation(nextProps.endpoints),
+      });
+    }
   }
 
   renderIcon() {
@@ -58,8 +70,6 @@ class DocumentationViewer extends React.Component {
   }
 
   render() {
-    const documentation = buildDocumentation(this.props.endpoints);
-
     return (
       <div className={styles.container}>
         <Sidebar>
@@ -72,11 +82,11 @@ class DocumentationViewer extends React.Component {
             />
           </div>
           <ScrollSpy>
-            { this.renderMenu(documentation, true) }
+            { this.renderMenu(this.state.documentation, true) }
           </ScrollSpy>
         </Sidebar>
         <div className={styles.docView}>
-          { this.renderDoc(documentation, true) }
+          { this.renderDoc(this.state.documentation, true) }
         </div>
       </div>
     );

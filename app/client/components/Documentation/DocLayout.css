@@ -27,6 +27,7 @@
   position: relative;
   background-color: #3F4258;
   color: #d1d0d7;
+  overflow: hidden;
 }
 
 .codeInner {
@@ -48,6 +49,11 @@
   composes: header;
   background-color: #FFFFFF;
   font-size: 22px;
+}
+
+.method {
+  color: #7f7d94;
+  text-transform: capitalize;
 }
 
 .section {

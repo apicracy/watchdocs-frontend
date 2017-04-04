@@ -12,5 +12,5 @@
   position: fixed;
   top: 10px;
   width: inherit;
-  z-index: -10;
+  border-right: 1px solid #dcdee1;
 }
