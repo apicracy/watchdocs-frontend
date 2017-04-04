@@ -8,7 +8,6 @@ import {
 } from 'actions/requestParams';
 
 const INITIAL_STATE = {
-  status: {},
   base: {
     id: 'User',
     type: 'object',
@@ -28,6 +27,7 @@ const INITIAL_STATE = {
     properties: {
       username: {
         type: 'integer',
+        default: 1234,
       },
       streetAddress: {
         type: 'string',
