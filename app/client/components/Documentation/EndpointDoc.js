@@ -14,7 +14,7 @@ const EndpointDoc = ({ doc }) => (
         <div className={styles.section}>
           <Heading>HTTP Request</Heading>
           <Well type="span" variants={['body', 'bold']}>
-            <span className={styles.method}>{doc.method}:</span> {`http://startjoin.com/api/v1${doc.path}`}
+            <span className={styles.method}>{doc.method}:</span> {`http://startjoin.com/api/v1${doc.url}`}
           </Well>
         </div>
 

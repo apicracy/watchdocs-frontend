@@ -8,7 +8,7 @@ export function buildDocumentation(endpointList, parentGroup = '') {
     if (item.groupName) {
       doc = {
         type: 'folder',
-        section: buildSectionId(`${parentGroup}-${item.groupName}`),
+        section: buildSectionId(`${item.groupName}`),
         title: item.groupName,
         description: item.description,
         children: [],
@@ -37,8 +37,6 @@ function buildSectionId(string) {
 
 function createEndpoint(item, parentGroup) {
   const params = item.params;
-  const mainParam = params.find(x => x.main);
-  const endpointPath = mainParam ? `/${mainParam.example || 1}` : parentGroup;
 
   const section = (item.description && item.description.title) ? (
     buildSectionId(`${parentGroup}-${item.description.title}`)
@@ -50,7 +48,7 @@ function createEndpoint(item, parentGroup) {
     title: (item.description && item.description.title) ? item.description.title : item.method,
     description: (item.description && item.description.content) ? item.description.content : '',
     method: item.method,
-    path: endpointPath,
+    url: item.url,
     urlParams: params,
     queryParams: item.requests ? item.requests[0].base : null,
     headers: item.requests ? item.requests[0].headers : [],
