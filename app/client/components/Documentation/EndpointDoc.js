@@ -22,10 +22,12 @@ const EndpointDoc = ({ doc }) => (
           <div className={styles.section}>
             <Heading>URL parameters</Heading>
             <ParamTable
-              data={doc.urlParams}
+              data={doc.urlParams.map(x => ({ ...x, required: `${x.required}` }))}
               headers={[
-                { key: 'name', text: 'Parameter', flex: 1 },
-                { key: 'description', text: 'Description', flex: 4 },
+                { key: 'name', text: 'Parameter', style: { flex: 2 } },
+                { key: 'required', text: 'Required', style: { flex: 2 } },
+                { key: 'example', text: 'Example value', style: { flex: 3 } },
+                { key: 'description', text: 'Description', style: { flex: 10 } },
               ]}
             />
           </div>
