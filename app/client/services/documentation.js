@@ -1,24 +1,24 @@
 import jsf from 'json-schema-faker';
 
 // hopefully TODO on backend
-export function buildDocumentation(endpointList, currentPath = '') {
+export function buildDocumentation(endpointList, parentGroup = '') {
   return endpointList.reduce((state, item) => {
     let doc;
 
     if (item.groupName) {
       doc = {
         type: 'folder',
-        section: buildSectionId(`${currentPath}-${item.groupName}`),
+        section: buildSectionId(`${parentGroup}-${item.groupName}`),
         title: item.groupName,
         description: item.description,
         children: [],
       };
 
       if (item.endpoints) {
-        doc.children = buildDocumentation(item.endpoints, item.groupPath);
+        doc.children = buildDocumentation(item.endpoints, `${parentGroup}-${item.groupName}`);
       }
     } else if (item.method) {
-      doc = createEndpoint(item, currentPath);
+      doc = createEndpoint(item, parentGroup);
     } else {
       doc = null;
     }
@@ -35,14 +35,14 @@ function buildSectionId(string) {
     .toLowerCase();
 }
 
-function createEndpoint(item, path) {
+function createEndpoint(item, parentGroup) {
   const params = item.params;
   const mainParam = params.find(x => x.main);
-  const endpointPath = mainParam ? `${path}/${mainParam.example || 1}` : path;
+  const endpointPath = mainParam ? `/${mainParam.example || 1}` : parentGroup;
 
   const section = (item.description && item.description.title) ? (
-    buildSectionId(`${path}-${item.description.title}`)
-  ) : buildSectionId(`${path}-${item.method}`);
+    buildSectionId(`${parentGroup}-${item.description.title}`)
+  ) : buildSectionId(`${parentGroup}-${item.method}`);
 
   return {
     type: 'endpoint',
