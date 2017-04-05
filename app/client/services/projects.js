@@ -80,7 +80,7 @@ function getActiveProjectFromUrl(data, name) {
 }
 
 export function urlFormatProjectName(name) {
-  if (!name) return '';
+  if (!name) return null;
 
   const formatted = name
     .replace(/[A-Z]/g, match => `-${match}`)

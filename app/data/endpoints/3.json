@@ -297,7 +297,7 @@
         "params": [
           {"id": 98321, "name": "education_id", "type": "number", "description": "Id of an education to be returned", "example": "2", "main": true }
         ],
-        "id": 20211,
+        "id": 202113,
         "status": "invalid",
         "description": {
           "title": "Get education details",
@@ -479,7 +479,7 @@
         "params": [
           {"id": 983212, "name": "opportunity_id", "type": "number", "description": "Id of an opportunity to be returned", "example": "2", "main": true }
         ],
-        "id": 202112,
+        "id": 20211209,
         "status": "invalid",
         "description": {
           "title": "Get opportunity details",
@@ -660,7 +660,7 @@
         "method": "POST",
         "url": "/companies",
         "params": [],
-        "id": 202113,
+        "id": 20211300,
         "status": "invalid",
         "description": {
           "title": "Create company",
@@ -695,7 +695,7 @@
         "params": [
           {"id": 983213, "name": "company_id", "type": "number", "description": "Id of an company to be returned", "example": "2", "main": true }
         ],
-        "id": 202113,
+        "id": 2021130000,
         "status": "invalid",
         "description": {
           "title": "Get company details",
@@ -876,7 +876,7 @@
         "params": [
           {"id": 9832134, "name": "user", "type": "number", "description": "Id of an user to be returned", "example": "2", "main": true }
         ],
-        "id": 2021134,
+        "id": 2021134996,
         "status": "invalid",
         "description": {
           "title": "Get user details",
