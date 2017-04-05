@@ -6,6 +6,7 @@
     "endpoints": [
       {
         "method": "GET",
+        "url": "/watchdocs",
         "params": [],
         "id": 202023,
         "status": "valid",
