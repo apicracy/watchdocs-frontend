@@ -1,8 +1,7 @@
 .root {
-  flex: 0 0 100%;
+  flex: 1 0 100%;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
   color: #7f7d94;
 }
 
@@ -10,6 +9,11 @@
   flex: 0 0 100%;
   display: flex;
   flex-direction: row;
+}
+
+.fill {
+  composes: top;
+  flex: 1;
 }
 
 .content {
