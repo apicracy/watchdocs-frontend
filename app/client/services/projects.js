@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router';
 import {
   fetchProjects as load,
   setActive,
- } from 'actions/projects';
+} from 'actions/projects';
 
 import { fetchEndpoints } from 'services/endpoints';
 

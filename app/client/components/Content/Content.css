@@ -17,6 +17,15 @@
   width: 1000px;
 }
 
+.contentWrapper {
+  display: flex;
+  flex: 1;
+  position: relative;
+  padding: 50px;
+  overflow-x: hidden;
+  flex-direction: column;
+}
+
 .justify {
   composes: content;
   justify-content: space-between;

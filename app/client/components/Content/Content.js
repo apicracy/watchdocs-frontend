@@ -11,7 +11,9 @@ const Content = ({ children, justify }) => {
 
   return (
     <section className={classes}>
-      { children }
+      <div className={styles.contentWrapper}>
+        { children }
+      </div>
     </section>
   );
 };
@@ -19,6 +21,6 @@ const Content = ({ children, justify }) => {
 export default Content;
 
 Content.propTypes = {
-  children: React.PropTypes.object,
+  children: React.PropTypes.node,
   justify: React.PropTypes.bool,
 };

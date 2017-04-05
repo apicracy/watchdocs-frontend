@@ -1,5 +1,40 @@
 [
   {
+    "id": 1011345,
+    "groupName": "Authorization",
+    "groupPath": "/sessions",
+    "description": "Signing in and out from an application",
+    "endpoints": [
+      {
+        "method": "POST",
+        "url": "/sessions/sign_in",
+        "params": [],
+        "id": 20201345,
+        "status": "valid",
+        "description": {
+          "title": "Sign in a user",
+          "content": "This method can be used to sign in an user, and retrieve JWT"
+        },
+        "responses": [
+          {
+            "status": { "id": 200, "name": "200 - OK" },
+            "id": 12341345,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"array","items":{"type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"null"},"work_place_id":{"type":"null"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"null"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"array","items":{"type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"null"},"work_place_id":{"type":"null"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"null"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}}
+          }
+        ],
+        "requests": [
+          {
+            "id": 12351345,
+            "headers": [
+              {"id": 12341345, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": 1010,
     "groupName": "Achievements",
     "groupPath": "/achievements",
@@ -16,9 +51,9 @@
           "content": "Returns all achievements for current user. By default non filtering is applied."
         },
         "params": [
-          {"id": 9832, "name": "active", "type": "string", "description": "filter only active achievements ('true' or 'false')", "example": "true", "main": false },
-          {"id": 9833, "name": "page", "type": "number", "description": "filter only active achievements ('true' or 'false')", "example": "true", "main": false },
-          {"id": 9834, "name": "per_page", "type": "number", "description": "filter only active achievements ('true' or 'false')", "example": "true", "main": false }
+          {"id": 9832, "name": "active", "type": "string", "description": "Display only active and ongoing achievements", "example": "true", "main": false },
+          {"id": 9833, "name": "page", "type": "number", "description": "Current page for pagination", "example": "1", "main": false },
+          {"id": 9834, "name": "per_page", "type": "number", "description": "Number of achievements per page", "example": "20", "main": false }
         ],
         "responses": [
           {
@@ -297,7 +332,7 @@
         "params": [
           {"id": 98321, "name": "education_id", "type": "number", "description": "Id of an education to be returned", "example": "2", "main": true }
         ],
-        "id": 202112,
+        "id": 202115,
         "status": "valid",
         "description": {
           "title": "Remove education",
@@ -332,7 +367,7 @@
         "params": [
           {"id": 98321, "name": "education_id", "type": "number", "description": "Id of an education to be returned", "example": "2", "main": true }
         ],
-        "id": 202113,
+        "id": 202119,
         "status": "valid",
         "description": {
           "title": "Update education",
@@ -412,8 +447,8 @@
         "id": 202112,
         "status": "invalid",
         "description": {
-          "title": "Create education",
-          "content": "Creates new education for authenticated user and returns newly saved object"
+          "title": "Create opportunity",
+          "content": "Creates new opportunity for authenticated user and returns newly saved object"
         },
         "requests": [
           {
@@ -442,13 +477,13 @@
         "method": "GET",
         "url": "/opportunities/:opportunity_id",
         "params": [
-          {"id": 983212, "name": "opportunity_id", "type": "number", "description": "Id of an education to be returned", "example": "2", "main": true }
+          {"id": 983212, "name": "opportunity_id", "type": "number", "description": "Id of an opportunity to be returned", "example": "2", "main": true }
         ],
         "id": 202112,
         "status": "invalid",
         "description": {
-          "title": "Get education details",
-          "content": "Returns all details for given education"
+          "title": "Get opportunity details",
+          "content": "Returns all details for given opportunity"
         },
         "requests": [
           {
@@ -482,8 +517,8 @@
         "id": 2021122,
         "status": "valid",
         "description": {
-          "title": "Remove education",
-          "content": "Removes education permanently"
+          "title": "Remove opportunity",
+          "content": "Removes opportunity permanently"
         },
         "requests": [
           {
@@ -512,13 +547,13 @@
         "method": "PUT",
         "url": "/opportunities/:opportunity_id",
         "params": [
-          {"id": 983213, "name": "opportunity_id", "type": "number", "description": "Id of an education to be returned", "example": "2", "main": true }
+          {"id": 983213, "name": "opportunity_id", "type": "number", "description": "Id of an opportunity to be returned", "example": "2", "main": true }
         ],
-        "id": 2021133,
+        "id": 2021137,
         "status": "valid",
         "description": {
-          "title": "Update education",
-          "content": "Updates all possible fields on education"
+          "title": "Update opportunity",
+          "content": "Updates all possible fields on opportunity"
         },
         "requests": [
           {
@@ -756,6 +791,187 @@
           {
             "status": { "id": 422, "name": "422 - Unauthorized" },
             "id": 12371213
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 101134,
+    "groupName": "Users",
+    "groupPath": "/users",
+    "description": "Users are one type of two types of account available on HireMe. User with Company account can post opportunities on a platform.",
+    "endpoints": [
+      {
+        "method": "GET",
+        "url": "/users",
+        "params": [],
+        "id": 2020134,
+        "status": "valid",
+        "description": {
+          "title": "List all users",
+          "content": "Returns all users for current user. By default non filtering is applied."
+        },
+        "params": [
+          {"id": 9833154, "name": "page", "type": "number", "description": "filter only active users ('true' or 'false')", "example": "true", "main": false },
+          {"id": 9834165, "name": "per_page", "type": "number", "description": "filter only active users ('true' or 'false')", "example": "true", "main": false }
+        ],
+        "responses": [
+          {
+            "status": { "id": 200, "name": "200 - OK" },
+            "id": 1234134,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"array","items":{"type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"null"},"work_place_id":{"type":"null"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"null"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"array","items":{"type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"null"},"work_place_id":{"type":"null"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"null"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}}
+          },
+          {
+            "status": { "id": 422, "name": "422 - Unauthorized" },
+            "id": 12203134
+          }
+        ],
+        "requests": [
+          {
+            "id": 1235134,
+            "headers": [
+              {"id": 1234134, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ]
+      },
+      {
+        "method": "POST",
+        "url": "/users",
+        "params": [],
+        "id": 2021134,
+        "status": "invalid",
+        "description": {
+          "title": "Create user",
+          "content": "Creates new user for authenticated user and returns newly saved object"
+        },
+        "requests": [
+          {
+            "id": 1236134,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"user":{"type":"object","properties":{"user_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"user_place_name":{"type":"string"}},"required":["user_category_id","level","involvement","activity","start_date","end_date","description","user_place_name"]}},"required":["user"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"user":{"type":"object","properties":{"user_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"user_place_name":{"type":"string"}},"required":["user_category_id","level","involvement","activity","start_date","end_date","description","user_place_name"]}},"required":["user"]},
+            "headers": [
+              {"id": 1234134, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ],
+        "responses": [
+          {
+            "status": { "id": 201, "name": "201 - Created" },
+            "id": 1237134,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"null"},"work_place_id":{"type":"null"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"null"},"work_place_id":{"type":"null"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}
+          },
+          {
+            "status": { "id": 422, "name": "422 - Unauthorized" },
+            "id": 1239134
+          }
+        ]
+      },
+      {
+        "method": "GET",
+        "url": "/users/:user",
+        "params": [
+          {"id": 9832134, "name": "user", "type": "number", "description": "Id of an user to be returned", "example": "2", "main": true }
+        ],
+        "id": 2021134,
+        "status": "invalid",
+        "description": {
+          "title": "Get user details",
+          "content": "Returns all details for given user"
+        },
+        "requests": [
+          {
+            "id": 1236134,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"user":{"type":"object","properties":{"user_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"user_place_name":{"type":"string"}},"required":["user_category_id","level","involvement","activity","start_date","end_date","description","user_place_name"]}},"required":["user"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"user":{"type":"object","properties":{"user_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"user_place_name":{"type":"string"}},"required":["user_category_id","level","involvement","activity","start_date","end_date","description","user_place_name"]}},"required":["user"]},
+            "headers": [
+              {"id": 1234134, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ],
+        "responses": [
+          {
+            "status": { "id": 201, "name": "201 - Created" },
+            "id": 1237134,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"null"},"work_place_id":{"type":"null"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"null"},"work_place_id":{"type":"null"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}
+          },
+          {
+            "status": { "id": 422, "name": "422 - Unauthorized" },
+            "id": 123712134
+          }
+        ]
+      },
+      {
+        "method": "DELETE",
+        "url": "/users/:user",
+        "params": [
+          {"id": 9832134, "name": "user", "type": "number", "description": "Id of an user to be returned", "example": "2", "main": true }
+        ],
+        "id": 20211234,
+        "status": "valid",
+        "description": {
+          "title": "Remove user",
+          "content": "Removes user permanently"
+        },
+        "requests": [
+          {
+            "id": 1236134,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"user":{"type":"object","properties":{"user_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"user_place_name":{"type":"string"}},"required":["user_category_id","level","involvement","activity","start_date","end_date","description","user_place_name"]}},"required":["user"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"user":{"type":"object","properties":{"user_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"user_place_name":{"type":"string"}},"required":["user_category_id","level","involvement","activity","start_date","end_date","description","user_place_name"]}},"required":["user"]},
+            "headers": [
+              {"id": 1234134, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ],
+        "responses": [
+          {
+            "status": { "id": 201, "name": "200 - OK" },
+            "id": 1237134,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"null"},"work_place_id":{"type":"null"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"null"},"work_place_id":{"type":"null"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}
+          },
+          {
+            "status": { "id": 422, "name": "422 - Unauthorized" },
+            "id": 123712134
+          }
+        ]
+      },
+      {
+        "method": "PUT",
+        "url": "/users/:user",
+        "params": [
+          {"id": 9832134, "name": "user", "type": "number", "description": "Id of an user to be returned", "example": "2", "main": true }
+        ],
+        "id": 20211334,
+        "status": "valid",
+        "description": {
+          "title": "Update user",
+          "content": "Updates all possible fields on user"
+        },
+        "requests": [
+          {
+            "id": 1236134,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"user":{"type":"object","properties":{"user_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"user_place_name":{"type":"string"}},"required":["user_category_id","level","involvement","activity","start_date","end_date","description","user_place_name"]}},"required":["user"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"user":{"type":"object","properties":{"user_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"user_place_name":{"type":"string"}},"required":["user_category_id","level","involvement","activity","start_date","end_date","description","user_place_name"]}},"required":["user"]},
+            "headers": [
+              {"id": 123414, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ],
+        "responses": [
+          {
+            "status": { "id": 201, "name": "200 - OK" },
+            "id": 1237134,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"null"},"work_place_id":{"type":"null"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"null"},"work_place_id":{"type":"null"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}
+          },
+          {
+            "status": { "id": 422, "name": "422 - Unauthorized" },
+            "id": 123712134
           }
         ]
       }
