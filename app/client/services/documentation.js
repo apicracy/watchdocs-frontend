@@ -20,7 +20,7 @@ export function buildDocumentation(endpointList, parentGroup = '') {
     } else if (item.method) {
       doc = createEndpoint(item, parentGroup);
     } else {
-      doc = null;
+      return state;
     }
 
     return [...state, doc];
@@ -59,6 +59,5 @@ function createEndpoint(item, parentGroup) {
 }
 
 function generateResponse(schema) {
-  const newSchema = { ...schema, required: Object.keys(schema.properties) };
-  return jsf(newSchema);
+  return jsf(schema);
 }
