@@ -17,13 +17,13 @@ import { MODAL_NAME as ADD_NEW_MODAL } from 'modals/AddNewModal/AddNewModal';
 import {
   addNewGroup,
   addNewEndpoint,
+  addNewDocument,
 } from 'services/modifyEndpoint-service';
 
 @connect(store => ({
   endpoints: store.endpoints,
 }))
 class Aside extends React.Component {
-
   static propTypes = {
     params: React.PropTypes.object, // supplied by react-router
     endpoints: React.PropTypes.arrayOf(React.PropTypes.object),
@@ -63,6 +63,11 @@ class Aside extends React.Component {
     this.props.dispatch(openModal(ADD_NEW_MODAL));
   }
 
+  addNewDocument = () => {
+    this.props.dispatch(addNewDocument());
+    this.props.dispatch(openModal(ADD_NEW_MODAL));
+  }
+
   render() {
     const { group_id: groupId, endpoint_id: endpointId } = this.props.params;
     const tabData = [
@@ -95,6 +100,7 @@ class Aside extends React.Component {
           selected={endpointId}
           onAddNewGroup={this.addNewGroup}
           onAddNewEndpoint={this.addNewEndpoint}
+          onAddNewDocument={this.addNewDocument}
         />
       </Sidebar>
     );

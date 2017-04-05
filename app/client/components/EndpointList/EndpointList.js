@@ -14,6 +14,7 @@ class EndpointList extends React.Component {
     selected: React.PropTypes.string,
     onAddNewEndpoint: React.PropTypes.func,
     onAddNewGroup: React.PropTypes.func,
+    onAddNewDocument: React.PropTypes.func,
   };
 
   componentWillMount() {
@@ -30,7 +31,7 @@ class EndpointList extends React.Component {
   render() {
     /* eslint no-unused-vars: 0 */
     const { endpoints, activeGroup, selected,
-      onAddNewEndpoint, onAddNewGroup,
+      onAddNewEndpoint, onAddNewGroup, onAddNewDocument,
     } = this.props;
     return (
       <div className={styles.root}>
@@ -63,6 +64,10 @@ class EndpointList extends React.Component {
               (<Button key={2} onClick={onAddNewEndpoint}>
                 <span className={styles.endpointIcon}><Icon name="link" size="lg" /></span>
                 <span className={styles.addNewItem}>Endpoint</span>
+              </Button>),
+              (<Button key={3} onClick={onAddNewDocument}>
+                <span className={styles.endpointIcon}><Icon name="file-o" size="lg" /></span>
+                <span className={styles.addNewItem}>Document</span>
               </Button>),
             ]}
           />
