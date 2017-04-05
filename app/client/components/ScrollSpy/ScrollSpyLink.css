@@ -9,12 +9,9 @@
 
 .active,
 .active:hover,
-.active:focus {
-  font-weight: bold;
-}
-
+.active:focus,
 .topLink {
-  font-weight: bold;
+  font-family: 'RobotoBold', Helvetica, sans-serif;
 }
 
 .expanded {
