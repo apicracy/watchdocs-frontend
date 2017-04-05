@@ -8,9 +8,7 @@ const FolderDoc = ({ doc }) => (
         { doc.description }
       </div>
     </article>
-    <article className={styles.code}>
-      {' '}
-    </article>
+    <article className={styles.code} />
   </div>
 );
 
