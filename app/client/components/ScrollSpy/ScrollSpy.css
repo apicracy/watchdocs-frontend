@@ -1,0 +1,16 @@
+.wrapper {
+  position: relative;
+  width: inherit;
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+}
+
+.fixed {
+  position: fixed;
+  top: 10px;
+  width: inherit;
+  border-right: 1px solid #dcdee1;
+}

@@ -168,8 +168,8 @@ class RequestParam extends React.Component {
         <BackLink onClick={browserHistory.goBack}><b>{endpoint.method} {`"${endpoint.fullPath}"`}</b></BackLink>
         <div className={styles.title}>Add Request</div>
         <div className={styles.description}>Your request for endpoint
-          <b> {endpoint.method} {endpoint.fullPath}</b> is outdated. Please
-          fix issues below <b>Last check performed 2 hours ago.</b></div>
+          <strong> {endpoint.method} {endpoint.fullPath}</strong> is outdated. Please
+          fix issues below<br /><strong>Last check performed 2 hours ago.</strong></div>
         <DocumentationBlock
           title="Request Body"
           description="This is title of the section we're going

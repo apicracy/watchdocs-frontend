@@ -1,0 +1,28 @@
+.root {
+  display: block;
+  padding: 15px 10px;
+}
+
+.root:not(.active) {
+  color: #7f7d94;
+}
+
+.active,
+.active:hover,
+.active:focus,
+.topLink {
+  font-family: 'RobotoBold', Helvetica, sans-serif;
+}
+
+.expanded {
+  background-color: #F7F7F7;
+}
+
+.expanded .root {
+  color: #6C6AB8;
+}
+
+.expanded > .topLink {
+  padding: 25px 10px;
+  background-color: #ECEFF3;
+}
