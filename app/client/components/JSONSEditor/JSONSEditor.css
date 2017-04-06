@@ -2,6 +2,8 @@
   flex: 1;
   border-radius: 5px;
   overflow: hidden;
+  display: flex;
+  position: relative;
 }
 
 .code {
@@ -36,6 +38,7 @@
   align-items: center;
   justify-content: center;
   display: flex;
+  height: 26px;
 }
 
 .redAttributeSpan {
@@ -95,8 +98,13 @@
 
 .containerButtons {
   position: absolute;
-  right: 50px;
-  margin-top: 2px;
+  right: 0;
+  left: 50px;
+  background: rgba(175, 145, 95, 0.55);
+  text-align: right;
+  height: 26px;
+  padding-right: 50px;
+  padding-top: 2px;
 }
 
 .button {
@@ -126,4 +134,28 @@
 .rejectButton {
   composes: button;
   color: gray;
+}
+
+.textareaContainer{
+  flex: 1;
+}
+
+.textarea{
+  width: 100%;
+  background: #3c3c3c;
+  color: #c9c9c9;
+  line-height: 25px;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+}
+
+.information {
+  background:#924A4B;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-left: 50px;
+  color: white;
 }

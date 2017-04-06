@@ -9,7 +9,6 @@ class LineOfCode extends React.Component {
     typeChanged: React.PropTypes.bool,
     toChange: React.PropTypes.bool,
     toRemove: React.PropTypes.bool,
-    code: React.PropTypes.string,
     onClick: React.PropTypes.func,
     onSwitchReq: React.PropTypes.func,
     isSelected: React.PropTypes.bool,
@@ -29,7 +28,6 @@ class LineOfCode extends React.Component {
       typeChanged,
       toChange,
       toRemove,
-      code,
       onClick,
       isSelected,
       onSwitchReq,
@@ -55,25 +53,20 @@ class LineOfCode extends React.Component {
       attributeSpan = styles.attributeSpanReq;
     }
 
-    let codeStyle = styles.code;
     let attributeStyle = styles.attribute;
     if (toChange) {
-      codeStyle = styles.yellowLine;
       attributeStyle = styles.yellowAttributeSpan;
     }
 
     if (typeChanged) {
-      codeStyle = styles.yellowLine;
       attributeStyle = styles.yellowAttributeSpan;
     }
 
     if (toAdd) {
-      codeStyle = styles.greenLine;
       attributeStyle = styles.greenAttributeSpan;
     }
 
     if (toRemove) {
-      codeStyle = styles.redLine;
       attributeStyle = styles.redAttributeSpan;
       // isAccepted could be also undefined;
       if (isAccepted === true) {
@@ -83,7 +76,6 @@ class LineOfCode extends React.Component {
 
     // if accepted, restart styles
     if (isAccepted === true || isAccepted === false) {
-      codeStyle = styles.code;
       attributeStyle = styles.attribute;
     }
 
@@ -123,7 +115,6 @@ class LineOfCode extends React.Component {
           <div onClick={onSwitchReq} className={attributeStyle}>
             <span className={attributeSpan}>{attribute}</span>
           </div>
-          <div className={codeStyle}>{code}</div>
         </div>
         <div className={containerButtonStyles}>
           <button className={actionButton} onClick={action}>{actionText}</button>
