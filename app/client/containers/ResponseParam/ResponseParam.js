@@ -200,13 +200,16 @@ class ResponseParam extends React.Component {
             onSelect={this.onTypeChange}
           />
         </DocumentationBlock>
-        <DocumentationBlock
-          title="Response Body"
-          description="This is title of the section we're going
-            to display in documentation and in navigation."
-        >
-          <JSONSEditor base={baseJSONSchema} draft={draftJSONSchema} onCompare={() => {}} />
-        </DocumentationBlock>
+        {
+          (baseJSONSchema || draftJSONSchema) &&
+          <DocumentationBlock
+            title="Response Body"
+            description="This is title of the section we're going
+              to display in documentation and in navigation."
+          >
+            <JSONSEditor base={baseJSONSchema} draft={draftJSONSchema} onCompare={() => {}} />
+          </DocumentationBlock>
+        }
         <DocumentationBlock
           title="Response Headers"
           titleElement={(<div className={styles.headerDetected}><CustomIcon name="warning-circle" /> Add newly detected headers!</div>)}

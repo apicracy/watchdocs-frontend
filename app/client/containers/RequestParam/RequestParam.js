@@ -170,13 +170,16 @@ class RequestParam extends React.Component {
         <div className={styles.description}>Your request for endpoint
           <strong> {endpoint.method} {endpoint.fullPath}</strong> is outdated. Please
           fix issues below<br /><strong>Last check performed 2 hours ago.</strong></div>
-        <DocumentationBlock
-          title="Request Body"
-          description="This is title of the section we're going
-            to display in documentation and in navigation."
-        >
-          <JSONSEditor base={baseJSONSchema} draft={draftJSONSchema} onCompare={() => {}} />
-        </DocumentationBlock>
+        {
+          (baseJSONSchema || draftJSONSchema) &&
+          <DocumentationBlock
+            title="Request Body"
+            description="This is title of the section we're going
+              to display in documentation and in navigation."
+          >
+            <JSONSEditor base={baseJSONSchema} draft={draftJSONSchema} onCompare={() => {}} />
+          </DocumentationBlock>
+        }
         <DocumentationBlock
           title="Request Headers"
           titleElement={(<div className={styles.headerDetected}><CustomIcon name="warning-circle" /> Add newly detected headers!</div>)}
