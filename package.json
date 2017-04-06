@@ -89,6 +89,7 @@
     "react-router": "^3.0.2",
     "react-router-redux": "^4.0.8",
     "react-tinymce": "^0.5.1",
+    "react-tinymce-input": "^1.2.1",
     "reapp-dev-tools": "0.2.x",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.x",
