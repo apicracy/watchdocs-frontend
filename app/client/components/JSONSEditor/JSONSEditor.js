@@ -12,11 +12,13 @@ class JSONSEditor extends React.Component {
   }
 
   componentWillMount() {
-    this.setState({ selectedLine: -1 });
-    this.setState({ linesOfCode: [] });
-    this.setState({ temp: {} });
-    this.setState({ output: {} });
-    this.setState({ invalidSchema: false });
+    this.setState({
+      selectedLine: -1,
+      linesOfCode: [],
+      temp: {},
+      output: {},
+      invalidSchema: false,
+    });
     this.compare(this.props.base, this.props.draft);
   }
 
@@ -30,12 +32,15 @@ class JSONSEditor extends React.Component {
   compare = (base, draft) => {
     const temp = compareJSONS(base, draft);
     const linesOfCode = JSONStoJSON(temp);
-    this.setState({ linesOfCode });
     const textAreaLines = this.getLines(linesOfCode);
-    this.setState({ textAreaLines });
-    this.setState({ output: base });
-    this.setState({ base });
-    this.setState({ temp });
+    this.setState({
+      linesOfCode,
+      textAreaLines,
+      output: base,
+      base,
+      temp,
+    });
+
     this.props.onCompare(cleanJSONS(base));
   }
 
@@ -46,11 +51,13 @@ class JSONSEditor extends React.Component {
 
     const newOutput = acceptJSONS(temp, index);
     const linesOfCode = JSONStoJSON(newOutput);
-    this.setState({ linesOfCode });
     const textAreaLines = this.getLines(linesOfCode);
-    this.setState({ textAreaLines });
-    this.setState({ output: newOutput });
-    this.setState({ temp: newOutput });
+    this.setState({
+      linesOfCode,
+      textAreaLines,
+      output: newOutput,
+      temp: newOutput,
+    });
     this.props.onCompare(cleanJSONS(newOutput));
   }
 
@@ -62,11 +69,14 @@ class JSONSEditor extends React.Component {
 
     const newOutput = rejectJSONS(temp, index, base);
     const linesOfCode = JSONStoJSON(newOutput);
-    this.setState({ linesOfCode });
     const textAreaLines = this.getLines(linesOfCode);
-    this.setState({ textAreaLines });
-    this.setState({ output: newOutput });
-    this.setState({ temp: newOutput });
+    this.setState({
+      linesOfCode,
+      textAreaLines,
+      output: newOutput,
+      temp: newOutput,
+    });
+
     this.props.onCompare(cleanJSONS(newOutput));
   }
 
@@ -100,11 +110,13 @@ class JSONSEditor extends React.Component {
     this.setState({ textAreaLines: event.target.value });
     if (lines.length > 0) {
       const linesOfCode = lines;
-      this.setState({ linesOfCode });
-      this.setState({ textAreaLines: event.target.value });
+      this.setState({
+        linesOfCode,
+        textAreaLines: event.target.value,
+        output: jsons,
+        temp: jsons,
+      });
 
-      this.setState({ output: jsons });
-      this.setState({ temp: jsons });
       this.props.onCompare(cleanSchema);
       this.setState({ invalidSchema: false });
     } else {
