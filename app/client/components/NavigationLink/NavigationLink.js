@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, IndexLink } from 'react-router';
+import { urlFormatProjectName } from 'services/projects';
 
 import styles from './NavigationLink.css';
 
 @connect(store => ({
-  projectName: store.projects.activeProject.name,
+  projectName: urlFormatProjectName(store.projects.activeProject.name),
 }))
 class NavigationLink extends React.Component {
   static propTypes = {

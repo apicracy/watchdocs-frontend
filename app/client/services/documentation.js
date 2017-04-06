@@ -1,26 +1,26 @@
 import jsf from 'json-schema-faker';
 
 // hopefully TODO on backend
-export function buildDocumentation(endpointList, currentPath = '') {
+export function buildDocumentation(endpointList, parentGroup = '') {
   return endpointList.reduce((state, item) => {
     let doc;
 
     if (item.groupName) {
       doc = {
         type: 'folder',
-        section: buildSectionId(`${currentPath}-${item.groupName}`),
+        section: buildSectionId(`${item.groupName}`),
         title: item.groupName,
         description: item.description,
         children: [],
       };
 
       if (item.endpoints) {
-        doc.children = buildDocumentation(item.endpoints, item.groupPath);
+        doc.children = buildDocumentation(item.endpoints, `${parentGroup}-${item.groupName}`);
       }
     } else if (item.method) {
-      doc = createEndpoint(item, currentPath);
+      doc = createEndpoint(item, parentGroup);
     } else {
-      doc = null;
+      return state;
     }
 
     return [...state, doc];
@@ -35,14 +35,12 @@ function buildSectionId(string) {
     .toLowerCase();
 }
 
-function createEndpoint(item, path) {
+function createEndpoint(item, parentGroup) {
   const params = item.params;
-  const mainParam = params.find(x => x.main);
-  const endpointPath = mainParam ? `${path}/${mainParam.example || 1}` : path;
 
   const section = (item.description && item.description.title) ? (
-    buildSectionId(`${path}-${item.description.title}`)
-  ) : buildSectionId(`${path}-${item.method}`);
+    buildSectionId(`${parentGroup}-${item.description.title}`)
+  ) : buildSectionId(`${parentGroup}-${item.method}`);
 
   return {
     type: 'endpoint',
@@ -50,7 +48,7 @@ function createEndpoint(item, path) {
     title: (item.description && item.description.title) ? item.description.title : item.method,
     description: (item.description && item.description.content) ? item.description.content : '',
     method: item.method,
-    path: endpointPath,
+    url: item.url,
     urlParams: params,
     queryParams: item.requests ? item.requests[0].base : null,
     headers: item.requests ? item.requests[0].headers : [],
@@ -59,6 +57,5 @@ function createEndpoint(item, path) {
 }
 
 function generateResponse(schema) {
-  const newSchema = { ...schema, required: Object.keys(schema.properties) };
-  return jsf(newSchema);
+  return jsf(schema);
 }

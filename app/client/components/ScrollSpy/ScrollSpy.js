@@ -51,7 +51,7 @@ class ScrollSpy extends React.Component {
     }
   }
 
-  isInView = rect => ((Math.abs(rect.top) + Math.abs(rect.bottom)) - 100) <= rect.height;
+  isInView = rect => ((Math.abs(rect.top) + Math.abs(rect.bottom)) - 250) <= rect.height;
 
   getVisibleSections = sections => sections.filter((section) => {
     if (!section) return false;

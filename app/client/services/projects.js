@@ -46,9 +46,10 @@ export function setActiveProject(id) {
 function activateProject(dispatch, project) {
   localStorage.setItem('activeProject', project.id);
   const currentPath = browserHistory.getCurrentLocation().pathname;
+  const projectName = urlFormatProjectName(project.name);
 
-  if (!currentPath.includes(project.name)) {
-    browserHistory.push(`${project.name}`);
+  if (!currentPath.includes(`/${projectName}/`)) {
+    browserHistory.push(`${projectName}`);
   }
 
   dispatch(setActive(project));
@@ -72,8 +73,20 @@ function getActiveProjectFromCache(data) {
 
 function getActiveProjectFromUrl(data, name) {
   return data.reduce((v, project) => {
-    if (project.name === name) return project;
+    if (urlFormatProjectName(project.name) === name) return project;
 
     return v;
   }, null);
+}
+
+export function urlFormatProjectName(name) {
+  if (!name) return null;
+
+  const formatted = name
+    .replace(/[A-Z]/g, match => `-${match}`)
+    .replace(/\s/g, '-')
+    .replace(/^-/, '')
+    .toLowerCase();
+
+  return formatted;
 }

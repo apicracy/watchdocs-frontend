@@ -11,7 +11,6 @@ class EndpointListGroup extends React.Component {
   static propTypes = {
     id: React.PropTypes.number,
     groupName: React.PropTypes.string,
-    groupPath: React.PropTypes.string,
     endpoints: React.PropTypes.arrayOf(React.PropTypes.object),
     isActive: React.PropTypes.bool,
     isOpen: React.PropTypes.bool,
@@ -35,21 +34,20 @@ class EndpointListGroup extends React.Component {
   }
 
   renderEndpoint(endpoint) {
-    const { id, groupPath, selected } = this.props;
+    const { id, selected } = this.props;
 
     return (
       <EndpointListItem
         key={endpoint.id}
         isSelected={(selected === `${endpoint.id}`)}
         groupId={id}
-        path={groupPath}
         {...endpoint}
       />
     );
   }
 
   renderEndpointGroup(group) {
-    const { groupPath, selected, activeGroup } = this.props;
+    const { selected, activeGroup } = this.props;
 
     return (
       <EndpointListGroup
@@ -58,7 +56,6 @@ class EndpointListGroup extends React.Component {
         selected={selected}
         key={group.id}
         {...group}
-        groupPath={groupPath + group.groupPath}
       />
     );
   }
