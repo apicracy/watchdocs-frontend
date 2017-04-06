@@ -8,7 +8,7 @@ class Sidebar extends React.Component {
 
   componentWillMount() {
     // Load width from cache
-    this.setState({ width: 300, baseWidth: 300, dragStart: null });
+    this.setState({ width: 250, baseWidth: 250, dragStart: null });
   }
 
   onDragStart = ({ nativeEvent }) => {

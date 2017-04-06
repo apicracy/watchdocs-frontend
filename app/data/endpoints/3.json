@@ -19,8 +19,8 @@
           {
             "status": { "id": 200, "name": "200 - OK" },
             "id": 12341345,
-            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"array","items":{"type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"null"},"work_place_id":{"type":"null"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"null"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}},
-            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"array","items":{"type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"null"},"work_place_id":{"type":"null"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"null"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}}
+            "base": { "$schema": "http://json-schema.org/draft-04/schema#", "properties": { "JWT": { "type": "string" }, "name": { "type": "string" } }, "type": "object" },
+            "draft": { "$schema": "http://json-schema.org/draft-04/schema#", "properties": { "JWT": { "type": "string" }, "name": { "type": "string" } }, "type": "object" }
           }
         ],
         "requests": [
