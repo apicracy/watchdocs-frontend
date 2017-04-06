@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './JSONSEditor.css';
 
 import LineOfCode from './LineOfCode';
-import { JSONStoJSON, compareJSONS, acceptJSONS, rejectJSONS, cleanJSONS } from 'services/JSONSEditor';
+import { JSONStoJSON, compareJSONS, acceptJSONS, rejectJSONS, cleanJSONS, JSONtoJSONS } from 'services/JSONSEditor';
 
 class JSONSEditor extends React.Component {
   static propTypes = {
@@ -12,10 +12,13 @@ class JSONSEditor extends React.Component {
   }
 
   componentWillMount() {
-    this.setState({ selectedLine: -1 });
-    this.setState({ linesOfCode: [] });
-    this.setState({ temp: {} });
-    this.setState({ output: {} });
+    this.setState({
+      selectedLine: -1,
+      linesOfCode: [],
+      temp: {},
+      output: {},
+      invalidSchema: false,
+    });
     this.compare(this.props.base, this.props.draft);
   }
 
@@ -28,10 +31,16 @@ class JSONSEditor extends React.Component {
 
   compare = (base, draft) => {
     const temp = compareJSONS(base, draft);
-    this.setState({ linesOfCode: JSONStoJSON(temp) });
-    this.setState({ output: base });
-    this.setState({ base });
-    this.setState({ temp });
+    const linesOfCode = JSONStoJSON(temp);
+    const textAreaLines = this.getLines(linesOfCode);
+    this.setState({
+      linesOfCode,
+      textAreaLines,
+      output: base,
+      base,
+      temp,
+    });
+
     this.props.onCompare(cleanJSONS(base));
   }
 
@@ -41,10 +50,14 @@ class JSONSEditor extends React.Component {
     } = this.state;
 
     const newOutput = acceptJSONS(temp, index);
-
-    this.setState({ linesOfCode: JSONStoJSON(newOutput) });
-    this.setState({ output: newOutput });
-    this.setState({ temp: newOutput });
+    const linesOfCode = JSONStoJSON(newOutput);
+    const textAreaLines = this.getLines(linesOfCode);
+    this.setState({
+      linesOfCode,
+      textAreaLines,
+      output: newOutput,
+      temp: newOutput,
+    });
     this.props.onCompare(cleanJSONS(newOutput));
   }
 
@@ -55,9 +68,15 @@ class JSONSEditor extends React.Component {
     } = this.state;
 
     const newOutput = rejectJSONS(temp, index, base);
-    this.setState({ linesOfCode: JSONStoJSON(newOutput) });
-    this.setState({ output: newOutput });
-    this.setState({ temp: newOutput });
+    const linesOfCode = JSONStoJSON(newOutput);
+    const textAreaLines = this.getLines(linesOfCode);
+    this.setState({
+      linesOfCode,
+      textAreaLines,
+      output: newOutput,
+      temp: newOutput,
+    });
+
     this.props.onCompare(cleanJSONS(newOutput));
   }
 
@@ -69,6 +88,39 @@ class JSONSEditor extends React.Component {
     if (prevProps.base !== base ||
     prevProps.draft !== draft) {
       this.compare(base, draft);
+    }
+  }
+
+  getLines = (linesOfCode) => {
+    let lines = '';
+    linesOfCode.map((line) => {
+      lines += `${line.line}\n`;
+      return null;
+    });
+
+    return lines;
+  }
+
+  onChange = (event) => {
+    const json = (event && event.target) ? event.target.value : {};
+
+    const jsons = JSONtoJSONS(json);
+    const lines = JSONStoJSON(jsons);
+    const cleanSchema = cleanJSONS(jsons);
+    this.setState({ textAreaLines: event.target.value });
+    if (lines.length > 0) {
+      const linesOfCode = lines;
+      this.setState({
+        linesOfCode,
+        textAreaLines: event.target.value,
+        output: jsons,
+        temp: jsons,
+      });
+
+      this.props.onCompare(cleanSchema);
+      this.setState({ invalidSchema: false });
+    } else {
+      this.setState({ invalidSchema: true });
     }
   }
 
@@ -85,37 +137,50 @@ class JSONSEditor extends React.Component {
 
     const {
       linesOfCode,
+      invalidSchema,
+      textAreaLines,
     } = this.state;
 
     return (
       <div className={styles.container}>
-        {linesOfCode && linesOfCode.map((object, index) => {
-          const {
-            selectedLine,
-          } = this.state;
-          return (
-            <LineOfCode
-              key={index}
-              isSelected={selectedLine === index}
-              isReq={object.isReq}
-              isOpt={object.isOpt}
-              toAdd={object.toAdd}
-              toRemove={object.toRemove}
-              typeChanged={object.typeChanged}
-              toChange={object.toChange}
-              addAction={object.addAction ? () => { this.onAccept(object.index); } : undefined}
-              removeAction={object.removeAction ?
-                () => { this.onAccept(object.index); } : undefined}
-              changeAction={object.changeAction ?
-                () => { this.onAccept(object.index); } : undefined}
-              onReject={() => { this.onReject(object.index); }}
-              isAccepted={object.isAccepted}
-              code={object.line}
-              onClick={() => { this.onSelect(index); }}
-              onSwitchReq={() => { this.onSwitchReq(index); }}
-            />
-          );
-        })}
+        <div>
+          {linesOfCode && linesOfCode.map((object, index) => {
+            const {
+              selectedLine,
+            } = this.state;
+            return (
+              <LineOfCode
+                key={index}
+                isSelected={selectedLine === index}
+                isReq={object.isReq}
+                isOpt={object.isOpt}
+                toAdd={object.toAdd}
+                toRemove={object.toRemove}
+                typeChanged={object.typeChanged}
+                toChange={object.toChange}
+                addAction={object.addAction ? () => { this.onAccept(object.index); } : undefined}
+                removeAction={object.removeAction ?
+                  () => { this.onAccept(object.index); } : undefined}
+                changeAction={object.changeAction ?
+                  () => { this.onAccept(object.index); } : undefined}
+                onReject={() => { this.onReject(object.index); }}
+                isAccepted={object.isAccepted}
+                code={object.line}
+                onClick={() => { this.onSelect(index); }}
+                onSwitchReq={() => { this.onSwitchReq(index); }}
+              />
+            );
+          })}
+        </div>
+        <div className={styles.textareaContainer}>
+          <textarea
+            style={{ height: `${25 * linesOfCode.length}px` }}
+            className={styles.textarea}
+            value={textAreaLines}
+            onChange={this.onChange}
+          />
+        </div>
+        { invalidSchema && <div className={styles.information}>JSON Schema is not valid</div> }
       </div>
     );
   }
