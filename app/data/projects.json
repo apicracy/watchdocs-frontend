@@ -1,5 +1,5 @@
 [
   { "id": 1, "name": "HireMe", "version": "v1", "updated_at": "2017-04-05 07:45:18 UTC" },
-  { "id": 2, "name": "HireMev1", "version": "v1", "updated_at": "2017-04-05 07:42:18 UTC" },
-  { "id": 3, "name": "HireMev2", "version": "v3", "updated_at": "2017-04-05 07:40:18 UTC" }
+  { "id": 2, "name": "HireMe v1", "version": "v1", "updated_at": "2017-04-05 07:42:18 UTC" },
+  { "id": 3, "name": "HireMe v2", "version": "v3", "updated_at": "2017-04-05 07:40:18 UTC" }
 ]

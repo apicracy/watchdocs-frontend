@@ -26,6 +26,10 @@ const DocLayout = ({ topLevel, doc, children }) => {
       { renderBody(doc.type) }
 
       { children }
+      <div className={styles.fill}>
+        <article className={styles.content} />
+        <article className={styles.code} />
+      </div>
     </section>
   );
 };
