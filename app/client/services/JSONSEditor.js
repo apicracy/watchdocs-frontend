@@ -265,9 +265,7 @@ export function JSONtoJSONS(json) {
 
 export function JSONStoJSON(schema) {
   let JSONObject = [];
-  if (schema && typeof schema === 'object') {
-    JSONObject = getLines('', schema, false, 0, undefined, undefined, undefined, false);
-  }
+  JSONObject = getLines('', schema, false, 0);
   return JSONObject;
 }
 
@@ -408,7 +406,7 @@ const getArrayLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove, 
     removeAction: schema.toRemove,
     changeAction: schema.typeChanged || schema.toChange,
     index: schema.index,
-    line: `${pre}"${name}": [`,
+    line: (name !== '') ? `${pre}"${name}": [` : `${pre}[`,
     isAccepted: schema.isAccepted,
   });
 

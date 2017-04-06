@@ -16,3 +16,11 @@ export function getFullLink(endpoint, group) {
 
   return basePath;
 }
+
+export function curlBuilder(data) {
+  const method = data.method.toUpperCase();
+  const url = `https://startjoin.com/api/v1${data.path}`;
+  const headers = data.headers.map(h => `\n  -H "${h.name}: ${h.type}"`).join('');
+
+  return `curl ${method} "${url}" ${headers}`;
+}

@@ -1,0 +1,32 @@
+.root {
+  font-family: 'RobotoRegular', Helvetica, sans-serif;
+  margin: 5px 0;
+  color: #6C6AB8;
+}
+
+.h1 {
+  composes: root;
+  font-size: 22px;
+}
+
+.h2 {
+  composes: root;
+  font-size: 20px;
+}
+
+.h3 {
+  composes: root;
+  font-size: 18px;
+}
+
+.h4 {
+  composes: root;
+  font-size: 16px;
+}
+
+.h5 {
+  composes: root;
+  font-size: 14px;
+}
+
+/* Variants */

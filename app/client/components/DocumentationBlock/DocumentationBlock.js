@@ -45,9 +45,11 @@ const DocumentationBlock = ({ title, titleElement, description,
       <main className={styles.blockWrapper}>
         { rows }
       </main>
-      <footer className={styles.footer}>
-        { content }
-      </footer>
+      { content && (
+        <footer className={styles.footer}>
+          { content }
+        </footer>
+      )}
     </article>
   );
 };
