@@ -73,6 +73,7 @@
     "file-loader": "^0.8.x",
     "font-awesome": "^4.7.0",
     "font-awesome-webpack": "0.0.5-beta.2",
+    "generate-schema": "^2.5.0",
     "img-loader": "^1.2.x",
     "imports-loader": "^0.7.1",
     "json-loader": "^0.5.x",
