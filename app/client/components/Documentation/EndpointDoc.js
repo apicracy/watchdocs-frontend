@@ -7,7 +7,7 @@ import ParamTable from 'components/ParamTable/ParamTable';
 
 import { curlBuilder } from 'services/helpers';
 
-const EndpointDoc = ({ doc }) => (
+const EndpointDoc = ({ projectUrl, doc }) => (
   <div className={styles.top} >
     <article className={styles.content}>
       <div className={styles.bodyContent}>
@@ -41,7 +41,7 @@ const EndpointDoc = ({ doc }) => (
           Example request
         </Well>
         <Code>
-          { curlBuilder(doc) }
+          { curlBuilder(projectUrl, doc) }
         </Code>
         { doc.exampleResponse && (
           <div>
@@ -60,6 +60,7 @@ const EndpointDoc = ({ doc }) => (
 
 EndpointDoc.propTypes = {
   doc: React.PropTypes.object,
+  projectUrl: React.PropTypes.string,
 };
 
 export default EndpointDoc;

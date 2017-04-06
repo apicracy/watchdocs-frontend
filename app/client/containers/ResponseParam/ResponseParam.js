@@ -30,6 +30,7 @@ import { getFullLink } from 'services/helpers';
   baseJSONSchema: store.responseParams.base,
   draftJSONSchema: store.responseParams.draft,
   headers: store.responseParams.headers,
+  projectUrl: store.projects.activeProject.url,
 }))
 class ResponseParam extends React.Component {
 
@@ -44,6 +45,7 @@ class ResponseParam extends React.Component {
     baseJSONSchema: React.PropTypes.object,
     draftJSONSchema: React.PropTypes.object,
     headers: React.PropTypes.array,
+    projectUrl: React.PropTypes.string,
   }
 
   componentWillMount() {
@@ -152,8 +154,8 @@ class ResponseParam extends React.Component {
 
 
   getFullLink = () => {
-    const { group, endpoint } = this.props;
-    return getFullLink(endpoint, group);
+    const { projectUrl, group, endpoint } = this.props;
+    return getFullLink(projectUrl, endpoint, group);
   }
 
   onTypeChange = (id) => {

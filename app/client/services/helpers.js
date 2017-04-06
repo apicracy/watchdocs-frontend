@@ -1,5 +1,5 @@
-export function getFullLink(endpoint, group) {
-  const basePath = `http://startjoin.com/api/v1${group.fullPath}`;
+export function getFullLink(domain, endpoint, group) {
+  const basePath = `${domain}${group.fullPath}`;
 
   if (endpoint.params) {
     const mainParam = endpoint.params.find(p => p.main);
@@ -17,9 +17,15 @@ export function getFullLink(endpoint, group) {
   return basePath;
 }
 
-export function curlBuilder(data) {
+export function curlBuilder(domain, data) {
   const method = data.method.toUpperCase();
-  const url = `https://startjoin.com/api/v1${data.url}`;
+  let modifiedDomain = domain;
+
+  if (domain[domain.length - 1] === '/') {
+    modifiedDomain = modifiedDomain.substring(0, domain.length - 1);
+  }
+
+  const url = `${modifiedDomain}${data.url}`;
   const headers = data.headers.map(h => `\n  -H "${h.name}: ${h.example}"`).join('');
 
   return `curl ${method} "${url}" ${headers}`;
