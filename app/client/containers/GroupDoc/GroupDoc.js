@@ -7,7 +7,7 @@ import { loadGroup } from 'services/groupView';
 import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock';
 import Button from 'components/Button/Button';
 import TextInput from 'components/Form/TextInput/TextInput';
-import TinyMCE from 'react-tinymce';
+import TinyMCE from 'react-tinymce-input';
 
 @connect(store => ({
   group: store.groupView,
@@ -20,6 +20,27 @@ class GroupDoc extends React.Component {
     dispatch: React.PropTypes.func,
     group: React.PropTypes.object,
     endpointList: React.PropTypes.array,
+  }
+
+  componentWillMount() {
+    this.setState({
+      description: '',
+      groupName: '',
+      isDirty: false,
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const conditions = [
+      JSON.stringify(nextProps.group) !== JSON.stringify(this.props.group),
+      this.state.description === '' && nextProps.group.description !== '',
+      this.state.groupName === '' && nextProps.group.groupName !== '',
+    ];
+
+    // If at least one of above conditions is met, reload state.
+    if (conditions.some(x => x)) {
+      this.setState(nextProps.group);
+    }
   }
 
   componentDidMount() {
@@ -49,10 +70,31 @@ class GroupDoc extends React.Component {
     }
   }
 
+  onGroupDescriptionChange = description => this.setState({
+    description,
+    isDirty: true,
+  });
+
+  onFieldChange = fieldName => ({ nativeEvent }) => (
+    this.setState({
+      [fieldName]: nativeEvent.target.value,
+      isDirty: true,
+    })
+  );
+
+  onSave = () => {
+    // TODO make an API call to save endpoint & refresh data in endpoint tree
+  }
+
+  onReset = () => {
+    this.setState(this.props.group);
+  }
+
   render() {
     const {
-      group,
-    } = this.props;
+      description,
+      groupName,
+    } = this.state;
 
     return (
       <div className={styles.container}>
@@ -61,7 +103,11 @@ class GroupDoc extends React.Component {
           description="This is title of the section we're going
             to display in documentation and in navigation."
         >
-          <TextInput value={group.groupName} variant="white" />
+          <TextInput
+            value={groupName}
+            variant="white"
+            onChange={this.onFieldChange('groupName')}
+          />
         </DocumentationBlock>
 
         <DocumentationBlock
@@ -69,12 +115,27 @@ class GroupDoc extends React.Component {
           description="This description will
             appear on your generated public documentation."
         >
-          <TinyMCE />
+          <TinyMCE
+            value={description}
+            tinymceConfig={{
+              plugins: 'autolink link image lists preview',
+              toolbar: 'undo redo | bold italic underline',
+            }}
+            onChange={this.onGroupDescriptionChange}
+          />
         </DocumentationBlock>
 
         <div className={styles.buttons}>
-          <Button variants={['primary', 'large', 'spaceRight']}>Save</Button>
-          <Button variants={['body', 'large']}>Preview</Button>
+          <Button
+            variants={['primary', 'large', 'spaceRight']}
+            onClick={this.onSave}
+          >Save</Button>
+          <Button
+            variants={['body', 'large']}
+            onClick={this.onReset}
+          >
+            Cancel
+          </Button>
         </div>
       </div>
     );

@@ -262,7 +262,7 @@
         "method": "POST",
         "url": "/educations",
         "params": [],
-        "id": 20211,
+        "id": 20211099,
         "status": "invalid",
         "description": {
           "title": "Create education",
@@ -526,7 +526,7 @@
         "params": [
           {"id": 983212, "name": "opportunity_id", "type": "number", "description": "Id of an opportunity to be returned", "example": "2", "main": true }
         ],
-        "id": 202112,
+        "id": 20211299,
         "status": "invalid",
         "description": {
           "title": "Get opportunity details",
@@ -707,7 +707,7 @@
         "method": "POST",
         "url": "/companies",
         "params": [],
-        "id": 202113,
+        "id": 202113999,
         "status": "invalid",
         "description": {
           "title": "Create company",
@@ -888,7 +888,7 @@
         "method": "POST",
         "url": "/users",
         "params": [],
-        "id": 2021134,
+        "id": 2021134999,
         "status": "invalid",
         "description": {
           "title": "Create user",
