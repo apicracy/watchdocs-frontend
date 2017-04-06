@@ -3,6 +3,7 @@ import React from 'react';
 import styles from './EndpointListGroup.css';
 
 import EndpointListItem from '../EndpointListItem/EndpointListItem';
+import DocumentListItem from '../DocumentListItem/DocumentListItem';
 import Icon from 'components/Icon/Icon';
 import Link from 'components/NavigationLink/LinkWrapper';
 
@@ -56,6 +57,20 @@ class EndpointListGroup extends React.Component {
         selected={selected}
         key={group.id}
         {...group}
+      />
+    );
+  }
+
+  renderDocument(document) {
+    const { id, groupPath, selected } = this.props;
+
+    return (
+      <DocumentListItem
+        key={document.id}
+        isSelected={(selected === `${document.id}`)}
+        groupId={id}
+        path={groupPath}
+        {...document}
       />
     );
   }
