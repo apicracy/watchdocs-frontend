@@ -46,6 +46,18 @@ class EndpointListGroup extends React.Component {
       />
     );
   }
+  renderDocument(endpoint) {
+    const { id, selected } = this.props;
+
+    return (
+      <DocumentListItem
+        key={endpoint.id}
+        isSelected={(selected === `${endpoint.id}`)}
+        groupId={id}
+        {...endpoint}
+      />
+    );
+  }
 
   renderEndpointGroup(group) {
     const { selected, activeGroup } = this.props;
@@ -61,20 +73,6 @@ class EndpointListGroup extends React.Component {
     );
   }
 
-  renderDocument(document) {
-    const { id, groupPath, selected } = this.props;
-
-    return (
-      <DocumentListItem
-        key={document.id}
-        isSelected={(selected === `${document.id}`)}
-        groupId={id}
-        path={groupPath}
-        {...document}
-      />
-    );
-  }
-
   renderEndpointList(endpoints) {
     if (this.state.isOpen || (!this.state.force && this.props.isOpen)) {
       return endpoints.map((endpoint) => {
@@ -82,6 +80,8 @@ class EndpointListGroup extends React.Component {
           return this.renderEndpoint(endpoint);
         } else if (endpoint.groupPath) {
           return this.renderEndpointGroup(endpoint);
+        } else if (endpoint.wiki) {
+          return this.renderDocument(endpoint);
         }
 
         return null; // do not render

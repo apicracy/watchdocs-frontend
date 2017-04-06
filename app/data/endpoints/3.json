@@ -411,6 +411,12 @@
     "description": "Opportunities are all job offers, and internships, open days posted by companies.",
     "endpoints": [
       {
+        "id": 10844,
+        "groupName": "Getting Startedd",
+        "description": "This is a wiki content",
+        "wiki": true
+      },
+      {
         "method": "GET",
         "url": "/opportunities",
         "params": [],

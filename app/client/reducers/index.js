@@ -16,6 +16,7 @@ import { endpointView } from 'reducers/endpointView';
 import { responseParams } from 'reducers/responseParams';
 import { requestParams } from 'reducers/requestParams';
 import { groupView } from 'reducers/groupView';
+import { documentView } from 'reducers/documentView';
 import { projects } from 'reducers/projects';
 import { modals } from 'reducers/modals';
 /* reapp: import new reducer */
@@ -25,6 +26,7 @@ export const reducers = {
   modifyEndpoint,
   endpointView,
   groupView,
+  documentView,
   projects,
   modals,
   responseParams,

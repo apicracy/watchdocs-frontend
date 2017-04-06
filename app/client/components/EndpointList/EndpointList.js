@@ -6,6 +6,7 @@ import CustomIcon from 'components/Icon/CustomIcon';
 import Icon from 'components/Icon/Icon';
 import Select from 'components/Form/Select/AddNewSelect';
 import Button from 'components/Button/Button';
+import DocumentListItem from './DocumentListItem/DocumentListItem';
 
 class EndpointList extends React.Component {
   static propTypes = {
@@ -38,16 +39,35 @@ class EndpointList extends React.Component {
         <div className={styles.list}>
           {
             /* TODO not sure if id will be int or string */
-            endpoints.map(group => (
-              <EndpointListGroup
-                isActive={(`${group.id}` === activeGroup)}
-                isOpen={!!group.isOpen}
-                activeGroup={activeGroup}
-                selected={selected}
-                key={group.id}
-                {...group}
-              />
-            ))
+            endpoints.map((group) => {
+              if (group.wiki) {
+                return (
+                  <DocumentListItem
+                    isActive={(`${group.id}` === activeGroup)}
+                    activeGroup={activeGroup}
+                    selected={selected}
+                    key={group.id}
+                    {...group}
+                  />);
+              }
+              return null;
+            })
+          }
+          {
+            endpoints.map((group) => {
+              if (!group.wiki) {
+                return (
+                  <EndpointListGroup
+                    isActive={(`${group.id}` === activeGroup)}
+                    isOpen={!!group.isOpen}
+                    activeGroup={activeGroup}
+                    selected={selected}
+                    key={group.id}
+                    {...group}
+                  />);
+              }
+              return null;
+            })
           }
           { (!endpoints || endpoints.length === 0) && this.renderNoItems() }
         </div>
