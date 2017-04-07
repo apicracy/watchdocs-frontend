@@ -21,7 +21,7 @@ class EndpointListGroup extends React.Component {
   componentWillMount() {
     // TODO cache opened folders
     this.setState({
-      isOpen: false,
+      isOpen: true,
       force: false,
     });
   }
