@@ -8,33 +8,8 @@ import {
 } from 'actions/requestParams';
 
 const INITIAL_STATE = {
-  base: {
-    id: 'User',
-    type: 'object',
-    properties: {
-      username: {
-        type: 'integer',
-      },
-      streetAddress: {
-        type: 'string',
-      },
-    },
-    required: ['username'],
-  },
-  draft: {
-    id: 'User',
-    type: 'object',
-    properties: {
-      username: {
-        type: 'integer',
-        default: 1234,
-      },
-      streetAddress: {
-        type: 'string',
-      },
-    },
-    required: ['username'],
-  },
+  base: null,
+  draft: null,
   headers: [],
 };
 

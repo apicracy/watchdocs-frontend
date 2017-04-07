@@ -143,7 +143,7 @@ class JSONSEditor extends React.Component {
 
     return (
       <div className={styles.container}>
-        <div>
+        <div className={styles.rows}>
           {linesOfCode && linesOfCode.map((object, index) => {
             const {
               selectedLine,
@@ -174,7 +174,7 @@ class JSONSEditor extends React.Component {
         </div>
         <div className={styles.textareaContainer}>
           <textarea
-            style={{ height: `${25 * linesOfCode.length}px` }}
+            style={{ height: `${25 * linesOfCode.length}px`, minHeight: '200px' }}
             className={styles.textarea}
             value={textAreaLines}
             onChange={this.onChange}

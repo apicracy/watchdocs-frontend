@@ -9,32 +9,8 @@ import {
 
 const INITIAL_STATE = {
   status: {},
-  base: {
-    id: 'User',
-    type: 'object',
-    properties: {
-      username: {
-        type: 'integer',
-      },
-      streetAddress: {
-        type: 'string',
-      },
-    },
-    required: ['username'],
-  },
-  draft: {
-    id: 'User',
-    type: 'object',
-    properties: {
-      username: {
-        type: 'integer',
-      },
-      streetAddress: {
-        type: 'integer',
-      },
-    },
-    required: ['username'],
-  },
+  base: null,
+  draft: null,
   headers: [],
 };
 
