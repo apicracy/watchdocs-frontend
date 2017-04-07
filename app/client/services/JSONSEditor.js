@@ -265,7 +265,9 @@ export function JSONtoJSONS(json) {
 
 export function JSONStoJSON(schema) {
   let JSONObject = [];
-  JSONObject = getLines('', schema, false, 0);
+  if (schema) {
+    JSONObject = getLines('', schema, false, 0);
+  }
   return JSONObject;
 }
 
