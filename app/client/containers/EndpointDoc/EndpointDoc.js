@@ -127,7 +127,7 @@ class EndpointDoc extends React.Component {
       <Row
         key={key}
         data={[
-          <Button variants={['linkPrimary', 'noPadding']}>{param.name}</Button>,
+          <Button variants={['linkPrimary', 'noPaddingLeft']}>{param.name}</Button>,
           param.type ? `${param.type}, ${String.fromCharCode(160)}` : null,
           param.required ? 'required' : 'optional',
           (!param.description || !param.example) ? <WarningLabel /> : '',
@@ -160,27 +160,29 @@ class EndpointDoc extends React.Component {
   }
 
   renderRequests() {
-    if (!this.props.endpoint || !this.props.endpoint.requests) return [];
+    const conditions = [
+      !this.props.endpoint,
+      !this.props.endpoint.requests,
+      this.props.endpoint.requests.length === 0,
+    ];
 
-    // to keep order.
-    // TODO create 'order' field in model to allow ordering
-    const requests = this.props.endpoint.requests.sort((a, b) => a.id > b.id);
+    if (conditions.some(x => x)) return [];
 
-    return requests.map((param, key) => (
+    const request = this.props.endpoint.requests[0];
+
+    return [
       <Row
-        key={key}
+        key={1}
         data={[
-          <Button variants={['linkPrimary']}>{param.name}</Button>,
-          param.type ? `${param.type}, ${String.fromCharCode(160)}` : null,
-          param.required ? 'required' : 'optional',
-          (!param.description || !param.example) ? <WarningLabel /> : '',
+          <Button variants={['linkPrimary', 'noPaddingLeft']}>{this.props.endpoint.method}</Button>,
+          this.props.endpoint.url,
         ]}
         actions={[
-          <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editRequest(param.id)} />,
-          !param.main && <IconButton icon={<Icon name="trash" size="lg" />} />,
+          <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editRequest(request.id)} />,
+          <IconButton icon={<Icon name="trash" size="lg" />} />,
         ]}
-      />
-    ));
+      />,
+    ];
   }
 
   getFullLink = () => {
@@ -191,12 +193,7 @@ class EndpointDoc extends React.Component {
   render() {
     return (
       <div className={styles.root}>
-        <MethodPicker
-          activeId={this.props.endpoint.id}
-          params={this.props.endpoint.params}
-          groupEndpoints={this.props.group.endpoints}
-          path={this.props.group.fullPath}
-        />
+        <MethodPicker endpoint={this.props.endpoint} />
 
         <DocumentationBlock
           title="Description"
@@ -226,7 +223,7 @@ class EndpointDoc extends React.Component {
           title="Request"
           description="API's methods can support or require various HTTP headers."
           emptyMsg="You don't have request set up yet."
-          buttonAction={() => {
+          buttonAction={this.props.responses[0] ? null : () => {
             this.props.router.push(`/${this.props.params.project_name}/editor/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/request`);
           }}
           content={(
