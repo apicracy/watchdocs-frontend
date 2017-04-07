@@ -14,10 +14,12 @@ import { buildDocumentation } from 'services/documentation';
 
 @connect(store => ({
   documentation: buildDocumentation(store.endpoints),
+  projectUrl: store.projects.activeProject.url,
 }))
 class DocumentationViewer extends React.Component {
   static propTypes = {
     documentation: React.PropTypes.array,
+    projectUrl: React.PropTypes.string,
   }
 
   componentWillMount() {
@@ -41,11 +43,16 @@ class DocumentationViewer extends React.Component {
   clearFilter = () => this.setState({ search: '' });
 
   renderDoc(documentation, isTop) {
+    const {
+      projectUrl,
+    } = this.props;
+
     return documentation.map((v, i) => (
       <DocLayout
         key={i}
         topLevel={isTop}
         doc={v}
+        projectUrl={projectUrl}
       >
         { v.children && this.renderDoc(v.children, false) }
       </DocLayout>

@@ -28,6 +28,7 @@ import { getFullLink } from 'services/helpers';
   baseJSONSchema: store.requestParams.base,
   draftJSONSchema: store.requestParams.draft,
   headers: store.requestParams.headers,
+  projectUrl: store.projects.activeProject.url,
 }))
 class RequestParam extends React.Component {
 
@@ -41,6 +42,7 @@ class RequestParam extends React.Component {
     baseJSONSchema: React.PropTypes.object,
     draftJSONSchema: React.PropTypes.object,
     headers: React.PropTypes.array,
+    projectUrl: React.PropTypes.array,
   }
 
   componentDidMount() {
@@ -134,8 +136,8 @@ class RequestParam extends React.Component {
 
 
   getFullLink = () => {
-    const { group, endpoint } = this.props;
-    return getFullLink(endpoint, group);
+    const { projectUrl, group, endpoint } = this.props;
+    return getFullLink(projectUrl, endpoint, group);
   }
 
   onTypeChange = (id) => {

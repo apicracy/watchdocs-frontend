@@ -27,6 +27,7 @@ import { getFullLink } from 'services/helpers';
   group: store.groupView,
   endpointList: store.endpoints,
   responses: store.endpointView.responses,
+  projectUrl: store.projects.activeProject.url,
 }))
 class EndpointDoc extends React.Component {
 
@@ -38,6 +39,7 @@ class EndpointDoc extends React.Component {
     endpointList: React.PropTypes.array,
     router: React.PropTypes.object,
     responses: React.PropTypes.array,
+    projectUrl: React.PropTypes.string,
   }
 
   componentWillMount() {
@@ -184,8 +186,8 @@ class EndpointDoc extends React.Component {
   }
 
   getFullLink = () => {
-    const { group, endpoint } = this.props;
-    return getFullLink(endpoint, group);
+    const { projectUrl, group, endpoint } = this.props;
+    return getFullLink(projectUrl, endpoint, group);
   }
 
   render() {

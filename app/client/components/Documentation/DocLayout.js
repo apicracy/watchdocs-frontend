@@ -3,14 +3,14 @@ import styles from './DocLayout.css';
 import FolderDoc from './FolderDoc';
 import EndpointDoc from './EndpointDoc';
 
-const DocLayout = ({ topLevel, doc, children }) => {
+const DocLayout = ({ topLevel, doc, children, projectUrl }) => {
   const renderBody = (type) => {
     switch (type) {
       case 'endpoint':
-        return <EndpointDoc doc={doc} />;
+        return <EndpointDoc doc={doc} projectUrl={projectUrl} />;
 
       default:
-        return <FolderDoc doc={doc} />;
+        return <FolderDoc doc={doc} projectUrl={projectUrl} />;
     }
   };
 
@@ -38,6 +38,7 @@ DocLayout.propTypes = {
   topLevel: React.PropTypes.bool,
   doc: React.PropTypes.object,
   children: React.PropTypes.node,
+  projectUrl: React.PropTypes.string,
 };
 
 export default DocLayout;
