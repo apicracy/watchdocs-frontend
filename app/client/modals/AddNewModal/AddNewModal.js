@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Modal from 'components/Modal/Modal';
 import FolderForm from 'components/FolderForm/FolderForm';
 import EndpointForm from 'components/EndpointForm/EndpointForm';
+import DocumentForm from 'components/DocumentForm/DocumentForm';
 
 import { closeModal } from 'actions/modals';
 
@@ -14,6 +15,7 @@ import {
   saveEndpoint,
   cancel,
   setType,
+  setDocumentName,
 } from 'services/modifyEndpoint-service';
 
 export const MODAL_NAME = 'AddNewEndpoint';
@@ -24,6 +26,7 @@ export const MODAL_NAME = 'AddNewEndpoint';
   url: state.modifyEndpoint.url,
   folderName: state.modifyEndpoint.folderName,
   endpointType: state.modifyEndpoint.method,
+  documentName: state.modifyEndpoint.documentName,
   type: state.modifyEndpoint.type,
 }))
 class AddNewModal extends React.Component {
@@ -32,6 +35,7 @@ class AddNewModal extends React.Component {
     selectedParentFolder: React.PropTypes.string,
     url: React.PropTypes.string,
     folderName: React.PropTypes.string,
+    documentName: React.PropTypes.string,
     endpointType: React.PropTypes.string,
     type: React.PropTypes.string,
     dispatch: React.PropTypes.func,
@@ -45,9 +49,17 @@ class AddNewModal extends React.Component {
       folderName,
       endpointType,
       type,
+      documentName,
     } = this.props;
 
-    const title = (type === 'Endpoint' ? 'Add endpoint' : 'Add folder');
+    let title;
+
+    switch (type) {
+      case 'Endpoint' : title = 'Add endpoint'; break;
+      case 'Folder' : title = 'Add folder'; break;
+      case 'Document' : title = 'Add document'; break;
+      default: break;
+    }
 
     return (
       <Modal isVisible={isVisible} title={title} onSave={this.onSave} onHide={this.onHide}>
@@ -66,6 +78,12 @@ class AddNewModal extends React.Component {
             <FolderForm
               inputValue={folderName}
               onChangeInput={this.onChangeFolderName}
+            />
+          }
+          { type === 'Document' &&
+            <DocumentForm
+              inputValue={documentName}
+              onChangeInput={this.onChangeDocumentName}
             />
           }
         </div>
@@ -93,6 +111,9 @@ class AddNewModal extends React.Component {
 
   onChangeFolderName = (url) => {
     this.props.dispatch(setFolderName(url));
+  }
+  onChangeDocumentName = (title) => {
+    this.props.dispatch(setDocumentName(title));
   }
 
   onChangeEndpointType = (method) => {

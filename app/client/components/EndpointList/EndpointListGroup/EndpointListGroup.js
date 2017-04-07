@@ -3,6 +3,7 @@ import React from 'react';
 import styles from './EndpointListGroup.css';
 
 import EndpointListItem from '../EndpointListItem/EndpointListItem';
+import DocumentListItem from '../DocumentListItem/DocumentListItem';
 import Icon from 'components/Icon/Icon';
 import Link from 'components/NavigationLink/LinkWrapper';
 
@@ -45,6 +46,18 @@ class EndpointListGroup extends React.Component {
       />
     );
   }
+  renderDocument(endpoint) {
+    const { id, selected } = this.props;
+
+    return (
+      <DocumentListItem
+        key={endpoint.id}
+        isSelected={(selected === `${endpoint.id}`)}
+        groupId={id}
+        {...endpoint}
+      />
+    );
+  }
 
   renderEndpointGroup(group) {
     const { selected, activeGroup } = this.props;
@@ -67,6 +80,8 @@ class EndpointListGroup extends React.Component {
           return this.renderEndpoint(endpoint);
         } else if (endpoint.groupPath) {
           return this.renderEndpointGroup(endpoint);
+        } else if (endpoint.wiki) {
+          return this.renderDocument(endpoint);
         }
 
         return null; // do not render

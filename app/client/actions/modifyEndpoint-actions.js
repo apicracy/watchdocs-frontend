@@ -9,7 +9,15 @@ export const SET_FOLDER_NAME = 'setFolderName@modifyEndpoint';
 export const SET_PARENT_FOLDER = 'setParentFolder@modifyEndpoint';
 export const SET_METHOD = 'setMethod@modifyEndpoint';
 export const SET_URL = 'setUrl@modifyEndpoint';
+export const SET_DOCUMENT_NAME = 'setDocumentName@modifyEndpoint';
 export const RESET = 'reset@modifyEndpoint';
+
+export function setDocumentName(value) {
+  return {
+    type: SET_DOCUMENT_NAME,
+    payload: value,
+  };
+}
 
 export function setEditMode(value) {
   return {

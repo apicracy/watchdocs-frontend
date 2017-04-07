@@ -6,6 +6,7 @@ import CustomIcon from 'components/Icon/CustomIcon';
 import Icon from 'components/Icon/Icon';
 import Select from 'components/Form/Select/AddNewSelect';
 import Button from 'components/Button/Button';
+import DocumentListItem from './DocumentListItem/DocumentListItem';
 
 class EndpointList extends React.Component {
   static propTypes = {
@@ -14,6 +15,7 @@ class EndpointList extends React.Component {
     selected: React.PropTypes.string,
     onAddNewEndpoint: React.PropTypes.func,
     onAddNewGroup: React.PropTypes.func,
+    onAddNewDocument: React.PropTypes.func,
   };
 
   componentWillMount() {
@@ -30,23 +32,42 @@ class EndpointList extends React.Component {
   render() {
     /* eslint no-unused-vars: 0 */
     const { endpoints, activeGroup, selected,
-      onAddNewEndpoint, onAddNewGroup,
+      onAddNewEndpoint, onAddNewGroup, onAddNewDocument,
     } = this.props;
     return (
       <div className={styles.root}>
         <div className={styles.list}>
           {
             /* TODO not sure if id will be int or string */
-            endpoints.map(group => (
-              <EndpointListGroup
-                isActive={(`${group.id}` === activeGroup)}
-                isOpen={!!group.isOpen}
-                activeGroup={activeGroup}
-                selected={selected}
-                key={group.id}
-                {...group}
-              />
-            ))
+            endpoints.map((group) => {
+              if (group.wiki) {
+                return (
+                  <DocumentListItem
+                    isActive={(`${group.id}` === activeGroup)}
+                    activeGroup={activeGroup}
+                    selected={selected}
+                    key={group.id}
+                    {...group}
+                  />);
+              }
+              return null;
+            })
+          }
+          {
+            endpoints.map((group) => {
+              if (!group.wiki) {
+                return (
+                  <EndpointListGroup
+                    isActive={(`${group.id}` === activeGroup)}
+                    isOpen={!!group.isOpen}
+                    activeGroup={activeGroup}
+                    selected={selected}
+                    key={group.id}
+                    {...group}
+                  />);
+              }
+              return null;
+            })
           }
           { (!endpoints || endpoints.length === 0) && this.renderNoItems() }
         </div>
@@ -63,6 +84,10 @@ class EndpointList extends React.Component {
               (<Button key={2} onClick={onAddNewEndpoint}>
                 <span className={styles.endpointIcon}><Icon name="link" size="lg" /></span>
                 <span className={styles.addNewItem}>Endpoint</span>
+              </Button>),
+              (<Button key={3} onClick={onAddNewDocument}>
+                <span className={styles.endpointIcon}><Icon name="file-o" size="lg" /></span>
+                <span className={styles.addNewItem}>Document</span>
               </Button>),
             ]}
           />

@@ -5,6 +5,7 @@ import {
   setUrl as setUrlAction,
   setMethod as setMethodAction,
   setEditMode as setEditModeAction,
+  setDocumentName as setDocumentNameAction,
   reset,
 } from 'actions/modifyEndpoint-actions';
 import {
@@ -21,6 +22,13 @@ export function addNewEndpoint() {
 export function addNewGroup() {
   return (dispatch /* , getState */) => {
     dispatch(setType('Folder'));
+    dispatch(setEditModeAction(false));
+  };
+}
+
+export function addNewDocument() {
+  return (dispatch /* , getState */) => {
+    dispatch(setType('Document'));
     dispatch(setEditModeAction(false));
   };
 }
@@ -93,6 +101,12 @@ export function setParentFolder(folderName) {
 export function setUrl(url) {
   return (dispatch /* getState */) => {
     dispatch(setUrlAction(url));
+  };
+}
+
+export function setDocumentName(title) {
+  return (dispatch /* getState */) => {
+    dispatch(setDocumentNameAction(title));
   };
 }
 

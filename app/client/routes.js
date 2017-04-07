@@ -37,7 +37,7 @@ const Routes = (
         <Route path="jsonseditor" component={JSONSEditor} />
 
         <Route component={ApiDoc}>
-          <Route path="wiki" component={Wiki} />
+          <Route path="document/:document_id" component={Wiki} />
           <Route path=":group_id" component={GroupDoc} />
           <Route path=":group_id/endpoint/:endpoint_id" component={EndpointDoc} />
           <Route path=":group_id/endpoint/:endpoint_id/request" component={RequestParam} />
