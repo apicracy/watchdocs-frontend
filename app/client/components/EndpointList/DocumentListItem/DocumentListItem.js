@@ -10,7 +10,7 @@ const DocumentListItem = ({ groupName, id, isSelected }) => {
     <div className={topStyle}>
       <Link to={`/editor/document/${id}`} className={styles.root}>
         <span className={styles.data}>
-          <span className={styles.method}>WIKI</span>
+          <span className={styles.method}>DOC</span>
           <span className={styles.path}>{ groupName }</span>
         </span>
       </Link>

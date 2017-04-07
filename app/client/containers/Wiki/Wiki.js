@@ -14,7 +14,7 @@ import { loadDocument } from 'services/documentView';
   name: state.documentView.name,
   description: state.documentView.description,
 }))
-export default class Wiki extends React.Component {
+export default class Document extends React.Component {
   static propTypes = {
     params: React.PropTypes.object, // supplied by react-router
     name: React.PropTypes.string,
