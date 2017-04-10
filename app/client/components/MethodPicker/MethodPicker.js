@@ -3,33 +3,32 @@ import styles from './MethodPicker.css';
 
 import Select from 'components/Form/Select/Select';
 
-const MethodPicker = ({ activeId, path, groupEndpoints }) => {
-  const currentEndpoint = groupEndpoints.find(v => v.id === activeId);
-  const options = currentEndpoint ? [{ ...currentEndpoint, name: currentEndpoint.method }] : [];
-  const mainParam = currentEndpoint ? currentEndpoint.params.find(p => p.main) : false;
+const MethodPicker = ({ endpoint }) => {
+  const options = [
+    { id: 0, name: 'Select Method' },
+    { id: 1, name: 'GET' },
+    { id: 2, name: 'POST' },
+    { id: 3, name: 'PATCH' },
+    { id: 4, name: 'PUT' },
+    { id: 5, name: 'DELETE' },
+  ];
+
+  const activeOption = options.find(x => x.name === endpoint.method.toUpperCase());
 
   return (
     <div className={styles.root}>
       <div className={styles.select}>
-        <Select options={options} activeId={currentEndpoint ? currentEndpoint.id : 0} />
+        <Select options={options} activeId={activeOption ? activeOption.id : 0} />
       </div>
       <div className={styles.path}>
-        { path }{ mainParam ? `/:${mainParam.name}` : '' }
+        { endpoint.url }
       </div>
     </div>
   );
 };
 
 MethodPicker.propTypes = {
-  activeId: React.PropTypes.number,
-  path: React.PropTypes.string,
-  groupEndpoints: React.PropTypes.array,
-};
-
-MethodPicker.defaultProps = {
-  activeId: 0,
-  path: '',
-  groupEndpoints: [],
+  endpoint: React.PropTypes.object,
 };
 
 export default MethodPicker;
