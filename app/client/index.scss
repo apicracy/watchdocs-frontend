@@ -16,6 +16,10 @@ body, html, #app, #root {
   min-height: min-content;
 }
 
+.mce-notification {
+  display: none;
+}
+
 
 /* syntax higlight TODO: move to separate file */
 .sh-string,
