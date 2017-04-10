@@ -62,7 +62,7 @@ class ResponseParam extends React.Component {
       { id: 500, name: '500 - Internal Server Error' },
     ];
 
-    this.setState({ isNewHeaders: false });
+    this.setState({ hasNewHeaders: false });
   }
 
   componentDidMount() {
@@ -123,7 +123,7 @@ class ResponseParam extends React.Component {
 
     return headers.map((param, key) => {
       if (param.isNew) {
-        this.setState({ isNewHeaders: true });
+        this.setState({ hasNewHeaders: true });
       }
 
       return (
@@ -206,7 +206,7 @@ class ResponseParam extends React.Component {
         </DocumentationBlock>
         <DocumentationBlock
           title="Response Headers"
-          titleElement={this.state.isNewHeaders && (<div className={styles.headerDetected}><CustomIcon name="warning-circle" /> Add newly detected headers!</div>)}
+          titleElement={this.state.hasNewHeaders && (<div className={styles.headerDetected}><CustomIcon name="warning-circle" /> Add newly detected headers!</div>)}
           description="This is title of the section we're going
             to display in documentation and in navigation."
           emptyMsg="You don't have any response headers set up yet."

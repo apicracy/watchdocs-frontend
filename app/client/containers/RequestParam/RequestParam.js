@@ -46,7 +46,7 @@ class RequestParam extends React.Component {
   }
 
   componentWillMount() {
-    this.setState({ isNewHeaders: false });
+    this.setState({ hasNewHeaders: false });
   }
 
   componentDidMount() {
@@ -107,7 +107,7 @@ class RequestParam extends React.Component {
 
     return headers.map((param, key) => {
       if (param.isNew) {
-        this.setState({ isNewHeaders: true });
+        this.setState({ hasNewHeaders: true });
       }
 
       return (
@@ -177,7 +177,7 @@ class RequestParam extends React.Component {
         </DocumentationBlock>
         <DocumentationBlock
           title="Request Headers"
-          titleElement={this.state.isNewHeaders && (<div className={styles.headerDetected}><CustomIcon name="warning-circle" /> Add newly detected headers!</div>)}
+          titleElement={this.state.hasNewHeaders && (<div className={styles.headerDetected}><CustomIcon name="warning-circle" /> Add newly detected headers!</div>)}
           description="This is title of the section we're going
             to display in documentation and in navigation."
           emptyMsg="You don't have any response headers set up yet."
