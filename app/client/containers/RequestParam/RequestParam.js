@@ -17,7 +17,7 @@ import JSONSEditor from 'components/JSONSEditor/JSONSEditor';
 import CustomIcon from 'components/Icon/CustomIcon';
 
 import { openModal } from 'actions/modals';
-import { setStatus, addHeader, saveRequestParam, setRequestParam, addParam } from 'services/requestParams';
+import { setStatus, saveRequestParam, setRequestParam, addParam } from 'services/requestParams';
 import { getFullLink } from 'services/helpers';
 
 @connect(store => ({
@@ -45,23 +45,13 @@ class RequestParam extends React.Component {
     projectUrl: React.PropTypes.array,
   }
 
+  componentWillMount() {
+    this.setState({ hasNewHeaders: false });
+  }
+
   componentDidMount() {
     this.loadGroup();
     this.loadEndpoint();
-
-    // Sample detected newly headers
-    const data = {
-      id: (new Date()).getTime(),
-      main: false,
-      name: 'live',
-      required: false,
-      description: '',
-      type: 'string',
-      example: '',
-      isNew: true,
-    };
-
-    this.props.dispatch(addHeader(data));
 
     if (this.props.params.request_id) {
       const {
@@ -115,23 +105,29 @@ class RequestParam extends React.Component {
     // TODO create 'order' field in model to allow ordering
     const headers = this.props.headers.sort((a, b) => a.id > b.id);
 
-    return headers.map((param, key) => (
-      <Row
-        key={key}
-        variants={[param.isNew ? 'isNew' : '']}
-        data={[
-          <Button variants={[param.isNew ? 'linkWhite' : 'linkPrimary']}>{param.name}</Button>,
-          param.required ? 'required' : 'optional',
-          (!param.description || !param.example) && !param.isNew ? <WarningLabel /> : '',
-        ]}
-        actions={!param.isNew ? [
-          <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editParam(param.id)} />,
-          !param.main && <IconButton icon={<Icon name="trash" size="lg" />} />,
-        ] : [
-          <IconButton icon={<Icon name="plus" size="lg" />} onClick={this.addParam(param.id)} />,
-        ]}
-      />
-    ));
+    return headers.map((param, key) => {
+      if (param.isNew) {
+        this.setState({ hasNewHeaders: true });
+      }
+
+      return (
+        <Row
+          key={key}
+          variants={[param.isNew ? 'isNew' : '']}
+          data={[
+            <Button variants={[param.isNew ? 'linkWhite' : 'linkPrimary']}>{param.name}</Button>,
+            param.required ? 'required' : 'optional',
+            (!param.description || !param.example) && !param.isNew ? <WarningLabel /> : '',
+          ]}
+          actions={!param.isNew ? [
+            <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editParam(param.id)} />,
+            !param.main && <IconButton icon={<Icon name="trash" size="lg" />} />,
+          ] : [
+            <IconButton icon={<Icon name="plus" size="lg" />} onClick={this.addParam(param.id)} />,
+          ]}
+        />
+      );
+    });
   }
 
 
@@ -181,7 +177,7 @@ class RequestParam extends React.Component {
         </DocumentationBlock>
         <DocumentationBlock
           title="Request Headers"
-          titleElement={(<div className={styles.headerDetected}><CustomIcon name="warning-circle" /> Add newly detected headers!</div>)}
+          titleElement={this.state.hasNewHeaders && (<div className={styles.headerDetected}><CustomIcon name="warning-circle" /> Add newly detected headers!</div>)}
           description="This is title of the section we're going
             to display in documentation and in navigation."
           emptyMsg="You don't have any response headers set up yet."

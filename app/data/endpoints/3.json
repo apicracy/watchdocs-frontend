@@ -27,7 +27,8 @@
           {
             "id": 12351345,
             "headers": [
-              {"id": 12341345, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+              {"id": 12341345, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false},
+              {"id": 12341346, "name": "Live", "type": "string", "description": "Live param", "required": true, "example": "Bearer <token>", "main": false, "isNew": true}
             ]
           }
         ]
