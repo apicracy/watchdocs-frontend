@@ -56,7 +56,10 @@ const DocumentationBlock = ({ title, titleElement, description,
 
 DocumentationBlock.propTypes = {
   title: React.PropTypes.string.isRequired,
-  titleElement: React.PropTypes.object,
+  titleElement: React.PropTypes.oneOfType([
+    React.PropTypes.bool,
+    React.PropTypes.object,
+  ]),
   description: React.PropTypes.oneOfType([
     React.PropTypes.node,
     React.PropTypes.arrayOf(React.PropTypes.node),
