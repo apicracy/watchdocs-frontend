@@ -18,20 +18,34 @@ import Select from 'components/Form/Select/Select';
 import CustomIcon from 'components/Icon/CustomIcon';
 
 import { openModal } from 'actions/modals';
-import { setStatus, saveResponseParam, setResponseParam, addParam } from 'services/responseParams';
+import { setStatus, saveResponseParam, setResponseParam, addParam, reset } from 'services/responseParams';
 import { getFullLink } from 'services/helpers';
 
-@connect(store => ({
-  endpoint: store.endpointView,
-  group: store.groupView,
-  endpointList: store.endpoints,
+@connect((store) => {
+  const headers = (store.responseParams.headers) ?
+    store.responseParams.headers.sort((a, b) => a.id > b.id) : [];
+  let hasNewHeaders = false;
 
-  status: store.responseParams.status,
-  baseJSONSchema: store.responseParams.base,
-  draftJSONSchema: store.responseParams.draft,
-  headers: store.responseParams.headers,
-  projectUrl: store.projects.activeProject.url,
-}))
+  headers.map((param) => {
+    if (param.isNew) {
+      hasNewHeaders = true;
+    }
+    return null;
+  });
+
+  return {
+    endpoint: store.endpointView,
+    group: store.groupView,
+    endpointList: store.endpoints,
+
+    status: store.responseParams.status,
+    baseJSONSchema: store.responseParams.base,
+    draftJSONSchema: store.responseParams.draft,
+    headers,
+    hasNewHeaders,
+    projectUrl: store.projects.activeProject.url,
+  };
+})
 class ResponseParam extends React.Component {
 
   static propTypes = {
@@ -46,6 +60,7 @@ class ResponseParam extends React.Component {
     draftJSONSchema: React.PropTypes.object,
     headers: React.PropTypes.array,
     projectUrl: React.PropTypes.string,
+    hasNewHeaders: React.PropTypes.bool,
   }
 
   componentWillMount() {
@@ -59,22 +74,23 @@ class ResponseParam extends React.Component {
       { id: 403, name: '403 - Forbidden' },
       { id: 404, name: '404 - Not Found' },
       { id: 409, name: '409 - Conflict' },
+      { id: 422, name: '422 - Unauthorized' },
       { id: 500, name: '500 - Internal Server Error' },
     ];
-
-    this.setState({ hasNewHeaders: false });
   }
 
   componentDidMount() {
     this.loadGroup();
     this.loadEndpoint();
 
-    if (this.props.params.response_id) {
-      const {
-        dispatch,
-      } = this.props;
+    const {
+      dispatch,
+    } = this.props;
 
+    if (this.props.params.response_id) {
       dispatch(setResponseParam(this.props.params.response_id));
+    } else {
+      dispatch(reset());
     }
   }
 
@@ -119,32 +135,25 @@ class ResponseParam extends React.Component {
   renderParams() {
     // to keep order.
     // TODO create 'order' field in model to allow ordering
-    const headers = this.props.headers.sort((a, b) => a.id > b.id);
+    const headers = this.props.headers;
 
-    return headers.map((param, key) => {
-      if (param.isNew) {
-        this.setState({ hasNewHeaders: true });
-      }
-
-      return (
-        <Row
-          key={key}
-          variants={[param.isNew ? 'isNew' : '']}
-          data={[
-            <Button variants={[param.isNew ? 'linkWhite' : 'linkPrimary']}>{param.name}</Button>,
-            param.required ? 'required' : 'optional',
-            (!param.description || !param.example) && !param.isNew ? <WarningLabel /> : '',
-          ]}
-          actions={!param.isNew ? [
-            <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editParam(param.id)} />,
-            !param.main && <IconButton icon={<Icon name="trash" size="lg" />} />,
-          ] : [
-            <IconButton icon={<Icon name="plus" size="lg" />} onClick={this.addParam(param.id)} />,
-          ]}
-        />
-      );
-    },
-    );
+    return headers.map((param, key) => (
+      <Row
+        key={key}
+        variants={[param.isNew ? 'isNew' : '']}
+        data={[
+          <Button variants={[param.isNew ? 'linkWhite' : 'linkPrimary']}>{param.name}</Button>,
+          param.required ? 'required' : 'optional',
+          (!param.description || !param.example) && !param.isNew ? <WarningLabel /> : '',
+        ]}
+        actions={!param.isNew ? [
+          <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editParam(param.id)} />,
+          !param.main && <IconButton icon={<Icon name="trash" size="lg" />} />,
+        ] : [
+          <IconButton icon={<Icon name="plus" size="lg" />} onClick={this.addParam(param.id)} />,
+        ]}
+      />
+    ));
   }
 
 
@@ -193,7 +202,7 @@ class ResponseParam extends React.Component {
           <Select
             variants={['fullWidth', 'bordered', 'whiteBackground']}
             options={this.paramTypes}
-            activeId={status.id}
+            activeId={status && status.id}
             onSelect={this.onTypeChange}
           />
         </DocumentationBlock>
@@ -206,7 +215,7 @@ class ResponseParam extends React.Component {
         </DocumentationBlock>
         <DocumentationBlock
           title="Response Headers"
-          titleElement={this.state.hasNewHeaders && (<div className={styles.headerDetected}><CustomIcon name="warning-circle" /> Add newly detected headers!</div>)}
+          titleElement={this.props.hasNewHeaders && (<div className={styles.headerDetected}><CustomIcon name="warning-circle" /> Add newly detected headers!</div>)}
           description="This is title of the section we're going
             to display in documentation and in navigation."
           emptyMsg="You don't have any response headers set up yet."

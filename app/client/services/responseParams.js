@@ -2,11 +2,17 @@ import {
   setResponse as setResponseAction,
   setStatus as setStatusAction,
   setHeaders as setHeadersAction,
-  reset,
+  reset as resetAction,
 } from 'actions/responseParams';
 import {
   setResponses,
 } from 'actions/endpointView';
+
+export function reset() {
+  return (dispatch) => {
+    dispatch(resetAction());
+  };
+}
 
 export function setStatus(value) {
   return (dispatch) => {
@@ -52,7 +58,7 @@ export function saveResponseParam() {
       dispatch(setResponses(newResponses));
     }
 
-    dispatch(reset());
+    dispatch(resetAction());
   };
 }
 
@@ -61,7 +67,7 @@ export function setResponseParam(id) {
     const {
       responses,
     } = getState().endpointView;
-    dispatch(reset());
+    dispatch(resetAction());
     const elem = responses.find(param => param.id.toString() === id);
     dispatch(setResponseAction(elem));
   };

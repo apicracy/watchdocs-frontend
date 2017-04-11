@@ -2,11 +2,17 @@ import {
   setRequest as setRequestAction,
   setStatus as setStatusAction,
   setHeaders as setHeadersAction,
-  reset,
+  reset as resetAction,
 } from 'actions/requestParams';
 import {
   setRequests,
 } from 'actions/endpointView';
+
+export function reset() {
+  return (dispatch) => {
+    dispatch(resetAction());
+  };
+}
 
 export function setStatus(value) {
   return (dispatch) => {
@@ -52,7 +58,7 @@ export function saveRequestParam() {
       dispatch(setRequests(newRequest));
     }
 
-    dispatch(reset());
+    dispatch(resetAction());
   };
 }
 
@@ -62,7 +68,7 @@ export function setRequestParam(id) {
       requests,
     } = getState().endpointView;
 
-    dispatch(reset());
+    dispatch(resetAction());
 
     const elem = requests.find(param => param.id.toString() === id);
     dispatch(setRequestAction(elem));
