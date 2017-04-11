@@ -1,4 +1,4 @@
-import jsf from 'json-schema-faker';
+import parseJsonSchema from './json-schema-parser';
 
 // hopefully TODO on backend
 export function buildDocumentation(endpointList, parentGroup = '') {
@@ -52,10 +52,6 @@ function createEndpoint(item, parentGroup) {
     urlParams: params,
     queryParams: item.requests ? item.requests[0].base : null,
     headers: item.requests ? item.requests[0].headers : [],
-    exampleResponse: item.responses ? generateResponse(item.responses[0].base) : null,
+    exampleResponse: item.responses ? parseJsonSchema(item.responses[0].base) : null,
   };
-}
-
-function generateResponse(schema) {
-  return jsf(schema);
 }
