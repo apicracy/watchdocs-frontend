@@ -279,6 +279,8 @@ function getLines(name, schema, isReq, space, toAdd, typeChanged, toRemove, comm
     case 'integer': return getIntegerLine(name, schema, isReq, space, toAdd, typeChanged, toRemove, comma);
     case 'number': return getNumberLine(name, schema, isReq, space, toAdd, typeChanged, toRemove, comma);
     case 'array': return getArrayLine(name, schema, isReq, space, toAdd, typeChanged, toRemove, comma);
+    case 'null': return getNullLine(name, schema, isReq, space, toAdd, typeChanged, toRemove, comma);
+    case 'boolean': return getBooleanLine(name, schema, isReq, space, toAdd, typeChanged, toRemove, comma);
     default: return [];
   }
 }
@@ -355,6 +357,44 @@ const getStringLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove,
   };
 };
 
+const getBooleanLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove, comma) => {
+  const pre = ' '.repeat(space);
+  return {
+    isOpt: !isReq,
+    isReq,
+    toAdd: toAdd || schema.toAdd,
+    toRemove: toRemove || schema.toRemove,
+    typeChanged: typeChanged || schema.typeChanged,
+    toChange: schema.toChange,
+    type: 'boolean',
+    addAction: schema.toAdd,
+    removeAction: schema.toRemove,
+    changeAction: schema.typeChanged || schema.toChange,
+    index: schema.index,
+    line: (name !== '') ? `${pre}"${name}": ${schema.default || true}${comma ? ',' : ''}` : `${pre}${schema.default || true}${comma ? ',' : ''}`,
+    isAccepted: schema.isAccepted,
+  };
+};
+
+const getNullLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove, comma) => {
+  const pre = ' '.repeat(space);
+  return {
+    isOpt: !isReq,
+    isReq,
+    toAdd: toAdd || schema.toAdd,
+    toRemove: toRemove || schema.toRemove,
+    typeChanged: typeChanged || schema.typeChanged,
+    toChange: schema.toChange,
+    type: 'null',
+    addAction: schema.toAdd,
+    removeAction: schema.toRemove,
+    changeAction: schema.typeChanged || schema.toChange,
+    index: schema.index,
+    line: (name !== '') ? `${pre}"${name}": ${schema.default || null}${comma ? ',' : ''}` : `${pre}${schema.default || null}${comma ? ',' : ''}`,
+    isAccepted: schema.isAccepted,
+  };
+};
+
 const getIntegerLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove, comma) => {
   const pre = ' '.repeat(space);
   return {
@@ -388,7 +428,7 @@ const getNumberLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove,
     removeAction: schema.toRemove,
     changeAction: schema.typeChanged || schema.toChange,
     index: schema.index,
-    line: (name !== '') ? `${pre}"${name}": 7262325` : `${pre}7262325${comma ? ',' : ''}`,
+    line: (name !== '') ? `${pre}"${name}": ${schema.default || '7262325'}${comma ? ',' : ''}` : `${pre}${schema.default || '7262325'}${comma ? ',' : ''}`,
     isAccepted: schema.isAccepted,
   };
 };
