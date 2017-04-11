@@ -7,7 +7,7 @@ import { loadGroup } from 'services/groupView';
 
 import MethodPicker from 'components/MethodPicker/MethodPicker';
 import Button from 'components/Button/Button';
-import Radio from 'components/Form/Radio/Radio';
+// import Radio from 'components/Form/Radio/Radio';
 import Icon from 'components/Icon/Icon';
 import IconButton from 'components/Button/IconButton';
 
@@ -228,21 +228,21 @@ class EndpointDoc extends React.Component {
           buttonAction={this.props.responses[0] ? null : () => {
             this.props.router.push(`/${this.props.params.project_name}/editor/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/request`);
           }}
-          content={(
-            <Radio
-              title={[
-                'Select applicable authentications mechanisms.',
-                <span className={styles.divider} />,
-                <Button variants={['linkPrimary']}>Edit secure schemas</Button>,
-              ]}
-              activeId={this.state.security}
-              options={[
-                { id: 0, text: 'JWT' },
-                { id: 1, text: 'OAuth 2.0' },
-              ]}
-              onChange={this.onSecutityChange}
-            />
-          )}
+          // content={(
+          //   <Radio
+          //     title={[
+          //       'Select applicable authentications mechanisms.',
+          //       <span className={styles.divider} />,
+          //       <Button variants={['linkPrimary']}>Edit secure schemas</Button>,
+          //     ]}
+          //     activeId={this.state.security}
+          //     options={[
+          //       { id: 0, text: 'JWT' },
+          //       { id: 1, text: 'OAuth 2.0' },
+          //     ]}
+          //     onChange={this.onSecutityChange}
+          //   />
+          // )}
         >
           { this.renderRequests() }
         </DocumentationBlock>

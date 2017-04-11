@@ -74,7 +74,7 @@ export default class Document extends React.Component {
 
         <div className={styles.buttons}>
           <Button variants={['primary', 'large', 'spaceRight']}>Save</Button>
-          <Button variants={['body', 'large']}>Preview</Button>
+          <Button variants={['body', 'large']}>Cancel</Button>
         </div>
       </div>
     );

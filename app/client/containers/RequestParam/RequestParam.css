@@ -23,6 +23,7 @@
 .description {
   color: #7f7d94;
   flex: 0 0 100%;
+  margin-bottom: 40px;
 }
 
 .headerDetected {
