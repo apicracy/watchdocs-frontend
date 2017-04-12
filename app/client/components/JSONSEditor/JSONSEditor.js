@@ -106,7 +106,7 @@ class JSONSEditor extends React.Component {
     const line = event.target.value.substr(0, event.target.selectionStart).split('\n').length - 1;
     this.onSelect(line);
   }
-  
+
   onKeyDown = (e) => {
     if (e.keyCode === 9) { // tab was pressed
       // get caret position/selection
@@ -205,7 +205,7 @@ class JSONSEditor extends React.Component {
         </div>
         <div className={styles.textareaContainer}>
           <textarea
-            onKeyUp={this.getLineNumber} 
+            onKeyUp={this.getLineNumber}
             onMouseUp={this.getLineNumber}
             onKeyDown={this.onKeyDown}
             style={{ height: `${25 * linesOfCode.length}px`, minHeight: '200px' }}
