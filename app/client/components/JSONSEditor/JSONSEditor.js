@@ -101,9 +101,30 @@ class JSONSEditor extends React.Component {
     return lines;
   }
 
+
   getLineNumber = (event) => {
     const line = event.target.value.substr(0, event.target.selectionStart).split('\n').length - 1;
     this.onSelect(line);
+  }
+  
+  onKeyDown = (e) => {
+    if (e.keyCode === 9) { // tab was pressed
+      // get caret position/selection
+      const start = this.selectionStart;
+      const end = this.selectionEnd;
+
+      const target = e.target;
+      const value = target.value;
+
+      // set textarea value to: text before caret + tab + text after caret
+      target.value = `${value.substring(0, start)}\t${value.substring(end)}`;
+
+      // put caret at right position again (add one for the tab)
+      this.selectionStart = this.selectionEnd = start + 1;
+
+      // prevent the focus lose
+      e.preventDefault();
+    }
   }
 
   onChange = (event) => {
@@ -184,7 +205,9 @@ class JSONSEditor extends React.Component {
         </div>
         <div className={styles.textareaContainer}>
           <textarea
-            onKeyUp={this.getLineNumber} onMouseUp={this.getLineNumber}
+            onKeyUp={this.getLineNumber} 
+            onMouseUp={this.getLineNumber}
+            onKeyDown={this.onKeyDown}
             style={{ height: `${25 * linesOfCode.length}px`, minHeight: '200px' }}
             className={styles.textarea}
             value={textAreaLines}

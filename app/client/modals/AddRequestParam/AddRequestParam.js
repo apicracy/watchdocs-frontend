@@ -100,7 +100,7 @@ class addRequestParam extends React.Component {
         onSave={this.onSave}
         onHide={this.onHide}
         saveButtonText="Save"
-        cancelButtonText="Preview"
+        cancelButtonText="Cancel"
         message={this.shouldDisplayMessage() ? warningMessage : null}
       >
 
