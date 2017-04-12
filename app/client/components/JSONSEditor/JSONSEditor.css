@@ -33,12 +33,11 @@
 .attribute {
   width: 50px;
   display: inline-block;
-  background: #464646;
   height: 100%;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   display: flex;
-  height: 26px;
+  height: 25px;
 }
 
 .redAttributeSpan {
@@ -66,6 +65,7 @@
   -o-user-select: none;
   user-select: none;
   cursor: pointer;
+  line-height: 25px;
 }
 
 .attributeSpanReq {
@@ -81,11 +81,12 @@
 
 .oneLineSelected {
   composes: oneLine;
-  opacity: 0.8;
+  background: rgba(106, 106, 106, 0.8);
 }
 
 .lineContainer {
   display: flex;
+  height: 24px;
 }
 
 .lineContainerHidden {

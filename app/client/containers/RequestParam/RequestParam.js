@@ -23,14 +23,7 @@ import { getFullLink } from 'services/helpers';
 @connect((store) => {
   const headers = (store.requestParams.headers) ?
     store.requestParams.headers.sort((a, b) => a.id > b.id) : [];
-  let hasNewHeaders = false;
-
-  headers.map((param) => {
-    if (param.isNew) {
-      hasNewHeaders = true;
-    }
-    return null;
-  });
+  const hasNewHeaders = !!headers.find(param => param.isNew);
 
   return {
     endpoint: store.endpointView,

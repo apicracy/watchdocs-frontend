@@ -101,6 +101,12 @@ class JSONSEditor extends React.Component {
     return lines;
   }
 
+
+  getLineNumber = (event) => {
+    const line = event.target.value.substr(0, event.target.selectionStart).split('\n').length - 1;
+    this.onSelect(line);
+  }
+  
   onKeyDown = (e) => {
     if (e.keyCode === 9) { // tab was pressed
       // get caret position/selection
@@ -126,13 +132,15 @@ class JSONSEditor extends React.Component {
 
     const jsons = JSONtoJSONS(json);
     const lines = JSONStoJSON(jsons);
-    const cleanSchema = cleanJSONS(jsons);
-    this.setState({ textAreaLines: event.target.value });
+
     if (lines.length > 0) {
+      const cleanSchema = cleanJSONS(jsons);
+
       const linesOfCode = lines;
+
       this.setState({
         linesOfCode,
-        textAreaLines: event.target.value,
+        textAreaLines: this.getLines(lines),
         output: jsons,
         temp: jsons,
       });
@@ -140,7 +148,10 @@ class JSONSEditor extends React.Component {
       this.props.onCompare(cleanSchema);
       this.setState({ invalidSchema: false });
     } else {
-      this.setState({ invalidSchema: true });
+      this.setState({
+        invalidSchema: true,
+        textAreaLines: json,
+      });
     }
   }
 
@@ -194,6 +205,8 @@ class JSONSEditor extends React.Component {
         </div>
         <div className={styles.textareaContainer}>
           <textarea
+            onKeyUp={this.getLineNumber} 
+            onMouseUp={this.getLineNumber}
             onKeyDown={this.onKeyDown}
             style={{ height: `${25 * linesOfCode.length}px`, minHeight: '200px' }}
             className={styles.textarea}
