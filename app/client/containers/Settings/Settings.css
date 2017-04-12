@@ -27,13 +27,25 @@
   width: 300px;
 }
 
+.button {
+  width: 100%;
+  background: none;
+  border: none;
+  outline: none;
+  height: 50px;
+  text-align: left;
+  padding-left: 20px;
+}
+
 .active {
+  composes: button;
+  background: #ECEFF3;
+  color: #5E5CA8;
   font-weight: bold;
 }
 
 .menu {
-  margin-top: 50px;
-  margin-left: 80px;
+  margin-top: 20px;
 }
 
 .container {

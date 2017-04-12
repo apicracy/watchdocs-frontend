@@ -1,0 +1,39 @@
+.container {
+  width: 100%;
+  background: white;
+}
+
+.tabs {
+  margin: 0 auto;
+  background: #DDE0E5;
+}
+
+.button {
+  background: #DDE0E5;
+  border: 0;
+  height: 50px;
+  width: 150px;
+  font-size: 17px;
+  outline: none;
+  color: #848484;
+}
+
+.activeButton {
+  composes: button;
+  background: white;
+}
+
+.tabContainer {
+  padding: 20px 50px;
+  color: #848484;
+  background: white;
+}
+
+.code {
+  margin: 10px 0;
+  background: #ECEFF3;
+  width: 100%;
+  /*height: 50px;
+  line-height: 50px;*/
+  padding: 25px;
+}
