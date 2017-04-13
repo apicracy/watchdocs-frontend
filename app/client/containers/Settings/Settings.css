@@ -54,3 +54,18 @@
   padding: 50px;
   padding-top: 0;
 }
+
+/* DELETE page*/
+
+.text {
+  color: #7f7d94;
+}
+
+.deleteButton {
+  padding: 20px;
+  border: none;
+  background: #C51E1E;
+  color: white;
+  outline: none;
+  margin-top: 20px;
+}
