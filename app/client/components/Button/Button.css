@@ -31,7 +31,7 @@
 }
 
 .primary {
-  background: #61b8f4;
+  background: #62B8F5;
   color: white;
 }
 
@@ -41,7 +41,7 @@
 
 .linkPrimary {
   font-family: 'RobotoBold', Helvetica, sans-serif;
-  color: #6C6AB8;
+  color: #6c6ab8;
   padding-right: 10px !important; /* do not let to override this */
 }
 
