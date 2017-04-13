@@ -52,11 +52,25 @@
   background: #EDEFF4;
   width: 100%;
   padding: 50px;
-  padding-top: 0;
 }
 
 /* Users */
 .addressWrapper{
+  background: white;
   display: flex;
   flex: 1;
+}
+
+.selectWrapper {
+  width: 250px;
+  display: flex;
+}
+
+.buttonWrapper {
+  width: 150px;
+  display: flex;
+}
+
+.emailWrapper {
+  margin-top: 20px;
 }

@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import styles from './Settings.css';
-
 import TabPanel from 'components/TabPanel/TabPanel';
 import TextInput from 'components/Form/TextInput/TextInput';
 import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock';
@@ -24,7 +22,7 @@ class Setup extends React.Component {
     } = this.props;
 
     return (
-      <div className={styles.container}>
+      <div>
         <DocumentationBlock
           title="Application name"
         >
