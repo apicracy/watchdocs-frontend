@@ -3,7 +3,6 @@ const express = require('express');
 const path = require('path');
 const compression = require('compression');
 const fs = require('fs');
-const basicAuth = require('basic-auth');
 
 const app = express();
 app.use(compression());
@@ -23,31 +22,6 @@ const mockServerRoutes = mockServer.map((resource) => {
   };
 }).filter(x => x);
 
-// Auth middleware
-const auth = (req, res, next) => {
-  // Skip API paths
-  if (mockServerRoutes.find(x => req.path.includes(x.path))) return next();
-
-  function unauthorized(response) {
-    response.set('WWW-Authenticate', 'Basic realm=Authorization Required');
-    return response.sendStatus(401);
-  }
-
-  const user = basicAuth(req);
-
-  if (!user || !user.name || !user.pass) {
-    return unauthorized(res);
-  }
-
-  if (user.name === process.env.USER_NAME && user.pass === process.env.PASSWORD) {
-    return next();
-  }
-
-  return unauthorized(res);
-};
-
-// // Authenticate each call
-app.use(auth);
 
 // serve our static stuff like index.css
 app.use(express.static(path.join(__dirname, 'dist')));
