@@ -54,3 +54,9 @@
   padding: 50px;
   padding-top: 0;
 }
+
+/* Users */
+.addressWrapper{
+  display: flex;
+  flex: 1;
+}

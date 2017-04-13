@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import styles from './Settings.css';
 import Setup from './Setup';
+import Users from './Users';
 
 @connect(store => ({
   projectUrl: store.projects.activeProject.url,
@@ -36,11 +37,20 @@ class Settings extends React.Component {
             >
               Setup
             </button>
+            <button
+              onClick={() => { this.setPanel('users'); }}
+              className={this.state.activePanel === 'users' ? styles.active : styles.button}
+            >
+              Users
+            </button>
           </div>
         </aside>
         <div className={styles.container}>
           {
             this.state.activePanel === 'setup' && <Setup params={this.props.params} />
+          }
+          {
+            this.state.activePanel === 'users' && <Users params={this.props.params} />
           }
         </div>
       </div>
