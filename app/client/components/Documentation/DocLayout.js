@@ -7,22 +7,15 @@ const DocLayout = ({ topLevel, doc, children, projectUrl }) => {
   const renderBody = (type) => {
     switch (type) {
       case 'endpoint':
-        return <EndpointDoc doc={doc} projectUrl={projectUrl} />;
+        return <EndpointDoc topLevel={topLevel} doc={doc} projectUrl={projectUrl} />;
 
       default:
-        return <FolderDoc doc={doc} projectUrl={projectUrl} />;
+        return <FolderDoc topLevel={topLevel} doc={doc} projectUrl={projectUrl} />;
     }
   };
 
   return (
     <section className={styles.root} id={doc.section}>
-      <div className={styles.top} >
-        <article className={styles.content}>
-          <div className={topLevel ? styles.headerMain : styles.header}>{ doc.title }</div>
-          { (doc.type === 'endpoint') && <div className={styles.addHeader}>{ doc.description }</div> }
-        </article>
-        <article className={styles.code} />
-      </div>
       { renderBody(doc.type) }
 
       { children }

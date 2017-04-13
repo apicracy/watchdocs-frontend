@@ -7,13 +7,15 @@ import ParamTable from 'components/ParamTable/ParamTable';
 
 import { curlBuilder } from 'services/helpers';
 
-const EndpointDoc = ({ projectUrl, doc }) => (
+const EndpointDoc = ({ topLevel, projectUrl, doc }) => (
   <div className={styles.top} >
     <article className={styles.content}>
+      <div className={topLevel ? styles.headerMain : styles.header}>{ doc.title }</div>
+      <div className={styles.addHeader}>{ doc.description }</div>
       <div className={styles.bodyContent}>
         <div className={styles.section}>
           <Well type="span" variants={['body', 'bold']}>
-            <span className={styles.method}>{doc.method}</span> {`http://startjoin.com/api/v1${doc.url}`}
+            <span className={styles.method}>{doc.method}</span> {`${projectUrl}${doc.url}`}
           </Well>
         </div>
 
@@ -21,13 +23,11 @@ const EndpointDoc = ({ projectUrl, doc }) => (
           <div className={styles.section}>
             <Heading>URL parameters</Heading>
             <ParamTable
-              data={doc.urlParams.map(x => ({ ...x, required: `${!!x.required}` }))}
+              data={doc.urlParams.map(x => ({ ...x, type: `${x.type} (${x.required ? 'required' : 'optional'})` }))}
               headers={[
-                { key: 'name', text: 'Parameter', style: { flex: 2 } },
+                { key: 'name', text: 'Parameter', style: { flex: 1 } },
                 { key: 'type', text: 'Type', style: { flex: 2 } },
-                { key: 'required', text: 'Required', style: { flex: 2 } },
-                { key: 'description', text: 'Description', style: { flex: 10 } },
-                { key: 'example', text: 'Example value', style: { flex: 3 } },
+                { key: 'description', text: 'Description', style: { flex: 3 } },
               ]}
             />
           </div>
@@ -61,6 +61,7 @@ const EndpointDoc = ({ projectUrl, doc }) => (
 EndpointDoc.propTypes = {
   doc: React.PropTypes.object,
   projectUrl: React.PropTypes.string,
+  topLevel: React.PropTypes.bool,
 };
 
 export default EndpointDoc;

@@ -6,9 +6,10 @@
   flex-direction: column;
   width: 550px;
   background-color: white;
-  min-height: 300px;
   color: #7f7d94;
-  font-size: 16px;
+  font-size: 14px;
+  height: max-content;
+  max-height: calc(100vh - 100px);
 }
 
 .overlay {
@@ -61,8 +62,10 @@
 }
 
 .body {
-  padding: 15px def-padding 0;
-  flex: 1 0;
+  padding: 10px def-padding 0;
+  flex: 2 1;
+  height: max-content;
+  overflow-y: auto;
 }
 
 .buttons {
