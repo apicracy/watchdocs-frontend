@@ -1,15 +1,15 @@
 [
   {
     "id": 10844,
-    "groupName": "Getting Startedd",
-    "description": "This is a wiki content",
+    "groupName": "Getting Started",
+    "description": "HireMe is an application that connects youg talents with Opportunities submitted by Organisations. All opportunities are later being matched to candidates based on their eCV. CV consists of achievements, experiences, educations and many more.\nThe HireMe API uses HTTP methods and a RESTful endpoint structure. The API authorization is made with JWT. You format requests in JSON and the APIs return JSON-formatted responses.",
     "wiki": true
   },
   {
     "id": 1011345,
     "groupName": "Authorization",
     "groupPath": "/sessions",
-    "description": "Signing in and out from an application",
+    "description": "Signing in and out from an application. Group of endpoints required for authorization further requests. Communication is stateles so we don't store your session but in order to authorize your request we need to know your JWT token.",
     "endpoints": [
       {
         "method": "POST",
@@ -25,17 +25,16 @@
           {
             "status": { "id": 200, "name": "200 - OK" },
             "id": 12341343,
-            "base": { "$schema": "http://json-schema.org/draft-04/schema#", "properties": { "JWT": { "type": "string" }, "name": { "type": "string" } }, "type": "object" },
-            "draft": { "$schema": "http://json-schema.org/draft-04/schema#", "properties": { "JWT": { "type": "string" }, "name": { "type": "string" } }, "type": "object" }
+            "base": {"$schema":"http://json-schema.org/draft-04/schema#","properties":{"email":{"type":"string"},"first_name":{"type":"string"},"last_name":{"type":"string"},"sign_in_count":{"type":"integer"}, "token":{"type":"string"}},"required":["token","first_name","last_name","email","sign_in_count"],"type":"object"},
+            "draft": {"$schema":"http://json-schema.org/draft-04/schema#","properties":{"email":{"type":"string"},"first_name":{"type":"string"},"last_name":{"type":"string"},"sign_in_count":{"type":"integer"}, "token":{"type":"string"}},"required":["token","first_name","last_name","email","sign_in_count"],"type":"object"}
           }
         ],
         "requests": [
           {
             "id": 123513451,
-            "headers": [
-              {"id": 12341345, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false},
-              {"id": 12341346, "name": "Live", "type": "string", "description": "Live param", "required": true, "example": "Bearer <token>", "main": false, "isNew": true}
-            ]
+            "headers": [],
+            "base": { "$schema": "http://json-schema.org/draft-04/schema#", "properties": { "email": { "type": "string" }, "password": { "type": "string" } }, "type": "object" },
+            "draft": { "$schema": "http://json-schema.org/draft-04/schema#", "properties": { "email": { "type": "string" }, "password": { "type": "string" } }, "type": "object" }
           }
         ]
       }
@@ -652,5 +651,11 @@
         ]
       }
     ]
+  },
+  {
+    "id": 108492,
+    "groupName": "SDKs",
+    "description": "HireMe SDK is distributed as a source code package or compiled bundle, and can be easily integrated into a new app or an existing codebase with standard tooling. The HireMe Web SDK is built as a UMD module that can be loaded via CDN, NPM, or from source.",
+    "wiki": true
   }
 ]
