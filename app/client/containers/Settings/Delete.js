@@ -20,7 +20,7 @@ class Delete extends React.Component {
     } = this.props;
 
     return (
-      <div className={styles.container}>
+      <div>
         <DocumentationBlock
           title={`Delete "${projectName}" project`}
         >
