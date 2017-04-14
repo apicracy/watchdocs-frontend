@@ -1,10 +1,13 @@
 import { sanitize } from 'dompurify';
 
+const replaceChars = { '<': 'lt', '>': 'gt' };
+const htmlSafe = text => text.replace(/[<>]/g, chr => `&${replaceChars[chr]};`);
+
 // Rules
 const rules = /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g;
 
 export const higlightSyntax = (code) => {
-  const syntax = code
+  const syntax = htmlSafe(code)
     .replace(rules, (match) => {
       let cls = 'sh-number';
 

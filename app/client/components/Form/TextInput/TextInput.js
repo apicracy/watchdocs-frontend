@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './TextInput.css';
 
-const TextInput = ({ placeholder, value, onChange, iconRight,
+const TextInput = ({ placeholder, value, defaultValue, onChange, iconRight,
   validationErrorMsg, validation, variant, type }) => {
   const isValid = (value.replace(validation, '').length === 0);
   const variantStyle = (variant === 'white') ? styles.rootWhite : styles.root;
@@ -16,7 +16,8 @@ const TextInput = ({ placeholder, value, onChange, iconRight,
           placeholder={placeholder}
           onChange={onChange}
           className={variantInputStyle}
-          value={value}
+          value={value || undefined}
+          defaultValue={defaultValue}
         />
         <span className={styles.addon}>{ iconRight }</span>
       </div>
@@ -30,6 +31,7 @@ TextInput.propTypes = {
   placeholder: React.PropTypes.string,
   value: React.PropTypes.string,
   type: React.PropTypes.string,
+  defaultValue: React.PropTypes.string,
   variant: React.PropTypes.string,
   iconRight: React.PropTypes.node,
   onChange: React.PropTypes.func,
