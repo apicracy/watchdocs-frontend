@@ -17,16 +17,26 @@ import RequestParam from 'containers/RequestParam/RequestParam';
 import ResponseParam from 'containers/ResponseParam/ResponseParam';
 import JSONSEditor from 'containers/JSONSEditor/JSONSEditor';
 import Settings from 'containers/Settings/Settings';
+import Login from 'containers/Login/Login';
+
+const requireAuth = (nextState, replace) => {
+  if (!sessionStorage.getItem('JWT')) {
+    replace({
+      pathname: '/login',
+    });
+  }
+};
 
 const Routes = (
   <Route>
-    <Route exact path="/" component={AppLayout} >
+    <Route exact path="/" component={AppLayout} onEnter={requireAuth}>
       <IndexRoute component={Loading} />
     </Route>
 
-    <Route path="/project-manager" component={Projects} />
+    <Route path="/project-manager" component={Projects} onEnter={requireAuth} />
+    <Route path="/login" component={Login} />
 
-    <Route path=":project_name" component={AppLayout}>
+    <Route path=":project_name" component={AppLayout} onEnter={requireAuth}>
       <IndexRedirect to="editor" />
 
       <Route path="project-not-found" component={NoMatch} />
@@ -54,7 +64,7 @@ const Routes = (
       <Route path="settings" component={Settings} />
     </Route>
 
-    <Route path="*" component={AppLayout}>
+    <Route path="*" component={AppLayout} onEnter={requireAuth}>
       <IndexRoute component={NoMatch} />
     </Route>
   </Route>

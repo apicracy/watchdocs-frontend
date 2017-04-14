@@ -19,6 +19,7 @@ import { groupView } from 'reducers/groupView';
 import { documentView } from 'reducers/documentView';
 import { projects } from 'reducers/projects';
 import { modals } from 'reducers/modals';
+import { session } from 'reducers/session';
 /* reapp: import new reducer */
 
 export const reducers = {
@@ -31,5 +32,6 @@ export const reducers = {
   modals,
   responseParams,
   requestParams,
+  session,
   /* reapp: append new reducer */
 };

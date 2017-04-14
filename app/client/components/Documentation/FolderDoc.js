@@ -6,7 +6,9 @@ const FolderDoc = ({ topLevel, doc }) => (
     <article className={styles.content}>
       <div className={topLevel ? styles.headerMain : styles.header}>{ doc.title }</div>
       <div className={styles.bodyContent}>
-        { doc.description }
+        {doc.description.split('\n').map((paragraph, key) => (
+          <p key={key}>{paragraph}</p>
+        ))}
       </div>
     </article>
     <article className={styles.code} />

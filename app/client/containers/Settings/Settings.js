@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import Container from 'components/Container/Container';
 import styles from './Settings.css';
 import Setup from './Setup';
 import Users from './Users';
+import Delete from './Delete';
 
 @connect(store => ({
   projectUrl: store.projects.activeProject.url,
@@ -43,6 +45,12 @@ class Settings extends React.Component {
             >
               Users
             </button>
+            <button
+              onClick={() => { this.setPanel('delete'); }}
+              className={this.state.activePanel === 'delete' ? styles.active : styles.button}
+            >
+              Delete
+            </button>
           </div>
         </aside>
         <div className={styles.container}>
@@ -52,8 +60,11 @@ class Settings extends React.Component {
           {
             this.state.activePanel === 'users' && <Users params={this.props.params} />
           }
+          {
+            this.state.activePanel === 'delete' && <Delete />
+          }
         </div>
-      </div>
+      </Container>
     );
   }
 }

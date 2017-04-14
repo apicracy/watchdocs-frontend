@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './TextInput.css';
 
 const TextInput = ({ placeholder, value, defaultValue, onChange, iconRight,
-  validationErrorMsg, validation, variant }) => {
+  validationErrorMsg, validation, variant, type }) => {
   const isValid = (value.replace(validation, '').length === 0);
 
   let variantStyle = styles.root;
@@ -26,7 +26,7 @@ const TextInput = ({ placeholder, value, defaultValue, onChange, iconRight,
     <div className={styles.wrapper}>
       <div className={isValid ? variantStyle : variantErrorStyle}>
         <input
-          type="text"
+          type={type}
           placeholder={placeholder}
           onChange={onChange}
           className={variantInputStyle}
@@ -44,6 +44,7 @@ const TextInput = ({ placeholder, value, defaultValue, onChange, iconRight,
 TextInput.propTypes = {
   placeholder: React.PropTypes.string,
   value: React.PropTypes.string,
+  type: React.PropTypes.string,
   defaultValue: React.PropTypes.string,
   variant: React.PropTypes.string,
   iconRight: React.PropTypes.node,
@@ -54,6 +55,7 @@ TextInput.propTypes = {
 
 TextInput.defaultProps = {
   placeholder: '',
+  type: 'text',
   value: '',
   onChange: () => {},
   validation: new RegExp(/./g),
