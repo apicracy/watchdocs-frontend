@@ -28,14 +28,14 @@ export function authenticate({ email, password }) {
         }
 
         const JWT = response.headers.get('authorization');
-        sessionStorage.setItem('JWT', JWT);
+        localStorage.setItem('JWT', JWT);
 
         return response;
       })
       .then(response => response.json())
       .then(response => dispatch(loginSuccess(response)))
       .catch((err) => {
-        sessionStorage.removeItem('JWT');
+        localStorage.removeItem('JWT');
         dispatch(loginFailed(err));
       });
   };

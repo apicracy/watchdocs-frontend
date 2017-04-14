@@ -20,10 +20,20 @@ import Settings from 'containers/Settings/Settings';
 import Login from 'containers/Login/Login';
 
 const requireAuth = (nextState, replace) => {
-  if (!sessionStorage.getItem('JWT')) {
-    replace({
-      pathname: '/login',
-    });
+  const { pathname } = nextState.location;
+  if (!localStorage.getItem('JWT')) {
+    if (pathname && pathname !== '/') {
+      replace({
+        pathname: '/login',
+        query: {
+          redirect: pathname,
+        },
+      });
+    } else {
+      replace({
+        pathname: '/login',
+      });
+    }
   }
 };
 

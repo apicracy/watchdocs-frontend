@@ -25,6 +25,7 @@
 }
 
 .form {
+  position: relative;
   background: #FFFFFF;
   text-align: left;
   padding: 20px 40px 40px;
@@ -53,6 +54,10 @@
 }
 
 .errors {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   color: #FFFFFF;
   background-color: #c0392b;
   padding: 10px;
