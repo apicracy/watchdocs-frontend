@@ -17,6 +17,12 @@
   background: white;
 }
 
+.rootNoBorder{
+  composes: rootWhite;
+  background: white;
+  border: none;
+}
+
 .rootError {
   composes: root;
   border-color: red;

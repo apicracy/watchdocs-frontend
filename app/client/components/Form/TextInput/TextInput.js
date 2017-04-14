@@ -4,9 +4,23 @@ import styles from './TextInput.css';
 const TextInput = ({ placeholder, value, defaultValue, onChange, iconRight,
   validationErrorMsg, validation, variant, type }) => {
   const isValid = (value.replace(validation, '').length === 0);
-  const variantStyle = (variant === 'white') ? styles.rootWhite : styles.root;
-  const variantErrorStyle = (variant === 'white') ? styles.rootErrorWhite : styles.rootError;
-  const variantInputStyle = (variant === 'white') ? styles.inputWhite : styles.input;
+
+  let variantStyle = styles.root;
+  let variantErrorStyle = styles.rootError;
+  let variantInputStyle = styles.input;
+
+  switch (variant) {
+    case 'white':
+      variantStyle = styles.rootWhite;
+      variantErrorStyle = styles.rootErrorWhite;
+      variantInputStyle = styles.inputWhite;
+      break;
+    case 'no-border':
+      variantStyle = styles.rootNoBorder;
+      break;
+    default:
+      break;
+  }
 
   return (
     <div className={styles.wrapper}>
