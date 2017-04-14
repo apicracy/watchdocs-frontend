@@ -30,7 +30,7 @@ class Settings extends React.Component {
 
   render() {
     return (
-      <div className={styles.root}>
+      <Container className={styles.root}>
         <aside className={styles.aside}>
           <div className={styles.menu}>
             <button
