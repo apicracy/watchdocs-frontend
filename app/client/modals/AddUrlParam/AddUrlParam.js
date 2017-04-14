@@ -129,7 +129,7 @@ class AddUrlParam extends React.Component {
             value={this.state.name}
             placeholder="Param name"
             onChange={this.onFieldChange('name')}
-            validation={new RegExp(/(^[a-zA-Z_$][a-zA-Z_$0-9]*$)/ig)}
+            validation={new RegExp(/((^[a-zA-Z_$][a-zA-Z_$[\]0-9]*$))/ig)}
             validationErrorMsg={'URL parameter should include only allowed URL characters.'}
           />
 
