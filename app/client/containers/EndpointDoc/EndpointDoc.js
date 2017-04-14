@@ -27,7 +27,7 @@ import { getFullLink } from 'services/helpers';
   group: store.groupView,
   endpointList: store.endpoints,
   responses: store.endpointView.responses,
-  projectUrl: store.projects.activeProject.url,
+  projectUrl: store.projects.activeProject.base_url,
 }))
 class EndpointDoc extends React.Component {
 

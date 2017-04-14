@@ -7,7 +7,7 @@ import Setup from './Setup';
 import Delete from './Delete';
 
 @connect(store => ({
-  projectUrl: store.projects.activeProject.url,
+  projectUrl: store.projects.activeProject.base_url,
 }))
 class Settings extends React.Component {
 
