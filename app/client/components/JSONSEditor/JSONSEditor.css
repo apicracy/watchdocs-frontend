@@ -32,8 +32,6 @@
 
 .attribute {
   width: 50px;
-  display: inline-block;
-  height: 100%;
   align-items: flex-end;
   justify-content: center;
   display: flex;
@@ -65,7 +63,6 @@
   -o-user-select: none;
   user-select: none;
   cursor: pointer;
-  line-height: 25px;
 }
 
 .attributeSpanReq {
@@ -86,7 +83,7 @@
 
 .lineContainer {
   display: flex;
-  height: 24px;
+  height: 25px;
 }
 
 .lineContainerHidden {
