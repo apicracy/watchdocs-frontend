@@ -11,8 +11,8 @@ class EndpointListGroup extends React.Component {
 
   static propTypes = {
     id: React.PropTypes.number,
-    groupName: React.PropTypes.string,
-    endpoints: React.PropTypes.arrayOf(React.PropTypes.object),
+    name: React.PropTypes.string,
+    items: React.PropTypes.arrayOf(React.PropTypes.object),
     isActive: React.PropTypes.bool,
     isOpen: React.PropTypes.bool,
     activeGroup: React.PropTypes.string,
@@ -74,13 +74,13 @@ class EndpointListGroup extends React.Component {
   }
 
   renderEndpointList(endpoints) {
-    if (this.state.isOpen || (!this.state.force && this.props.isOpen)) {
+    if (endpoints && (this.state.isOpen || (!this.state.force && this.props.isOpen))) {
       return endpoints.map((endpoint) => {
-        if (endpoint.method) {
+        if (endpoint.type === 'Endpoint') {
           return this.renderEndpoint(endpoint);
-        } else if (endpoint.groupPath) {
+        } else if (endpoint.type === 'Group') {
           return this.renderEndpointGroup(endpoint);
-        } else if (endpoint.wiki) {
+        } else if (endpoint.type === 'Document') {
           return this.renderDocument(endpoint);
         }
 
@@ -116,19 +116,18 @@ class EndpointListGroup extends React.Component {
   }
 
   render() {
-    const { id, groupName, endpoints, isActive, selected } = this.props;
+    const { id, name, items, isActive, selected } = this.props;
     const topStyle = (isActive && !selected) ? styles.selected : styles.link;
-
     return (
       <div className={styles.root}>
         <div className={topStyle}>
           <Link to={`/editor/${id}`} className={styles.link} onClick={this.toggleOpen}>
             { this.renderIcon() }
-            <span className={styles.groupName}>{ groupName }</span>
+            <span className={styles.groupName}>{ name }</span>
           </Link>
         </div>
         <div className={styles.endpoints}>
-          { this.renderEndpointList(endpoints) }
+          { this.renderEndpointList(items) }
         </div>
       </div>
     );

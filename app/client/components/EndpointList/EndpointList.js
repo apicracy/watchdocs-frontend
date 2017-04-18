@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './EndpointList.css';
 
 import EndpointListGroup from './EndpointListGroup/EndpointListGroup';
+import EndpointListItem from './EndpointListItem/EndpointListItem';
 import CustomIcon from 'components/Icon/CustomIcon';
 import Icon from 'components/Icon/Icon';
 import Select from 'components/Form/Select/AddNewSelect';
@@ -39,15 +40,28 @@ class EndpointList extends React.Component {
         <div className={styles.list}>
           {
             /* TODO not sure if id will be int or string */
-            endpoints.map((group) => {
-              if (group.wiki) {
+            endpoints.map((document) => {
+              if (document.type === 'Document') {
                 return (
                   <DocumentListItem
-                    isActive={(`${group.id}` === activeGroup)}
+                    isActive={(`${document.id}` === activeGroup)}
                     activeGroup={activeGroup}
                     selected={selected}
-                    key={group.id}
-                    {...group}
+                    key={document.id}
+                    {...document}
+                  />);
+              }
+              return null;
+            })
+          }
+          {
+            endpoints.map((endpoint) => {
+              if (endpoint.type === 'Endpoint') {
+                return (
+                  <EndpointListItem
+                    key={endpoint.id}
+                    isSelected={(selected === `${endpoint.id}`)}
+                    {...endpoint}
                   />);
               }
               return null;
@@ -55,7 +69,7 @@ class EndpointList extends React.Component {
           }
           {
             endpoints.map((group) => {
-              if (!group.wiki) {
+              if (group.type === 'Group') {
                 return (
                   <EndpointListGroup
                     isActive={(`${group.id}` === activeGroup)}
