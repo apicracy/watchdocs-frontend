@@ -8,6 +8,7 @@ export function fetchEndpoints(projectId) {
         authorization: jwtToken,
       },
     };
+
     fetch(`http://watchdocs-backend-dev.herokuapp.com/api/v1/projects/${projectId}`, init)
       .then(response => response.json())
       .then((data) => {
