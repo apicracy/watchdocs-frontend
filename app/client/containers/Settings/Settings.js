@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Container from 'components/Container/Container';
+import Sidebar from 'components/Sidebar/Sidebar';
+import Content from 'components/Content/Content';
 import styles from './Settings.css';
 import Setup from './Setup';
 import Users from './Users';
@@ -30,8 +31,8 @@ class Settings extends React.Component {
 
   render() {
     return (
-      <Container className={styles.root}>
-        <aside className={styles.aside}>
+      <div className={styles.root}>
+        <Sidebar>
           <div className={styles.menu}>
             <button
               onClick={() => { this.setPanel('setup'); }}
@@ -52,8 +53,8 @@ class Settings extends React.Component {
               Delete
             </button>
           </div>
-        </aside>
-        <div className={styles.container}>
+        </Sidebar>
+        <Content>
           {
             this.state.activePanel === 'setup' && <Setup params={this.props.params} />
           }
@@ -63,8 +64,8 @@ class Settings extends React.Component {
           {
             this.state.activePanel === 'delete' && <Delete />
           }
-        </div>
-      </Container>
+        </Content>
+      </div>
     );
   }
 }

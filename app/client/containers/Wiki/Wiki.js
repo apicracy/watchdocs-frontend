@@ -57,7 +57,7 @@ export default class Document extends React.Component {
     return (
       <div>
         <DocumentationBlock
-          title="Wiki title"
+          title="Document title"
           description="This is title of the section we're going
             to display in documentation and in navigation."
         >

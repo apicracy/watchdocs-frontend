@@ -3,6 +3,7 @@
   flex-direction: column;
   overflow: hidden;
   position: relative;
+  padding-top: 10px;
   padding-right: 10px;
   border-right: solid 1px #dcdee1;
 }

@@ -3,8 +3,7 @@
   align-items: center;
   border: #EEEEEE solid 1px;
   border-radius: 5px;
-  padding: 10px;
-  margin-top: 10px;
+  padding: 10px;\
   margin-right: 10px;
   margin-bottom: 5px;
   flex-shrink: 0;
@@ -48,6 +47,7 @@
   width: 100%;
   box-shadow: none;
   font-size: 14px;
+  color: #7f7d94;
 }
 
 .inputWhite {

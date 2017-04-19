@@ -26,7 +26,7 @@ class Setup extends React.Component {
         <DocumentationBlock
           title="Application name"
         >
-          <TextInput defaultValue={params.project_name} />
+          <TextInput variant="white" defaultValue={params.project_name} />
         </DocumentationBlock>
         <DocumentationBlock
           title="Base URL"

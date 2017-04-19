@@ -21,7 +21,7 @@
   display: flex;
   flex: 1;
   position: relative;
-  padding: 50px;
+  padding: 25px 35px;
   overflow-x: hidden;
   flex-direction: column;
 }

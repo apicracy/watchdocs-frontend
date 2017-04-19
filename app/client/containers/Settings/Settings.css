@@ -23,18 +23,15 @@
   width: 49%;
 }
 
-.aside {
-  width: 300px;
-}
-
 .button {
   width: 100%;
   background: none;
   border: none;
+  font-family: 'RobotoBold', Helvetica, sans-serif;
   outline: none;
-  height: 50px;
+  color: #7f7d94;
   text-align: left;
-  padding-left: 20px;
+  padding: 15px;
 }
 
 .active {
@@ -45,13 +42,7 @@
 }
 
 .menu {
-  margin-top: 20px;
-}
-
-.container {
-  background: #EDEFF4;
-  width: 100%;
-  padding: 50px;
+  width: inherit;
 }
 
 /* Users */

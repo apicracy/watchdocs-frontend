@@ -8,7 +8,14 @@ class Sidebar extends React.Component {
 
   componentWillMount() {
     // Load width from cache
-    this.setState({ width: 250, baseWidth: 250, dragStart: null });
+    let initWidth = 250;
+
+    if (typeof (Storage) !== 'undefined' && localStorage.getItem('sidebarWidth')) {
+      initWidth = localStorage.getItem('sidebarWidth');
+      initWidth = parseInt(initWidth, 10);
+    }
+
+    this.setState({ width: initWidth, baseWidth: initWidth, dragStart: null });
   }
 
   onDragStart = ({ nativeEvent }) => {
@@ -28,6 +35,10 @@ class Sidebar extends React.Component {
     this.setState({
       baseWidth: null,
     });
+
+    if (typeof (Storage) !== 'undefined') {
+      localStorage.setItem('sidebarWidth', this.state.width);
+    }
   }
 
   render() {

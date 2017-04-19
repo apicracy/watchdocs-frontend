@@ -8,8 +8,7 @@
   align-items: center;
   flex: 1;
   flex-direction: row;
-  padding-bottom: 5px;
-  min-height: 60px;
+  margin-bottom: 15px;
   flex-wrap: wrap;
 }
 
@@ -31,10 +30,6 @@
 
 .iconWrapper {
   color: #6fb3e3;
-}
-
-.blockWrapper {
-  margin-top: 10px;
 }
 
 .footer {
