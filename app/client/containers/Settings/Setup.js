@@ -6,7 +6,7 @@ import TextInput from 'components/Form/TextInput/TextInput';
 import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock';
 
 @connect(store => ({
-  projectUrl: store.projects.activeProject.url,
+  projectUrl: store.projects.activeProject.base_url,
 }))
 class Setup extends React.Component {
 

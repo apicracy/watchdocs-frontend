@@ -14,7 +14,7 @@ import { buildDocumentation } from 'services/documentation';
 
 @connect(store => ({
   documentation: buildDocumentation(store.endpoints),
-  projectUrl: store.projects.activeProject.url,
+  projectUrl: store.projects.activeProject.base_url,
 }))
 class DocumentationViewer extends React.Component {
   static propTypes = {
