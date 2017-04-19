@@ -88,15 +88,6 @@ class EndpointListGroup extends React.Component {
           }
           default: return null;
         }
-        // if (endpoint.type === 'Endpoint') {
-        //   return this.renderEndpoint(endpoint);
-        // } else if (endpoint.type === 'Group') {
-        //   return this.renderEndpointGroup(endpoint);
-        // } else if (endpoint.type === 'Document') {
-        //   return this.renderDocument(endpoint);
-        // }
-        //
-        // return null; // do not render
       });
     }
 
