@@ -81,8 +81,8 @@ export function setRequestParam(id) {
 
     fetch(`http://watchdocs-backend-dev.herokuapp.com/api/v1/endpoints/${id}/request`, init)
       .then(response => response.json())
-      .then((data) => {
-        console.log(data);
+      .then(() => {
+        // console.log(data);
         const elem = request.find(param => param.id.toString() === id);
         dispatch(setRequestAction(elem));
       });
