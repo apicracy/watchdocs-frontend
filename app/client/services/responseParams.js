@@ -63,13 +63,33 @@ export function saveResponseParam() {
 }
 
 export function setResponseParam(id) {
-  return (dispatch, getState) => {
-    const {
-      responses,
-    } = getState().endpointView;
+  return (dispatch) => {
+    // const {
+    //   responses,
+    // } = getState().endpointView;
     dispatch(resetAction());
-    const elem = responses.find(param => param.id.toString() === id);
-    dispatch(setResponseAction(elem));
+
+    const jwtToken = localStorage.getItem('JWT');
+    const init = {
+      headers: {
+        authorization: jwtToken,
+      },
+    };
+
+    fetch(`http://watchdocs-backend-dev.herokuapp.com/api/v1/responses/${id}`, init)
+      .then(response => response.json())
+      .then((data) => {
+        // console.log(data);
+        const elem2 = {
+          status: data.http_status_code,
+          base: data.body,
+          draft: data.body_draft,
+          headers: data.headers,
+        };
+
+        // const elem = responses.find(param => param.id.toString() === id);
+        dispatch(setResponseAction(elem2));
+      });
   };
 }
 
