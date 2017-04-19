@@ -50,8 +50,8 @@ function createEndpoint(item, parentGroup) {
     method: item.method,
     url: item.url,
     urlParams: params,
-    queryParams: item.requests ? item.requests[0].base : null,
-    headers: item.requests ? item.requests[0].headers : [],
+    queryParams: item.request ? item.request.base : null,
+    headers: item.request ? item.request.headers : [],
     exampleResponse: item.responses ? parseJsonSchema(item.responses[0].base) : null,
   };
 }

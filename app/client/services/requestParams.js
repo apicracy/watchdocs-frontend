@@ -5,7 +5,7 @@ import {
   reset as resetAction,
 } from 'actions/requestParams';
 import {
-  setRequests,
+  setRequest,
 } from 'actions/endpointView';
 
 export function reset() {
@@ -48,14 +48,16 @@ export function saveRequestParam() {
 
     if (!requestParams.id) {
       requestParams.id = (new Date()).getTime();
-      const newRequest = [].concat(endpointView.requests);
+      const newRequest = {
+        ...endpointView.request,
+      };
       newRequest.push(requestParams);
-      dispatch(setRequests(newRequest));
+      dispatch(setRequest(newRequest));
     } else {
-      const newRequest = endpointView.requests
-        .map(param => ((param.id === requestParams.id) ? requestParams : param));
+      // const newRequest = endpointView.request
+      //   .map(param => ((param.id === requestParams.id) ? requestParams : param));
 
-      dispatch(setRequests(newRequest));
+      dispatch(setRequest(requestParams));
     }
 
     dispatch(resetAction());
@@ -65,13 +67,25 @@ export function saveRequestParam() {
 export function setRequestParam(id) {
   return (dispatch, getState) => {
     const {
-      requests,
+      request,
     } = getState().endpointView;
 
     dispatch(resetAction());
 
-    const elem = requests.find(param => param.id.toString() === id);
-    dispatch(setRequestAction(elem));
+    const jwtToken = localStorage.getItem('JWT');
+    const init = {
+      headers: {
+        authorization: jwtToken,
+      },
+    };
+
+    fetch(`http://watchdocs-backend-dev.herokuapp.com/api/v1/endpoints/${id}/request`, init)
+      .then(response => response.json())
+      .then((data) => {
+        console.log(data);
+        const elem = request.find(param => param.id.toString() === id);
+        dispatch(setRequestAction(elem));
+      });
   };
 }
 

@@ -161,16 +161,16 @@ class EndpointDoc extends React.Component {
     ));
   }
 
-  renderRequests() {
+  renderRequest() {
     const conditions = [
       !this.props.endpoint,
-      !this.props.endpoint.requests,
-      this.props.endpoint.requests.length === 0,
+      !this.props.endpoint.request,
+      this.props.endpoint.request.length === 0,
     ];
 
     if (conditions.some(x => x)) return [];
 
-    const request = this.props.endpoint.requests[0];
+    const request = this.props.endpoint.request;
 
     return [
       <Row
@@ -244,7 +244,7 @@ class EndpointDoc extends React.Component {
           //   />
           // )}
         >
-          { this.renderRequests() }
+          { this.renderRequest() }
         </DocumentationBlock>
 
         <DocumentationBlock
