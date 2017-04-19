@@ -40,48 +40,36 @@ class EndpointList extends React.Component {
         <div className={styles.list}>
           {
             /* TODO not sure if id will be int or string */
-            endpoints.map((document) => {
-              if (document.type === 'Document') {
-                return (
-                  <DocumentListItem
-                    isActive={(`${document.id}` === activeGroup)}
-                    activeGroup={activeGroup}
-                    selected={selected}
-                    key={document.id}
-                    {...document}
-                  />);
-              }
-              return null;
-            })
+            endpoints.filter(e => e.type === 'Document').map(document => (
+              <DocumentListItem
+                isActive={(`${document.id}` === activeGroup)}
+                activeGroup={activeGroup}
+                selected={selected}
+                key={document.id}
+                {...document}
+              />),
+            )
           }
           {
-            endpoints.map((endpoint) => {
-              if (endpoint.type === 'Endpoint') {
-                return (
-                  <EndpointListItem
-                    key={endpoint.id}
-                    isSelected={(selected === `${endpoint.id}`)}
-                    {...endpoint}
-                  />);
-              }
-              return null;
-            })
+            endpoints.filter(e => e.type === 'Endpoint').map(endpoint => (
+              <EndpointListItem
+                key={endpoint.id}
+                isSelected={(selected === `${endpoint.id}`)}
+                {...endpoint}
+              />),
+            )
           }
           {
-            endpoints.map((group) => {
-              if (group.type === 'Group') {
-                return (
-                  <EndpointListGroup
-                    isActive={(`${group.id}` === activeGroup)}
-                    isOpen={!!group.isOpen}
-                    activeGroup={activeGroup}
-                    selected={selected}
-                    key={group.id}
-                    {...group}
-                  />);
-              }
-              return null;
-            })
+            endpoints.filter(e => e.type === 'Group').map(group => (
+              <EndpointListGroup
+                isActive={(`${group.id}` === activeGroup)}
+                isOpen={!!group.isOpen}
+                activeGroup={activeGroup}
+                selected={selected}
+                key={group.id}
+                {...group}
+              />),
+            )
           }
           { (!endpoints || endpoints.length === 0) && this.renderNoItems() }
         </div>

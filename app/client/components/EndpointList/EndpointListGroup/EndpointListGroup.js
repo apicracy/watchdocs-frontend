@@ -76,15 +76,27 @@ class EndpointListGroup extends React.Component {
   renderEndpointList(endpoints) {
     if (endpoints && (this.state.isOpen || (!this.state.force && this.props.isOpen))) {
       return endpoints.map((endpoint) => {
-        if (endpoint.type === 'Endpoint') {
-          return this.renderEndpoint(endpoint);
-        } else if (endpoint.type === 'Group') {
-          return this.renderEndpointGroup(endpoint);
-        } else if (endpoint.type === 'Document') {
-          return this.renderDocument(endpoint);
+        switch (endpoint) {
+          case 'Endpoint': {
+            return this.renderEndpoint(endpoint);
+          }
+          case 'Group': {
+            return this.renderEndpointGroup(endpoint);
+          }
+          case 'Document': {
+            return this.renderDocument(endpoint);
+          }
+          default: return null;
         }
-
-        return null; // do not render
+        // if (endpoint.type === 'Endpoint') {
+        //   return this.renderEndpoint(endpoint);
+        // } else if (endpoint.type === 'Group') {
+        //   return this.renderEndpointGroup(endpoint);
+        // } else if (endpoint.type === 'Document') {
+        //   return this.renderDocument(endpoint);
+        // }
+        //
+        // return null; // do not render
       });
     }
 
