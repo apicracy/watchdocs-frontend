@@ -34,7 +34,7 @@ import { getFullLink } from 'services/helpers';
     draftJSONSchema: store.requestParams.draft,
     hasNewHeaders,
     headers,
-    projectUrl: store.projects.activeProject.url,
+    projectUrl: store.projects.activeProject.base_url,
   };
 })
 class RequestParam extends React.Component {

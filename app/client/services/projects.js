@@ -9,7 +9,13 @@ import { fetchEndpoints } from 'services/endpoints';
 
 export function fetchProjects(urlParam) {
   return (dispatch) => {
-    fetch('/projects')
+    const jwtToken = localStorage.getItem('JWT');
+    const init = {
+      headers: {
+        authorization: jwtToken,
+      },
+    };
+    fetch('http://watchdocs-backend-dev.herokuapp.com/api/v1/projects', init)
       .then(response => response.json())
       .then((data) => {
         let activeProjectFromCache = null;

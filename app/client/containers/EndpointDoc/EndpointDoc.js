@@ -7,7 +7,7 @@ import { loadGroup } from 'services/groupView';
 
 import MethodPicker from 'components/MethodPicker/MethodPicker';
 import Button from 'components/Button/Button';
-// import Radio from 'components/Form/Radio/Radio';
+
 import Icon from 'components/Icon/Icon';
 import IconButton from 'components/Button/IconButton';
 
@@ -27,7 +27,7 @@ import { getFullLink } from 'services/helpers';
   group: store.groupView,
   endpointList: store.endpoints,
   responses: store.endpointView.responses,
-  projectUrl: store.projects.activeProject.url,
+  projectUrl: store.projects.activeProject.base_url,
 }))
 class EndpointDoc extends React.Component {
 
@@ -151,7 +151,7 @@ class EndpointDoc extends React.Component {
       <Row
         key={key}
         data={[
-          <div>Status <span className={styles.responseParam}>{`${param.status.name}`}</span></div>,
+          <div>Status <span className={styles.responseParam}>{`${param.status_code ? param.status_code : ''}`}</span></div>,
         ]}
         actions={[
           <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editResponse(param.id)} />,
