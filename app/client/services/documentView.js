@@ -11,7 +11,7 @@ export function loadDocument(id) {
     const document = filterById([...endpoints], id);
     if (document) {
       dispatch(setName(document.groupName));
-      dispatch(setDescription(document.description));
+      dispatch(setDescription(document.text));
     }
   };
 }
