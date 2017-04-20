@@ -151,7 +151,7 @@ class EndpointDoc extends React.Component {
       <Row
         key={key}
         data={[
-          <div>Status <span className={styles.responseParam}>{`${param.status_code ? param.status_code : ''}`}</span></div>,
+          <div>Status <span className={styles.responseParam}>{`${param.http_status_code ? param.http_status_code : ''}`}</span></div>,
         ]}
         actions={[
           <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editResponse(param.id)} />,
