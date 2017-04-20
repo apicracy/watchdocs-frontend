@@ -76,7 +76,7 @@ class EndpointListGroup extends React.Component {
   renderEndpointList(endpoints) {
     if (endpoints && (this.state.isOpen || (!this.state.force && this.props.isOpen))) {
       return endpoints.map((endpoint) => {
-        switch (endpoint) {
+        switch (endpoint.type) {
           case 'Endpoint': {
             return this.renderEndpoint(endpoint);
           }
