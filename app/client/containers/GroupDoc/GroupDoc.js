@@ -25,7 +25,7 @@ class GroupDoc extends React.Component {
   componentWillMount() {
     this.setState({
       description: '',
-      groupName: '',
+      name: '',
       isDirty: false,
     });
   }
@@ -34,7 +34,7 @@ class GroupDoc extends React.Component {
     const conditions = [
       JSON.stringify(nextProps.group) !== JSON.stringify(this.props.group),
       this.state.description === '' && nextProps.group.description !== '',
-      this.state.groupName === '' && nextProps.group.groupName !== '',
+      this.state.name === '' && nextProps.group.name !== '',
     ];
 
     // If at least one of above conditions is met, reload state.
@@ -93,7 +93,7 @@ class GroupDoc extends React.Component {
   render() {
     const {
       description,
-      groupName,
+      name,
     } = this.state;
 
     return (
@@ -104,9 +104,9 @@ class GroupDoc extends React.Component {
             to display in documentation and in navigation."
         >
           <TextInput
-            value={groupName}
+            value={name}
             variant="white"
-            onChange={this.onFieldChange('groupName')}
+            onChange={this.onFieldChange('name')}
           />
         </DocumentationBlock>
 
@@ -116,7 +116,7 @@ class GroupDoc extends React.Component {
             appear on your generated public documentation."
         >
           <TinyMCE
-            value={description}
+            value={description || ''}
             tinymceConfig={{
               plugins: 'autolink link image lists preview',
               toolbar: 'undo redo | bold italic underline',
