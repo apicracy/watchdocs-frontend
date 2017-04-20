@@ -65,11 +65,7 @@ export function saveRequestParam() {
 }
 
 export function setRequestParam(id) {
-  return (dispatch, getState) => {
-    const {
-      request,
-    } = getState().endpointView;
-
+  return (dispatch) => {
     dispatch(resetAction());
 
     const jwtToken = localStorage.getItem('JWT');
@@ -81,9 +77,13 @@ export function setRequestParam(id) {
 
     fetch(`http://watchdocs-backend-dev.herokuapp.com/api/v1/endpoints/${id}/request`, init)
       .then(response => response.json())
-      .then(() => {
-        // console.log(data);
-        const elem = request.find(param => param.id.toString() === id);
+      .then((data) => {
+        const elem = {
+          base: data.body,
+          draft: data.body_draft,
+          headers: data.headers,
+        };
+
         dispatch(setRequestAction(elem));
       });
   };
