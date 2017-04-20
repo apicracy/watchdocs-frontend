@@ -135,9 +135,9 @@ class ResponseParam extends React.Component {
         key={key}
         variants={[param.isNew ? 'isNew' : '']}
         data={[
-          <Button variants={[param.isNew ? 'linkWhite' : 'linkPrimary']}>{param.name}</Button>,
+          <Button variants={[param.isNew ? 'linkWhite' : 'linkPrimary']}>{param.key}</Button>,
           param.required ? 'required' : 'optional',
-          (!param.description || !param.example) && !param.isNew ? <WarningLabel /> : '',
+          (!param.description || !param.example_value) && !param.isNew ? <WarningLabel /> : '',
         ]}
         actions={!param.isNew ? [
           <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editParam(param.id)} />,

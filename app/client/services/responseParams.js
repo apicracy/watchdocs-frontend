@@ -79,9 +79,22 @@ export function setResponseParam(id) {
     fetch(`http://watchdocs-backend-dev.herokuapp.com/api/v1/responses/${id}`, init)
       .then(response => response.json())
       .then((data) => {
-        // console.log(data);
+        const paramTypes = [
+          { id: 200, name: '200 - OK' },
+          { id: 201, name: '201 - Created' },
+          { id: 204, name: '204 - No Content' },
+          { id: 304, name: '304 - Not Modified' },
+          { id: 400, name: '400 - Bad Request' },
+          { id: 401, name: '401 - Unauthorized' },
+          { id: 403, name: '403 - Forbidden' },
+          { id: 404, name: '404 - Not Found' },
+          { id: 409, name: '409 - Conflict' },
+          { id: 422, name: '422 - Unauthorized' },
+          { id: 500, name: '500 - Internal Server Error' },
+        ];
+
         const elem2 = {
-          status: data.http_status_code,
+          status: paramTypes.filter(obj => ((data.http_status_code === obj.id) ? obj : null))[0],
           base: data.body,
           draft: data.body_draft,
           headers: data.headers,
