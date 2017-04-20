@@ -64,9 +64,6 @@ export function saveResponseParam() {
 
 export function setResponseParam(id) {
   return (dispatch) => {
-    // const {
-    //   responses,
-    // } = getState().endpointView;
     dispatch(resetAction());
 
     const jwtToken = localStorage.getItem('JWT');
@@ -100,7 +97,6 @@ export function setResponseParam(id) {
           headers: data.headers,
         };
 
-        // const elem = responses.find(param => param.id.toString() === id);
         dispatch(setResponseAction(elem2));
       });
   };
