@@ -188,8 +188,8 @@ class EndpointDoc extends React.Component {
   }
 
   getFullLink = () => {
-    const { projectUrl, group, endpoint } = this.props;
-    return getFullLink(projectUrl, endpoint, group);
+    const { projectUrl, endpoint } = this.props;
+    return getFullLink(projectUrl, endpoint);
   }
 
   render() {
