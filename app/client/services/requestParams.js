@@ -54,9 +54,6 @@ export function saveRequestParam() {
       newRequest.push(requestParams);
       dispatch(setRequest(newRequest));
     } else {
-      // const newRequest = endpointView.request
-      //   .map(param => ((param.id === requestParams.id) ? requestParams : param));
-
       dispatch(setRequest(requestParams));
     }
 
