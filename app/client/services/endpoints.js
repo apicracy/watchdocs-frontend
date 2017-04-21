@@ -1,18 +1,10 @@
 import { fetchEndpoints as load } from 'actions/endpoints';
+import http from 'services/http';
 
 export function fetchEndpoints(projectId) {
-  return (dispatch) => {
-    const jwtToken = localStorage.getItem('JWT');
-    const init = {
-      headers: {
-        authorization: jwtToken,
-      },
-    };
-
-    fetch(`http://watchdocs-backend-dev.herokuapp.com/api/v1/projects/${projectId}`, init)
+  return dispatch => (
+    http(`/api/v1/projects/${projectId}`)
       .then(response => response.json())
-      .then((data) => {
-        dispatch(load(data.tree));
-      });
-  };
+      .then(data => dispatch(load(data.tree)))
+  );
 }
