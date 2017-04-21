@@ -10,8 +10,8 @@ export function loadDocument(id) {
     const { endpoints } = getState();
     const document = filterById([...endpoints], id);
     if (document) {
-      dispatch(setName(document.groupName));
-      dispatch(setDescription(document.description));
+      dispatch(setName(document.name));
+      dispatch(setDescription(document.text));
     }
   };
 }

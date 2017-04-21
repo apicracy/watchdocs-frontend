@@ -61,7 +61,7 @@ export default class Document extends React.Component {
           description="This is title of the section we're going
             to display in documentation and in navigation."
         >
-          <TextInput value={name} variant="white" />
+          <TextInput value={name || ''} variant="white" />
         </DocumentationBlock>
 
         <DocumentationBlock
@@ -69,7 +69,7 @@ export default class Document extends React.Component {
           description="This description will
             appear on your generated public documentation."
         >
-          <TinyMCE value={description} />
+          <TinyMCE value={description || ''} />
         </DocumentationBlock>
 
         <div className={styles.buttons}>
