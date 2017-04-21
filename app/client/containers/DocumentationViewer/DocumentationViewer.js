@@ -10,11 +10,12 @@ import IconButton from 'components/Button/IconButton';
 import DocLayout from 'components/Documentation/DocLayout';
 import { ScrollSpy, Link } from 'components/ScrollSpy/ScrollSpy';
 
-import { buildDocumentation } from 'services/documentation';
+import { buildDocumentation, fetchDocumentation } from 'services/documentation';
 
 @connect(store => ({
-  documentation: buildDocumentation(store.endpoints),
+  documentation: store.documentation,
   projectUrl: store.projects.activeProject.base_url,
+  activeProject: store.projects.activeProject,
 }))
 class DocumentationViewer extends React.Component {
   static propTypes = {
@@ -23,9 +24,24 @@ class DocumentationViewer extends React.Component {
   }
 
   componentWillMount() {
+    const { dispatch, activeProject } = this.props;
+
     this.setState({
       search: '',
     });
+
+    if (activeProject.id) {
+      dispatch(fetchDocumentation(activeProject.id));
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { dispatch } = this.props;
+    const { activeProject } = nextProps;
+
+    if (activeProject.id && activeProject.id !== this.props.activeProject.id) {
+      dispatch(fetchDocumentation(activeProject.id));
+    }
   }
 
   renderIcon() {
@@ -54,14 +70,14 @@ class DocumentationViewer extends React.Component {
         doc={v}
         projectUrl={projectUrl}
       >
-        { v.children && this.renderDoc(v.children, false) }
+        { v.items && this.renderDoc(v.children, false) }
       </DocLayout>
     ));
   }
 
   renderMenu() {
     return this.props.documentation.map((v, i) => (
-      <Link key={i} isTop subitems={v.children} section={v.section}>
+      <Link key={i} isTop subitems={v.items} section={v.section}>
         {v.title}
       </Link>
     ));

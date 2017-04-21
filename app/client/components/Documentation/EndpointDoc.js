@@ -19,11 +19,11 @@ const EndpointDoc = ({ topLevel, projectUrl, doc }) => (
           </Well>
         </div>
 
-        { doc.urlParams && doc.urlParams.length > 0 && (
+        { doc.url_params && doc.url_params.length > 0 && (
           <div className={styles.section}>
             <Heading>URL parameters</Heading>
             <ParamTable
-              data={doc.urlParams.map(x => ({ ...x, type: `${x.type} (${x.required ? 'required' : 'optional'})` }))}
+              data={doc.url_params.map(x => ({ ...x, type: `${x.type} (${x.required ? 'required' : 'optional'})` }))}
               headers={[
                 { key: 'name', text: 'Parameter', style: { flex: 1 } },
                 { key: 'type', text: 'Type', style: { flex: 2 } },

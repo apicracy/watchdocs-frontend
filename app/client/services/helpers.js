@@ -26,7 +26,11 @@ export function curlBuilder(domain, data) {
   }
 
   const url = `${modifiedDomain}${data.url}`;
-  const headers = data.headers.map(h => `\n  -H "${h.name}: ${h.example}"`).join('');
+  const headers = data.request ? (
+    data.request.headers
+      .map(h => `\n  -H "${h.key}: ${h.example_value}"`)
+      .join('')
+    ) : '';
 
   return `curl ${method} "${url}" ${headers}`;
 }

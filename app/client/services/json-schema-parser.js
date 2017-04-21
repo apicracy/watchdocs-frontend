@@ -22,16 +22,19 @@ const generateValue = (obj) => {
   }
 };
 
-const buildObject = schema => Object.keys(schema.properties).map((x) => {
-  const property = schema.properties[x];
+const buildObject = schema => {
+  if(!schema || !schema.properties) return {};
 
-  return Object.assign({}, property, {
-    key: x,
-    value: generateValue(property),
-  });
-}).reduce((final, current) => (
-  Object.assign({}, final, { [current.key]: current.value })
-), {});
+  return Object.keys(schema.properties).map((x) => {
+    const property = schema.properties[x];
+    return Object.assign({}, property, {
+      key: x,
+      value: generateValue(property),
+    });
+  }).reduce((final, current) => (
+    Object.assign({}, final, { [current.key]: current.value })
+  ), {});
+};
 
 function generateResponse(schema) {
   if (schema.type === 'object') {
