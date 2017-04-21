@@ -7,6 +7,7 @@ import {
 import {
   setResponses,
 } from 'actions/endpointView';
+import http from 'services/http';
 
 export function reset() {
   return (dispatch) => {
@@ -66,14 +67,7 @@ export function setResponseParam(id) {
   return (dispatch) => {
     dispatch(resetAction());
 
-    const jwtToken = localStorage.getItem('JWT');
-    const init = {
-      headers: {
-        authorization: jwtToken,
-      },
-    };
-
-    fetch(`http://watchdocs-backend-dev.herokuapp.com/api/v1/responses/${id}`, init)
+    http(`/api/v1/responses/${id}`)
       .then(response => response.json())
       .then((data) => {
         const paramTypes = [
