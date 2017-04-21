@@ -22,7 +22,12 @@ export function setStatus(value) {
 
 export function addHeader(header) {
   return (dispatch, getState) => {
-    const newHeaders = [].concat(getState().responseParams.headers);
+    let newHeaders = [];
+
+    if (getState().requestParams.headers) {
+      newHeaders = newHeaders.concat(getState().responseParams.headers);
+    }
+
     newHeaders.push(header);
     dispatch(setHeadersAction(newHeaders));
   };

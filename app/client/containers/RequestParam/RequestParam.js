@@ -23,6 +23,7 @@ import { getFullLink } from 'services/helpers';
 @connect((store) => {
   const headers = (store.requestParams.headers) ?
     store.requestParams.headers.sort((a, b) => a.id > b.id) : [];
+
   const hasNewHeaders = !!headers.find(param => param.isNew);
 
   return {

@@ -8,6 +8,8 @@ import {
   setRequest,
 } from 'actions/endpointView';
 
+import http from 'services/http';
+
 export function reset() {
   return (dispatch) => {
     dispatch(resetAction());
@@ -22,7 +24,12 @@ export function setStatus(value) {
 
 export function addHeader(header) {
   return (dispatch, getState) => {
-    const newHeaders = [].concat(getState().requestParams.headers);
+    let newHeaders = [];
+
+    if (getState().requestParams.headers) {
+      newHeaders = newHeaders.concat(getState().requestParams.headers);
+    }
+
     newHeaders.push(header);
     dispatch(setHeadersAction(newHeaders));
   };
@@ -65,14 +72,7 @@ export function setRequestParam(id) {
   return (dispatch) => {
     dispatch(resetAction());
 
-    const jwtToken = localStorage.getItem('JWT');
-    const init = {
-      headers: {
-        authorization: jwtToken,
-      },
-    };
-
-    fetch(`http://watchdocs-backend-dev.herokuapp.com/api/v1/endpoints/${id}/request`, init)
+    http(`/api/v1/endpoints/${id}/request`)
       .then(response => response.json())
       .then((data) => {
         const elem = {
@@ -95,6 +95,7 @@ export function addParam(id) {
     const elem = headers.find(param => param.id === id);
     const newHeaders = headers
       .map(param => ((param.id === id) ? { ...elem, isNew: false } : param));
+
     dispatch(setHeadersAction(newHeaders));
   };
 }
