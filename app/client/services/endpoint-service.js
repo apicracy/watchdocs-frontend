@@ -97,8 +97,21 @@ export const filterById = (endpoints, id, parentId = null, fullPath = '') => end
 
   if (item.id === id) {
     return { ...item, parentId, fullPath: path };
-  } else if (item.endpoints) {
-    const subGroups = filterById(item.endpoints, id, item.id, path);
+  } else if (item.items) {
+    const subGroups = filterById(item.items, id, item.id, path);
+    return subGroups ? { ...subGroups, parentId: item.id } : state;
+  }
+
+  return state;
+}, null);
+
+export const filterByIdAndType = (endpoints, id, type, parentId = null, fullPath = '') => endpoints.reduce((state, item) => {
+  const path = item.groupPath ? fullPath + item.groupPath : fullPath;
+
+  if (item.id === id && item.type === type) {
+    return { ...item, parentId, fullPath: path };
+  } else if (item.items) {
+    const subGroups = filterByIdAndType(item.items, id, type, item.id, fullPath);
     return subGroups ? { ...subGroups, parentId: item.id } : state;
   }
 
