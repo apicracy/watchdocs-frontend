@@ -165,7 +165,6 @@ class EndpointDoc extends React.Component {
     const conditions = [
       !this.props.endpoint,
       !this.props.endpoint.request,
-      this.props.endpoint.request.length === 0,
     ];
 
     if (conditions.some(x => x)) return [];
