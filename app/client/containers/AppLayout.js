@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import styles from './AppLayout.css';
 
 import { fetchProjects, setActiveProject } from 'services/projects';
+import { getCurrentUser } from 'services/session';
 
 import AppBar from 'components/AppBar/AppBar';
 import Container from 'components/Container/Container';
@@ -20,6 +21,7 @@ import CustomIcon from 'components/Icon/CustomIcon';
 class AppLayout extends React.Component {
 
   componentWillMount() {
+    this.props.dispatch(getCurrentUser());
     this.props.dispatch(fetchProjects(this.props.params.project_name));
   }
 

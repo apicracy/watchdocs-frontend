@@ -1,4 +1,5 @@
 import { browserHistory } from 'react-router';
+import http from 'services/http';
 
 import {
   fetchProjects as load,
@@ -8,38 +9,30 @@ import {
 import { fetchEndpoints } from 'services/endpoints';
 
 export function fetchProjects(urlParam) {
-  return (dispatch) => {
-    const jwtToken = localStorage.getItem('JWT');
-    const init = {
-      headers: {
-        authorization: jwtToken,
-      },
-    };
-    fetch('http://watchdocs-backend-dev.herokuapp.com/api/v1/projects', init)
-      .then(response => response.json())
-      .then((data) => {
-        let activeProjectFromCache = null;
-        let activeProjectFromUrl = null;
+  return dispatch => http('/api/v1/projects')
+    .then(response => response.json())
+    .then((data) => {
+      let activeProjectFromCache = null;
+      let activeProjectFromUrl = null;
 
-        if (!urlParam) {
-          activeProjectFromCache = getActiveProjectFromCache(data);
-        } else {
-          activeProjectFromUrl = getActiveProjectFromUrl(data, urlParam);
-        }
+      if (!urlParam) {
+        activeProjectFromCache = getActiveProjectFromCache(data);
+      } else {
+        activeProjectFromUrl = getActiveProjectFromUrl(data, urlParam);
+      }
 
-        const projects = [...data];
-        const activeProject = activeProjectFromUrl || activeProjectFromCache;
+      const projects = [...data];
+      const activeProject = activeProjectFromUrl || activeProjectFromCache;
 
-        dispatch(load(projects));
+      dispatch(load(projects));
 
-        if (activeProject) {
-          activateProject(dispatch, activeProject);
-        } else {
-          // project does not exist
-          browserHistory.push(`/project-manager?not_found=${urlParam}`);
-        }
-      });
-  };
+      if (activeProject) {
+        activateProject(dispatch, activeProject);
+      } else {
+        // project does not exist
+        browserHistory.push(`/project-manager?not_found=${urlParam}`);
+      }
+    });
 }
 
 export function setActiveProject(id) {
