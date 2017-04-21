@@ -2,6 +2,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
+  LOGOUT,
 } from 'actions/session';
 
 const INITIAL_STATE = {
@@ -18,6 +19,7 @@ export function session(state = INITIAL_STATE, action) {
     case LOGIN_REQUEST: return loginRequest(state);
     case LOGIN_SUCCESS: return loginSuccess(state, payload);
     case LOGIN_FAILED: return loginFailed(payload);
+    case LOGOUT: return logout(state);
     default: return state;
   }
 }
@@ -32,4 +34,8 @@ function loginSuccess(state, user) {
 
 function loginFailed(errors) {
   return { ...INITIAL_STATE, loginErrors: errors };
+}
+
+function logout() {
+  return { ...INITIAL_STATE };
 }
