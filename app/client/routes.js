@@ -61,7 +61,6 @@ const Routes = (
           <Route path=":group_id" component={GroupDoc} />
           <Route path=":group_id/endpoint/:endpoint_id" component={EndpointDoc} />
           <Route path=":group_id/endpoint/:endpoint_id/request" component={RequestParam} />
-          <Route path=":group_id/endpoint/:endpoint_id/request/:request_id" component={RequestParam} />
           <Route path=":group_id/endpoint/:endpoint_id/response" component={ResponseParam} />
           <Route path=":group_id/endpoint/:endpoint_id/response/:response_id" component={ResponseParam} />
         </Route>

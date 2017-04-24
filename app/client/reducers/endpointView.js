@@ -8,7 +8,7 @@ import {
   ADD_REQUEST,
   UPDATE_REQUEST,
   SET_RESPONSES,
-  SET_REQUESTS,
+  SET_REQUEST,
 } from 'actions/endpointView';
 
 const INITIAL_STATE = {
@@ -16,7 +16,7 @@ const INITIAL_STATE = {
   method: '',
   params: [],
   responses: [],
-  requests: [],
+  request: {},
   id: null,
   status: '',
   parentId: null,
@@ -36,15 +36,15 @@ export function endpointView(state = INITIAL_STATE, action) {
     case ADD_REQUEST: return addRequest(state, payload);
     case UPDATE_REQUEST: return updateRequest(state, payload);
     case SET_RESPONSES: return setResponses(state, payload);
-    case SET_REQUESTS: return setRequests(state, payload);
+    case SET_REQUEST: return setRequest(state, payload);
     default: return state;
   }
 }
 
-function setRequests(state, payload) {
+function setRequest(state, payload) {
   return {
     ...state,
-    requests: payload,
+    request: payload,
   };
 }
 
@@ -131,25 +131,14 @@ function addRequest(state, payload) {
   return {
     ...state,
     isDirty: true,
-    requests: [
-      ...state.requests,
-      {
-        ...payload,
-      },
-    ],
+    request: payload,
   };
 }
 
 function updateRequest(state, payload) {
-  const requests = state.requests.filter(p => p.id !== payload.id);
   return {
     ...state,
     isDirty: true,
-    requests: [
-      ...requests,
-      {
-        ...payload,
-      },
-    ],
+    request: payload,
   };
 }

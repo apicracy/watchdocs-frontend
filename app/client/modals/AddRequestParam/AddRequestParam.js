@@ -51,11 +51,11 @@ class addRequestParam extends React.Component {
   reset = () => this.setState({
     id: null,
     main: false,
-    name: '',
+    key: '',
     required: false,
     description: '',
     type: 'string',
-    example: '',
+    example_value: '',
   });
 
   onSave = () => {
@@ -88,8 +88,9 @@ class addRequestParam extends React.Component {
   onRequiredChange = () => this.setState({ required: !this.state.required });
 
   shouldDisplayMessage = () => {
-    const { id, description, example } = this.state;
-    return (id && (!description || !example));
+    const { id, description, example_value } = this.state;
+    /* eslint camelcase: 0*/
+    return (id && (!description || !example_value));
   }
 
   render() {
@@ -106,10 +107,10 @@ class addRequestParam extends React.Component {
 
         <InputGroup title="Name" description="Write here param name as it apears inside URL">
           <TextInput
-            value={this.state.name}
+            value={this.state.key || ''}
             placeholder="Param name"
-            onChange={this.onFieldChange('name')}
-            validation={new RegExp(/(^[a-zA-Z_$][a-zA-Z_$0-9]*$)/ig)}
+            onChange={this.onFieldChange('key')}
+            validation={new RegExp(/(^[a-zA-Z_$][a-zA-Z_\-$0-9]*$)/ig)}
             validationErrorMsg={'URL parameter should include only allowed URL characters.'}
           />
 
@@ -125,7 +126,7 @@ class addRequestParam extends React.Component {
         <InputGroup title="Description" description="Give user more context info about the param itself">
           <TextArea
             rows={3}
-            value={this.state.description}
+            value={this.state.description || ''}
             placeholder="Param description"
             onChange={this.onFieldChange('description')}
           />
@@ -133,9 +134,9 @@ class addRequestParam extends React.Component {
 
         <InputGroup title="Example" description="This examle is going to be used to generate user friendly documentation">
           <TextInput
-            value={this.state.example}
+            value={this.state.example_value || ''}
             placeholder="Example of param value"
-            onChange={this.onFieldChange('example')}
+            onChange={this.onFieldChange('example_value')}
           />
         </InputGroup>
 
