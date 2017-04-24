@@ -116,7 +116,7 @@ class EndpointDoc extends React.Component {
   /* Params section */
   editParam = id => () => this.props.dispatch(openModal('addUrlParam', id));
   editResponse = id => () => this.props.router.push(`/${this.props.params.project_name}/editor/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/response/${id}`);
-  editRequest = id => () => this.props.router.push(`/${this.props.params.project_name}/editor/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/request/${id}`);
+  editRequest = () => () => this.props.router.push(`/${this.props.params.project_name}/editor/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/request`);
 
   renderParams() {
     if (!this.props.endpoint || !this.props.endpoint.params) return [];
@@ -169,8 +169,6 @@ class EndpointDoc extends React.Component {
 
     if (conditions.some(x => x)) return [];
 
-    const request = this.props.endpoint.request;
-
     return [
       <Row
         key={1}
@@ -179,7 +177,7 @@ class EndpointDoc extends React.Component {
           this.props.endpoint.url,
         ]}
         actions={[
-          <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editRequest(request.id)} />,
+          <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editRequest()} />,
           <IconButton icon={<Icon name="trash" size="lg" />} />,
         ]}
       />,

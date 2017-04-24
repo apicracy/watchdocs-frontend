@@ -62,8 +62,8 @@ class RequestParam extends React.Component {
       dispatch,
     } = this.props;
 
-    if (this.props.params.request_id) {
-      dispatch(setRequestParam(this.props.params.request_id));
+    if (this.props.params.endpoint_id) {
+      dispatch(setRequestParam(this.props.params.endpoint_id));
     } else {
       dispatch(reset());
     }
@@ -165,7 +165,7 @@ class RequestParam extends React.Component {
     return (
       <div className={styles.root}>
         <BackLink onClick={browserHistory.goBack}><b>{endpoint.method} {`"${endpoint.url}"`}</b></BackLink>
-        <div className={styles.title}>Add Request</div>
+        <div className={styles.title}>Update Request</div>
         <div className={styles.description}>Your request for endpoint
           <strong> {endpoint.method} {endpoint.url}</strong>.<br />
           <strong>Last check performed 2 hours ago.</strong></div>
