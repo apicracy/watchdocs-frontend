@@ -452,11 +452,9 @@ const getArrayLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove, 
     isAccepted: schema.isAccepted,
   });
 
-  const item1 = getLines('', schema.items, false, space + 2, (toAdd || schema.toAdd), (typeChanged || schema.typeChanged), (toRemove || schema.toRemove), true);
-  const item2 = getLines('', schema.items, false, space + 2, (toAdd || schema.toAdd), (typeChanged || schema.typeChanged), (toRemove || schema.toRemove), false);
+  const item1 = getLines('', schema.items, false, space + 2, (toAdd || schema.toAdd), (typeChanged || schema.typeChanged), (toRemove || schema.toRemove), false);
 
   lines = lines.concat(item1);
-  lines = lines.concat(item2);
 
   lines.push({
     line: `${pre}]${comma ? ',' : ''}`,
