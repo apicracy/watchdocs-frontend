@@ -5,6 +5,13 @@
 export const LOGIN_REQUEST = 'loginRequest@session';
 export const LOGIN_SUCCESS = 'loginSuccess@session';
 export const LOGIN_FAILED = 'loginFailed@session';
+export const LOGOUT = 'logout@session';
+
+export function logout() {
+  return {
+    type: LOGOUT,
+  };
+}
 
 export function loginRequest() {
   return {

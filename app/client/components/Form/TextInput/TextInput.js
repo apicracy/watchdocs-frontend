@@ -3,7 +3,10 @@ import styles from './TextInput.css';
 
 const TextInput = ({ placeholder, value, defaultValue, onChange, iconRight,
   validationErrorMsg, validation, variant, type }) => {
-  const isValid = (value.replace(validation, '').length === 0);
+  let isValid = true;
+  if (value) {
+    isValid = (value.replace(validation, '').length === 0);
+  }
 
   let variantStyle = styles.root;
   let variantErrorStyle = styles.rootError;

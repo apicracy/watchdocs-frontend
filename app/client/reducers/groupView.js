@@ -4,9 +4,8 @@ import {
 
 const INITIAL_STATE = {
   id: null,
-  groupName: '',
-  groupPath: '',
-  endpoints: [],
+  name: '',
+  items: [],
   fullPath: '',
 };
 

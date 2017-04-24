@@ -11,12 +11,12 @@ export const UPDATE_RESPONSE = 'updateResponse@endpointView';
 export const ADD_REQUEST = 'addRequest@endpointView';
 export const UPDATE_REQUEST = 'updateRequest@endpointView';
 export const SET_RESPONSES = 'setResponses@endpointView';
-export const SET_REQUESTS = 'setRequests@endpointView';
+export const SET_REQUEST = 'setRequest@endpointView';
 
-export function setRequests(requests) {
+export function setRequest(request) {
   return {
-    type: SET_REQUESTS,
-    payload: requests,
+    type: SET_REQUEST,
+    payload: request,
   };
 }
 

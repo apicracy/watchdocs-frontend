@@ -5,8 +5,10 @@ import {
   reset as resetAction,
 } from 'actions/requestParams';
 import {
-  setRequests,
+  setRequest,
 } from 'actions/endpointView';
+
+import http from 'services/http';
 
 export function reset() {
   return (dispatch) => {
@@ -22,7 +24,12 @@ export function setStatus(value) {
 
 export function addHeader(header) {
   return (dispatch, getState) => {
-    const newHeaders = [].concat(getState().requestParams.headers);
+    let newHeaders = [];
+
+    if (getState().requestParams.headers) {
+      newHeaders = newHeaders.concat(getState().requestParams.headers);
+    }
+
     newHeaders.push(header);
     dispatch(setHeadersAction(newHeaders));
   };
@@ -43,19 +50,14 @@ export function saveRequestParam() {
   return (dispatch, getState) => {
     const {
       requestParams,
-      endpointView,
     } = getState();
 
     if (!requestParams.id) {
       requestParams.id = (new Date()).getTime();
-      const newRequest = [].concat(endpointView.requests);
-      newRequest.push(requestParams);
-      dispatch(setRequests(newRequest));
+      const newRequest = requestParams;
+      dispatch(setRequest(newRequest));
     } else {
-      const newRequest = endpointView.requests
-        .map(param => ((param.id === requestParams.id) ? requestParams : param));
-
-      dispatch(setRequests(newRequest));
+      dispatch(setRequest(requestParams));
     }
 
     dispatch(resetAction());
@@ -63,15 +65,20 @@ export function saveRequestParam() {
 }
 
 export function setRequestParam(id) {
-  return (dispatch, getState) => {
-    const {
-      requests,
-    } = getState().endpointView;
-
+  return (dispatch) => {
     dispatch(resetAction());
 
-    const elem = requests.find(param => param.id.toString() === id);
-    dispatch(setRequestAction(elem));
+    http(`/api/v1/endpoints/${id}/request`)
+      .then(response => response.json())
+      .then((data) => {
+        const elem = {
+          base: data.body,
+          draft: data.body_draft,
+          headers: data.headers,
+        };
+
+        dispatch(setRequestAction(elem));
+      });
   };
 }
 
@@ -84,6 +91,7 @@ export function addParam(id) {
     const elem = headers.find(param => param.id === id);
     const newHeaders = headers
       .map(param => ((param.id === id) ? { ...elem, isNew: false } : param));
+
     dispatch(setHeadersAction(newHeaders));
   };
 }

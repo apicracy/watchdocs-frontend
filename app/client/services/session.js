@@ -2,9 +2,12 @@ import {
   loginRequest,
   loginFailed,
   loginSuccess,
+  logout as logoutAction,
 } from 'actions/session';
 
 import http, { httpNoAuth } from 'services/http';
+
+import { browserHistory } from 'react-router';
 
 export function checkStatus(response, message) {
   if (response.status !== 200) {
@@ -59,5 +62,17 @@ export function authenticate({ email, password }) {
         localStorage.removeItem('JWT');
         dispatch(loginFailed(err));
       });
+  };
+}
+
+export function logout() {
+  return (dispatch) => {
+    httpNoAuth('/logout', {
+      method: 'DELETE',
+    }).then(() => {
+      localStorage.removeItem('JWT');
+      dispatch(logoutAction());
+      browserHistory.push('/login');
+    });
   };
 }
