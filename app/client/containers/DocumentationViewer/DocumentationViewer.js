@@ -70,7 +70,7 @@ class DocumentationViewer extends React.Component {
         doc={v}
         projectUrl={projectUrl}
       >
-        { v.items && this.renderDoc(v.children, false) }
+        { v.items && this.renderDoc(v.items, false) }
       </DocLayout>
     ));
   }
@@ -84,6 +84,8 @@ class DocumentationViewer extends React.Component {
   }
 
   render() {
+    const { documentation } = this.props;
+
     return (
       <div className={styles.container}>
         <Sidebar>
@@ -100,7 +102,7 @@ class DocumentationViewer extends React.Component {
           </ScrollSpy>
         </Sidebar>
         <div className={styles.docView}>
-          { this.renderDoc(this.props.documentation, true) }
+          { this.renderDoc(documentation, true) }
         </div>
       </div>
     );

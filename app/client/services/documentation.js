@@ -22,6 +22,7 @@ export function buildDocumentation(endpointList, parentGroup = '') {
           ...state,
           {
             ...item,
+            section: buildSectionId(`${parentGroup ? parentGroup + ' ' : ''}${item.name}`)
           },
         ];
 
@@ -33,6 +34,7 @@ export function buildDocumentation(endpointList, parentGroup = '') {
           ...state,
           {
             ...item,
+            section: buildSectionId(`${parentGroup ? parentGroup + ' ' : ''}${item.name}`)
           },
         ];
 
