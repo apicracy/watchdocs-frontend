@@ -3,18 +3,16 @@ import http from 'services/http';
 import { fetchDocumentation as fetchDoc } from 'actions/documentation';
 
 export function fetchDocumentation(projectId) {
-  return (dispatch) => {
-
-    return http(`/api/v1/projects/${projectId}/documentation`)
-      .then(response => response.json())
-      .then(response => buildDocumentation(response.documentation))
-      .then(response => dispatch(fetchDoc(response)));
-  };
+  return dispatch => http(`/api/v1/projects/${projectId}/documentation`)
+    .then(response => response.json())
+    .then(response => buildDocumentation(response.documentation))
+    .then(response => dispatch(fetchDoc(response)));
 }
 
 // hopefully TODO on backend
 export function buildDocumentation(endpointList, parentGroup = '') {
   return endpointList.reduce((state, item) => {
+    const parent = parentGroup ? `${parentGroup} ` : '';
 
     switch (item.type) {
       case 'Group':
@@ -22,7 +20,8 @@ export function buildDocumentation(endpointList, parentGroup = '') {
           ...state,
           {
             ...item,
-            section: buildSectionId(`${parentGroup ? parentGroup + ' ' : ''}${item.name}`)
+            section: buildSectionId(`${parent}${item.name}`),
+            items: buildDocumentation(item.items),
           },
         ];
 
@@ -34,7 +33,7 @@ export function buildDocumentation(endpointList, parentGroup = '') {
           ...state,
           {
             ...item,
-            section: buildSectionId(`${parentGroup ? parentGroup + ' ' : ''}${item.name}`)
+            section: buildSectionId(`${parent}${item.name}`),
           },
         ];
 
@@ -53,11 +52,10 @@ function buildSectionId(string) {
 }
 
 function createEndpoint(item, parentGroup) {
-  const params = item.params;
   const group = parentGroup !== '' ? `${parentGroup}-` : '';
   const section = (item.description && item.description.title) ? (
-    buildSectionId(`${group}-${item.description.title}`)
-  ) : buildSectionId(`${group}-${item.method}${item.url}`);
+    buildSectionId(`${group}${item.description.title}`)
+  ) : buildSectionId(`${group}${item.method}${item.url}`);
 
   return {
     ...item,

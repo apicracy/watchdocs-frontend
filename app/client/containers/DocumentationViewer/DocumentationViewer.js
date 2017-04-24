@@ -10,7 +10,7 @@ import IconButton from 'components/Button/IconButton';
 import DocLayout from 'components/Documentation/DocLayout';
 import { ScrollSpy, Link } from 'components/ScrollSpy/ScrollSpy';
 
-import { buildDocumentation, fetchDocumentation } from 'services/documentation';
+import { fetchDocumentation } from 'services/documentation';
 
 @connect(store => ({
   documentation: store.documentation,
@@ -21,6 +21,8 @@ class DocumentationViewer extends React.Component {
   static propTypes = {
     documentation: React.PropTypes.array,
     projectUrl: React.PropTypes.string,
+    dispatch: React.PropTypes.func,
+    activeProject: React.PropTypes.object,
   }
 
   componentWillMount() {
@@ -78,7 +80,7 @@ class DocumentationViewer extends React.Component {
   renderMenu() {
     return this.props.documentation.map((v, i) => (
       <Link key={i} isTop subitems={v.items} section={v.section}>
-        {v.title}
+        { v.title || v.name }
       </Link>
     ));
   }

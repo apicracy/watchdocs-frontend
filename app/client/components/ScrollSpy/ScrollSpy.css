@@ -6,11 +6,15 @@
 .root {
   display: flex;
   flex-direction: column;
+  overflow: auto;
 }
 
 .fixed {
+  background-color: #FFFFFF;
   position: fixed;
-  top: 10px;
+  top: 0;
+  bottom: 0;
   width: inherit;
   border-right: 1px solid #dcdee1;
+  z-index: 100;
 }

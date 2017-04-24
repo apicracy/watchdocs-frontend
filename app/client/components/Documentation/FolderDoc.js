@@ -13,10 +13,10 @@ const parseDescription = (desc) => {
 const FolderDoc = ({ topLevel, doc }) => (
   <div className={styles.top} >
     <article className={styles.content}>
-      <div className={topLevel ? styles.headerMain : styles.header}>{ doc.title }</div>
+      <div className={topLevel ? styles.headerMain : styles.header}>{ doc.name }</div>
       <div className={styles.bodyContent}>
         {
-          parseDescription(doc.description)
+          doc.description ? parseDescription(doc.description) : doc.text
         }
       </div>
     </article>

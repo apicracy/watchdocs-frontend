@@ -11,7 +11,7 @@ const EndpointDoc = ({ topLevel, projectUrl, doc }) => (
   <div className={styles.top} >
     <article className={styles.content}>
       <div className={topLevel ? styles.headerMain : styles.header}>{ doc.title }</div>
-      <div className={styles.addHeader}>{ doc.description }</div>
+      { doc.description && <div className={styles.addHeader}>{ doc.description }</div> }
       <div className={styles.bodyContent}>
         <div className={styles.section}>
           <Well type="span" variants={['body', 'bold']}>
@@ -23,10 +23,10 @@ const EndpointDoc = ({ topLevel, projectUrl, doc }) => (
           <div className={styles.section}>
             <Heading>URL parameters</Heading>
             <ParamTable
-              data={doc.url_params.map(x => ({ ...x, type: `${x.type} (${x.required ? 'required' : 'optional'})` }))}
+              data={doc.url_params.map(x => ({ ...x, data_type: `${x.data_type} (${x.required ? 'required' : 'optional'})` }))}
               headers={[
                 { key: 'name', text: 'Parameter', style: { flex: 1 } },
-                { key: 'type', text: 'Type', style: { flex: 2 } },
+                { key: 'data_type', text: 'Type', style: { flex: 2 } },
                 { key: 'description', text: 'Description', style: { flex: 3 } },
               ]}
             />
