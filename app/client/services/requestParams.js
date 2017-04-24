@@ -50,15 +50,11 @@ export function saveRequestParam() {
   return (dispatch, getState) => {
     const {
       requestParams,
-      endpointView,
     } = getState();
 
     if (!requestParams.id) {
       requestParams.id = (new Date()).getTime();
-      const newRequest = {
-        ...endpointView.request,
-      };
-      newRequest.push(requestParams);
+      const newRequest = requestParams;
       dispatch(setRequest(newRequest));
     } else {
       dispatch(setRequest(requestParams));
