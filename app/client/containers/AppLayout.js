@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styles from './AppLayout.css';
 
 import { fetchProjects, setActiveProject } from 'services/projects';
-import { getCurrentUser } from 'services/session';
+import { getCurrentUser, logout } from 'services/session';
 
 import AppBar from 'components/AppBar/AppBar';
 import Container from 'components/Container/Container';
@@ -46,6 +46,10 @@ class AppLayout extends React.Component {
     this.props.dispatch(setActiveProject(id));
   }
 
+  onLogout = () => {
+    this.props.dispatch(logout());
+  }
+
   render() {
     const { projects, activeProject } = this.props;
 
@@ -69,7 +73,10 @@ class AppLayout extends React.Component {
             <div className={styles.right}>
               <CustomIcon name="notifications" size="lg" />
               <CustomIcon name="help" size="lg" />
-              <UserMenu username="WatchDocs User" />
+              <UserMenu
+                username="WatchDocs User"
+                onLogout={this.onLogout}
+              />
             </div>
           </Container>
         </AppBar>
