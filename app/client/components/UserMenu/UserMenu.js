@@ -36,7 +36,6 @@ class UserMenu extends React.Component {
         { this.state.isOpen && (
           /* eslint jsx-a11y/no-static-element-interactions: 0 */
           <div onClick={this.onClick} className={styles.userMenu}>
-            <button className={styles.option}>User Setting</button>
             <button onClick={onLogout} className={styles.option}>Log Out</button>
           </div>
         )
