@@ -114,3 +114,20 @@ export function addParam(id) {
     dispatch(setHeadersAction(newHeaders));
   };
 }
+
+export function saveJson(id, json) {
+  return () => {
+    const options = {
+      method: 'PUT',
+      body: JSON.stringify({
+        body: JSON.stringify(json),
+      }),
+    };
+
+    http(`/api/v1/endpoints/${id}/response`, options)
+      .then(response => response.json())
+      .then(() => {
+        // Do something with data
+      });
+  };
+}

@@ -161,3 +161,12 @@
 .rows{
   background: #464646;
 }
+
+.acceptButton {
+  outline: none;
+  background: none;
+  border: none;
+  color: black;
+  padding-left: 70px;
+  margin-top: 10px;
+}
