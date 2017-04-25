@@ -20,6 +20,7 @@ import { documentView } from 'reducers/documentView';
 import { projects } from 'reducers/projects';
 import { modals } from 'reducers/modals';
 import { session } from 'reducers/session';
+import { documentation } from 'reducers/documentation';
 /* reapp: import new reducer */
 
 export const reducers = {
@@ -33,5 +34,6 @@ export const reducers = {
   responseParams,
   requestParams,
   session,
+  documentation,
   /* reapp: append new reducer */
 };
