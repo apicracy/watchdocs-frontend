@@ -3,6 +3,7 @@ import http from 'services/http';
 import {
   setEndpointView,
   addEndpointParam as addEndpointParamAction,
+  removeEndpointParam as removeEndpointParamAction,
 } from 'actions/endpointView';
 
 export function loadEndpoint(id) {
@@ -27,6 +28,22 @@ export function addEndpointParam(endpointParam) {
       .then((data) => {
         if (!data.errors) {
           dispatch(addEndpointParamAction(data));
+        }
+      });
+  };
+}
+
+export function removeUrlParams(id) {
+  return (dispatch) => {
+    const options = {
+      method: 'DELETE',
+    };
+
+    http(`/api/v1/url_params/${id}`, options)
+      .then(response => response.json())
+      .then((data) => {
+        if (!data.errors) {
+          dispatch(removeEndpointParamAction(id));
         }
       });
   };
