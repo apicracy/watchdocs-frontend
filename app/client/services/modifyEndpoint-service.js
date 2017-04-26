@@ -13,6 +13,8 @@ import {
 } from 'services/endpoint-service';
 
 import http from 'services/http';
+import { browserHistory } from 'react-router';
+import { urlFormatProjectName } from 'services/projects';
 
 export function addNewEndpoint() {
   return (dispatch /* , getState */) => {
@@ -35,23 +37,26 @@ export function addNewDocument() {
   };
 }
 
-export function saveEndpoint() {
+export function saveEndpoint(project_name) {
   return (dispatch, getState) => {
     const endpoint = getState().modifyEndpoint;
-    const activeProjectId = getState().projects.activeProject.id;
+    const activeProject = getState().projects.activeProject;
 
     http('/api/v1/endpoints', {
       method: 'POST',
       body: JSON.stringify({
-        project_id: activeProjectId,
+        project_id: activeProject.id,
         url: endpoint.url,
         http_method: endpoint.method || 'GET',
       }),
     })
       .then(response => response.json())
-      .then(console.log);
-
-    dispatch(reset());
+      .then(response => {
+        dispatch(reset());
+        browserHistory.push(
+          `/${urlFormatProjectName(activeProject.name)}/editor/undefined/endpoint/${response.id}`
+        );
+      });
   };
 }
 

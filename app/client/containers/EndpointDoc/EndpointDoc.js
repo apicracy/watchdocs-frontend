@@ -13,6 +13,7 @@ import IconButton from 'components/Button/IconButton';
 
 import DocumentationBlock, { Row } from 'components/DocumentationBlock/DocumentationBlock';
 import WarningLabel from 'components/DocumentationBlock/Labels/WarningLabel';
+import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
 
 /* Actions */
 import { updateEndpointDescription } from 'actions/endpointView';
@@ -28,6 +29,7 @@ import { getFullLink } from 'services/helpers';
   endpointList: store.endpoints,
   responses: store.endpointView.responses,
   projectUrl: store.projects.activeProject.base_url,
+  isFetching: store.endpointView.isFetching,
 }))
 class EndpointDoc extends React.Component {
 
@@ -192,6 +194,7 @@ class EndpointDoc extends React.Component {
   render() {
     return (
       <div className={styles.root}>
+        { this.props.isFetching && <LoadingIndicator /> }
         <MethodPicker endpoint={this.props.endpoint} />
 
         <DocumentationBlock
