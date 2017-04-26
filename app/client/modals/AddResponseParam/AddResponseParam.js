@@ -50,7 +50,6 @@ class addResponseParam extends React.Component {
 
   reset = () => this.setState({
     id: null,
-    main: false,
     key: '',
     required: false,
     description: '',
