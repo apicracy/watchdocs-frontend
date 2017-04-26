@@ -18,7 +18,9 @@ import Select from 'components/Form/Select/Select';
 import CustomIcon from 'components/Icon/CustomIcon';
 
 import { openModal } from 'actions/modals';
-import { setStatus, saveResponseParam, setResponseParam, addParam, reset } from 'services/responseParams';
+import { setStatus, saveResponseParam,
+  setResponseParam, addParam, reset, saveJson,
+} from 'services/responseParams';
 import { getFullLink } from 'services/helpers';
 
 @connect((store) => {
@@ -173,6 +175,14 @@ class ResponseParam extends React.Component {
     browserHistory.goBack();
   }
 
+  onSaveJson = (json) => {
+    const {
+      dispatch,
+    } = this.props;
+
+    dispatch(saveJson(this.props.params.endpoint_id, json));
+  }
+
   render() {
     const {
       endpoint,
@@ -204,7 +214,10 @@ class ResponseParam extends React.Component {
           description="This is title of the section we're going
             to display in documentation and in navigation."
         >
-          <JSONSEditor base={baseJSONSchema} draft={draftJSONSchema} onCompare={() => {}} />
+          <JSONSEditor
+            base={baseJSONSchema} draft={draftJSONSchema}
+            onSave={this.onSaveJson}
+          />
         </DocumentationBlock>
         <DocumentationBlock
           title="Response Headers"

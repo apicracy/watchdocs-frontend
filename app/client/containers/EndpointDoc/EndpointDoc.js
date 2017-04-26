@@ -121,24 +121,24 @@ class EndpointDoc extends React.Component {
   editRequest = () => () => this.props.router.push(`/${this.props.params.project_name}/editor/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/request`);
 
   renderParams() {
-    if (!this.props.endpoint || !this.props.endpoint.params) return [];
+    if (!this.props.endpoint || !this.props.endpoint.url_params) return [];
 
     // to keep order.
     // TODO create 'order' field in model to allow ordering
-    const params = this.props.endpoint.params.sort((a, b) => a.id > b.id);
+    const params = this.props.endpoint.url_params.sort((a, b) => a.id > b.id);
 
     return params.map((param, key) => (
       <Row
         key={key}
         data={[
           <Button variants={['linkPrimary', 'noPaddingLeft']}>{param.name}</Button>,
-          param.type ? `${param.type}, ${String.fromCharCode(160)}` : null,
+          param.data_type ? `${param.data_type}, ${String.fromCharCode(160)}` : null,
           param.required ? 'required' : 'optional',
           (!param.description || !param.example) ? <WarningLabel /> : '',
         ]}
         actions={[
           <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editParam(param.id)} />,
-          !param.main && <IconButton icon={<Icon name="trash" size="lg" />} />,
+          !param.is_part_of_url && <IconButton icon={<Icon name="trash" size="lg" />} />,
         ]}
       />
     ));
@@ -147,7 +147,7 @@ class EndpointDoc extends React.Component {
   renderResponses() {
     // to keep order.
     // TODO create 'order' field in model to allow ordering
-    const responses = this.props.responses.sort((a, b) => a.id > b.id);
+    const responses = this.props.responses.sort((a, b) => a.http_status_code > b.http_status_code);
 
     return responses.map((param, key) => (
       <Row
@@ -157,7 +157,7 @@ class EndpointDoc extends React.Component {
         ]}
         actions={[
           <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editResponse(param.id)} />,
-          !param.main && <IconButton icon={<Icon name="trash" size="lg" />} />,
+          <IconButton icon={<Icon name="trash" size="lg" />} />,
         ]}
       />
     ));
