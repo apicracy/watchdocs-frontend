@@ -21,6 +21,8 @@ export function loadEndpoint(id) {
 
 export function addEndpointParam(endpointParam) {
   return (dispatch) => {
+    dispatch(setEndpointView({ isFetching: true }));
+
     const options = {
       method: 'POST',
       body: JSON.stringify(endpointParam),
@@ -31,6 +33,7 @@ export function addEndpointParam(endpointParam) {
       .then((data) => {
         if (!data.errors) {
           dispatch(addEndpointParamAction(data));
+          dispatch(setEndpointView({ isFetching: false }));
         }
       });
   };

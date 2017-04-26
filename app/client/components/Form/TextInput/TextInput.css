@@ -67,14 +67,12 @@
 
 /* Variants */
 
-.noRadius > .root {
+.modal > .root {
   border-radius: 0;
-}
-
-.big > .root {
   height: 50px;
+  border: 1px solid #e5e5e5;
 }
 
-.darkBorder > .root {
-  border: 1px solid #e5e5e5;
+.modal > .rootError {
+  border-color: red;
 }

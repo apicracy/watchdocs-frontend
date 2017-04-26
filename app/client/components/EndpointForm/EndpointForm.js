@@ -10,6 +10,7 @@ class EndpointForm extends React.Component {
 
     onChangeInput: React.PropTypes.func,
     onChangeEndpointType: React.PropTypes.func,
+    validUrl: React.PropTypes.object,
   };
 
   static defaultProps = {
@@ -21,6 +22,7 @@ class EndpointForm extends React.Component {
     const {
       inputValue,
       endpointType,
+      validUrl,
     } = this.props;
 
     return (
@@ -28,7 +30,7 @@ class EndpointForm extends React.Component {
         <div className={styles.modalField}>
           <text className={styles.modalLabel}>Endpoint URL</text>
           <text className={styles.modalSmallLabel}>
-            Format query params to &quot;id&quot; notation (for example /user/:id)
+            Format endpoint url to &quot;id&quot; notation (for example /user/:id)
           </text>
           <div className={styles.modalInputWrapper}>
             <select
@@ -43,11 +45,11 @@ class EndpointForm extends React.Component {
               <option>DELETE</option>
             </select>
             <TextInput
-              variants={['noRadius', 'big', 'darkBorder']}
+              variants={['modal']}
               value={inputValue}
               placeholder="URL endpoint"
               onChange={this.onChangeInput}
-              validation={new RegExp(/((^[a-zA-Z_$][a-zA-Z_$[\]0-9]*$))/ig)}
+              validation={validUrl}
               validationErrorMsg={'Endpoint URL should include only allowed URL characters.'}
             />
           </div>
