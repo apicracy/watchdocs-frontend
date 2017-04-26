@@ -3,7 +3,6 @@ import styles from './TextInput.css';
 
 const TextInput = ({ placeholder, value, defaultValue, onChange, iconRight,
   validationErrorMsg, validation, variant, variants, type }) => {
-
   const variantStyles = variants.map(v => styles[v]);
   const rootClasses = [
     styles.wrapper,
@@ -61,6 +60,7 @@ TextInput.propTypes = {
   onChange: React.PropTypes.func,
   validation: React.PropTypes.object,
   validationErrorMsg: React.PropTypes.string,
+  variants: React.PropTypes.array,
 };
 
 TextInput.defaultProps = {

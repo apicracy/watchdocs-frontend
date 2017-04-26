@@ -6,7 +6,7 @@ import {
 } from 'actions/endpointView';
 
 export function loadEndpoint(id) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(setEndpointView({
       isFetching: true,
     }));

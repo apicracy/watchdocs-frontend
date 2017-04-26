@@ -37,7 +37,7 @@ export function addNewDocument() {
   };
 }
 
-export function saveEndpoint(project_name) {
+export function saveEndpoint() {
   return (dispatch, getState) => {
     const endpoint = getState().modifyEndpoint;
     const activeProject = getState().projects.activeProject;
@@ -51,10 +51,10 @@ export function saveEndpoint(project_name) {
       }),
     })
       .then(response => response.json())
-      .then(response => {
+      .then((response) => {
         dispatch(fetchEndpoints(getState().projects.activeProject.id));
         browserHistory.push(
-          `/${urlFormatProjectName(activeProject.name)}/editor/undefined/endpoint/${response.id}`
+          `/${urlFormatProjectName(activeProject.name)}/editor/undefined/endpoint/${response.id}`,
         );
         dispatch(reset());
       });

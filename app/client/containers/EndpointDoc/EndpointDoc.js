@@ -42,6 +42,7 @@ class EndpointDoc extends React.Component {
     router: React.PropTypes.object,
     responses: React.PropTypes.array,
     projectUrl: React.PropTypes.string,
+    isFetching: React.PropTypes.bool,
   }
 
   componentWillMount() {
