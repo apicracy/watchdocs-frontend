@@ -145,7 +145,7 @@ class EndpointDoc extends React.Component {
   renderResponses() {
     // to keep order.
     // TODO create 'order' field in model to allow ordering
-    const responses = this.props.responses.sort((a, b) => a.id > b.id);
+    const responses = this.props.responses.sort((a, b) => a.http_status_code > b.http_status_code);
 
     return responses.map((param, key) => (
       <Row
