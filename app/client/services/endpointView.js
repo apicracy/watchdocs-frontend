@@ -1,9 +1,14 @@
 import http from 'services/http';
+import { browserHistory } from 'react-router';
 
 import {
   setEndpointView,
   addEndpointParam as addEndpointParamAction,
 } from 'actions/endpointView';
+
+import {
+  urlFormatProjectName,
+} from 'services/projects';
 
 export function loadEndpoint(id) {
   return (dispatch) => {
@@ -28,6 +33,24 @@ export function addEndpointParam(endpointParam) {
         if (!data.errors) {
           dispatch(addEndpointParamAction(data));
         }
+      });
+  };
+}
+
+export function removeEndpoint() {
+  return (dispatch, getState) => {
+    const { id } = getState().endpointView;
+    const name = getState().projects.activeProject.name;
+    const url = urlFormatProjectName(name);
+
+    const options = {
+      method: 'DELETE',
+    };
+
+    http(`/api/v1/endpoints/${id}`, options)
+      .then(response => response.json())
+      .then(() => {
+        browserHistory.push(url);
       });
   };
 }
