@@ -5,8 +5,6 @@ import Well from 'components/Well/Well';
 import Code from 'components/Code/Code';
 import ParamTable from 'components/ParamTable/ParamTable';
 
-import { curlBuilder } from 'services/helpers';
-
 const EndpointDoc = ({ topLevel, projectUrl, doc }) => (
   <div className={styles.top} >
     <article className={styles.content}>
@@ -37,12 +35,15 @@ const EndpointDoc = ({ topLevel, projectUrl, doc }) => (
     </article>
     <article className={styles.code}>
       <div className={styles.codeInner}>
-        <Well variants={['code']}>
-          Example request
-        </Well>
-        <Code>
-          { curlBuilder(projectUrl, doc) }
-        </Code>
+        <div>
+          <Well variants={['code']}>
+            Example request
+          </Well>
+          <Code>
+            { JSON.stringify(doc.exampleRequest, null, 2) }
+          </Code>
+        </div>
+
         { doc.exampleResponse && (
           <div>
             <Well variants={['code']}>
