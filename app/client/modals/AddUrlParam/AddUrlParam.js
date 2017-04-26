@@ -60,7 +60,7 @@ class AddUrlParam extends React.Component {
     const { modals, endpoint } = this.props;
 
     if (nextProps.modals.refId && modals.refId !== nextProps.modals.refId) {
-      const currentParam = endpoint.params.find(param => param.id === nextProps.modals.refId);
+      const currentParam = endpoint.url_params.find(param => param.id === nextProps.modals.refId);
 
       if (currentParam) {
         this.setState({ ...currentParam });

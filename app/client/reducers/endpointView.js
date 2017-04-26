@@ -14,7 +14,7 @@ import {
 const INITIAL_STATE = {
   isDirty: false,
   method: '',
-  params: [],
+  url_params: [],
   responses: [],
   request: {},
   id: null,
@@ -68,8 +68,8 @@ function addEndpointParam(state, payload) {
   return {
     ...state,
     isDirty: true,
-    params: [
-      ...state.params,
+    url_params: [
+      ...state.url_params,
       {
         ...payload,
       },
@@ -78,11 +78,11 @@ function addEndpointParam(state, payload) {
 }
 
 function updateEndpointParam(state, payload) {
-  const params = state.params.filter(p => p.id !== payload.id);
+  const params = state.url_params.filter(p => p.id !== payload.id);
   return {
     ...state,
     isDirty: true,
-    params: [
+    url_params: [
       ...params,
       {
         ...payload,

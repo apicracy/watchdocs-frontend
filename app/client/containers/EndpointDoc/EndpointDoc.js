@@ -119,11 +119,11 @@ class EndpointDoc extends React.Component {
   editRequest = () => () => this.props.router.push(`/${this.props.params.project_name}/editor/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/request`);
 
   renderParams() {
-    if (!this.props.endpoint || !this.props.endpoint.params) return [];
+    if (!this.props.endpoint || !this.props.endpoint.url_params) return [];
 
     // to keep order.
     // TODO create 'order' field in model to allow ordering
-    const params = this.props.endpoint.params.sort((a, b) => a.id > b.id);
+    const params = this.props.endpoint.url_params.sort((a, b) => a.id > b.id);
 
     return params.map((param, key) => (
       <Row
