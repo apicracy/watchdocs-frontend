@@ -6,11 +6,16 @@ import {
   setMethod as setMethodAction,
   setEditMode as setEditModeAction,
   setDocumentName as setDocumentNameAction,
+  setEditMode,
   reset,
 } from 'actions/modifyEndpoint-actions';
 import {
   filterById,
 } from 'services/endpoint-service';
+import http from 'services/http';
+import {
+  setEndpointView,
+} from 'actions/endpointView';
 
 export function addNewEndpoint() {
   return (dispatch /* , getState */) => {
@@ -119,5 +124,50 @@ export function setFolderName(folderName) {
 export function setMethod(method) {
   return (dispatch /* getState */) => {
     dispatch(setMethodAction(method));
+  };
+}
+
+export function setEdit(isEdit) {
+  return (dispatch /* getState */) => {
+    dispatch(setEditMode(isEdit));
+  };
+}
+
+// export function editEndpoint() {
+//   return (dispatch, getState) => {
+//     const { url, method } = getState().modifyEndpoint;
+//     const { modifyEndpoint, endpointView } = getState();
+//
+//     console.log('-----');
+//     console.log('-API-');
+//     console.log(modifyEndpoint);
+//     console.log(endpointView);
+//     console.log('-----');
+//   };
+// }
+
+export function editEndpoint() {
+  return (dispatch, getState) => {
+    const { url, method } = getState().modifyEndpoint;
+    const { id } = getState().endpointView;
+
+    const options = {
+      method: 'PUT',
+      body: JSON.stringify({
+        url,
+        http_method: method,
+      }),
+    };
+
+    http(`/api/v1/endpoints/${id}`, options)
+      .then(response => response.json())
+      .then((data) => {
+        if (!data.errors) {
+          dispatch(setEndpointView({
+            url,
+            method,
+          }));
+        }
+      });
   };
 }

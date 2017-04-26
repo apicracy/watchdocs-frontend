@@ -8,6 +8,7 @@ import AddUrlParam from 'modals/AddUrlParam/AddUrlParam';
 import EditEndpointDescription from 'modals/EditEndpointDescription/EditEndpointDescription';
 import AddResponseParam from 'modals/AddResponseParam/AddResponseParam';
 import AddRequestParam from 'modals/AddRequestParam/AddRequestParam';
+import EditEndpointModal from 'modals/EditEndpointModal/EditEndpointModal';
 
 export default () => (
   <div>
@@ -16,5 +17,6 @@ export default () => (
     <EditEndpointDescription />
     <AddResponseParam />
     <AddRequestParam />
+    <EditEndpointModal />
   </div>
 );

@@ -5,7 +5,6 @@ import styles from './EndpointDoc.css';
 import { loadEndpoint } from 'services/endpointView';
 import { loadGroup } from 'services/groupView';
 
-import MethodPicker from 'components/MethodPicker/MethodPicker';
 import Button from 'components/Button/Button';
 
 import Icon from 'components/Icon/Icon';
@@ -17,9 +16,16 @@ import WarningLabel from 'components/DocumentationBlock/Labels/WarningLabel';
 /* Actions */
 import { updateEndpointDescription } from 'actions/endpointView';
 
+import {
+  setMethod,
+  setUrl,
+  setEdit as editEndpoint,
+} from 'services/modifyEndpoint-service';
+
 /* Modals */
 import { openModal } from 'actions/modals';
 import { MODAL_NAME as EDIT_DESC_MODAL } from 'modals/EditEndpointDescription/EditEndpointDescription';
+import { MODAL_NAME as EDIT_URL_MODAL } from 'modals/EditEndpointModal/EditEndpointModal';
 import { getFullLink } from 'services/helpers';
 
 @connect(store => ({
@@ -92,6 +98,17 @@ class EndpointDoc extends React.Component {
 
   /* Description section */
   editDescription = () => this.props.dispatch(openModal(EDIT_DESC_MODAL));
+  editUrl = () => {
+    const {
+      method,
+      url,
+    } = this.props.endpoint;
+    this.props.dispatch(setMethod(method));
+    this.props.dispatch(setUrl(url));
+    this.props.dispatch(editEndpoint(true));
+
+    this.props.dispatch(openModal(EDIT_URL_MODAL));
+  }
 
   renderDescription = () => {
     const { description } = this.props.endpoint;
@@ -192,8 +209,17 @@ class EndpointDoc extends React.Component {
   render() {
     return (
       <div className={styles.root}>
-        <MethodPicker endpoint={this.props.endpoint} />
-
+        <div className={styles.urlContainer}>
+          <div className={styles.method}>
+            { this.props.endpoint && this.props.endpoint.method}
+          </div>
+          <div className={styles.url}>
+            { this.props.endpoint && this.props.endpoint.url }
+          </div>
+          <div className={styles.editUrl}>
+            <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editUrl} />
+          </div>
+        </div>
         <DocumentationBlock
           title="Description"
           description="This description will appear on your generated public documentation."
