@@ -8,7 +8,7 @@ class JSONSEditor extends React.Component {
   static propTypes = {
     base: React.PropTypes.object,
     draft: React.PropTypes.object,
-    onCompare: React.PropTypes.func,
+    onSave: React.PropTypes.func,
   }
 
   componentWillMount() {
@@ -18,6 +18,7 @@ class JSONSEditor extends React.Component {
       temp: {},
       output: {},
       invalidSchema: false,
+      isDirty: false,
     });
     this.compare(this.props.base, this.props.draft);
   }
@@ -35,13 +36,13 @@ class JSONSEditor extends React.Component {
     const textAreaLines = this.getLines(linesOfCode);
     this.setState({
       linesOfCode,
+      tempLinesOfCode: linesOfCode,
       textAreaLines,
+      tempTextAreaLines: textAreaLines,
       output: base,
       base,
       temp,
     });
-
-    this.props.onCompare(cleanJSONS(base));
   }
 
   onAccept = (index) => {
@@ -56,9 +57,8 @@ class JSONSEditor extends React.Component {
       linesOfCode,
       textAreaLines,
       output: newOutput,
-      temp: newOutput,
+      isDirty: true,
     });
-    this.props.onCompare(cleanJSONS(newOutput));
   }
 
   onReject = (index) => {
@@ -74,10 +74,10 @@ class JSONSEditor extends React.Component {
       linesOfCode,
       textAreaLines,
       output: newOutput,
-      temp: newOutput,
+      isDirty: true,
     });
 
-    this.props.onCompare(cleanJSONS(newOutput));
+    this.onSave(cleanJSONS(newOutput));
   }
 
   componentDidUpdate(prevProps) {
@@ -134,25 +134,43 @@ class JSONSEditor extends React.Component {
     const lines = JSONStoJSON(jsons);
 
     if (lines.length > 0) {
-      const cleanSchema = cleanJSONS(jsons);
-
       const linesOfCode = lines;
 
       this.setState({
         linesOfCode,
         textAreaLines: this.getLines(lines),
         output: jsons,
-        temp: jsons,
       });
 
-      this.props.onCompare(cleanSchema);
-      this.setState({ invalidSchema: false });
+      this.setState({ isDirty: true, invalidSchema: false });
     } else {
       this.setState({
         invalidSchema: true,
         textAreaLines: json,
       });
     }
+  }
+
+  onCancel = () => {
+    this.setState({
+      linesOfCode: this.state.tempLinesOfCode,
+      textAreaLines: this.state.tempTextAreaLines,
+      output: this.state.temp,
+      isDirty: false,
+      invalidSchema: false,
+    });
+  }
+
+  onSave = () => {
+    this.setState({
+      tempLinesOfCode: this.state.linesOfCode,
+      tempTextAreaLines: this.state.textAreaLines,
+      temp: this.state.output,
+      isDirty: false,
+      invalidSchema: false,
+    });
+
+    this.props.onSave(cleanJSONS(this.state.output));
   }
 
   render() {
@@ -173,48 +191,58 @@ class JSONSEditor extends React.Component {
     } = this.state;
 
     return (
-      <div className={styles.container}>
-        <div className={styles.rows}>
-          {linesOfCode && linesOfCode.map((object, index) => {
-            const {
-              selectedLine,
-            } = this.state;
-            return (
-              <LineOfCode
-                key={index}
-                isSelected={selectedLine === index}
-                isReq={object.isReq}
-                isOpt={object.isOpt}
-                toAdd={object.toAdd}
-                toRemove={object.toRemove}
-                typeChanged={object.typeChanged}
-                toChange={object.toChange}
-                addAction={object.addAction ? () => { this.onAccept(object.index); } : undefined}
-                removeAction={object.removeAction ?
-                  () => { this.onAccept(object.index); } : undefined}
-                changeAction={object.changeAction ?
-                  () => { this.onAccept(object.index); } : undefined}
-                onReject={() => { this.onReject(object.index); }}
-                isAccepted={object.isAccepted}
-                code={object.line}
-                onClick={() => { this.onSelect(index); }}
-                onSwitchReq={() => { this.onSwitchReq(index); }}
-              />
-            );
-          })}
+      <div>
+        <div className={styles.container}>
+          <div className={styles.rows}>
+            {linesOfCode && linesOfCode.map((object, index) => {
+              const {
+                selectedLine,
+              } = this.state;
+              return (
+                <LineOfCode
+                  key={index}
+                  isSelected={selectedLine === index}
+                  isReq={object.isReq}
+                  isOpt={object.isOpt}
+                  toAdd={object.toAdd}
+                  toRemove={object.toRemove}
+                  typeChanged={object.typeChanged}
+                  toChange={object.toChange}
+                  addAction={object.addAction ? () => { this.onAccept(object.index); } : undefined}
+                  removeAction={object.removeAction ?
+                    () => { this.onAccept(object.index); } : undefined}
+                  changeAction={object.changeAction ?
+                    () => { this.onAccept(object.index); } : undefined}
+                  onReject={() => { this.onReject(object.index); }}
+                  isAccepted={object.isAccepted}
+                  code={object.line}
+                  onClick={() => { this.onSelect(index); }}
+                  onSwitchReq={() => { this.onSwitchReq(index); }}
+                />
+              );
+            })}
+          </div>
+          <div className={styles.textareaContainer}>
+            <textarea
+              onKeyUp={this.getLineNumber}
+              onMouseUp={this.getLineNumber}
+              onKeyDown={this.onKeyDown}
+              style={{ height: `${25 * linesOfCode.length}px`, minHeight: '200px' }}
+              className={styles.textarea}
+              value={textAreaLines}
+              onChange={this.onChange}
+            />
+          </div>
+          { invalidSchema && <div className={styles.information}>JSON Schema is not valid</div> }
         </div>
-        <div className={styles.textareaContainer}>
-          <textarea
-            onKeyUp={this.getLineNumber}
-            onMouseUp={this.getLineNumber}
-            onKeyDown={this.onKeyDown}
-            style={{ height: `${25 * linesOfCode.length}px`, minHeight: '200px' }}
-            className={styles.textarea}
-            value={textAreaLines}
-            onChange={this.onChange}
-          />
-        </div>
-        { invalidSchema && <div className={styles.information}>JSON Schema is not valid</div> }
+        {
+          this.state.isDirty && (
+            <div>
+              <button className={styles.acceptButton} onClick={this.onSave}>Save</button>
+              <button className={styles.acceptButton} onClick={this.onCancel}>Cancel</button>
+            </div>
+          )
+        }
       </div>
     );
   }
