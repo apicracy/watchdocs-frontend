@@ -95,6 +95,7 @@
   composes: containerButtons;
   background: rgba(176, 92, 92, 0.55);
 }
+
 .greenLine {
   composes: containerButtons;
   background: rgba(91, 177, 106, 0.55);
