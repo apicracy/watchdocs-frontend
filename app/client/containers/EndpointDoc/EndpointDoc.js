@@ -130,13 +130,13 @@ class EndpointDoc extends React.Component {
         key={key}
         data={[
           <Button variants={['linkPrimary', 'noPaddingLeft']}>{param.name}</Button>,
-          param.type ? `${param.type}, ${String.fromCharCode(160)}` : null,
+          param.data_type ? `${param.data_type}, ${String.fromCharCode(160)}` : null,
           param.required ? 'required' : 'optional',
           (!param.description || !param.example) ? <WarningLabel /> : '',
         ]}
         actions={[
           <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editParam(param.id)} />,
-          !param.main && <IconButton icon={<Icon name="trash" size="lg" />} />,
+          !param.is_part_of_url && <IconButton icon={<Icon name="trash" size="lg" />} />,
         ]}
       />
     ));
@@ -155,7 +155,7 @@ class EndpointDoc extends React.Component {
         ]}
         actions={[
           <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editResponse(param.id)} />,
-          !param.main && <IconButton icon={<Icon name="trash" size="lg" />} />,
+          <IconButton icon={<Icon name="trash" size="lg" />} />,
         ]}
       />
     ));
