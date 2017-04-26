@@ -8,9 +8,9 @@ import {
   setDocumentName as setDocumentNameAction,
   reset,
 } from 'actions/modifyEndpoint-actions';
-import {
-  filterById,
-} from 'services/endpoint-service';
+
+import { filterById } from 'services/endpoint-service';
+import { fetchEndpoints } from 'services/endpoints';
 
 import http from 'services/http';
 import { browserHistory } from 'react-router';
@@ -52,10 +52,11 @@ export function saveEndpoint(project_name) {
     })
       .then(response => response.json())
       .then(response => {
-        dispatch(reset());
+        dispatch(fetchEndpoints(getState().projects.activeProject.id));
         browserHistory.push(
           `/${urlFormatProjectName(activeProject.name)}/editor/undefined/endpoint/${response.id}`
         );
+        dispatch(reset());
       });
   };
 }

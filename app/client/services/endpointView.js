@@ -3,7 +3,7 @@ import http from 'services/http';
 import { setEndpointView } from 'actions/endpointView';
 
 export function loadEndpoint(id) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch(setEndpointView({
       isFetching: true,
     }));
