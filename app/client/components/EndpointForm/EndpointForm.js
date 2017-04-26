@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './EndpointForm.css';
 
+import TextInput from 'components/Form/TextInput/TextInput';
+
 class EndpointForm extends React.Component {
   static propTypes = {
     inputValue: React.PropTypes.string,
@@ -40,7 +42,14 @@ class EndpointForm extends React.Component {
               <option>PATCH</option>
               <option>DELETE</option>
             </select>
-            <input value={inputValue} placeholder="URL endpoint" className={styles.modalInput} onChange={this.onChangeInput} />
+            <TextInput
+              variants={['noRadius', 'big', 'darkBorder']}
+              value={inputValue}
+              placeholder="URL endpoint"
+              onChange={this.onChangeInput}
+              validation={new RegExp(/((^[a-zA-Z_$][a-zA-Z_$[\]0-9]*$))/ig)}
+              validationErrorMsg={'Endpoint URL should include only allowed URL characters.'}
+            />
           </div>
         </div>
       </div>

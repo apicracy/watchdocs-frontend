@@ -12,6 +12,8 @@ import {
   filterById,
 } from 'services/endpoint-service';
 
+import http from 'services/http';
+
 export function addNewEndpoint() {
   return (dispatch /* , getState */) => {
     dispatch(setType('Endpoint'));
@@ -34,8 +36,21 @@ export function addNewDocument() {
 }
 
 export function saveEndpoint() {
-  return (dispatch /* , getState */) => {
-    // TODO dispatch save action
+  return (dispatch, getState) => {
+    const endpoint = getState().modifyEndpoint;
+    const activeProjectId = getState().projects.activeProject.id;
+
+    http('/api/v1/endpoints', {
+      method: 'POST',
+      body: JSON.stringify({
+        project_id: activeProjectId,
+        url: endpoint.url,
+        http_method: endpoint.method || 'GET',
+      }),
+    })
+      .then(response => response.json())
+      .then(console.log);
+
     dispatch(reset());
   };
 }

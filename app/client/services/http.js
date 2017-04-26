@@ -26,6 +26,7 @@ export default function http(url, options = {}) {
     method: 'GET',
     headers: {
       authorization: JWT,
+      "Content-Type": 'application/json',
     },
     ...options,
   }).then(response => checkIfAuthorised(response));
