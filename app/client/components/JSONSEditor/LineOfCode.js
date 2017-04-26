@@ -84,29 +84,37 @@ class LineOfCode extends React.Component {
     let actionText = '';
     let containerButtonStyles = styles.inactiveActionButton;
     let actionButton = styles.button;
+    let acceptedText;
+    let isAcceptedStyle;
 
     if (removeAction) {
       actionText = 'remove';
       action = removeAction;
       containerButtonStyles = (isAccepted !== undefined) ?
-        styles.inactiveActionButton : styles.containerButtons;
+        styles.inactiveActionButton : styles.redLine;
       actionButton = styles.removeButton;
+      acceptedText = 'removed';
+      isAcceptedStyle = styles.removeAccepted;
     }
 
     if (changeAction) {
       actionText = 'change';
       action = changeAction;
       containerButtonStyles = (isAccepted !== undefined) ?
-        styles.inactiveActionButton : styles.containerButtons;
+        styles.inactiveActionButton : styles.yellowLine;
       actionButton = styles.changeButton;
+      acceptedText = 'changed';
+      isAcceptedStyle = styles.changeAccepted;
     }
 
     if (addAction) {
       actionText = 'add';
       action = addAction;
       containerButtonStyles = (isAccepted !== undefined) ?
-        styles.inactiveActionButton : styles.containerButtons;
+        styles.inactiveActionButton : styles.greenLine;
       actionButton = styles.addButton;
+      acceptedText = 'added';
+      isAcceptedStyle = styles.addAccepted;
     }
 
     return (
@@ -120,6 +128,11 @@ class LineOfCode extends React.Component {
           <button className={actionButton} onClick={action}>{actionText}</button>
           <button className={styles.rejectButton} onClick={onReject}>reject</button>
         </div>
+        {
+          isAccepted && <div className={isAcceptedStyle}>
+            {acceptedText}
+          </div>
+        }
       </div>
     );
   }

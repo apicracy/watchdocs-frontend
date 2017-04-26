@@ -17,19 +17,6 @@
   display: flex;
 }
 
-.greenLine {
-  composes: code;
-  background: #4A9154;
-}
-.yellowLine {
-  composes: code;
-  background: #93784B;
-}
-.redLine {
-  composes: code;
-  background: #924A4B;
-}
-
 .attribute {
   width: 50px;
   align-items: flex-end;
@@ -98,11 +85,25 @@
   position: absolute;
   right: 0;
   left: 50px;
-  background: rgba(175, 145, 95, 0.55);
   text-align: right;
   height: 26px;
   padding-right: 50px;
   padding-top: 2px;
+}
+
+.redLine {
+  composes: containerButtons;
+  background: rgba(176, 92, 92, 0.55);
+}
+
+.greenLine {
+  composes: containerButtons;
+  background: rgba(91, 177, 106, 0.55);
+}
+
+.yellowLine {
+  composes: containerButtons;
+  background: rgba(175, 145, 95, 0.55);
 }
 
 .button {
@@ -160,4 +161,24 @@
 
 .rows{
   background: #464646;
+}
+
+.isAccepted {
+  position: absolute;
+  right: 50px;
+}
+
+.addAccepted {
+  composes: isAccepted;
+  color: #5BB16A;
+}
+
+.removeAccepted {
+  composes: isAccepted;
+  color: #B05C5C;
+}
+
+.changeAccepted {
+  composes: isAccepted;
+  color: #AF915F;
 }
