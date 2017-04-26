@@ -6,7 +6,7 @@ import EndpointDoc from './EndpointDoc';
 const DocLayout = ({ topLevel, doc, children, projectUrl }) => {
   const renderBody = (type) => {
     switch (type) {
-      case 'endpoint':
+      case 'Endpoint':
         return <EndpointDoc topLevel={topLevel} doc={doc} projectUrl={projectUrl} />;
 
       default:

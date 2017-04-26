@@ -1,29 +1,45 @@
 import parseJsonSchema from './json-schema-parser';
+import http from 'services/http';
+import { fetchDocumentation as fetchDoc } from 'actions/documentation';
+
+export function fetchDocumentation(projectId) {
+  return dispatch => http(`/api/v1/projects/${projectId}/documentation`)
+    .then(response => response.json())
+    .then(response => buildDocumentation(response.documentation))
+    .then(response => dispatch(fetchDoc(response)));
+}
 
 // hopefully TODO on backend
 export function buildDocumentation(endpointList, parentGroup = '') {
   return endpointList.reduce((state, item) => {
-    let doc;
+    const parent = parentGroup ? `${parentGroup} ` : '';
 
-    if (item.groupName) {
-      doc = {
-        type: 'folder',
-        section: buildSectionId(`${item.groupName}`),
-        title: item.groupName,
-        description: item.description,
-        children: [],
-      };
+    switch (item.type) {
+      case 'Group':
+        return [
+          ...state,
+          {
+            ...item,
+            section: buildSectionId(`${parent}${item.name}`),
+            items: buildDocumentation(item.items),
+          },
+        ];
 
-      if (item.endpoints) {
-        doc.children = buildDocumentation(item.endpoints, `${parentGroup}-${item.groupName}`);
-      }
-    } else if (item.method) {
-      doc = createEndpoint(item, parentGroup);
-    } else {
-      return state;
+      case 'Endpoint':
+        return [...state, createEndpoint(item, parentGroup)];
+
+      case 'Document':
+        return [
+          ...state,
+          {
+            ...item,
+            section: buildSectionId(`${parent}${item.name}`),
+          },
+        ];
+
+      default:
+        return state;
     }
-
-    return [...state, doc];
   }, []);
 }
 
@@ -36,22 +52,15 @@ function buildSectionId(string) {
 }
 
 function createEndpoint(item, parentGroup) {
-  const params = item.params;
-
+  const group = parentGroup !== '' ? `${parentGroup}-` : '';
   const section = (item.description && item.description.title) ? (
-    buildSectionId(`${parentGroup}-${item.description.title}`)
-  ) : buildSectionId(`${parentGroup}-${item.method}`);
+    buildSectionId(`${group}${item.description.title}`)
+  ) : buildSectionId(`${group}${item.method}${item.url}`);
 
   return {
-    type: 'endpoint',
+    ...item,
     section,
-    title: (item.description && item.description.title) ? item.description.title : item.method,
-    description: (item.description && item.description.content) ? item.description.content : '',
-    method: item.method,
-    url: item.url,
-    urlParams: params,
-    queryParams: item.request ? item.request.base : null,
-    headers: item.request ? item.request.headers : [],
-    exampleResponse: item.responses ? parseJsonSchema(item.responses[0].base) : null,
+    title: (item.description && item.description.title) ? item.description.title : `[${item.method}]: ${item.url}`,
+    exampleResponse: item.responses ? parseJsonSchema(item.responses[0].body) : null,
   };
 }
