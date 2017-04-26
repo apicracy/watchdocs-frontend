@@ -16,6 +16,7 @@ span.root {
 }
 
 .code {
+  margin-top: 0;
   background-color: #323446;
   padding: 15px;
 }

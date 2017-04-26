@@ -8,12 +8,14 @@ import Icon from 'components/Icon/Icon';
 import CustomIcon from 'components/Icon/CustomIcon';
 import IconButton from 'components/Button/IconButton';
 import DocLayout from 'components/Documentation/DocLayout';
+import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
 import { ScrollSpy, Link } from 'components/ScrollSpy/ScrollSpy';
 
 import { fetchDocumentation } from 'services/documentation';
 
 @connect(store => ({
-  documentation: store.documentation,
+  documentation: store.documentation.data,
+  isFetching: store.documentation.isFetching,
   projectUrl: store.projects.activeProject.base_url,
   activeProject: store.projects.activeProject,
 }))
@@ -22,6 +24,7 @@ class DocumentationViewer extends React.Component {
     documentation: React.PropTypes.array,
     projectUrl: React.PropTypes.string,
     dispatch: React.PropTypes.func,
+    isFetching: React.PropTypes.bool,
     activeProject: React.PropTypes.object,
   }
 
@@ -90,6 +93,7 @@ class DocumentationViewer extends React.Component {
 
     return (
       <div className={styles.container}>
+        { this.props.isFetching && <LoadingIndicator fixed /> }
         <Sidebar>
           <div className={styles.marginLeft}>
             <TextInput
