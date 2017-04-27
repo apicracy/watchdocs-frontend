@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styles from './EndpointDoc.css';
 
-import { loadEndpoint, removeUrlParams } from 'services/endpointView';
+import { loadEndpoint, removeEndpoint, removeUrlParams } from 'services/endpointView';
+
 import { loadGroup } from 'services/groupView';
 
 import MethodPicker from 'components/MethodPicker/MethodPicker';
@@ -149,7 +150,7 @@ class EndpointDoc extends React.Component {
   renderResponses() {
     // to keep order.
     // TODO create 'order' field in model to allow ordering
-    const responses = this.props.responses.sort((a, b) => a.id > b.id);
+    const responses = this.props.responses.sort((a, b) => a.http_status_code > b.http_status_code);
 
     return responses.map((param, key) => (
       <Row
@@ -191,6 +192,13 @@ class EndpointDoc extends React.Component {
   getFullLink = () => {
     const { projectUrl, endpoint } = this.props;
     return getFullLink(projectUrl, endpoint);
+  }
+
+  removeEndpoint = () => {
+    /* eslint no-alert: 0 */
+    if (confirm('are you sure?')) {
+      this.props.dispatch(removeEndpoint());
+    }
   }
 
   render() {
@@ -262,6 +270,7 @@ class EndpointDoc extends React.Component {
         <div className={styles.buttons}>
           <Button variants={['primary', 'large', 'spaceRight']}>Save</Button>
           <Button variants={['body', 'large']}>Cancel</Button>
+          <Button variants={['warning', 'large', 'left']} onClick={this.removeEndpoint}>Remove</Button>
         </div>
 
       </div>
