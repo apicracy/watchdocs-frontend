@@ -4,6 +4,7 @@ import { browserHistory } from 'react-router';
 import {
   setEndpointView,
   addEndpointParam as addEndpointParamAction,
+  updateEndpointParam as updateEndpointParamAction,
   removeEndpointParam as removeEndpointParamAction,
 } from 'actions/endpointView';
 
@@ -38,6 +39,22 @@ export function addEndpointParam(endpointParam) {
   };
 }
 
+export function updateEndpointParam(endpointParam) {
+  return (dispatch) => {
+    const options = {
+      method: 'PUT',
+      body: JSON.stringify(endpointParam),
+    };
+
+    http(`/api/v1/url_params/${endpointParam.id}`, options)
+      .then(response => response.json())
+      .then((data) => {
+        if (!data.errors) {
+          dispatch(updateEndpointParamAction(data));
+        }
+     });
+   };
+}
 
 export function removeUrlParams(id) {
   return (dispatch) => {
@@ -70,3 +87,4 @@ export function removeEndpoint() {
       });
   };
 }
+
