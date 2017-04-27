@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styles from './EndpointDoc.css';
 
-import { loadEndpoint } from 'services/endpointView';
+import { loadEndpoint, removeEndpoint } from 'services/endpointView';
 import { loadGroup } from 'services/groupView';
 
 import MethodPicker from 'components/MethodPicker/MethodPicker';
@@ -189,6 +189,13 @@ class EndpointDoc extends React.Component {
     return getFullLink(projectUrl, endpoint);
   }
 
+  removeEndpoint = () => {
+    /* eslint no-alert: 0 */
+    if (confirm('are you sure?')) {
+      this.props.dispatch(removeEndpoint());
+    }
+  }
+
   render() {
     return (
       <div className={styles.root}>
@@ -258,6 +265,7 @@ class EndpointDoc extends React.Component {
         <div className={styles.buttons}>
           <Button variants={['primary', 'large', 'spaceRight']}>Save</Button>
           <Button variants={['body', 'large']}>Cancel</Button>
+          <Button variants={['warning', 'large', 'left']} onClick={this.removeEndpoint}>Remove</Button>
         </div>
 
       </div>
