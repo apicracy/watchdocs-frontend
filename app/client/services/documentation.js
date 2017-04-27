@@ -61,6 +61,6 @@ function createEndpoint(item, parentGroup) {
     ...item,
     section,
     title: (item.description && item.description.title) ? item.description.title : `[${item.method}]: ${item.url}`,
-    exampleResponse: item.responses ? parseJsonSchema(item.responses[0].body) : null,
+    exampleResponse: item.responses.length > 0 ? parseJsonSchema(item.responses[0].body) : null,
   };
 }
