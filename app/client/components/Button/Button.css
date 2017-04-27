@@ -55,6 +55,13 @@
   padding: 10px;
   font-size: 14px;
 }
+.left {
+  float: right;
+}
+.warning {
+  background: #C51E1E;
+  color: white;
+}
 
 .spaceRight {
   margin-right: 15px;
