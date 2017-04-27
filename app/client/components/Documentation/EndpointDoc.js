@@ -12,7 +12,8 @@ const EndpointDoc = ({ topLevel, projectUrl, doc }) => (
       { doc.description && <div className={styles.addHeader}>{ doc.description }</div> }
       <div className={styles.bodyContent}>
         <div className={styles.section}>
-          <Well type="span" variants={['body', 'bold']}>
+          <Heading>HTTP Request</Heading>
+          <Well variants={['body', 'bold', 'noPadding']}>
             <span className={styles.method}>{doc.method}</span> {`${projectUrl}${doc.url}`}
           </Well>
         </div>
@@ -35,14 +36,16 @@ const EndpointDoc = ({ topLevel, projectUrl, doc }) => (
     </article>
     <article className={styles.code}>
       <div className={styles.codeInner}>
-        <div>
-          <Well variants={['code']}>
-            Example request
-          </Well>
-          <Code>
-            { JSON.stringify(doc.exampleRequest, null, 2) }
-          </Code>
-        </div>
+        { doc.exampleRequest && (
+          <div>
+            <Well variants={['code']}>
+              Example request
+            </Well>
+            <Code>
+              { JSON.stringify(doc.exampleRequest, null, 2) }
+            </Code>
+          </div>
+        )}
 
         { doc.exampleResponse && (
           <div>
