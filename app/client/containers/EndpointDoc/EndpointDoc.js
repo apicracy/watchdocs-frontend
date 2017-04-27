@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styles from './EndpointDoc.css';
 
-import { loadEndpoint, removeEndpoint } from 'services/endpointView';
+import { loadEndpoint, removeEndpoint, removeUrlParams } from 'services/endpointView';
+
 import { loadGroup } from 'services/groupView';
 
 import MethodPicker from 'components/MethodPicker/MethodPicker';
@@ -136,10 +137,14 @@ class EndpointDoc extends React.Component {
         ]}
         actions={[
           <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editParam(param.id)} />,
-          !param.is_part_of_url && <IconButton icon={<Icon name="trash" size="lg" />} />,
+          !param.is_part_of_url && <IconButton onClick={() => { this.onRemoveUrlParam(param.id); }} icon={<Icon name="trash" size="lg" />} />,
         ]}
       />
     ));
+  }
+
+  onRemoveUrlParam = (id) => {
+    this.props.dispatch(removeUrlParams(id));
   }
 
   renderResponses() {

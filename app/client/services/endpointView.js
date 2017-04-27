@@ -4,6 +4,7 @@ import { browserHistory } from 'react-router';
 import {
   setEndpointView,
   addEndpointParam as addEndpointParamAction,
+  removeEndpointParam as removeEndpointParamAction,
 } from 'actions/endpointView';
 
 import {
@@ -37,12 +38,27 @@ export function addEndpointParam(endpointParam) {
   };
 }
 
+
+export function removeUrlParams(id) {
+  return (dispatch) => {
+    const options = {
+      method: 'DELETE',
+    };
+    http(`/api/v1/url_params/${id}`, options)
+      .then(response => response.json())
+      .then((data) => {
+        if (!data.errors) {
+          dispatch(removeEndpointParamAction(id));
+        }
+    });
+   };
+}
+
 export function removeEndpoint() {
   return (dispatch, getState) => {
     const { id } = getState().endpointView;
     const name = getState().projects.activeProject.name;
     const url = urlFormatProjectName(name);
-
     const options = {
       method: 'DELETE',
     };
