@@ -144,7 +144,7 @@ class EndpointDoc extends React.Component {
   }
 
   onRemoveUrlParam = (id) => {
-    if (confirm('are you sure')) {
+    if (confirm('are you sure?')) {
       this.props.dispatch(removeUrlParams(id));
     }
   }
