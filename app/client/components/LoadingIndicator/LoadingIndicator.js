@@ -8,7 +8,7 @@ const LoadingIndicator = ({ fixed }) => (
 );
 
 LoadingIndicator.propTypes = {
-  fixed: React.PropTypes.bood,
+  fixed: React.PropTypes.bool,
 };
 
 export default LoadingIndicator;
