@@ -52,8 +52,8 @@ export function updateEndpointParam(endpointParam) {
         if (!data.errors) {
           dispatch(updateEndpointParamAction(data));
         }
-     });
-   };
+      });
+  };
 }
 
 export function removeUrlParams(id) {
@@ -67,8 +67,8 @@ export function removeUrlParams(id) {
         if (!data.errors) {
           dispatch(removeEndpointParamAction(id));
         }
-    });
-   };
+      });
+  };
 }
 
 export function removeEndpoint() {
@@ -87,4 +87,3 @@ export function removeEndpoint() {
       });
   };
 }
-
