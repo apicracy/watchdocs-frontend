@@ -24,7 +24,7 @@ const EndpointDoc = ({ topLevel, projectUrl, doc }) => (
             <ParamTable
               data={doc.url_params.map(x => ({ ...x, data_type: `${x.data_type} (${x.required ? 'required' : 'optional'})` }))}
               headers={[
-                { key: 'name', text: 'Parameter', style: { flex: 1 } },
+                { key: 'name', text: 'Parameter', style: { flex: 1, fontWeight: 'bold' } },
                 { key: 'data_type', text: 'Type', style: { flex: 2 } },
                 { key: 'description', text: 'Description', style: { flex: 3 } },
               ]}
