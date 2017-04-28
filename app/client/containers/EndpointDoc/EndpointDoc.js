@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styles from './EndpointDoc.css';
 
-import { loadEndpoint } from 'services/endpointView';
+import { loadEndpoint, removeEndpoint, removeUrlParams } from 'services/endpointView';
+
 import { loadGroup } from 'services/groupView';
 
 import Button from 'components/Button/Button';
@@ -12,6 +13,7 @@ import IconButton from 'components/Button/IconButton';
 
 import DocumentationBlock, { Row } from 'components/DocumentationBlock/DocumentationBlock';
 import WarningLabel from 'components/DocumentationBlock/Labels/WarningLabel';
+import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
 
 /* Actions */
 import { updateEndpointDescription } from 'actions/endpointView';
@@ -34,6 +36,7 @@ import { getFullLink } from 'services/helpers';
   endpointList: store.endpoints,
   responses: store.endpointView.responses,
   projectUrl: store.projects.activeProject.base_url,
+  isFetching: store.endpointView.isFetching,
 }))
 class EndpointDoc extends React.Component {
 
@@ -46,6 +49,7 @@ class EndpointDoc extends React.Component {
     router: React.PropTypes.object,
     responses: React.PropTypes.array,
     projectUrl: React.PropTypes.string,
+    isFetching: React.PropTypes.bool,
   }
 
   componentWillMount() {
@@ -153,10 +157,16 @@ class EndpointDoc extends React.Component {
         ]}
         actions={[
           <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editParam(param.id)} />,
-          !param.is_part_of_url && <IconButton icon={<Icon name="trash" size="lg" />} />,
+          !param.is_part_of_url && <IconButton onClick={() => { this.onRemoveUrlParam(param.id); }} icon={<Icon name="trash" size="lg" />} />,
         ]}
       />
     ));
+  }
+
+  onRemoveUrlParam = (id) => {
+    if (confirm('are you sure?')) {
+      this.props.dispatch(removeUrlParams(id));
+    }
   }
 
   renderResponses() {
@@ -195,7 +205,6 @@ class EndpointDoc extends React.Component {
         ]}
         actions={[
           <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editRequest()} />,
-          <IconButton icon={<Icon name="trash" size="lg" />} />,
         ]}
       />,
     ];
@@ -206,9 +215,17 @@ class EndpointDoc extends React.Component {
     return getFullLink(projectUrl, endpoint);
   }
 
+  removeEndpoint = () => {
+    /* eslint no-alert: 0 */
+    if (confirm('are you sure?')) {
+      this.props.dispatch(removeEndpoint());
+    }
+  }
+
   render() {
     return (
       <div className={styles.root}>
+        { this.props.isFetching && <LoadingIndicator /> }
         <div className={styles.urlContainer}>
           <div className={styles.method}>
             { this.props.endpoint && this.props.endpoint.method}
@@ -284,6 +301,7 @@ class EndpointDoc extends React.Component {
         <div className={styles.buttons}>
           <Button variants={['primary', 'large', 'spaceRight']}>Save</Button>
           <Button variants={['body', 'large']}>Cancel</Button>
+          <Button variants={['warning', 'large', 'left']} onClick={this.removeEndpoint}>Remove</Button>
         </div>
 
       </div>

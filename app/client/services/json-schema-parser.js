@@ -37,6 +37,8 @@ const buildObject = (schema) => {
 };
 
 function generateResponse(schema) {
+  if (!schema) return '';
+
   if (schema.type === 'object') {
     return buildObject(schema);
   } else if (schema.type === 'array') {

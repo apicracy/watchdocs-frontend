@@ -2,7 +2,13 @@ import React from 'react';
 import styles from './TextInput.css';
 
 const TextInput = ({ placeholder, value, defaultValue, onChange, iconRight,
-  validationErrorMsg, validation, variant, type }) => {
+  validationErrorMsg, validation, variant, variants, type }) => {
+  const variantStyles = variants.map(v => styles[v]);
+  const rootClasses = [
+    styles.wrapper,
+    ...variantStyles,
+  ].join(' ');
+
   let isValid = true;
   if (value) {
     isValid = (value.replace(validation, '').length === 0);
@@ -26,7 +32,7 @@ const TextInput = ({ placeholder, value, defaultValue, onChange, iconRight,
   }
 
   return (
-    <div className={styles.wrapper}>
+    <div className={rootClasses}>
       <div className={isValid ? variantStyle : variantErrorStyle}>
         <input
           type={type}
@@ -54,9 +60,11 @@ TextInput.propTypes = {
   onChange: React.PropTypes.func,
   validation: React.PropTypes.object,
   validationErrorMsg: React.PropTypes.string,
+  variants: React.PropTypes.array,
 };
 
 TextInput.defaultProps = {
+  variants: [],
   placeholder: '',
   type: 'text',
   value: '',
