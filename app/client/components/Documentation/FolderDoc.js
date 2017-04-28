@@ -2,9 +2,9 @@ import React from 'react';
 import styles from './DocLayout.css';
 
 const parseDescription = (desc) => {
-  if (!desc || !desc.content) return '';
+  if (!desc) return '';
 
-  return desc.content.split('\n')
+  return desc.split('\n')
     .map((paragraph, key) => (
       <p key={key}>{paragraph}</p>
     ));

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Button.css';
 
-const Button = ({ onClick, children, icon, variants }) => {
+const Button = ({ onClick, children, icon, variants, disabled }) => {
   // to apply many variants to one button
   const variantStyles = variants.map(v => styles[v]);
   const buttonStyle = [
@@ -13,6 +13,7 @@ const Button = ({ onClick, children, icon, variants }) => {
     <button
       onClick={onClick}
       className={buttonStyle}
+      disabled={disabled}
     >
       { children } { icon && <span className={styles.icon}>{ icon }</span> }
     </button>
@@ -26,6 +27,7 @@ Button.propTypes = {
     React.PropTypes.array,
     React.PropTypes.node,
   ]),
+  disabled: React.PropTypes.bool,
   icon: React.PropTypes.node,
   variants: React.PropTypes.array,
 };
@@ -33,6 +35,7 @@ Button.propTypes = {
 Button.defaultProps = {
   onClick: () => {},
   icon: '',
+  disabled: false,
   variants: [],
 };
 

@@ -8,9 +8,13 @@ import {
   setDocumentName as setDocumentNameAction,
   reset,
 } from 'actions/modifyEndpoint-actions';
-import {
-  filterById,
-} from 'services/endpoint-service';
+
+import { filterById } from 'services/endpoint-service';
+import { fetchEndpoints } from 'services/endpoints';
+
+import http from 'services/http';
+import { browserHistory } from 'react-router';
+import { urlFormatProjectName } from 'services/projects';
 
 export function addNewEndpoint() {
   return (dispatch /* , getState */) => {
@@ -34,9 +38,26 @@ export function addNewDocument() {
 }
 
 export function saveEndpoint() {
-  return (dispatch /* , getState */) => {
-    // TODO dispatch save action
-    dispatch(reset());
+  return (dispatch, getState) => {
+    const endpoint = getState().modifyEndpoint;
+    const activeProject = getState().projects.activeProject;
+
+    http('/api/v1/endpoints', {
+      method: 'POST',
+      body: JSON.stringify({
+        project_id: activeProject.id,
+        url: endpoint.url,
+        http_method: endpoint.method || 'GET',
+      }),
+    })
+      .then(response => response.json())
+      .then((response) => {
+        dispatch(fetchEndpoints(getState().projects.activeProject.id));
+        browserHistory.push(
+          `/${urlFormatProjectName(activeProject.name)}/editor/undefined/endpoint/${response.id}`,
+        );
+        dispatch(reset());
+      });
   };
 }
 

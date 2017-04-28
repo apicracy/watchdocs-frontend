@@ -10,6 +10,10 @@
   font-size: 14px;
 }
 
+.root:disabled {
+  opacity: .5;
+}
+
 .small {
   composes: root;
 }
@@ -54,6 +58,13 @@
   width: 120px;
   padding: 10px;
   font-size: 14px;
+}
+.left {
+  float: right;
+}
+.warning {
+  background: #C51E1E;
+  color: white;
 }
 
 .spaceRight {

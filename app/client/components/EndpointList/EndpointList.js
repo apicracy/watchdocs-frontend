@@ -79,7 +79,7 @@ class EndpointList extends React.Component {
             variants={['addNew']}
             customIcon={<div className={styles.buttonPlus}><CustomIcon size="lg" name="add-primary" /></div>}
             options={[
-              (<Button key={1} onClick={onAddNewGroup}>
+              false && (<Button key={1} onClick={onAddNewGroup}>
                 <span className={styles.endpointIcon}><Icon name="folder-o" size="lg" /></span>
                 <span className={styles.addNewItem}>Group</span>
               </Button>),
@@ -87,7 +87,7 @@ class EndpointList extends React.Component {
                 <span className={styles.endpointIcon}><Icon name="link" size="lg" /></span>
                 <span className={styles.addNewItem}>Endpoint</span>
               </Button>),
-              (<Button key={3} onClick={onAddNewDocument}>
+              false && (<Button key={3} onClick={onAddNewDocument}>
                 <span className={styles.endpointIcon}><Icon name="file-o" size="lg" /></span>
                 <span className={styles.addNewItem}>Document</span>
               </Button>),

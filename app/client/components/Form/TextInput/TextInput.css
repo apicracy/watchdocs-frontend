@@ -1,9 +1,14 @@
+.wrapper {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
 .root {
   display: inline-flex;
   align-items: center;
   border: #EEEEEE solid 1px;
   border-radius: 5px;
-  padding: 10px;\
+  padding: 10px;
   margin-right: 10px;
   margin-bottom: 5px;
   flex-shrink: 0;
@@ -32,11 +37,6 @@
   background: white;
 }
 
-.wrapper {
-  width: 100%;
-  margin-bottom: 10px;
-}
-
 .error {
   color: red;
   font-size: 12px;
@@ -63,4 +63,16 @@
 
 .addon {
   color: #6fb3e3;
+}
+
+/* Variants */
+
+.modal > .root {
+  border-radius: 0;
+  height: 50px;
+  border: 1px solid #e5e5e5;
+}
+
+.modal > .rootError {
+  border-color: red;
 }
