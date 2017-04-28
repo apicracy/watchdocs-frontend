@@ -5,6 +5,7 @@
 export const SET_ENDPOINT_VIEW = 'set@endpointView';
 export const ADD_ENDPOINT_PARAM = 'addParam@endpointView';
 export const UPDATE_ENDPOINT_PARAM = 'updateParam@endpointView';
+export const REMOVE_ENDPOINT_PARAM = 'removeParam@endpointView';
 export const UPDATE_ENDPOINT_DESCRIPTION = 'updateDescription@endpointView';
 export const ADD_RESPONSE = 'addResponse@endpointView';
 export const UPDATE_RESPONSE = 'updateResponse@endpointView';
@@ -45,6 +46,13 @@ export function updateEndpointParam(paramData) {
   return {
     type: UPDATE_ENDPOINT_PARAM,
     payload: paramData,
+  };
+}
+
+export function removeEndpointParam(paramId) {
+  return {
+    type: REMOVE_ENDPOINT_PARAM,
+    payload: paramId,
   };
 }
 

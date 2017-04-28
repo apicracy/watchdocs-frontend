@@ -11,7 +11,9 @@ const EndpointDoc = ({ topLevel, projectUrl, doc }) => (
   <div className={styles.top} >
     <article className={styles.content}>
       <div className={topLevel ? styles.headerMain : styles.header}>{ doc.title }</div>
-      { doc.description && <div className={styles.addHeader}>{ doc.description }</div> }
+      { doc.description &&
+        doc.description.content &&
+        <div className={styles.addHeader}>{ doc.description.content }</div> }
       <div className={styles.bodyContent}>
         <div className={styles.section}>
           <Well type="span" variants={['body', 'bold']}>
