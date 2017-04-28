@@ -6,8 +6,8 @@ import {
   addEndpointParam as addEndpointParamAction,
   updateEndpointParam as updateEndpointParamAction,
   removeEndpointParam as removeEndpointParamAction,
+  updateEndpointDescription as updateEndpointDescriptionAction,
 } from 'actions/endpointView';
-
 import {
   urlFormatProjectName,
 } from 'services/projects';
@@ -91,6 +91,26 @@ export function removeEndpoint() {
       .then(response => response.json())
       .then(() => {
         browserHistory.push(url);
+      });
+  };
+}
+
+export function updateEndpointDescription(description) {
+  return (dispatch, getState) => {
+    const { id } = getState().endpointView;
+    const options = {
+      method: 'PUT',
+      body: JSON.stringify({
+        title: description.title,
+        summary: description.content,
+      }),
+    };
+    http(`/api/v1/endpoints/${id}`, options)
+      .then(response => response.json())
+      .then((data) => {
+        if (!data.errors) {
+          dispatch(updateEndpointDescriptionAction(description));
+        }
       });
   };
 }

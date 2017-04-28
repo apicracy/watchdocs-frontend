@@ -6,7 +6,7 @@ import TextInput from 'components/Form/TextInput/TextInput';
 import TextArea from 'components/Form/TextArea/TextArea';
 
 import { closeModal } from 'actions/modals';
-import { updateEndpointDescription as save } from 'actions/endpointView';
+import { updateEndpointDescription as save } from 'services/endpointView';
 
 export const MODAL_NAME = 'EditEndpointDescription';
 
