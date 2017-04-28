@@ -4,8 +4,7 @@ import Heading from 'components/Heading/Heading';
 import Well from 'components/Well/Well';
 import Code from 'components/Code/Code';
 import ParamTable from 'components/ParamTable/ParamTable';
-
-import { curlBuilder } from 'services/helpers';
+import SchemaTable from 'components/SchemaTable/SchemaTable';
 
 const EndpointDoc = ({ topLevel, projectUrl, doc }) => (
   <div className={styles.top} >
@@ -16,7 +15,8 @@ const EndpointDoc = ({ topLevel, projectUrl, doc }) => (
         <div className={styles.addHeader}>{ doc.description.content }</div> }
       <div className={styles.bodyContent}>
         <div className={styles.section}>
-          <Well type="span" variants={['body', 'bold']}>
+          <Heading>HTTP Request</Heading>
+          <Well variants={['body', 'bold', 'noPadding']}>
             <span className={styles.method}>{doc.method}</span> {`${projectUrl}${doc.url}`}
           </Well>
         </div>
@@ -27,7 +27,7 @@ const EndpointDoc = ({ topLevel, projectUrl, doc }) => (
             <ParamTable
               data={doc.url_params.map(x => ({ ...x, data_type: `${x.data_type} (${x.required ? 'required' : 'optional'})` }))}
               headers={[
-                { key: 'name', text: 'Parameter', style: { flex: 1 } },
+                { key: 'name', text: 'Parameter', style: { flex: 1, fontWeight: 'bold' } },
                 { key: 'data_type', text: 'Type', style: { flex: 2 } },
                 { key: 'description', text: 'Description', style: { flex: 3 } },
               ]}
@@ -35,16 +35,35 @@ const EndpointDoc = ({ topLevel, projectUrl, doc }) => (
           </div>
         )}
 
+        { doc.exampleRequest && (
+          <div className={styles.section}>
+            <Heading>Request</Heading>
+            <SchemaTable data={doc.request.body} topLevel />
+          </div>
+        )}
+
+        { doc.exampleResponse && (
+          <div className={styles.section}>
+            <Heading>Response</Heading>
+            <SchemaTable data={doc.responses[0].body} topLevel />
+          </div>
+        )}
+
       </div>
     </article>
     <article className={styles.code}>
       <div className={styles.codeInner}>
-        <Well variants={['code']}>
-          Example request
-        </Well>
-        <Code>
-          { curlBuilder(projectUrl, doc) }
-        </Code>
+        { doc.exampleRequest && (
+          <div>
+            <Well variants={['code']}>
+              Example request
+            </Well>
+            <Code>
+              { JSON.stringify(doc.exampleRequest, null, 2) }
+            </Code>
+          </div>
+        )}
+
         { doc.exampleResponse && (
           <div>
             <Well variants={['code']}>

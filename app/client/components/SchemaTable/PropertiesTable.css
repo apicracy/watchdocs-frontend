@@ -1,0 +1,24 @@
+.root {
+  /*margin-top: 15px;*/
+}
+
+.toggle,
+.name {
+  font-family: 'RobotoBold', Helvetica, sans-serif;
+}
+
+.itemTable {
+  margin-top: 10px;
+  border: 1px solid #E6EBEF;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.name,
+.type {
+  display: flex;
+  align-items: center;
+}
