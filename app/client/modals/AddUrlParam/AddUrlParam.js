@@ -6,7 +6,7 @@ import TextInput from 'components/Form/TextInput/TextInput';
 import TextArea from 'components/Form/TextArea/TextArea';
 import CheckBox from 'components/Form/CheckBox/CheckBox';
 import Select from 'components/Form/Select/Select';
-
+import styles from './AddUrlParam.css';
 import { closeModal } from 'actions/modals';
 import { addEndpointParam, updateEndpointParam } from 'services/endpointView';
 
@@ -42,6 +42,11 @@ class AddUrlParam extends React.Component {
       { id: 2, name: 'string' },
       { id: 3, name: 'array' },
     ];
+
+    this.setState({
+      nameIsDirty: false,
+      typeIsDirty: false,
+    });
   }
 
   getSelectedId = (value) => {
@@ -76,9 +81,11 @@ class AddUrlParam extends React.Component {
     data_type: null,
     example: '',
     is_part_of_url: false,
+    nameIsDirty: false,
+    typeIsDirty: false,
   });
 
-  onSave = () => {
+  save = () => {
     const data = {
       ...this.state,
       endpoint_id: this.props.endpointId,
@@ -92,6 +99,17 @@ class AddUrlParam extends React.Component {
 
     this.props.dispatch(closeModal(MODAL_NAME));
     this.reset();
+  }
+
+  onSave = () => {
+    if (this.state.name && this.state.data_type) {
+      this.save();
+    } else {
+      this.setState({
+        nameIsDirty: true,
+        typeIsDirty: true,
+      });
+    }
   }
 
   onHide = () => {
@@ -131,8 +149,12 @@ class AddUrlParam extends React.Component {
             onChange={this.onFieldChange('name')}
             validation={new RegExp(/((^[a-zA-Z_$][a-zA-Z_$[\]0-9]*$))/ig)}
             validationErrorMsg={'URL parameter should include only allowed URL characters.'}
-          />
+            onBlur={() => { this.setState({ nameIsDirty: true }); }}
 
+          />
+          { this.state.nameIsDirty && !this.state.name && <div className={styles.required}>
+              Required
+          </div>}
           <CheckBox
             activeIds={[this.state.required ? 1 : null]}
             options={[
@@ -148,7 +170,12 @@ class AddUrlParam extends React.Component {
             options={this.paramTypes}
             activeId={this.getSelectedId(this.state.data_type)}
             onSelect={this.onTypeChange}
+            onBlur={() => { this.setState({ typeIsDirty: true }); }}
           />
+          { this.state.typeIsDirty && !this.state.data_type &&
+            <div className={styles.requiredSelect}>
+            Required
+          </div>}
         </InputGroup>
 
         <InputGroup title="Description" description="Give user more context info about the param itself">
