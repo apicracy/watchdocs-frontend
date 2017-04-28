@@ -31,7 +31,15 @@ class ApiDoc extends React.Component {
     const { children, endpoints, router, params } = props;
 
     if (!children && endpoints && endpoints.length > 0) {
-      router.push(`/${params.project_name}/editor/${endpoints[0].id}`);
+      switch (endpoints[0].type) {
+        case 'Endpoint':
+          router.push(`/${params.project_name}/editor/undefined/endpoint/${endpoints[0].id}`);
+          break;
+
+        default:
+          router.push(`/${params.project_name}/editor/${endpoints[0].id}`);
+          break;
+      }
     }
   }
 

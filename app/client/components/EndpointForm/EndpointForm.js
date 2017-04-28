@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './EndpointForm.css';
 
+import TextInput from 'components/Form/TextInput/TextInput';
+
 class EndpointForm extends React.Component {
   static propTypes = {
     inputValue: React.PropTypes.string,
@@ -8,6 +10,7 @@ class EndpointForm extends React.Component {
 
     onChangeInput: React.PropTypes.func,
     onChangeEndpointType: React.PropTypes.func,
+    validUrl: React.PropTypes.object,
   };
 
   static defaultProps = {
@@ -19,6 +22,7 @@ class EndpointForm extends React.Component {
     const {
       inputValue,
       endpointType,
+      validUrl,
     } = this.props;
 
     return (
@@ -26,7 +30,7 @@ class EndpointForm extends React.Component {
         <div className={styles.modalField}>
           <text className={styles.modalLabel}>Endpoint URL</text>
           <text className={styles.modalSmallLabel}>
-            Format query params to &quot;id&quot; notation (for example /user/:id)
+            Format endpoint url to &quot;id&quot; notation (for example /user/:id)
           </text>
           <div className={styles.modalInputWrapper}>
             <select
@@ -40,7 +44,14 @@ class EndpointForm extends React.Component {
               <option>PATCH</option>
               <option>DELETE</option>
             </select>
-            <input value={inputValue} placeholder="URL endpoint" className={styles.modalInput} onChange={this.onChangeInput} />
+            <TextInput
+              variants={['modal']}
+              value={inputValue}
+              placeholder="URL endpoint"
+              onChange={this.onChangeInput}
+              validation={validUrl}
+              validationErrorMsg={'Endpoint URL should include only allowed URL characters.'}
+            />
           </div>
         </div>
       </div>
