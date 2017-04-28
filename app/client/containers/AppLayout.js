@@ -13,6 +13,7 @@ import UserMenu from 'components/UserMenu/UserMenu';
 import Select from 'components/Form/Select/Select';
 import Icon from 'components/Icon/Icon';
 import CustomIcon from 'components/Icon/CustomIcon';
+import Modals from 'modals/Modals';
 
 @connect(store => ({
   projects: store.projects.projectList,
@@ -37,6 +38,7 @@ class AppLayout extends React.Component {
       React.PropTypes.node,
     ]),
     params: React.PropTypes.object, // supplied by react-router
+    router: React.PropTypes.object,
     dispatch: React.PropTypes.func,
     projects: React.PropTypes.array,
     activeProject: React.PropTypes.object,
@@ -84,6 +86,7 @@ class AppLayout extends React.Component {
         <AppBar footer>
           <Container />
         </AppBar>
+        <Modals params={this.props.params} router={this.props.router} />
       </div>
     );
   }

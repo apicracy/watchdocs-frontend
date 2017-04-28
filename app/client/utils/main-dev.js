@@ -5,7 +5,6 @@ import { createDevTools } from 'redux-devtools';
 import LogMonitor from 'redux-devtools-log-monitor';
 import DockMonitor from 'redux-devtools-dock-monitor';
 import routes from 'routes';
-import Modals from 'modals/Modals';
 
 import { Router } from 'react-router';
 
@@ -72,7 +71,6 @@ export class Main extends React.Component {
         <div id="root">
           <Router history={history} routes={routes} />
           {showDebug ? <DevTools /> : null}
-          <Modals />
         </div>
       </Provider>
     );

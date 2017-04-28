@@ -263,7 +263,7 @@ class EndpointDoc extends React.Component {
           description="List of all available responses for given endpoint"
           emptyMsg="You don't have any responses set up yet."
           buttonAction={() => {
-            this.props.router.push(`/${this.props.params.project_name}/editor/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/response`);
+            this.props.dispatch(openModal('addResponse'));
           }}
         >
           { this.renderResponses() }
