@@ -185,7 +185,6 @@ class EndpointDoc extends React.Component {
         ]}
         actions={[
           <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editRequest()} />,
-          <IconButton icon={<Icon name="trash" size="lg" />} />,
         ]}
       />,
     ];
