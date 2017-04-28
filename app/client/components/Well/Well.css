@@ -12,12 +12,23 @@ span.root {
 
 /* Variants */
 .body {
+  margin-top: 20px;
   color: #6C6AB8;
+  background: #dbddef;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
 }
 
 .code {
+  margin-top: 0;
   background-color: #323446;
   padding: 15px;
+}
+
+.noPadding {
+  padding: 0;
 }
 
 .bold {
