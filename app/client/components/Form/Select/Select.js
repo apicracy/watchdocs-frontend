@@ -7,7 +7,10 @@ class Select extends React.Component {
 
   static propTypes = {
     options: React.PropTypes.array,
-    activeId: React.PropTypes.number,
+    activeId: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.number,
+    ]),
     onSelect: React.PropTypes.func,
     variants: React.PropTypes.array,
     emptyMsg: React.PropTypes.string,

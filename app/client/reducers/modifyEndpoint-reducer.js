@@ -16,7 +16,7 @@ export const INITIAL_STATE = {
   type: 'Endpoint',
   folderName: '',
   parentFolder: '',
-  method: '',
+  method: 'GET',
   documentName: '',
   url: '',
 };

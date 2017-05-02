@@ -2,6 +2,15 @@ import React from 'react';
 import styles from './EndpointForm.css';
 
 import TextInput from 'components/Form/TextInput/TextInput';
+import Select from 'components/Form/Select/Select';
+
+const httpMethods = [
+  { id: 'GET', name: 'GET' },
+  { id: 'POST', name: 'POST' },
+  { id: 'PUT', name: 'PUT' },
+  { id: 'PATCH', name: 'PATCH' },
+  { id: 'DELETE', name: 'DELETE' },
+];
 
 class EndpointForm extends React.Component {
   static propTypes = {
@@ -14,7 +23,6 @@ class EndpointForm extends React.Component {
   };
 
   static defaultProps = {
-    selectedParentFolder: '',
     endpointType: 'GET',
   }
 
@@ -30,20 +38,15 @@ class EndpointForm extends React.Component {
         <div className={styles.modalField}>
           <text className={styles.modalLabel}>Endpoint URL</text>
           <text className={styles.modalSmallLabel}>
-            Format endpoint url to &quot;id&quot; notation (for example /user/:id)
+            Dupa &quot;id&quot; notation (for example /user/:id)
           </text>
           <div className={styles.modalInputWrapper}>
-            <select
-              value={endpointType}
-              className={styles.modalEndpointSelect}
-              onChange={this.onChangeEndpointType}
-            >
-              <option>GET</option>
-              <option>POST</option>
-              <option>PUT</option>
-              <option>PATCH</option>
-              <option>DELETE</option>
-            </select>
+            <Select
+              variants={['inline', 'bordered']}
+              options={httpMethods}
+              activeId={endpointType}
+              onSelect={this.onChangeEndpointType}
+            />
             <TextInput
               variants={['modal']}
               value={inputValue}
@@ -58,8 +61,8 @@ class EndpointForm extends React.Component {
     );
   }
 
-  onChangeEndpointType = (e) => {
-    this.props.onChangeEndpointType(e.target.value);
+  onChangeEndpointType = (id) => {
+    this.props.onChangeEndpointType(id);
   }
 
   onChangeInput = (e) => {

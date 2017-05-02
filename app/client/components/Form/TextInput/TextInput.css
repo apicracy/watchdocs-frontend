@@ -70,7 +70,6 @@
 .modal > .root {
   border-radius: 0;
   height: 50px;
-  border: 1px solid #e5e5e5;
 }
 
 .modal > .rootError {
