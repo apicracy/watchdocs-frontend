@@ -29,8 +29,7 @@
 .method {
   color: #6C6AB8;
   font-family: 'RobotoBold', Helvetica, sans-serif;
-  width: 120px;
-  padding-left: 20px;
+  padding: 0 20px;
   border-right: 1px solid #ECEEFA;
   height: 100%;
   align-items: center;
