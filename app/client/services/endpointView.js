@@ -8,6 +8,8 @@ import {
   removeEndpointParam as removeEndpointParamAction,
 } from 'actions/endpointView';
 
+import { removeEndpoint as removeEndpointAction } from 'actions/endpoints';
+
 import {
   urlFormatProjectName,
 } from 'services/projects';
@@ -91,6 +93,7 @@ export function removeEndpoint() {
       .then(response => response.json())
       .then(() => {
         browserHistory.push(url);
+        dispatch(removeEndpointAction(id));
       });
   };
 }
