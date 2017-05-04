@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styles from './EndpointDoc.css';
 
-import { loadEndpoint, removeEndpoint, removeUrlParams } from 'services/endpointView';
+import { loadEndpoint, removeEndpoint, removeUrlParams, removeResponse } from 'services/endpointView';
 
 import { loadGroup } from 'services/groupView';
 
@@ -120,6 +120,7 @@ class EndpointDoc extends React.Component {
   /* Params section */
   editParam = id => () => this.props.dispatch(openModal('addUrlParam', id));
   editResponse = id => () => this.props.router.push(`/${this.props.params.project_name}/editor/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/response/${id}`);
+  removeResponse = id => () => this.props.dispatch(removeResponse(id))
   editRequest = () => () => this.props.router.push(`/${this.props.params.project_name}/editor/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/request`);
 
   renderParams() {
@@ -165,7 +166,7 @@ class EndpointDoc extends React.Component {
         ]}
         actions={[
           <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editResponse(param.id)} />,
-          <IconButton icon={<Icon name="trash" size="lg" />} />,
+          <IconButton icon={<Icon name="trash" size="lg" />} onClick={this.removeResponse(param.id)} />,
         ]}
       />
     ));
