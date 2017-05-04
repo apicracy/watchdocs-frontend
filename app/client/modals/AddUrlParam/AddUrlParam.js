@@ -41,6 +41,7 @@ class AddUrlParam extends React.Component {
       { id: 1, name: 'number' },
       { id: 2, name: 'string' },
       { id: 3, name: 'array' },
+      { id: 4, name: 'boolean' }
     ];
   }
 
