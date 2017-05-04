@@ -4,7 +4,7 @@ import Modal from 'components/Modal/Modal';
 import Select from 'components/Form/Select/Select';
 import InputGroup from 'components/Form/InputGroup/InputGroup';
 import styles from './AddResponse.css';
-import { setStatus, saveResponseParam } from 'services/responseParams';
+import { addResponse } from 'services/endpointView';
 
 import { closeModal } from 'actions/modals';
 
@@ -13,12 +13,11 @@ export const MODAL_NAME = 'addResponse';
 @connect(store => ({
   isVisible: !!store.modals[MODAL_NAME],
 }))
-class addResponse extends React.Component {
+class addResponseModal extends React.Component {
 
   static propTypes = {
     isVisible: React.PropTypes.bool,
     dispatch: React.PropTypes.func,
-    router: React.PropTypes.object,
     params: React.PropTypes.object,
   }
 
@@ -39,16 +38,13 @@ class addResponse extends React.Component {
     ];
   }
 
-  reset = () => this.setState({
-    responseStatus: null,
-    selectWrapperStyle: null,
-  });
+  reset = () => this.setState({ responseStatus: null });
 
   onSave = () => {
-    const selectedObject = this.paramTypes.find(p => p.id === this.state.responseStatus);
-    this.props.dispatch(setStatus(selectedObject));
-    this.props.dispatch(saveResponseParam());
-    this.props.router.push(`/${this.props.params.project_name}/editor/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/response`);
+    this.props.dispatch(addResponse({
+      endpoint_id: this.props.params.endpoint_id,
+      http_status_code: this.getSelectedId(this.state.responseStatus),
+    }));
     this.props.dispatch(closeModal(MODAL_NAME));
     this.reset();
   }
@@ -96,4 +92,4 @@ class addResponse extends React.Component {
   }
 }
 
-export default addResponse;
+export default addResponseModal;

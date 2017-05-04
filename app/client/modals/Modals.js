@@ -8,19 +8,18 @@ import AddResponseParam from 'modals/AddResponseParam/AddResponseParam';
 import AddRequestParam from 'modals/AddRequestParam/AddRequestParam';
 import AddResponse from 'modals/addResponse/addResponse';
 
-const Modals = ({ router, params }) => (
+const Modals = ({ params }) => (
   <div>
     <AddNewModal />
     <AddUrlParam />
     <EditEndpointDescription />
     <AddResponseParam />
     <AddRequestParam />
-    <AddResponse router={router} params={params} />
+    <AddResponse params={params} />
   </div>
 );
 
 Modals.propTypes = {
-  router: React.PropTypes.object,
   params: React.PropTypes.object,
 };
 

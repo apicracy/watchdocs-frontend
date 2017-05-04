@@ -38,7 +38,6 @@ class AppLayout extends React.Component {
       React.PropTypes.node,
     ]),
     params: React.PropTypes.object, // supplied by react-router
-    router: React.PropTypes.object,
     dispatch: React.PropTypes.func,
     projects: React.PropTypes.array,
     activeProject: React.PropTypes.object,
@@ -86,7 +85,7 @@ class AppLayout extends React.Component {
         <AppBar footer>
           <Container />
         </AppBar>
-        <Modals params={this.props.params} router={this.props.router} />
+        <Modals params={this.props.params} />
       </div>
     );
   }

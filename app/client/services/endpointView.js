@@ -6,6 +6,7 @@ import {
   addEndpointParam as addEndpointParamAction,
   updateEndpointParam as updateEndpointParamAction,
   removeEndpointParam as removeEndpointParamAction,
+  addResponse as addResponseAction,
 } from 'actions/endpointView';
 
 import {
@@ -84,6 +85,23 @@ export function removeEndpoint() {
       .then(response => response.json())
       .then(() => {
         browserHistory.push(url);
+      });
+  };
+}
+
+export function addResponse(responseParam) {
+  return (dispatch) => {
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(responseParam),
+    };
+
+    http('/api/v1/responses/', options)
+      .then(response => response.json())
+      .then((data) => {
+        if (!data.errors) {
+          dispatch(addResponseAction(data));
+        }
       });
   };
 }
