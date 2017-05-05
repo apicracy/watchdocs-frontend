@@ -52,8 +52,6 @@ class AddNewModal extends React.Component {
       documentName,
     } = this.props;
 
-    const validUrl = new RegExp(/^\/{1}(:?[A-Za-z0-9\-_.~]+\/)*(:?[A-Za-z0-9\-_.~]+)$/ig);
-
     let title;
 
     switch (type) {
@@ -66,7 +64,7 @@ class AddNewModal extends React.Component {
     return (
       <Modal
         isVisible={isVisible}
-        isValid={validUrl.test(this.props.url)}
+        isValid={true}
         title={title}
         onSave={this.onSave}
         onHide={this.onHide}
@@ -74,7 +72,6 @@ class AddNewModal extends React.Component {
         <div>
           { type === 'Endpoint' &&
             <EndpointForm
-              validUrl={validUrl}
               selectedParentFolder={selectedParentFolder}
               inputValue={url}
               endpointType={endpointType}

@@ -1,7 +1,8 @@
 import React from 'react';
 import styles from './EndpointForm.css';
+import { Field, reduxForm } from 'redux-form';
 
-import TextInput from 'components/Form/TextInput/TextInput';
+import RFTextInput from 'components/Form/RFTextInput/RFTextInput';
 import Select from 'components/Form/Select/Select';
 
 const httpMethods = [
@@ -12,6 +13,16 @@ const httpMethods = [
   { id: 'DELETE', name: 'DELETE' },
 ];
 
+const validUrl = new RegExp(/^\/?(:?[A-Za-z0-9\-_.~]+\/)*(:?[A-Za-z0-9\-_.~]+\/?)$/i);
+
+const validate = (values) => {
+  const errors = {};
+  if (!validUrl.test(values.url)) {
+    errors.url = 'Endpoint URL should include only allowed URL characters.';
+  }
+  return errors;
+};
+
 class EndpointForm extends React.Component {
   static propTypes = {
     inputValue: React.PropTypes.string,
@@ -19,7 +30,6 @@ class EndpointForm extends React.Component {
 
     onChangeInput: React.PropTypes.func,
     onChangeEndpointType: React.PropTypes.func,
-    validUrl: React.PropTypes.object,
   };
 
   static defaultProps = {
@@ -30,7 +40,6 @@ class EndpointForm extends React.Component {
     const {
       inputValue,
       endpointType,
-      validUrl,
     } = this.props;
 
     return (
@@ -47,13 +56,13 @@ class EndpointForm extends React.Component {
               activeId={endpointType}
               onSelect={this.onChangeEndpointType}
             />
-            <TextInput
+            <Field
+              name="url"
+              component={RFTextInput}
               variants={['modal']}
               value={inputValue}
               placeholder="URL endpoint"
               onChange={this.onChangeInput}
-              validation={validUrl}
-              validationErrorMsg={'Endpoint URL should include only allowed URL characters.'}
             />
           </div>
         </div>
@@ -70,4 +79,7 @@ class EndpointForm extends React.Component {
   }
 }
 
-export default EndpointForm;
+export default reduxForm({
+  form: 'endpointForm',
+  validate,
+})(EndpointForm);

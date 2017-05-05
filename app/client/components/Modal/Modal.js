@@ -44,7 +44,7 @@ class Modal extends React.Component {
     /* eslint-disable jsx-a11y/no-static-element-interactions */
     return (
       <div className={styles.overlay} onClick={this.onOverlayClick} data-dismiss>
-        <section className={styles.root}>
+        <form className={styles.root}>
           <header className={styles.header}>
             { title } <Button onClick={this.props.onHide} icon={<CustomIcon name="close-button" />} />
           </header>
@@ -61,7 +61,7 @@ class Modal extends React.Component {
             <Button variants={['primary', 'large']} onClick={this.props.onSave} disabled={!isValid}>{this.props.saveButtonText}</Button>
             <Button variants={['large', 'lightBorder', 'spaceLeft']} onClick={this.props.onHide}>{this.props.cancelButtonText}</Button>
           </footer>
-        </section>
+        </form>
       </div>
     );
     /* eslint-enable jsx-a11y/no-static-element-interactions */
