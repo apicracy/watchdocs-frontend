@@ -17,13 +17,11 @@ export const MODAL_NAME = 'EditEndpoint';
 @connect(state => ({
   isVisible: state.modals[MODAL_NAME],
   isEdit: state.modifyEndpoint.isEdit,
-  url: state.modifyEndpoint.url,
   endpointType: state.modifyEndpoint.method,
 }))
 class EditModal extends React.Component {
   static propTypes = {
     isVisible: React.PropTypes.bool,
-    url: React.PropTypes.string,
     endpointType: React.PropTypes.string,
     dispatch: React.PropTypes.func,
   };
@@ -31,7 +29,6 @@ class EditModal extends React.Component {
   render() {
     const {
       isVisible,
-      url,
       endpointType,
     } = this.props;
 
@@ -45,7 +42,6 @@ class EditModal extends React.Component {
       >
         <div>
           <EndpointForm
-            inputValue={url}
             endpointType={endpointType}
             onChangeInput={this.onChangeInput}
             onChangeEndpointType={this.onChangeEndpointType}

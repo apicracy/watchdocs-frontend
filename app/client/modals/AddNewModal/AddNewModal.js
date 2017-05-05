@@ -23,7 +23,6 @@ export const MODAL_NAME = 'AddNewEndpoint';
 @connect(state => ({
   isVisible: state.modals[MODAL_NAME],
   selectedParentFolder: state.modifyEndpoint.parentFolder,
-  url: state.modifyEndpoint.url,
   folderName: state.modifyEndpoint.folderName,
   endpointType: state.modifyEndpoint.method,
   documentName: state.modifyEndpoint.documentName,
@@ -33,7 +32,6 @@ class AddNewModal extends React.Component {
   static propTypes = {
     isVisible: React.PropTypes.bool,
     selectedParentFolder: React.PropTypes.string,
-    url: React.PropTypes.string,
     folderName: React.PropTypes.string,
     documentName: React.PropTypes.string,
     endpointType: React.PropTypes.string,
@@ -45,7 +43,6 @@ class AddNewModal extends React.Component {
     const {
       isVisible,
       selectedParentFolder,
-      url,
       folderName,
       endpointType,
       type,
@@ -73,7 +70,6 @@ class AddNewModal extends React.Component {
           { type === 'Endpoint' &&
             <EndpointForm
               selectedParentFolder={selectedParentFolder}
-              inputValue={url}
               endpointType={endpointType}
               onSelectParentFolder={this.onSelectParentFolder}
               onChangeInput={this.onChangeInput}

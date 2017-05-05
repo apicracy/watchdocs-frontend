@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './EndpointForm.css';
 import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
 
 import RFTextInput from 'components/Form/RFTextInput/RFTextInput';
 import Select from 'components/Form/Select/Select';
@@ -23,63 +24,53 @@ const validate = (values) => {
   return errors;
 };
 
-class EndpointForm extends React.Component {
-  static propTypes = {
-    inputValue: React.PropTypes.string,
-    endpointType: React.PropTypes.string,
+let EndpointForm = ({ endpointType, onChangeInput,
+  onChangeEndpointType }) => (
+    <div>
+      <div className={styles.modalField}>
+        <text className={styles.modalLabel}>Endpoint URL</text>
+        <text className={styles.modalSmallLabel}>
+          Format endpoint url to &quot;id&quot; notation (for example /user/:id)
+        </text>
+        <div className={styles.modalInputWrapper}>
+          <Select
+            variants={['inline', 'bordered']}
+            options={httpMethods}
+            activeId={endpointType}
+            onSelect={id => (onChangeEndpointType(id))}
+          />
 
-    onChangeInput: React.PropTypes.func,
-    onChangeEndpointType: React.PropTypes.func,
-  };
-
-  static defaultProps = {
-    endpointType: 'GET',
-  }
-
-  render() {
-    const {
-      inputValue,
-      endpointType,
-    } = this.props;
-
-    return (
-      <div>
-        <div className={styles.modalField}>
-          <text className={styles.modalLabel}>Endpoint URL</text>
-          <text className={styles.modalSmallLabel}>
-            Dupa &quot;id&quot; notation (for example /user/:id)
-          </text>
-          <div className={styles.modalInputWrapper}>
-            <Select
-              variants={['inline', 'bordered']}
-              options={httpMethods}
-              activeId={endpointType}
-              onSelect={this.onChangeEndpointType}
-            />
-            <Field
-              name="url"
-              component={RFTextInput}
-              variants={['modal']}
-              value={inputValue}
-              placeholder="URL endpoint"
-              onChange={this.onChangeInput}
-            />
-          </div>
+          <Field
+            name="url"
+            component={RFTextInput}
+            variants={['modal']}
+            placeholder="URL endpoint"
+            onChange={e => (onChangeInput(e.target.value))}
+          />
         </div>
       </div>
-    );
-  }
+    </div>
+);
 
-  onChangeEndpointType = (id) => {
-    this.props.onChangeEndpointType(id);
-  }
+EndpointForm.propTypes = {
+  endpointType: React.PropTypes.string,
+  onChangeInput: React.PropTypes.func,
+  onChangeEndpointType: React.PropTypes.func,
+};
 
-  onChangeInput = (e) => {
-    this.props.onChangeInput(e.target.value);
-  }
-}
+EndpointForm.defaultProps = {
+  endpointType: 'GET',
+};
 
-export default reduxForm({
+EndpointForm = reduxForm({
   form: 'endpointForm',
   validate,
 })(EndpointForm);
+
+EndpointForm = connect(state => ({
+  initialValues: {
+    url: state.modifyEndpoint.url,
+  },
+}))(EndpointForm);
+
+export default EndpointForm;

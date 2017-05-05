@@ -7,7 +7,7 @@ const errorMessage = message => (
   </div>
 );
 
-const RFTextInput = ({ input, type, placeholder, value, iconRight,
+const RFTextInput = ({ input, type, placeholder, iconRight,
   variant, variants, meta: { touched, error } }) => {
   const variantStyles = variants.map(v => styles[v]);
   const rootClasses = [
@@ -40,7 +40,6 @@ const RFTextInput = ({ input, type, placeholder, value, iconRight,
         <input
           {...input}
           type={type}
-          value={value}
           placeholder={placeholder}
           className={variantInputStyle}
         />
@@ -54,18 +53,18 @@ const RFTextInput = ({ input, type, placeholder, value, iconRight,
 
 RFTextInput.propTypes = {
   placeholder: React.PropTypes.string,
-  value: React.PropTypes.string,
   type: React.PropTypes.string,
   variant: React.PropTypes.string,
   iconRight: React.PropTypes.node,
   variants: React.PropTypes.array,
+  input: React.PropTypes.object,
+  meta: React.PropTypes.object,
 };
 
 RFTextInput.defaultProps = {
   variants: [],
   placeholder: '',
   type: 'text',
-  value: '',
 };
 
 export default RFTextInput;
