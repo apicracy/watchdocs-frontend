@@ -43,7 +43,7 @@ class EditModal extends React.Component {
             endpointType={endpointType}
             onChangeInput={this.onChangeInput}
             onChangeEndpointType={this.onChangeEndpointType}
-            onSave={this.onSave}
+            onSubmit={this.onSave}
             onCancel={this.onHide}
             saveButtonText="Update"
           />
@@ -52,10 +52,11 @@ class EditModal extends React.Component {
     );
   }
 
-  onSave = () => {
-    this.props.dispatch(editEndpoint());
-    this.props.dispatch(closeModal(MODAL_NAME));
-  }
+  onSave = () => (
+    this.props
+       .dispatch(editEndpoint())
+       .then(() => (this.props.dispatch(closeModal(MODAL_NAME))))
+  );
 
   onHide = () => {
     this.props.dispatch(closeModal(MODAL_NAME));

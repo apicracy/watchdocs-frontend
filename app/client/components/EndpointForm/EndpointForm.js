@@ -7,6 +7,7 @@ import RFTextInput from 'components/Form/RFTextInput/RFTextInput';
 import Select from 'components/Form/Select/Select';
 import Button from 'components/Button/Button';
 import ButtonGroup from 'components/ButtonGroup/ButtonGroup';
+import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
 
 
 const httpMethods = [
@@ -27,9 +28,11 @@ const validate = (values) => {
   return errors;
 };
 
-let EndpointFormComponent = ({ endpointType, onChangeInput, onChangeEndpointType,
-  onSave, onCancel, saveButtonText, cancelButtonText, valid }) => (
+let EndpointFormComponent = ({ endpointType, onChangeInput, handleSubmit,
+  onChangeEndpointType, onCancel, saveButtonText, cancelButtonText, valid,
+  submitting }) => (
     <div>
+      { submitting && <LoadingIndicator fixed /> }
       <div className={styles.modalField}>
         <text className={styles.modalLabel}>Endpoint URL</text>
         <text className={styles.modalSmallLabel}>
@@ -53,7 +56,7 @@ let EndpointFormComponent = ({ endpointType, onChangeInput, onChangeEndpointType
         </div>
       </div>
       <ButtonGroup>
-        <Button variants={['primary', 'large']} onClick={onSave} disabled={!valid}>{saveButtonText}</Button>
+        <Button variants={['primary', 'large']} onClick={handleSubmit} disabled={!valid}>{saveButtonText}</Button>
         <Button variants={['large', 'lightBorder', 'spaceLeft']} onClick={onCancel}>{cancelButtonText}</Button>
       </ButtonGroup>
     </div>
@@ -63,11 +66,12 @@ EndpointFormComponent.propTypes = {
   endpointType: React.PropTypes.string,
   onChangeInput: React.PropTypes.func,
   onChangeEndpointType: React.PropTypes.func,
-  onSave: React.PropTypes.func,
   onCancel: React.PropTypes.func,
   saveButtonText: React.PropTypes.string,
   cancelButtonText: React.PropTypes.string,
-  valid: React.PropTypes.boolean,
+  valid: React.PropTypes.bool,
+  handleSubmit: React.PropTypes.func,
+  submitting: React.PropTypes.bool,
 };
 
 EndpointFormComponent.defaultProps = {

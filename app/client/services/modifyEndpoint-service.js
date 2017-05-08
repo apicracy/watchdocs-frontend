@@ -47,7 +47,7 @@ export function saveEndpoint() {
     const endpoint = getState().modifyEndpoint;
     const activeProject = getState().projects.activeProject;
 
-    http('/api/v1/endpoints', {
+    return http('/api/v1/endpoints', {
       method: 'POST',
       body: JSON.stringify({
         project_id: activeProject.id,
@@ -167,7 +167,7 @@ export function editEndpoint() {
       }),
     };
 
-    http(`/api/v1/endpoints/${id}`, options)
+    return http(`/api/v1/endpoints/${id}`, options)
       .then(response => response.json())
       .then((data) => {
         if (!data.errors) {

@@ -17,11 +17,7 @@ export const MODAL_NAME = 'AddNewEndpoint';
 
 @connect(state => ({
   isVisible: state.modals[MODAL_NAME],
-  selectedParentFolder: state.modifyEndpoint.parentFolder,
-  folderName: state.modifyEndpoint.folderName,
   endpointType: state.modifyEndpoint.method,
-  documentName: state.modifyEndpoint.documentName,
-  type: state.modifyEndpoint.type,
 }))
 class AddEndpointModal extends React.Component {
   static propTypes = {
@@ -47,7 +43,7 @@ class AddEndpointModal extends React.Component {
             endpointType={endpointType}
             onChangeInput={this.onChangeInput}
             onChangeEndpointType={this.onChangeEndpointType}
-            onSave={this.onSave}
+            onSubmit={this.onSave}
             onCancel={this.onHide}
           />
         </div>
@@ -55,10 +51,11 @@ class AddEndpointModal extends React.Component {
     );
   }
 
-  onSave = () => {
-    this.props.dispatch(saveEndpoint());
-    this.props.dispatch(closeModal(MODAL_NAME));
-  }
+  onSave = () => (
+    this.props
+       .dispatch(saveEndpoint())
+       .then(() => (this.props.dispatch(closeModal(MODAL_NAME))))
+  );
 
   onHide = () => {
     this.props.dispatch(closeModal(MODAL_NAME));
