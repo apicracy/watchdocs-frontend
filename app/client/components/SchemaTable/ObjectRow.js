@@ -28,14 +28,16 @@ class ObjectRow extends React.Component {
       <div className={name ? styles.row : ''}>
         { name && (
           <div className={styles.header}>
-            <div className={styles.toggle}>
-              { this.state.expanded && (
-                <Button onClick={this.toggleItems}>Hide properties</Button>
-              )}
-              { !this.state.expanded && (
-                <Button onClick={this.toggleItems}>Show properties</Button>
-              )}
-            </div>
+            { properties.length > 0 && (
+              <div className={styles.toggle}>
+                { this.state.expanded && (
+                  <Button onClick={this.toggleItems}>Hide properties</Button>
+                )}
+                { !this.state.expanded && (
+                  <Button onClick={this.toggleItems}>Show properties</Button>
+                )}
+              </div>
+            )}
             { name && <div className={styles.name}>{ name }</div> }
             <div className={styles.type}>object ({ `${isRequired ? 'required' : 'optional'}` })</div>
           </div>

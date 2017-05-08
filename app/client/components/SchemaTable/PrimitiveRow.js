@@ -5,7 +5,12 @@ const PrimitiveRow = ({ name, isRequired, node }) => (
   <div className={styles.row}>
     <div className={styles.header}>
       { name && <div className={styles.name}>{ name }</div> }
-      { node && node.type && <div className={styles.type}>{ `${node.type} (${isRequired ? 'required' : 'optional'})` }</div> }
+      { node && node.type && (
+        <div className={styles.type}>
+          { node.type !== 'null' && `${node.type} ` }
+          { `(${isRequired ? 'required' : 'optional'})` }
+        </div>
+      )}
     </div>
   </div>
 );
