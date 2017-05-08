@@ -6,10 +6,9 @@ import Button from 'components/Button/Button';
 import RowGenerator from './RowGenerator';
 
 class ObjectRow extends React.Component {
-  componentWillMount() {
-    this.setState({
-      expanded: false,
-    });
+  constructor(props) {
+    super(props);
+    this.state = { expanded: false };
   }
 
   toggleItems = () => this.setState({ expanded: !this.state.expanded });

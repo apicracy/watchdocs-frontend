@@ -12,7 +12,6 @@ const RowGenerator = ({ name, isRequired, node }) => {
   }
 };
 
-
 RowGenerator.propTypes = {
   node: React.PropTypes.object,
   name: React.PropTypes.string,
