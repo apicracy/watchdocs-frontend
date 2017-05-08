@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-import AddNewModal from 'modals/AddNewModal/AddNewModal';
+import AddEndpointModal from 'modals/AddEndpointModal/AddEndpointModal';
 
 /* Endpoint Documentation view modals */
 import AddUrlParam from 'modals/AddUrlParam/AddUrlParam';
@@ -12,7 +12,7 @@ import EditEndpointModal from 'modals/EditEndpointModal/EditEndpointModal';
 
 export default () => (
   <div>
-    <AddNewModal />
+    <AddEndpointModal />
     <AddUrlParam />
     <EditEndpointDescription />
     <AddResponseParam />

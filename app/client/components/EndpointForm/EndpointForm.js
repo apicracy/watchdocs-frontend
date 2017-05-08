@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 
 import RFTextInput from 'components/Form/RFTextInput/RFTextInput';
 import Select from 'components/Form/Select/Select';
+import Button from 'components/Button/Button';
+import ButtonGroup from 'components/ButtonGroup/ButtonGroup';
+
 
 const httpMethods = [
   { id: 'GET', name: 'GET' },
@@ -24,8 +27,8 @@ const validate = (values) => {
   return errors;
 };
 
-let EndpointForm = ({ endpointType, onChangeInput,
-  onChangeEndpointType }) => (
+let EndpointFormComponent = ({ endpointType, onChangeInput, onChangeEndpointType,
+  onSave, onCancel, saveButtonText, cancelButtonText, valid }) => (
     <div>
       <div className={styles.modalField}>
         <text className={styles.modalLabel}>Endpoint URL</text>
@@ -33,13 +36,13 @@ let EndpointForm = ({ endpointType, onChangeInput,
           Format endpoint url to &quot;id&quot; notation (for example /user/:id)
         </text>
         <div className={styles.modalInputWrapper}>
+          { /* TODO: Convert Select to redux-form Field */ }
           <Select
             variants={['inline', 'bordered']}
             options={httpMethods}
             activeId={endpointType}
             onSelect={id => (onChangeEndpointType(id))}
           />
-
           <Field
             name="url"
             component={RFTextInput}
@@ -49,28 +52,39 @@ let EndpointForm = ({ endpointType, onChangeInput,
           />
         </div>
       </div>
+      <ButtonGroup>
+        <Button variants={['primary', 'large']} onClick={onSave} disabled={!valid}>{saveButtonText}</Button>
+        <Button variants={['large', 'lightBorder', 'spaceLeft']} onClick={onCancel}>{cancelButtonText}</Button>
+      </ButtonGroup>
     </div>
 );
 
-EndpointForm.propTypes = {
+EndpointFormComponent.propTypes = {
   endpointType: React.PropTypes.string,
   onChangeInput: React.PropTypes.func,
   onChangeEndpointType: React.PropTypes.func,
+  onSave: React.PropTypes.func,
+  onCancel: React.PropTypes.func,
+  saveButtonText: React.PropTypes.string,
+  cancelButtonText: React.PropTypes.string,
+  valid: React.PropTypes.boolean,
 };
 
-EndpointForm.defaultProps = {
+EndpointFormComponent.defaultProps = {
   endpointType: 'GET',
+  saveButtonText: 'Save',
+  cancelButtonText: 'Cancel',
 };
 
-EndpointForm = reduxForm({
+EndpointFormComponent = reduxForm({
   form: 'endpointForm',
   validate,
-})(EndpointForm);
+})(EndpointFormComponent);
 
-EndpointForm = connect(state => ({
+const EndpointForm = connect(state => ({
   initialValues: {
     url: state.modifyEndpoint.url,
   },
-}))(EndpointForm);
+}))(EndpointFormComponent);
 
 export default EndpointForm;

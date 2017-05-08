@@ -8,18 +8,22 @@ import { closeModal } from 'actions/modals';
 import {
   setMethod,
   setUrl,
-  editEndpoint,
+  saveEndpoint,
   cancel,
+  setType,
 } from 'services/modifyEndpoint-service';
 
-export const MODAL_NAME = 'EditEndpoint';
+export const MODAL_NAME = 'AddNewEndpoint';
 
 @connect(state => ({
   isVisible: state.modals[MODAL_NAME],
-  isEdit: state.modifyEndpoint.isEdit,
+  selectedParentFolder: state.modifyEndpoint.parentFolder,
+  folderName: state.modifyEndpoint.folderName,
   endpointType: state.modifyEndpoint.method,
+  documentName: state.modifyEndpoint.documentName,
+  type: state.modifyEndpoint.type,
 }))
-class EditModal extends React.Component {
+class AddEndpointModal extends React.Component {
   static propTypes = {
     isVisible: React.PropTypes.bool,
     endpointType: React.PropTypes.string,
@@ -35,7 +39,7 @@ class EditModal extends React.Component {
     return (
       <Modal
         isVisible={isVisible}
-        title="Edit endpoint"
+        title="Add endpoint"
         onHide={this.onHide}
       >
         <div>
@@ -45,7 +49,6 @@ class EditModal extends React.Component {
             onChangeEndpointType={this.onChangeEndpointType}
             onSave={this.onSave}
             onCancel={this.onHide}
-            saveButtonText="Update"
           />
         </div>
       </Modal>
@@ -53,7 +56,7 @@ class EditModal extends React.Component {
   }
 
   onSave = () => {
-    this.props.dispatch(editEndpoint());
+    this.props.dispatch(saveEndpoint());
     this.props.dispatch(closeModal(MODAL_NAME));
   }
 
@@ -69,6 +72,10 @@ class EditModal extends React.Component {
   onChangeEndpointType = (method) => {
     this.props.dispatch(setMethod(method));
   }
+
+  onChangeType = (e) => {
+    this.props.dispatch(setType(e.target.value));
+  }
 }
 
-export default EditModal;
+export default AddEndpointModal;

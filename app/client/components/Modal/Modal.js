@@ -12,22 +12,14 @@ class Modal extends React.Component {
       React.PropTypes.array,
     ]),
     isVisible: React.PropTypes.bool,
-    isValid: React.PropTypes.bool,
     onHide: React.PropTypes.func.isRequired,
-    onSave: React.PropTypes.func.isRequired,
-    saveButtonText: React.PropTypes.string,
-    cancelButtonText: React.PropTypes.string,
     message: React.PropTypes.object,
   }
 
   static defaultProps = {
     onHide: () => {},
-    onSave: () => {},
     isVisible: false,
-    isValid: true,
     title: 'Add New',
-    saveButtonText: 'Add New',
-    cancelButtonText: 'Cancel',
     message: null,
   }
 
@@ -38,7 +30,7 @@ class Modal extends React.Component {
   }
 
   render() {
-    const { isVisible, isValid, title, children, message } = this.props;
+    const { isVisible, title, children, message } = this.props;
 
     if (!isVisible) return null;
     /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -57,10 +49,6 @@ class Modal extends React.Component {
           <main className={styles.body}>
             { children }
           </main>
-          <footer className={styles.buttons}>
-            <Button variants={['primary', 'large']} onClick={this.props.onSave} disabled={!isValid}>{this.props.saveButtonText}</Button>
-            <Button variants={['large', 'lightBorder', 'spaceLeft']} onClick={this.props.onHide}>{this.props.cancelButtonText}</Button>
-          </footer>
         </div>
       </div>
     );
