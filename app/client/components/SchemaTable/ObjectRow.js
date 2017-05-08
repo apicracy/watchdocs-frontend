@@ -20,6 +20,7 @@ class ObjectRow extends React.Component {
         name={propertyName}
         node={node.properties[propertyName]}
         isRequired={node.required.includes(propertyName)}
+        key={propertyName}
       />
     ));
 
@@ -36,7 +37,7 @@ class ObjectRow extends React.Component {
               )}
             </div>
             { name && <div className={styles.name}>{ name }</div> }
-            <div className={styles.type}>object{ `${isRequired ? '' : ' (optional)'}` }</div>
+            <div className={styles.type}>object ({ `${isRequired ? 'required' : 'optional'}` })</div>
           </div>
         )}
         { (this.state.expanded || !name) && (

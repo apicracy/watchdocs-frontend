@@ -6,7 +6,7 @@ import RowGenerator from './RowGenerator';
 
 const SchemaTable = ({ data }) => (
   <div className={styles.root}>
-    <RowGenerator isRequired node={data} />
+    <RowGenerator isRequired node={data} initializeOpen />
   </div>
 );
 
