@@ -16,7 +16,7 @@ class ArrayRow extends React.Component {
   render() {
     const { node, name, isRequired } = this.props;
     const items = <RowGenerator node={node.items} isRequired />;
-    const hasItems = Object.keys(node.items).length > 0;
+    const hasItems = node.items && Object.keys(node.items).length > 0;
 
     return (
       <div className={styles.row}>
