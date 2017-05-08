@@ -24,7 +24,7 @@
 .addNewEndpointButton {
   background: #ECEEFA;
   color: #7f7d94;
-  font-family: 'RobotoBold', Helvetica, sans-serif;
+  font-weight: bold;
   outline: none;
   width: 100%;
   padding: 10px;

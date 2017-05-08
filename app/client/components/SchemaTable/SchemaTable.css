@@ -1,79 +1,71 @@
 .root {
-  display: flex;
-  flex-direction: column;
-  margin: 20px 0 3em 0;
-  padding: 0;
+  margin-top: 20px;
 }
 
 .row {
-  display: flex;
   position: relative;
-  background: white;
+  padding: 20px;
 }
 
-.root > .row::before {
+.row::before {
   position: absolute;
   left: 0;
-  top: 0;
+  top: -1px;
   bottom: 0;
   width: 10px;
   background: #69bbf3;
   content: '';
 }
 
-.root > .row:not(:first-of-type) {
-  margin-top: 1px;
-}
-
-.root > .row:not(:first-of-type):before {
-  top: -1px;
-}
-
-.root > .row:nth-of-type(2n)::before {
+.row:nth-of-type(2n)::before {
   background: #96cff7;
 }
 
-.child > .row {
+.row .row::before {
+  display: none;
+}
+
+.row,
+.row .row .row,
+.row .row .row .row .row {
+  background: white;
+}
+
+.row .row,
+.row .row .row .row {
   background: #F6F7F9;
 }
 
-.child > .row:not(:first-of-type) {
-  border-top: 1px solid #E6EBEF;
+.row:not(:first-of-type) {
+  border-top: 1px solid rgba(0,0,0,0.1);
 }
 
-.cell {
-  box-sizing: border-box;
-  overflow: hidden;
-  list-style: none;
-  padding: 20px 0;
+.toggle,
+.name {
+  font-weight: bold;
 }
 
-.cell:first-of-type {
-  padding: 20px 20px;
+.name {
+  margin-right: 20px;
 }
 
-.key,
-.type {
-  composes: cell;
-}
-
-.key {
-  flex: 1;
-  font-family: 'RobotoBold', Helvetica, sans-serif;
+.name,
+.type,
+.toggle {
+  display: inline-block;
 }
 
 .type {
-  flex: 2;
+  font-style: italic;
+  color: #999;
 }
 
-.headerRow {
-  composes: row;
-  background: transparent;
-  height: 40px;
-  align-items: center;
-  font-family: 'RobotoBold', Helvetica, sans-serif;
+.toggle {
+  float: right;
+  margin-top: -5px;
 }
 
-.headerRow::before {
-  display: none;
+.itemTable {
+  margin-top: 20px;
+  border: 1px solid rgba(0,0,0,0.1);
 }

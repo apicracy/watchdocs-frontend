@@ -14,7 +14,7 @@
 .active:hover,
 .active:focus,
 .topLink {
-  font-family: 'RobotoBold', Helvetica, sans-serif;
+  font-weight: bold;
 }
 
 .expanded {

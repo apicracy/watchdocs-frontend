@@ -42,7 +42,7 @@
 .whiteBackground {
   background: white;
   color: #6C6AB8;
-  font-family: 'RobotoBold', Helvetica, sans-serif;
+  font-weight: bold;
 }
 /* Full Width Variant */
 .fullWidth {
@@ -144,7 +144,7 @@
 .addNew {
   background: #EEEEEE;
   color: #828097;
-  font-family: 'RobotoBold', Helvetica, sans-serif;
+  font-weight: bold;
   outline: none;
   width: 100%;
   text-align: left;
