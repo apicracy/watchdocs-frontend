@@ -50,7 +50,7 @@
   background: transparent;
   height: 40px;
   align-items: center;
-  font-family: 'RobotoBold', Helvetica, sans-serif;
+  font-weight: bold;
 }
 
 .headerRow::before {
