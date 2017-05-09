@@ -31,7 +31,7 @@ const validate = (values) => {
 let EndpointFormComponent = ({ endpointType, onChangeInput, handleSubmit,
   onChangeEndpointType, onCancel, saveButtonText, cancelButtonText, valid,
   submitting }) => (
-    <div>
+    <form onSubmit={handleSubmit} >
       { submitting && <LoadingIndicator fixed /> }
       <div className={styles.modalField}>
         <text className={styles.modalLabel}>Endpoint URL</text>
@@ -57,10 +57,10 @@ let EndpointFormComponent = ({ endpointType, onChangeInput, handleSubmit,
         </div>
       </div>
       <ButtonGroup>
-        <Button variants={['primary', 'large']} onClick={handleSubmit} disabled={!valid}>{saveButtonText}</Button>
+        <Button type="submit" variants={['primary', 'large']} disabled={!valid}>{saveButtonText}</Button>
         <Button variants={['large', 'lightBorder', 'spaceLeft']} onClick={onCancel}>{cancelButtonText}</Button>
       </ButtonGroup>
-    </div>
+    </form>
 );
 
 EndpointFormComponent.propTypes = {
