@@ -120,7 +120,6 @@ class EndpointDoc extends React.Component {
   /* Params section */
   editParam = id => () => this.props.dispatch(openModal('addUrlParam', id));
   editResponse = id => () => this.props.router.push(`/${this.props.params.project_name}/editor/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/response/${id}`);
-  removeResponse = id => () => this.props.dispatch(removeResponse(id))
   editRequest = () => () => this.props.router.push(`/${this.props.params.project_name}/editor/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/request`);
 
   renderParams() {
@@ -148,8 +147,14 @@ class EndpointDoc extends React.Component {
   }
 
   onRemoveUrlParam = (id) => {
-    if (confirm('are you sure?')) {
+    if (confirm('Are you sure you want to remove URL Param? This action can not be undone.')) {
       this.props.dispatch(removeUrlParams(id));
+    }
+  }
+
+  onRemoveResponse = (id) => {
+    if (confirm('Are you sure you want to remove this response? This action can not be undone.')) {
+      this.props.dispatch(removeResponse(id));
     }
   }
 
@@ -166,7 +171,7 @@ class EndpointDoc extends React.Component {
         ]}
         actions={[
           <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editResponse(param.id)} />,
-          <IconButton icon={<Icon name="trash" size="lg" />} onClick={this.removeResponse(param.id)} />,
+          <IconButton icon={<Icon name="trash" size="lg" />} onClick={() => { this.onRemoveResponse(param.id); }} />,
         ]}
       />
     ));
