@@ -39,7 +39,7 @@ Button.defaultProps = {
   icon: '',
   disabled: false,
   variants: [],
-  type: 'button',
+  type: '',
 };
 
 export default Button;
