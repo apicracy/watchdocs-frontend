@@ -200,7 +200,7 @@ class EndpointDoc extends React.Component {
 
   removeEndpoint = () => {
     /* eslint no-alert: 0 */
-    if (confirm('are you sure?')) {
+    if (confirm('Do you really want to remove this endpoint? This action can not be undone. All connected data will be lost.')) {
       this.props.dispatch(removeEndpoint());
     }
   }
