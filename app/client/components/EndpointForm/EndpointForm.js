@@ -52,6 +52,7 @@ let EndpointFormComponent = ({ endpointType, onChangeInput, handleSubmit,
             variants={['modal']}
             placeholder="URL endpoint"
             onChange={e => (onChangeInput(e.target.value))}
+            autofocus
           />
         </div>
       </div>

@@ -8,7 +8,7 @@ const errorMessage = message => (
 );
 
 const RFTextInput = ({ input, type, placeholder, iconRight,
-  variant, variants, meta: { touched, error } }) => {
+  variant, variants, meta: { touched, error }, autofocus }) => {
   const variantStyles = variants.map(v => styles[v]);
   const rootClasses = [
     styles.wrapper,
@@ -37,11 +37,13 @@ const RFTextInput = ({ input, type, placeholder, iconRight,
   return (
     <div className={rootClasses}>
       <div className={showError ? variantErrorStyle : variantStyle}>
+        {autofocus}
         <input
           {...input}
           type={type}
           placeholder={placeholder}
           className={variantInputStyle}
+          autoFocus={autofocus}
         />
         <span className={styles.addon}>{ iconRight }</span>
       </div>
@@ -59,6 +61,7 @@ RFTextInput.propTypes = {
   variants: React.PropTypes.array,
   input: React.PropTypes.object,
   meta: React.PropTypes.object,
+  autofocus: React.PropTypes.bool,
 };
 
 RFTextInput.defaultProps = {
