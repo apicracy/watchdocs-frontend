@@ -8,6 +8,8 @@ import {
   removeEndpointParam as removeEndpointParamAction,
 } from 'actions/endpointView';
 
+import { removeEndpoint as removeEndpointAction } from 'actions/endpoints';
+
 import {
   urlFormatProjectName,
 } from 'services/projects';
@@ -87,10 +89,16 @@ export function removeEndpoint() {
       method: 'DELETE',
     };
 
+    dispatch(setEndpointView({ isFetching: false }));
+
     http(`/api/v1/endpoints/${id}`, options)
       .then(response => response.json())
       .then(() => {
-        browserHistory.push(url);
+        // Redirect only when user stayed on the same page
+        if (id === getState().endpointView.id) {
+          browserHistory.push(url);
+        }
+        dispatch(removeEndpointAction(id));
       });
   };
 }
