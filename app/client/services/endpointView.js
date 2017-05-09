@@ -6,14 +6,13 @@ import {
   addEndpointParam as addEndpointParamAction,
   updateEndpointParam as updateEndpointParamAction,
   removeEndpointParam as removeEndpointParamAction,
+  addResponse as addResponseAction,
   removeResponse as removeResponseAction,
 } from 'actions/endpointView';
 
-import { removeEndpoint as removeEndpointAction } from 'actions/endpoints';
+import { urlFormatProjectName } from 'services/projects';
 
-import {
-  urlFormatProjectName,
-} from 'services/projects';
+import { removeEndpoint as removeEndpointAction } from 'actions/endpoints';
 
 export function loadEndpoint(id) {
   return (dispatch) => {
@@ -110,10 +109,38 @@ export function removeResponse(id) {
       method: 'DELETE',
     };
 
+    dispatch(setEndpointView({ isFetching: true }));
+
     http(`/api/v1/responses/${id}`, options)
       .then(response => response.json())
       .then(() => {
+        dispatch(setEndpointView({ isFetching: false }));
         dispatch(removeResponseAction(id));
+      });
+  };
+}
+
+export function addResponse(responseParam) {
+  return (dispatch, getState) => {
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(responseParam),
+    };
+
+    dispatch(setEndpointView({ isFetching: true }));
+
+    http('/api/v1/responses/', options)
+      .then(response => response.json())
+      .then((data) => {
+        if (!data.errors) {
+          const name = getState().projects.activeProject.name;
+          const endpointId = responseParam.endpoint_id;
+          const url = `/${urlFormatProjectName(name)}/editor/undefined/endpoint/${endpointId}/response/${data.id}`;
+
+          browserHistory.push(url);
+          dispatch(setEndpointView({ isFetching: false }));
+          dispatch(addResponseAction(data));
+        }
       });
   };
 }
