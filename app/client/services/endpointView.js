@@ -6,7 +6,10 @@ import {
   addEndpointParam as addEndpointParamAction,
   updateEndpointParam as updateEndpointParamAction,
   removeEndpointParam as removeEndpointParamAction,
+  removeResponse as removeResponseAction,
 } from 'actions/endpointView';
+
+import { removeEndpoint as removeEndpointAction } from 'actions/endpoints';
 
 import {
   urlFormatProjectName,
@@ -87,10 +90,30 @@ export function removeEndpoint() {
       method: 'DELETE',
     };
 
+    dispatch(setEndpointView({ isFetching: false }));
+
     http(`/api/v1/endpoints/${id}`, options)
       .then(response => response.json())
       .then(() => {
-        browserHistory.push(url);
+        // Redirect only when user stayed on the same page
+        if (id === getState().endpointView.id) {
+          browserHistory.push(url);
+        }
+        dispatch(removeEndpointAction(id));
+      });
+  };
+}
+
+export function removeResponse(id) {
+  return (dispatch) => {
+    const options = {
+      method: 'DELETE',
+    };
+
+    http(`/api/v1/responses/${id}`, options)
+      .then(response => response.json())
+      .then(() => {
+        dispatch(removeResponseAction(id));
       });
   };
 }
