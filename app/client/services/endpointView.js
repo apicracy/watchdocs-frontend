@@ -9,7 +9,7 @@ import {
   removeResponse as removeResponseAction,
 } from 'actions/endpointView';
 
-import { removeEndpoint as removeEndpointAction } from 'actions/endpoints';
+import { fetchEndpoints } from 'services/endpoints';
 
 import {
   urlFormatProjectName,
@@ -99,7 +99,7 @@ export function removeEndpoint() {
         if (id === getState().endpointView.id) {
           browserHistory.push(url);
         }
-        dispatch(removeEndpointAction(id));
+        dispatch(fetchEndpoints(getState().projects.activeProject.id));
       });
   };
 }

@@ -175,6 +175,7 @@ export function editEndpoint() {
             url,
             method,
           }));
+          dispatch(fetchEndpoints(getState().projects.activeProject.id));
         }
       });
   };
