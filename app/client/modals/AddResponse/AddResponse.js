@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Modal from 'components/Modal/Modal';
 import Select from 'components/Form/Select/Select';
 import InputGroup from 'components/Form/InputGroup/InputGroup';
-import styles from './AddResponse.css';
 import { addResponse } from 'services/endpointView';
 
 import { closeModal } from 'actions/modals';
@@ -12,9 +11,10 @@ export const MODAL_NAME = 'addResponse';
 
 @connect(store => ({
   isVisible: !!store.modals[MODAL_NAME],
-}))
-class addResponseModal extends React.Component {
 
+}))
+
+class addResponseModal extends React.Component {
   static propTypes = {
     isVisible: React.PropTypes.bool,
     dispatch: React.PropTypes.func,
@@ -78,14 +78,12 @@ class addResponseModal extends React.Component {
         message={null}
       >
         <InputGroup title="Response status" description="Give user more information about data type of param">
-          <div className={styles.selectWrapper}>
-            <Select
-              variants={['fullWidth', 'bordered']}
-              options={this.paramTypes}
-              activeId={this.getSelectedId(this.state.responseStatus)}
-              onSelect={this.onTypeChange}
-            />
-          </div>
+          <Select
+            variants={['fullWidth', 'bordered']}
+            options={this.paramTypes}
+            activeId={this.getSelectedId(this.state.responseStatus)}
+            onSelect={this.onTypeChange}
+          />
         </InputGroup>
       </Modal>
     );
