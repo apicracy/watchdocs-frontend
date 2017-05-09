@@ -6,6 +6,7 @@ import {
   addEndpointParam as addEndpointParamAction,
   updateEndpointParam as updateEndpointParamAction,
   removeEndpointParam as removeEndpointParamAction,
+  removeResponse as removeResponseAction,
 } from 'actions/endpointView';
 
 import { removeEndpoint as removeEndpointAction } from 'actions/endpoints';
@@ -99,6 +100,20 @@ export function removeEndpoint() {
           browserHistory.push(url);
         }
         dispatch(removeEndpointAction(id));
+      });
+  };
+}
+
+export function removeResponse(id) {
+  return (dispatch) => {
+    const options = {
+      method: 'DELETE',
+    };
+
+    http(`/api/v1/responses/${id}`, options)
+      .then(response => response.json())
+      .then(() => {
+        dispatch(removeResponseAction(id));
       });
   };
 }

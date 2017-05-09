@@ -13,6 +13,7 @@ export const ADD_REQUEST = 'addRequest@endpointView';
 export const UPDATE_REQUEST = 'updateRequest@endpointView';
 export const SET_RESPONSES = 'setResponses@endpointView';
 export const SET_REQUEST = 'setRequest@endpointView';
+export const REMOVE_RESPONSE = 'removeResponse@endpointView';
 
 export function setRequest(request) {
   return {
@@ -89,5 +90,12 @@ export function updateRequest(paramData) {
   return {
     type: UPDATE_REQUEST,
     payload: paramData,
+  };
+}
+
+export function removeResponse(responseId) {
+  return {
+    type: REMOVE_RESPONSE,
+    payload: responseId,
   };
 }
