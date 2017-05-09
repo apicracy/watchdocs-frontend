@@ -11,7 +11,7 @@ export const MODAL_NAME = 'addResponse';
 
 @connect(store => ({
   isVisible: !!store.modals[MODAL_NAME],
-
+  responses: store.endpointView.responses,
 }))
 
 class addResponseModal extends React.Component {
@@ -19,11 +19,12 @@ class addResponseModal extends React.Component {
     isVisible: React.PropTypes.bool,
     dispatch: React.PropTypes.func,
     params: React.PropTypes.object,
+    responses: React.PropTypes.array,
   }
 
   componentWillMount() {
     this.reset();
-    this.paramTypes = [
+    this.httpCodes = [
       { id: 200, name: '200 - OK' },
       { id: 201, name: '201 - Created' },
       { id: 204, name: '204 - No Content' },
@@ -57,16 +58,20 @@ class addResponseModal extends React.Component {
   onTypeChange = id => this.setState({ responseStatus: this.getSelectedValue(id) });
 
   getSelectedId = (value) => {
-    const record = this.paramTypes.find(p => p.name === value);
+    const record = this.httpCodes.find(p => p.name === value);
     return record ? record.id : null;
   }
 
   getSelectedValue = (id) => {
-    const record = this.paramTypes.find(p => p.id === id);
+    const record = this.httpCodes.find(p => p.id === id);
     return record ? record.name : null;
   }
 
   render() {
+    const { responses } = this.props;
+    const alreadyUsedCodes = responses.map(response => response.http_status_code);
+    const availableCodes = this.httpCodes.filter(code => !alreadyUsedCodes.includes(code.id));
+
     return (
       <Modal
         isVisible={this.props.isVisible}
@@ -80,7 +85,7 @@ class addResponseModal extends React.Component {
         <InputGroup title="Response status" description="Give user more information about data type of param">
           <Select
             variants={['fullWidth', 'bordered']}
-            options={this.paramTypes}
+            options={availableCodes}
             activeId={this.getSelectedId(this.state.responseStatus)}
             onSelect={this.onTypeChange}
           />

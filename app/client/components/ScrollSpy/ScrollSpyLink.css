@@ -1,5 +1,8 @@
 .root {
   display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
   padding: 15px 10px;
 }
 
@@ -11,7 +14,7 @@
 .active:hover,
 .active:focus,
 .topLink {
-  font-family: 'RobotoBold', Helvetica, sans-serif;
+  font-weight: bold;
 }
 
 .expanded {

@@ -1,12 +1,15 @@
 import parseJsonSchema from './json-schema-parser';
 import http from 'services/http';
-import { fetchDocumentation as fetchDoc } from 'actions/documentation';
+import { fetchDocumentation as fetchDoc, fetchRequest } from 'actions/documentation';
 
 export function fetchDocumentation(projectId) {
-  return dispatch => http(`/api/v1/projects/${projectId}/documentation`)
-    .then(response => response.json())
-    .then(response => buildDocumentation(response.documentation))
-    .then(response => dispatch(fetchDoc(response)));
+  return (dispatch) => {
+    dispatch(fetchRequest());
+    http(`/api/v1/projects/${projectId}/documentation`)
+      .then(response => response.json())
+      .then(response => buildDocumentation(response.documentation))
+      .then(response => dispatch(fetchDoc(response)));
+  };
 }
 
 // hopefully TODO on backend
@@ -60,7 +63,10 @@ function createEndpoint(item, parentGroup) {
   return {
     ...item,
     section,
-    title: (item.description && item.description.title) ? item.description.title : `[${item.method}]: ${item.url}`,
-    exampleResponse: item.responses.length > 0 ? parseJsonSchema(item.responses[0].body) : null,
+    title: (item.description && item.description.title) ?
+      item.description.title : `[${item.method}]: ${item.url}`,
+    exampleResponse: item.responses && item.responses.length > 0 ?
+      parseJsonSchema(item.responses[0].body) : null,
+    exampleRequest: item.request ? parseJsonSchema(item.request.body) : null,
   };
 }

@@ -10,6 +10,10 @@
   font-size: 14px;
 }
 
+.root:disabled {
+  opacity: .5;
+}
+
 .small {
   composes: root;
 }
@@ -40,13 +44,13 @@
 }
 
 .linkPrimary {
-  font-family: 'RobotoBold', Helvetica, sans-serif;
+  font-weight: bold;
   color: #6c6ab8;
   padding-right: 10px !important; /* do not let to override this */
 }
 
 .linkWhite {
-  font-family: 'RobotoBold', Helvetica, sans-serif;
+  font-weight: bold;
   color: white;
 }
 

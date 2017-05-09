@@ -1,7 +1,7 @@
 @value def-padding: 20px;
 
 .root {
-  font-family: 'RobotoRegular', Helvetica, sans-serif;
+  font-weight: normal;
   display: flex;
   flex-direction: column;
   width: 550px;
@@ -23,11 +23,12 @@
   right: 0;
   left: 0;
 
+  z-index: 10000;
   background: rgba(0, 0, 0, .8);
 }
 
 .header {
-  font-family: 'RobotoRegular', Helvetica, sans-serif;
+  font-weight: normal;
   display: flex;
   flex: 0 0 60px;
   padding: def-padding;
@@ -39,7 +40,7 @@
 }
 
 .message {
-  font-family: 'RobotoRegular', Helvetica, sans-serif;
+  font-weight: normal;
   background: url('assets/icons/warning-circle-white.svg?v=0.0.0') no-repeat;
   stroke: currentColor;
   background-size: 120px;

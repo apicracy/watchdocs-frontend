@@ -7,24 +7,31 @@ import {
   updateEndpointParam as updateEndpointParamAction,
   removeEndpointParam as removeEndpointParamAction,
   addResponse as addResponseAction,
+  removeResponse as removeResponseAction,
 } from 'actions/endpointView';
 
-import {
-  urlFormatProjectName,
-} from 'services/projects';
+import { urlFormatProjectName } from 'services/projects';
+
+import { removeEndpoint as removeEndpointAction } from 'actions/endpoints';
 
 export function loadEndpoint(id) {
   return (dispatch) => {
+    dispatch(setEndpointView({
+      isFetching: true,
+    }));
+
     http(`/api/v1/endpoints/${id}`)
       .then(response => response.json())
       .then((data) => {
-        dispatch(setEndpointView(data));
+        dispatch(setEndpointView({ ...data, isFetching: false }));
       });
   };
 }
 
 export function addEndpointParam(endpointParam) {
   return (dispatch) => {
+    dispatch(setEndpointView({ isFetching: true }));
+
     const options = {
       method: 'POST',
       body: JSON.stringify(endpointParam),
@@ -35,6 +42,7 @@ export function addEndpointParam(endpointParam) {
       .then((data) => {
         if (!data.errors) {
           dispatch(addEndpointParamAction(data));
+          dispatch(setEndpointView({ isFetching: false }));
         }
       });
   };
@@ -81,25 +89,54 @@ export function removeEndpoint() {
       method: 'DELETE',
     };
 
+    dispatch(setEndpointView({ isFetching: false }));
+
     http(`/api/v1/endpoints/${id}`, options)
       .then(response => response.json())
       .then(() => {
-        browserHistory.push(url);
+        // Redirect only when user stayed on the same page
+        if (id === getState().endpointView.id) {
+          browserHistory.push(url);
+        }
+        dispatch(removeEndpointAction(id));
+      });
+  };
+}
+
+export function removeResponse(id) {
+  return (dispatch) => {
+    const options = {
+      method: 'DELETE',
+    };
+
+    dispatch(setEndpointView({ isFetching: true }));
+
+    http(`/api/v1/responses/${id}`, options)
+      .then(response => response.json())
+      .then(() => {
+        dispatch(removeResponseAction(id));
       });
   };
 }
 
 export function addResponse(responseParam) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     const options = {
       method: 'POST',
       body: JSON.stringify(responseParam),
     };
 
+    dispatch(setEndpointView({ isFetching: true }));
+
     http('/api/v1/responses/', options)
       .then(response => response.json())
       .then((data) => {
         if (!data.errors) {
+          const name = getState().projects.activeProject.name;
+          const endpointId = responseParam.endpoint_id;
+          const url = `/${urlFormatProjectName(name)}/editor/undefined/endpoint/${endpointId}/response/${data.id}`;
+
+          browserHistory.push(url);
           dispatch(addResponseAction(data));
         }
       });

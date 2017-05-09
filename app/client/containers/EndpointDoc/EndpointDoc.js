@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styles from './EndpointDoc.css';
 
-import { loadEndpoint, removeEndpoint, removeUrlParams } from 'services/endpointView';
+import { loadEndpoint, removeEndpoint, removeUrlParams, removeResponse } from 'services/endpointView';
 
 import { loadGroup } from 'services/groupView';
 
@@ -14,6 +14,7 @@ import IconButton from 'components/Button/IconButton';
 
 import DocumentationBlock, { Row } from 'components/DocumentationBlock/DocumentationBlock';
 import WarningLabel from 'components/DocumentationBlock/Labels/WarningLabel';
+import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
 
 /* Actions */
 import { updateEndpointDescription } from 'actions/endpointView';
@@ -29,6 +30,7 @@ import { getFullLink } from 'services/helpers';
   endpointList: store.endpoints,
   responses: store.endpointView.responses,
   projectUrl: store.projects.activeProject.base_url,
+  isFetching: store.endpointView.isFetching,
 }))
 class EndpointDoc extends React.Component {
 
@@ -41,6 +43,7 @@ class EndpointDoc extends React.Component {
     router: React.PropTypes.object,
     responses: React.PropTypes.array,
     projectUrl: React.PropTypes.string,
+    isFetching: React.PropTypes.bool,
   }
 
   componentWillMount() {
@@ -144,8 +147,14 @@ class EndpointDoc extends React.Component {
   }
 
   onRemoveUrlParam = (id) => {
-    if (confirm('are you sure?')) {
+    if (confirm('Are you sure you want to remove URL Param? This action can not be undone.')) {
       this.props.dispatch(removeUrlParams(id));
+    }
+  }
+
+  onRemoveResponse = (id) => {
+    if (confirm('Are you sure you want to remove this response? This action can not be undone.')) {
+      this.props.dispatch(removeResponse(id));
     }
   }
 
@@ -162,7 +171,7 @@ class EndpointDoc extends React.Component {
         ]}
         actions={[
           <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editResponse(param.id)} />,
-          <IconButton icon={<Icon name="trash" size="lg" />} />,
+          <IconButton icon={<Icon name="trash" size="lg" />} onClick={() => { this.onRemoveResponse(param.id); }} />,
         ]}
       />
     ));
@@ -185,7 +194,6 @@ class EndpointDoc extends React.Component {
         ]}
         actions={[
           <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editRequest()} />,
-          <IconButton icon={<Icon name="trash" size="lg" />} />,
         ]}
       />,
     ];
@@ -198,7 +206,7 @@ class EndpointDoc extends React.Component {
 
   removeEndpoint = () => {
     /* eslint no-alert: 0 */
-    if (confirm('are you sure?')) {
+    if (confirm('Do you really want to remove this endpoint? This action can not be undone. All connected data will be lost.')) {
       this.props.dispatch(removeEndpoint());
     }
   }
@@ -206,6 +214,7 @@ class EndpointDoc extends React.Component {
   render() {
     return (
       <div className={styles.root}>
+        { this.props.isFetching && <LoadingIndicator /> }
         <MethodPicker endpoint={this.props.endpoint} />
 
         <DocumentationBlock
