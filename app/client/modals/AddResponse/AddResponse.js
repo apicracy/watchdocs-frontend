@@ -39,6 +39,13 @@ class addResponseModal extends React.Component {
     ];
   }
 
+  availableCodes = () => {
+    const { responses } = this.props;
+    const alreadyUsedCodes = responses.map(response => response.http_status_code);
+
+    return this.httpCodes.filter(code => !alreadyUsedCodes.includes(code.id));
+  }
+
   reset = () => this.setState({ responseStatus: null });
 
   onSave = () => {
@@ -58,20 +65,16 @@ class addResponseModal extends React.Component {
   onTypeChange = id => this.setState({ responseStatus: this.getSelectedValue(id) });
 
   getSelectedId = (value) => {
-    const record = this.httpCodes.find(p => p.name === value);
+    const record = this.availableCodes().find(p => p.name === value);
     return record ? record.id : null;
   }
 
   getSelectedValue = (id) => {
-    const record = this.httpCodes.find(p => p.id === id);
+    const record = this.availableCodes().find(p => p.id === id);
     return record ? record.name : null;
   }
 
   render() {
-    const { responses } = this.props;
-    const alreadyUsedCodes = responses.map(response => response.http_status_code);
-    const availableCodes = this.httpCodes.filter(code => !alreadyUsedCodes.includes(code.id));
-
     return (
       <Modal
         isVisible={this.props.isVisible}
@@ -85,7 +88,7 @@ class addResponseModal extends React.Component {
         <InputGroup title="Response status" description="Give user more information about data type of param">
           <Select
             variants={['fullWidth', 'bordered']}
-            options={availableCodes}
+            options={this.availableCodes()}
             activeId={this.getSelectedId(this.state.responseStatus)}
             onSelect={this.onTypeChange}
           />

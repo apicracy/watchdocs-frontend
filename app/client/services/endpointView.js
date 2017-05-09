@@ -114,6 +114,7 @@ export function removeResponse(id) {
     http(`/api/v1/responses/${id}`, options)
       .then(response => response.json())
       .then(() => {
+        dispatch(setEndpointView({ isFetching: false }));
         dispatch(removeResponseAction(id));
       });
   };
@@ -137,6 +138,7 @@ export function addResponse(responseParam) {
           const url = `/${urlFormatProjectName(name)}/editor/undefined/endpoint/${endpointId}/response/${data.id}`;
 
           browserHistory.push(url);
+          dispatch(setEndpointView({ isFetching: false }));
           dispatch(addResponseAction(data));
         }
       });
