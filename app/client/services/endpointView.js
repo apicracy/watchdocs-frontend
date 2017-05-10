@@ -31,20 +31,21 @@ export function loadEndpoint(id) {
 
 export function addEndpointParam(endpointParam) {
   return (dispatch) => {
-    dispatch(setEndpointView({ isFetching: true }));
-
     const options = {
       method: 'POST',
       body: JSON.stringify(endpointParam),
     };
 
-    http('/api/v1/url_params/', options)
+    dispatch(setEndpointView({ isFetching: true }));
+    return http('/api/v1/url_params/', options)
       .then(response => response.json())
       .then((data) => {
-        if (!data.errors) {
-          dispatch(addEndpointParamAction(data));
-          dispatch(setEndpointView({ isFetching: false }));
-        }
+        dispatch(addEndpointParamAction(data));
+        dispatch(setEndpointView({ isFetching: false }));
+      })
+      .catch(() => {
+        // Remove after redux-form integration
+        dispatch(setEndpointView({ isFetching: false }));
       });
   };
 }
@@ -56,12 +57,16 @@ export function updateEndpointParam(endpointParam) {
       body: JSON.stringify(endpointParam),
     };
 
-    http(`/api/v1/url_params/${endpointParam.id}`, options)
+    dispatch(setEndpointView({ isFetching: true }));
+    return http(`/api/v1/url_params/${endpointParam.id}`, options)
       .then(response => response.json())
       .then((data) => {
-        if (!data.errors) {
-          dispatch(updateEndpointParamAction(data));
-        }
+        dispatch(updateEndpointParamAction(data));
+        dispatch(setEndpointView({ isFetching: false }));
+      })
+      .catch(() => {
+        // Remove after redux-form integration
+        dispatch(setEndpointView({ isFetching: false }));
       });
   };
 }
@@ -71,12 +76,17 @@ export function removeUrlParams(id) {
     const options = {
       method: 'DELETE',
     };
+
+    dispatch(setEndpointView({ isFetching: true }));
     http(`/api/v1/url_params/${id}`, options)
       .then(response => response.json())
-      .then((data) => {
-        if (!data.errors) {
-          dispatch(removeEndpointParamAction(id));
-        }
+      .then(() => {
+        dispatch(removeEndpointParamAction(id));
+        dispatch(setEndpointView({ isFetching: false }));
+      })
+      .catch(() => {
+        // Remove after redux-form integration
+        dispatch(setEndpointView({ isFetching: false }));
       });
   };
 }

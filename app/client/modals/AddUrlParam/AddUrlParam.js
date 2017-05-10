@@ -6,6 +6,9 @@ import TextInput from 'components/Form/TextInput/TextInput';
 import TextArea from 'components/Form/TextArea/TextArea';
 import CheckBox from 'components/Form/CheckBox/CheckBox';
 import Select from 'components/Form/Select/Select';
+import Button from 'components/Button/Button';
+import ButtonGroup from 'components/ButtonGroup/ButtonGroup';
+import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
 
 import { closeModal } from 'actions/modals';
 import { addEndpointParam, updateEndpointParam } from 'services/endpointView';
@@ -23,6 +26,7 @@ const warningMessage = {
   endpoint: store.endpointView,
   modals: store.modals,
   endpointId: store.endpointView.id,
+  isFetching: store.endpointView.isFetching,
 }))
 class AddUrlParam extends React.Component {
 
@@ -32,6 +36,7 @@ class AddUrlParam extends React.Component {
     modals: React.PropTypes.object,
     endpoint: React.PropTypes.object,
     endpointId: React.PropTypes.number,
+    isFetching: React.PropTypes.bool,
   }
 
   componentWillMount() {
@@ -79,20 +84,24 @@ class AddUrlParam extends React.Component {
     is_part_of_url: false,
   });
 
-  onSave = () => {
+  onSave = (e) => {
+    e.preventDefault();
+    let response;
     const data = {
       ...this.state,
       endpoint_id: this.props.endpointId,
     };
 
     if (!this.state.id) {
-      this.props.dispatch(addEndpointParam(data));
+      response = this.props.dispatch(addEndpointParam(data));
     } else {
-      this.props.dispatch(updateEndpointParam(data));
+      response = this.props.dispatch(updateEndpointParam(data));
     }
 
-    this.props.dispatch(closeModal(MODAL_NAME));
-    this.reset();
+    response.then(() => {
+      this.props.dispatch(closeModal(MODAL_NAME));
+      this.reset();
+    });
   }
 
   onHide = () => {
@@ -118,57 +127,65 @@ class AddUrlParam extends React.Component {
       <Modal
         isVisible={this.props.isVisible}
         title="URL param"
-        onSave={this.onSave}
         onHide={this.onHide}
-        saveButtonText="Save"
-        cancelButtonText="Cancel"
         message={this.shouldDisplayMessage() ? warningMessage : null}
       >
+        <form onSubmit={this.onSave}>
+          { this.props.isFetching && <LoadingIndicator fixed /> }
+          <InputGroup title="Name" description="Write here param name as it apears inside URL">
+            <TextInput
+              value={this.state.name}
+              placeholder="Param name"
+              onChange={this.onFieldChange('name')}
+              validation={new RegExp(/((^[a-zA-Z_$][a-zA-Z_$[\]0-9]*$))/ig)}
+              validationErrorMsg={'URL parameter should include only allowed URL characters.'}
+            />
 
-        <InputGroup title="Name" description="Write here param name as it apears inside URL">
-          <TextInput
-            value={this.state.name}
-            placeholder="Param name"
-            onChange={this.onFieldChange('name')}
-            validation={new RegExp(/((^[a-zA-Z_$][a-zA-Z_$[\]0-9]*$))/ig)}
-            validationErrorMsg={'URL parameter should include only allowed URL characters.'}
-          />
+            <CheckBox
+              activeIds={[this.state.required ? 1 : null]}
+              options={[
+                { id: 1, text: 'Param required' },
+              ]}
+              onChange={this.onRequiredChange}
+            />
+          </InputGroup>
 
-          <CheckBox
-            activeIds={[this.state.required ? 1 : null]}
-            options={[
-              { id: 1, text: 'Param required' },
-            ]}
-            onChange={this.onRequiredChange}
-          />
-        </InputGroup>
+          <InputGroup title="Type" description="Give user more information about data type of param">
+            <Select
+              variants={['fullWidth', 'bordered']}
+              options={this.paramTypes}
+              activeId={this.getSelectedId(this.state.data_type)}
+              onSelect={this.onTypeChange}
+            />
+          </InputGroup>
 
-        <InputGroup title="Type" description="Give user more information about data type of param">
-          <Select
-            variants={['fullWidth', 'bordered']}
-            options={this.paramTypes}
-            activeId={this.getSelectedId(this.state.data_type)}
-            onSelect={this.onTypeChange}
-          />
-        </InputGroup>
+          <InputGroup title="Description" description="Give user more context info about the param itself">
+            <TextArea
+              rows={3}
+              value={this.state.description}
+              placeholder="Param description"
+              onChange={this.onFieldChange('description')}
+            />
+          </InputGroup>
 
-        <InputGroup title="Description" description="Give user more context info about the param itself">
-          <TextArea
-            rows={3}
-            value={this.state.description}
-            placeholder="Param description"
-            onChange={this.onFieldChange('description')}
-          />
-        </InputGroup>
-
-        <InputGroup title="Example" description="This examle is going to be used to generate user friendly documentation">
-          <TextInput
-            value={this.state.example}
-            placeholder="Example of param value"
-            onChange={this.onFieldChange('example')}
-          />
-        </InputGroup>
-
+          <InputGroup title="Example" description="This examle is going to be used to generate user friendly documentation">
+            <TextInput
+              value={this.state.example}
+              placeholder="Example of param value"
+              onChange={this.onFieldChange('example')}
+            />
+          </InputGroup>
+          <ButtonGroup>
+            <Button type="submit" variants={['primary', 'large']} >Save</Button>
+            <Button
+              type="button"
+              variants={['large', 'lightBorder', 'spaceLeft']}
+              onClick={this.onHide}
+            >
+              Cancel
+            </Button>
+          </ButtonGroup>
+        </form>
       </Modal>
     );
   }
