@@ -7,7 +7,10 @@ class Select extends React.Component {
 
   static propTypes = {
     options: React.PropTypes.array,
-    activeId: React.PropTypes.number,
+    activeId: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.number,
+    ]),
     onSelect: React.PropTypes.func,
     variants: React.PropTypes.array,
     emptyMsg: React.PropTypes.string,
@@ -63,6 +66,7 @@ class Select extends React.Component {
       <div className={selectStyle} tabIndex="0" onBlur={this.onOutsideClick}>
         <div className={styles.selectedOption}>
           <Button
+            type="button"
             onClick={this.toggleOpen}
             icon={<CustomIcon ext="svg" color="white" size="sm" name="arrow-down" />}
           >

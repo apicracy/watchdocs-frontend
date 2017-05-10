@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './TextInput.css';
+import styles from './RFTextInput.css';
 
 const errorMessage = message => (
   <div className={styles.error}>
@@ -7,18 +7,15 @@ const errorMessage = message => (
   </div>
 );
 
-const TextInput = ({ placeholder, value, defaultValue, onChange, iconRight,
-  validationErrorMsg, validation, variant, variants, type, name }) => {
+const RFTextInput = ({ input, type, placeholder, iconRight,
+  variant, variants, meta: { touched, error }, autofocus }) => {
   const variantStyles = variants.map(v => styles[v]);
   const rootClasses = [
     styles.wrapper,
     ...variantStyles,
   ].join(' ');
 
-  let isValid = true;
-  if (value) {
-    isValid = (value.replace(validation, '').length === 0);
-  }
+  const showError = touched && error;
 
   let variantStyle = styles.root;
   let variantErrorStyle = styles.rootError;
@@ -39,46 +36,38 @@ const TextInput = ({ placeholder, value, defaultValue, onChange, iconRight,
 
   return (
     <div className={rootClasses}>
-      <div className={isValid ? variantStyle : variantErrorStyle}>
+      <div className={showError ? variantErrorStyle : variantStyle}>
+        {autofocus}
         <input
+          {...input}
           type={type}
           placeholder={placeholder}
-          onChange={onChange}
           className={variantInputStyle}
-          value={value || undefined}
-          defaultValue={defaultValue}
-          name={name}
+          autoFocus={autofocus}
         />
         <span className={styles.addon}>{ iconRight }</span>
       </div>
-      { !isValid && errorMessage(validationErrorMsg) }
+      { showError && errorMessage(error) }
     </div>
   );
 };
 
 
-TextInput.propTypes = {
+RFTextInput.propTypes = {
   placeholder: React.PropTypes.string,
-  value: React.PropTypes.string,
   type: React.PropTypes.string,
-  defaultValue: React.PropTypes.string,
   variant: React.PropTypes.string,
   iconRight: React.PropTypes.node,
-  onChange: React.PropTypes.func,
-  validation: React.PropTypes.object,
-  validationErrorMsg: React.PropTypes.string,
   variants: React.PropTypes.array,
-  name: React.PropTypes.string,
+  input: React.PropTypes.object,
+  meta: React.PropTypes.object,
+  autofocus: React.PropTypes.bool,
 };
 
-TextInput.defaultProps = {
+RFTextInput.defaultProps = {
   variants: [],
   placeholder: '',
   type: 'text',
-  value: '',
-  onChange: () => {},
-  validation: new RegExp(/./g),
-  name: '',
 };
 
-export default TextInput;
+export default RFTextInput;

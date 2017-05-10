@@ -21,7 +21,7 @@
   border: 1px solid black;
   border-radius: 0 0 5px 5px;
   max-height: 150px;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 .innerSelected {
@@ -69,7 +69,7 @@
 
 /* Bordered Variant */
 .bordered {
-  border: #EEEEEE solid 1px;
+  border: #eee solid 1px;
   border-radius: 5px;
   padding: 10px 10px 10px 0;
   margin-bottom: 5px;
@@ -83,7 +83,7 @@
 .bordered > .optionList {
   left: -1px;
   right: -1px;
-  border: #EEEEEE solid 1px;
+  border: #eee solid 1px;
   margin-bottom: 5px;
   color: currentColor;
 
@@ -96,9 +96,15 @@
 }
 
 .bordered > .optionList > button:hover {
-  background: #EEEEEE;
+  background: #eee;
 }
 
+/* Inline Variant */
+.inline {
+  border-radius: 5px 0 0 5px;
+  border-right: 0;
+  height: 50px;
+}
 
 /* appBar Variant */
 
@@ -144,7 +150,7 @@
 /* Add new variant */
 
 .addNew {
-  background: #EEEEEE;
+  background: #eee;
   color: #828097;
   font-weight: bold;
   outline: none;

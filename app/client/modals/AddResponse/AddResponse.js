@@ -1,10 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
 import Modal from 'components/Modal/Modal';
 import Select from 'components/Form/Select/Select';
 import InputGroup from 'components/Form/InputGroup/InputGroup';
-import { addResponse } from 'services/endpointView';
+import Button from 'components/Button/Button';
+import ButtonGroup from 'components/ButtonGroup/ButtonGroup';
+import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
 
+import { addResponse } from 'services/endpointView';
 import { closeModal } from 'actions/modals';
 
 export const MODAL_NAME = 'addResponse';
@@ -12,6 +16,7 @@ export const MODAL_NAME = 'addResponse';
 @connect(store => ({
   isVisible: !!store.modals[MODAL_NAME],
   responses: store.endpointView.responses,
+  isFetching: store.endpointView.isFetching,
 }))
 
 class addResponseModal extends React.Component {
@@ -20,6 +25,7 @@ class addResponseModal extends React.Component {
     dispatch: React.PropTypes.func,
     params: React.PropTypes.object,
     responses: React.PropTypes.array,
+    isFetching: React.PropTypes.bool,
   }
 
   componentWillMount() {
@@ -48,13 +54,15 @@ class addResponseModal extends React.Component {
 
   reset = () => this.setState({ responseStatus: null });
 
-  onSave = () => {
+  onSave = (e) => {
+    e.preventDefault();
     this.props.dispatch(addResponse({
       endpoint_id: this.props.params.endpoint_id,
       http_status_code: this.getSelectedId(this.state.responseStatus),
-    }));
-    this.props.dispatch(closeModal(MODAL_NAME));
-    this.reset();
+    })).then(() => {
+      this.props.dispatch(closeModal(MODAL_NAME));
+      this.reset();
+    });
   }
 
   onHide = () => {
@@ -79,20 +87,32 @@ class addResponseModal extends React.Component {
       <Modal
         isVisible={this.props.isVisible}
         title="Add new response"
-        onSave={this.onSave}
         onHide={this.onHide}
-        saveButtonText="Save"
-        cancelButtonText="Cancel"
-        message={null}
       >
-        <InputGroup title="Response status" description="Give user more information about data type of param">
-          <Select
-            variants={['fullWidth', 'bordered']}
-            options={this.availableCodes()}
-            activeId={this.getSelectedId(this.state.responseStatus)}
-            onSelect={this.onTypeChange}
-          />
-        </InputGroup>
+        <form onSubmit={this.onSave} >
+          { this.props.isFetching && <LoadingIndicator fixed /> }
+          <InputGroup
+            title="Response status"
+            description="Give user more information about data type of param"
+          >
+            <Select
+              variants={['fullWidth', 'bordered']}
+              options={this.availableCodes()}
+              activeId={this.getSelectedId(this.state.responseStatus)}
+              onSelect={this.onTypeChange}
+            />
+          </InputGroup>
+          <ButtonGroup>
+            <Button type="submit" variants={['primary', 'large']}>Save</Button>
+            <Button
+              type="button"
+              variants={['large', 'lightBorder', 'spaceLeft']}
+              onClick={this.onHide}
+            >
+              Cancel
+            </Button>
+          </ButtonGroup>
+        </form>
       </Modal>
     );
   }
