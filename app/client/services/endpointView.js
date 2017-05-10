@@ -171,12 +171,17 @@ export function updateEndpointDescription(description) {
         summary: description.content,
       }),
     };
-    http(`/api/v1/endpoints/${id}`, options)
+    dispatch(setEndpointView({ isFetching: true }));
+    return http(`/api/v1/endpoints/${id}`, options)
       .then(response => response.json())
-      .then((data) => {
-        if (!data.errors) {
-          dispatch(updateEndpointDescriptionAction(description));
-        }
+      .then(() => {
+        dispatch(updateEndpointDescriptionAction(description));
+        dispatch(setEndpointView({ isFetching: false }));
+      })
+      .catch(() => {
+        // Remove after redux-form integration
+        dispatch(setEndpointView({ isFetching: false }));
+        return Promise.reject([]);
       });
   };
 }

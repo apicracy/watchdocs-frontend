@@ -6,6 +6,7 @@ import TextInput from 'components/Form/TextInput/TextInput';
 import TextArea from 'components/Form/TextArea/TextArea';
 import Button from 'components/Button/Button';
 import ButtonGroup from 'components/ButtonGroup/ButtonGroup';
+import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
 
 import { closeModal } from 'actions/modals';
 import { updateEndpointDescription as save } from 'services/endpointView';
@@ -16,12 +17,14 @@ export const MODAL_NAME = 'EditEndpointDescription';
 @connect(store => ({
   isVisible: !!store.modals[MODAL_NAME],
   endpoint: store.endpointView,
+  isFetching: store.endpointView.isFetching,
 }))
 class EditEndpointDescription extends React.Component {
   static propTypes ={
     endpoint: React.PropTypes.object,
     dispatch: React.PropTypes.func,
     isVisible: React.PropTypes.bool,
+    isFetching: React.PropTypes.bool,
   }
 
   componentWillMount() {
@@ -40,9 +43,11 @@ class EditEndpointDescription extends React.Component {
     }
   }
 
-  onSave = () => {
-    this.props.dispatch(closeModal(MODAL_NAME));
-    this.props.dispatch(save({ ...this.state }));
+  onSave = (e) => {
+    e.preventDefault();
+    this.props.dispatch(save({ ...this.state })).then(() => {
+      this.props.dispatch(closeModal(MODAL_NAME));
+    });
   }
 
   onHide = () => {
@@ -62,6 +67,7 @@ class EditEndpointDescription extends React.Component {
         onHide={this.onHide}
       >
         <form onSubmit={this.onSave}>
+          { this.props.isFetching && <LoadingIndicator fixed /> }
           <InputGroup title="Title" description="Describe in few words what this action will do.">
             <TextInput
               value={this.state.title}
