@@ -4,6 +4,7 @@ import Heading from 'components/Heading/Heading';
 import Well from 'components/Well/Well';
 import Code from 'components/Code/Code';
 import ParamTable from 'components/ParamTable/ParamTable';
+import SchemaTable from 'components/SchemaTable/SchemaTable';
 
 const EndpointDoc = ({ topLevel, projectUrl, doc }) => (
   <div className={styles.top} >
@@ -24,13 +25,27 @@ const EndpointDoc = ({ topLevel, projectUrl, doc }) => (
           <div className={styles.section}>
             <Heading>URL parameters</Heading>
             <ParamTable
-              data={doc.url_params.map(x => ({ ...x, data_type: `${x.data_type} (${x.required ? 'required' : 'optional'})` }))}
+              data={doc.url_params.map(x => ({ ...x, data_type: `${x.data_type ? x.data_type : ''} (${x.required ? 'required' : 'optional'})` }))}
               headers={[
                 { key: 'name', text: 'Parameter', style: { flex: 1, fontWeight: 'bold' } },
-                { key: 'data_type', text: 'Type', style: { flex: 2 } },
+                { key: 'data_type', text: 'Type', style: { flex: 2, fontStyle: 'italic', color: '#999' } },
                 { key: 'description', text: 'Description', style: { flex: 3 } },
               ]}
             />
+          </div>
+        )}
+
+        { doc.exampleRequest && (
+          <div className={styles.section}>
+            <Heading>Request</Heading>
+            <SchemaTable data={doc.request.body} topLevel />
+          </div>
+        )}
+
+        { doc.exampleResponse && (
+          <div className={styles.section}>
+            <Heading>Response</Heading>
+            <SchemaTable data={doc.responses[0].body} topLevel />
           </div>
         )}
 

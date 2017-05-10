@@ -22,7 +22,7 @@
 
 .active {
   composes: link;
-  font-family: 'RobotoBold', Helvetica, sans-serif;
+  font-weight: bold;
   color: #6C6AB8;
   border-bottom: 3px solid #6C6AB8;
 }

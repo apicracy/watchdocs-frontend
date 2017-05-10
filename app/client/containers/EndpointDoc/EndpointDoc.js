@@ -2,11 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styles from './EndpointDoc.css';
 
-import { loadEndpoint, removeEndpoint, removeUrlParams } from 'services/endpointView';
+import { loadEndpoint, removeEndpoint, removeUrlParams, removeResponse } from 'services/endpointView';
 
 import { loadGroup } from 'services/groupView';
 
-import MethodPicker from 'components/MethodPicker/MethodPicker';
 import Button from 'components/Button/Button';
 
 import Icon from 'components/Icon/Icon';
@@ -19,9 +18,16 @@ import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
 /* Actions */
 import { updateEndpointDescription } from 'actions/endpointView';
 
+import {
+  setMethod,
+  setUrl,
+  setEdit as editEndpoint,
+} from 'services/modifyEndpoint-service';
+
 /* Modals */
 import { openModal } from 'actions/modals';
 import { MODAL_NAME as EDIT_DESC_MODAL } from 'modals/EditEndpointDescription/EditEndpointDescription';
+import { MODAL_NAME as EDIT_URL_MODAL } from 'modals/EditEndpointModal/EditEndpointModal';
 import { getFullLink } from 'services/helpers';
 
 @connect(store => ({
@@ -96,6 +102,17 @@ class EndpointDoc extends React.Component {
 
   /* Description section */
   editDescription = () => this.props.dispatch(openModal(EDIT_DESC_MODAL));
+  editUrl = () => {
+    const {
+      method,
+      url,
+    } = this.props.endpoint;
+    this.props.dispatch(setMethod(method));
+    this.props.dispatch(setUrl(url));
+    this.props.dispatch(editEndpoint(true));
+
+    this.props.dispatch(openModal(EDIT_URL_MODAL));
+  }
 
   renderDescription = () => {
     const { description } = this.props.endpoint;
@@ -147,8 +164,14 @@ class EndpointDoc extends React.Component {
   }
 
   onRemoveUrlParam = (id) => {
-    if (confirm('are you sure?')) {
+    if (confirm('Are you sure you want to remove URL Param? This action can not be undone.')) {
       this.props.dispatch(removeUrlParams(id));
+    }
+  }
+
+  onRemoveResponse = (id) => {
+    if (confirm('Are you sure you want to remove this response? This action can not be undone.')) {
+      this.props.dispatch(removeResponse(id));
     }
   }
 
@@ -165,7 +188,7 @@ class EndpointDoc extends React.Component {
         ]}
         actions={[
           <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editResponse(param.id)} />,
-          <IconButton icon={<Icon name="trash" size="lg" />} />,
+          <IconButton icon={<Icon name="trash" size="lg" />} onClick={() => { this.onRemoveResponse(param.id); }} />,
         ]}
       />
     ));
@@ -200,7 +223,7 @@ class EndpointDoc extends React.Component {
 
   removeEndpoint = () => {
     /* eslint no-alert: 0 */
-    if (confirm('are you sure?')) {
+    if (confirm('Do you really want to remove this endpoint? This action can not be undone. All connected data will be lost.')) {
       this.props.dispatch(removeEndpoint());
     }
   }
@@ -209,8 +232,17 @@ class EndpointDoc extends React.Component {
     return (
       <div className={styles.root}>
         { this.props.isFetching && <LoadingIndicator /> }
-        <MethodPicker endpoint={this.props.endpoint} />
-
+        <div className={styles.urlContainer}>
+          <div className={styles.method}>
+            { this.props.endpoint && this.props.endpoint.method}
+          </div>
+          <div className={styles.url}>
+            { this.props.endpoint && this.props.endpoint.url }
+          </div>
+          <div className={styles.editUrl}>
+            <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editUrl} />
+          </div>
+        </div>
         <DocumentationBlock
           title="Description"
           description="This description will appear on your generated public documentation."
@@ -266,7 +298,7 @@ class EndpointDoc extends React.Component {
           description="List of all available responses for given endpoint"
           emptyMsg="You don't have any responses set up yet."
           buttonAction={() => {
-            this.props.router.push(`/${this.props.params.project_name}/editor/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/response`);
+            this.props.dispatch(openModal('addResponse'));
           }}
         >
           { this.renderResponses() }

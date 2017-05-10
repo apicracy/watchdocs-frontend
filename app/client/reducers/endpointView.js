@@ -10,6 +10,7 @@ import {
   SET_RESPONSES,
   SET_REQUEST,
   REMOVE_ENDPOINT_PARAM,
+  REMOVE_RESPONSE,
 } from 'actions/endpointView';
 
 const INITIAL_STATE = {
@@ -39,6 +40,7 @@ export function endpointView(state = INITIAL_STATE, action) {
     case SET_RESPONSES: return setResponses(state, payload);
     case SET_REQUEST: return setRequest(state, payload);
     case REMOVE_ENDPOINT_PARAM: return removeEndpointParam(state, payload);
+    case REMOVE_RESPONSE: return removeResponse(state, payload);
     default: return state;
   }
 }
@@ -48,6 +50,14 @@ function removeEndpointParam(state, payload) {
   return {
     ...state,
     url_params: params,
+  };
+}
+
+function removeResponse(state, payload) {
+  const responses = state.responses.filter(r => r.id !== payload);
+  return {
+    ...state,
+    responses,
   };
 }
 
