@@ -271,9 +271,6 @@ class EndpointDoc extends React.Component {
           title="Request"
           description="API's methods can support or require various HTTP headers."
           emptyMsg="You don't have request set up yet."
-          buttonAction={this.props.responses[0] ? null : () => {
-            this.props.router.push(`/${this.props.params.project_name}/editor/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/request`);
-          }}
           // content={(
           //   <Radio
           //     title={[

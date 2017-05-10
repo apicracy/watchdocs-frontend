@@ -6,6 +6,7 @@ import {
   addEndpointParam as addEndpointParamAction,
   updateEndpointParam as updateEndpointParamAction,
   removeEndpointParam as removeEndpointParamAction,
+  updateEndpointDescription as updateEndpointDescriptionAction,
   addResponse as addResponseAction,
   removeResponse as removeResponseAction,
 } from 'actions/endpointView';
@@ -151,6 +152,31 @@ export function addResponse(responseParam) {
         browserHistory.push(url);
         dispatch(setEndpointView({ isFetching: false }));
         dispatch(addResponseAction(data));
+      })
+      .catch(() => {
+        // Remove after redux-form integration
+        dispatch(setEndpointView({ isFetching: false }));
+        return Promise.reject([]);
+      });
+  };
+}
+
+export function updateEndpointDescription(description) {
+  return (dispatch, getState) => {
+    const { id } = getState().endpointView;
+    const options = {
+      method: 'PUT',
+      body: JSON.stringify({
+        title: description.title,
+        summary: description.content,
+      }),
+    };
+    dispatch(setEndpointView({ isFetching: true }));
+    return http(`/api/v1/endpoints/${id}`, options)
+      .then(response => response.json())
+      .then(() => {
+        dispatch(updateEndpointDescriptionAction(description));
+        dispatch(setEndpointView({ isFetching: false }));
       })
       .catch(() => {
         // Remove after redux-form integration
