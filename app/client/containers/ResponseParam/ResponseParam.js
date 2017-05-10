@@ -193,10 +193,10 @@ class ResponseParam extends React.Component {
     return (
       <div className={styles.root}>
         <BackLink onClick={browserHistory.goBack}><b>{endpoint.method} {`"${endpoint.url}"`}</b></BackLink>
-        <div className={styles.title}>Add Response</div>
+        <div className={styles.title}>Edit Response</div>
         <div className={styles.description}>Your request for endpoint
-          <strong> {endpoint.method} {endpoint.url}</strong>.<br />
-          <strong>Last check performed 2 hours ago.</strong></div>
+          <strong> {endpoint.method} {endpoint.url}</strong>
+        </div>
         <DocumentationBlock
           title="Response status"
           description="This description will appear on your generated public documentation."

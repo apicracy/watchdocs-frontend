@@ -20,6 +20,8 @@
   color: black;
   border: 1px solid black;
   border-radius: 0 0 5px 5px;
+  max-height: 150px;
+  overflow-y: scroll;
 }
 
 .innerSelected {
@@ -57,7 +59,7 @@
 }
 
 .fullWidth > .optionList {
-  display: flex;
+  display: block;
   flex-direction: column;
 }
 

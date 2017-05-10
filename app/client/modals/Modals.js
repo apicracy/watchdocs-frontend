@@ -1,6 +1,4 @@
-
 import React from 'react';
-
 import AddEndpointModal from 'modals/AddEndpointModal/AddEndpointModal';
 
 /* Endpoint Documentation view modals */
@@ -9,8 +7,9 @@ import EditEndpointDescription from 'modals/EditEndpointDescription/EditEndpoint
 import AddResponseParam from 'modals/AddResponseParam/AddResponseParam';
 import AddRequestParam from 'modals/AddRequestParam/AddRequestParam';
 import EditEndpointModal from 'modals/EditEndpointModal/EditEndpointModal';
+import AddResponse from 'modals/addResponse/addResponse';
 
-export default () => (
+const Modals = ({ params }) => (
   <div>
     <AddEndpointModal />
     <AddUrlParam />
@@ -18,5 +17,12 @@ export default () => (
     <AddResponseParam />
     <AddRequestParam />
     <EditEndpointModal />
+    <AddResponse params={params} />
   </div>
 );
+
+Modals.propTypes = {
+  params: React.PropTypes.object,
+};
+
+export default Modals;

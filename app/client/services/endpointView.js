@@ -6,14 +6,12 @@ import {
   addEndpointParam as addEndpointParamAction,
   updateEndpointParam as updateEndpointParamAction,
   removeEndpointParam as removeEndpointParamAction,
+  addResponse as addResponseAction,
   removeResponse as removeResponseAction,
 } from 'actions/endpointView';
 
 import { fetchEndpoints } from 'services/endpoints';
-
-import {
-  urlFormatProjectName,
-} from 'services/projects';
+import { urlFormatProjectName } from 'services/projects';
 
 export function loadEndpoint(id) {
   return (dispatch) => {
@@ -46,6 +44,7 @@ export function addEndpointParam(endpointParam) {
       .catch(() => {
         // Remove after redux-form integration
         dispatch(setEndpointView({ isFetching: false }));
+        return Promise.reject([]);
       });
   };
 }
@@ -67,6 +66,7 @@ export function updateEndpointParam(endpointParam) {
       .catch(() => {
         // Remove after redux-form integration
         dispatch(setEndpointView({ isFetching: false }));
+        return Promise.reject([]);
       });
   };
 }
@@ -78,7 +78,7 @@ export function removeUrlParams(id) {
     };
 
     dispatch(setEndpointView({ isFetching: true }));
-    http(`/api/v1/url_params/${id}`, options)
+    return http(`/api/v1/url_params/${id}`, options)
       .then(response => response.json())
       .then(() => {
         dispatch(removeEndpointParamAction(id));
@@ -87,6 +87,7 @@ export function removeUrlParams(id) {
       .catch(() => {
         // Remove after redux-form integration
         dispatch(setEndpointView({ isFetching: false }));
+        return Promise.reject([]);
       });
   };
 }
@@ -102,7 +103,7 @@ export function removeEndpoint() {
 
     dispatch(setEndpointView({ isFetching: false }));
 
-    http(`/api/v1/endpoints/${id}`, options)
+    return http(`/api/v1/endpoints/${id}`, options)
       .then(response => response.json())
       .then(() => {
         // Redirect only when user stayed on the same page
@@ -120,10 +121,41 @@ export function removeResponse(id) {
       method: 'DELETE',
     };
 
-    http(`/api/v1/responses/${id}`, options)
+    dispatch(setEndpointView({ isFetching: true }));
+
+    return http(`/api/v1/responses/${id}`, options)
       .then(response => response.json())
       .then(() => {
+        dispatch(setEndpointView({ isFetching: false }));
         dispatch(removeResponseAction(id));
+      });
+  };
+}
+
+export function addResponse(responseParam) {
+  return (dispatch, getState) => {
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(responseParam),
+    };
+
+    dispatch(setEndpointView({ isFetching: true }));
+
+    return http('/api/v1/responses/', options)
+      .then(response => response.json())
+      .then((data) => {
+        const name = getState().projects.activeProject.name;
+        const endpointId = responseParam.endpoint_id;
+        const url = `/${urlFormatProjectName(name)}/editor/undefined/endpoint/${endpointId}/response/${data.id}`;
+
+        browserHistory.push(url);
+        dispatch(setEndpointView({ isFetching: false }));
+        dispatch(addResponseAction(data));
+      })
+      .catch(() => {
+        // Remove after redux-form integration
+        dispatch(setEndpointView({ isFetching: false }));
+        return Promise.reject([]);
       });
   };
 }
