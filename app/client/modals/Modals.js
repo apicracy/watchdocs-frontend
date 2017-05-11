@@ -7,7 +7,7 @@ import EditEndpointDescription from 'modals/EditEndpointDescription/EditEndpoint
 import AddResponseParam from 'modals/AddResponseParam/AddResponseParam';
 import AddRequestParam from 'modals/AddRequestParam/AddRequestParam';
 import EditEndpointModal from 'modals/EditEndpointModal/EditEndpointModal';
-import AddResponse from 'modals/addResponse/addResponse';
+import AddResponse from 'modals/AddResponse/AddResponse';
 
 const Modals = ({ params }) => (
   <div>
