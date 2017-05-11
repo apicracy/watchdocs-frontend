@@ -42,19 +42,11 @@ class AddUrlParam extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // Magic happens here. Deal with it.
-    const { modals, endpoint } = this.props;
-
-    if (nextProps.modals.refId && modals.refId !== nextProps.modals.refId) {
-      const currentParam = endpoint.url_params.find(param => param.id === nextProps.modals.refId);
-
-      if (currentParam) {
-        this.setState({ ...currentParam });
-      }
-    }
+    nextProps.modals.refId && this.setEditedParam(nextProps.modals.refId);
   }
 
   reset = () => this.setState({
+    id: null,
     endpoint_id: this.props.endpointId,
     name: '',
     required: false,
@@ -63,6 +55,14 @@ class AddUrlParam extends React.Component {
     example: '',
     is_part_of_url: false,
   });
+
+  setEditedParam = (urlParamId) => {
+    const { endpoint } = this.props;
+    const currentParam = endpoint.url_params.find(param => (
+      param.id === urlParamId
+    ));
+    currentParam && this.setState({ ...currentParam });
+  }
 
   onSave = () => {
     let response;
