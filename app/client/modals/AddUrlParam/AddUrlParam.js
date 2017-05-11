@@ -5,6 +5,7 @@ import UrlParamForm from 'components/UrlParamForm/UrlParamForm';
 
 import { closeModal } from 'actions/modals';
 import { addEndpointParam, updateEndpointParam } from 'services/endpointView';
+import { valueTypes } from 'config';
 
 export const MODAL_NAME = 'addUrlParam';
 
@@ -113,7 +114,7 @@ class AddUrlParam extends React.Component {
       >
         <UrlParamForm
           {...this.state}
-          paramTypes={this.paramTypes}
+          paramTypes={valueTypes}
           onFieldChange={this.onFieldChange}
           onRequiredChange={this.onRequiredChange}
           onTypeChange={this.onTypeChange}

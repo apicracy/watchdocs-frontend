@@ -5,43 +5,29 @@ import styles from './ResponseParam.css';
 import { loadEndpoint } from 'services/endpointView';
 import { loadGroup } from 'services/groupView';
 
-import Button from 'components/Button/Button';
-import Icon from 'components/Icon/Icon';
-import IconButton from 'components/Button/IconButton';
+import ResponseStatusForm from 'components/ResponseForm/ResponseStatusForm';
 import BackLink from 'components/BackLink/BackLink';
 import { browserHistory } from 'react-router';
 
-import DocumentationBlock, { Row } from 'components/DocumentationBlock/DocumentationBlock';
-import WarningLabel from 'components/DocumentationBlock/Labels/WarningLabel';
+import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock';
 import JSONSEditor from 'components/JSONSEditor/JSONSEditor';
-import Select from 'components/Form/Select/Select';
 
-import { openModal } from 'actions/modals';
-import { setStatus, saveResponseParam,
-  setResponseParam, addParam, reset, saveJson,
-} from 'services/responseParams';
+import { loadResponse, reset, saveJson, updateHttpStatus } from 'services/responseParams';
 import { getFullLink } from 'services/helpers';
 
-@connect((store) => {
-  const headers = (store.responseParams.headers) ?
-    store.responseParams.headers.sort((a, b) => a.id > b.id) : [];
-  const hasNewHeaders = !!headers.find(param => param.isNew);
 
-  return {
-    endpoint: store.endpointView,
-    group: store.groupView,
-    endpointList: store.endpoints,
+@connect(store => ({
+  endpoint: store.endpointView,
+  group: store.groupView,
+  endpointList: store.endpoints,
 
-    status: store.responseParams.status,
-    baseJSONSchema: store.responseParams.base,
-    draftJSONSchema: store.responseParams.draft,
-    headers,
-    hasNewHeaders,
-    projectUrl: store.projects.activeProject.base_url,
-  };
-})
+  http_status_code: store.responseParams.http_status_code,
+  baseJSONSchema: store.responseParams.base,
+  draftJSONSchema: store.responseParams.draft,
+  projectUrl: store.projects.activeProject.base_url,
+}))
+
 class ResponseParam extends React.Component {
-
   static propTypes = {
     params: React.PropTypes.object, // supplied by react-router
     dispatch: React.PropTypes.func,
@@ -49,28 +35,10 @@ class ResponseParam extends React.Component {
     group: React.PropTypes.object,
     endpointList: React.PropTypes.array,
 
-    status: React.PropTypes.object,
+    http_status_code: React.PropTypes.number,
     baseJSONSchema: React.PropTypes.object,
     draftJSONSchema: React.PropTypes.object,
-    headers: React.PropTypes.array,
     projectUrl: React.PropTypes.string,
-    hasNewHeaders: React.PropTypes.bool,
-  }
-
-  componentWillMount() {
-    this.paramTypes = [
-      { id: 200, name: '200 - OK' },
-      { id: 201, name: '201 - Created' },
-      { id: 204, name: '204 - No Content' },
-      { id: 304, name: '304 - Not Modified' },
-      { id: 400, name: '400 - Bad Request' },
-      { id: 401, name: '401 - Unauthorized' },
-      { id: 403, name: '403 - Forbidden' },
-      { id: 404, name: '404 - Not Found' },
-      { id: 409, name: '409 - Conflict' },
-      { id: 422, name: '422 - Unauthorized' },
-      { id: 500, name: '500 - Internal Server Error' },
-    ];
   }
 
   componentDidMount() {
@@ -79,10 +47,11 @@ class ResponseParam extends React.Component {
 
     const {
       dispatch,
+      params,
     } = this.props;
 
-    if (this.props.params.response_id) {
-      dispatch(setResponseParam(this.props.params.response_id));
+    if (params.response_id) {
+      dispatch(loadResponse(params.response_id));
     } else {
       dispatch(reset());
     }
@@ -123,89 +92,52 @@ class ResponseParam extends React.Component {
     this.props.dispatch(loadGroup(parseInt(this.props.params.group_id, 10)));
   }
 
-  editParam = id => () => this.props.dispatch(openModal('addResponseParam', id));
-  addParam = id => () => this.props.dispatch(addParam(id));
-
-  renderParams() {
-    // to keep order.
-    // TODO create 'order' field in model to allow ordering
-    const headers = this.props.headers;
-
-    return headers.map((param, key) => (
-      <Row
-        key={key}
-        variants={[param.isNew ? 'isNew' : '']}
-        data={[
-          <Button variants={[param.isNew ? 'linkWhite' : 'linkPrimary']}>{param.key}</Button>,
-          param.required ? 'required' : 'optional',
-          (!param.description || !param.example_value) && !param.isNew ? <WarningLabel /> : '',
-        ]}
-        actions={!param.isNew ? [
-          <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editParam(param.id)} />,
-          !param.main && <IconButton icon={<Icon name="trash" size="lg" />} />,
-        ] : [
-          <IconButton icon={<Icon name="plus" size="lg" />} onClick={this.addParam(param.id)} />,
-        ]}
-      />
-    ));
-  }
-
-
   getFullLink = () => {
     const { projectUrl, endpoint } = this.props;
     return getFullLink(projectUrl, endpoint);
   }
 
-  onTypeChange = (id) => {
+  onSaveStatus = ({ http_status_code }) => {
     const {
       dispatch,
+      params,
     } = this.props;
 
-    const selectedObject = this.paramTypes.find(p => p.id === id);
-    dispatch(setStatus(selectedObject));
+    return dispatch(updateHttpStatus(params.response_id, http_status_code));
   }
 
-  onSave = () => {
+  onSaveJsonSchema = (json) => {
     const {
       dispatch,
+      params,
     } = this.props;
 
-    dispatch(saveResponseParam());
-    browserHistory.goBack();
-  }
-
-  onSaveJson = (json) => {
-    const {
-      dispatch,
-    } = this.props;
-
-    dispatch(saveJson(this.props.params.endpoint_id, json));
+    dispatch(saveJson(params.response_id, json));
   }
 
   render() {
     const {
       endpoint,
-      status,
       baseJSONSchema,
       draftJSONSchema,
+      http_status_code,
     } = this.props;
 
     return (
       <div className={styles.root}>
         <BackLink onClick={browserHistory.goBack}><b>{endpoint.method} {`"${endpoint.url}"`}</b></BackLink>
         <div className={styles.title}>Edit Response</div>
-        <div className={styles.description}>Your request for endpoint
+        <div className={styles.description}>Your response for endpoint
           <strong> {endpoint.method} {endpoint.url}</strong>
         </div>
         <DocumentationBlock
           title="Response status"
           description="This description will appear on your generated public documentation."
         >
-          <Select
-            variants={['fullWidth', 'bordered', 'whiteBackground']}
-            options={this.paramTypes}
-            activeId={status && status.id}
-            onSelect={this.onTypeChange}
+          <ResponseStatusForm
+            onSubmit={this.onSaveStatus}
+            enableReinitialize // Refresh status when response loaded
+            initialValues={{ http_status_code }}
           />
         </DocumentationBlock>
         <DocumentationBlock
@@ -215,28 +147,9 @@ class ResponseParam extends React.Component {
         >
           <JSONSEditor
             base={baseJSONSchema} draft={draftJSONSchema}
-            onSave={this.onSaveJson}
+            onSave={this.onSaveJsonSchema}
           />
         </DocumentationBlock>
-        { /*
-        <DocumentationBlock
-          title="Response Headers"
-          titleElement={this.props.hasNewHeaders && (<div className={styles.headerDetected}><CustomIcon name="warning-circle" /> Add newly detected headers!</div>)}
-          description="This is title of the section we're going
-            to display in documentation and in navigation."
-          emptyMsg="You don't have any response headers set up yet."
-          buttonAction={() => {
-            this.props.dispatch(openModal('addResponseParam'));
-          }}
-        >
-          { this.renderParams() }
-        </DocumentationBlock>
-        */ }
-        <div className={styles.buttons}>
-          <Button onClick={this.onSave} variants={['primary', 'large', 'spaceRight']}>Save</Button>
-          <Button variants={['body', 'large']}>Cancel</Button>
-        </div>
-
       </div>
     );
   }

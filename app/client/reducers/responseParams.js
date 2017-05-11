@@ -8,7 +8,7 @@ import {
 } from 'actions/responseParams';
 
 const INITIAL_STATE = {
-  status: {},
+  status: '',
   base: null,
   draft: null,
   headers: [],
