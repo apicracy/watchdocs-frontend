@@ -4,7 +4,7 @@ import { presence, format } from 'redux-form-validators';
 
 import InputGroup from 'components/Form/InputGroup/InputGroup';
 import RFTextInput from 'components/Form/RFTextInput/RFTextInput';
-import TextArea from 'components/Form/TextArea/TextArea';
+import RFTextArea from 'components/Form/RFTextArea/RFTextArea';
 import CheckBox from 'components/Form/CheckBox/CheckBox';
 import RFSelect from 'components/Form/RFSelect/RFSelect';
 import Button from 'components/Button/Button';
@@ -66,7 +66,7 @@ const ParamForm = (props) => {
       <InputGroup title="Description" description="Give user more context info about the param itself">
         <Field
           name="description"
-          component={TextArea}
+          component={RFTextArea}
           placeholder="Param description"
           onChange={onFieldChange('description')}
           rows={3}
