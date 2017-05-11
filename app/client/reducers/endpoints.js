@@ -1,4 +1,6 @@
-import { FETCH_ENDPOINTS } from 'actions/endpoints';
+import {
+  FETCH_ENDPOINTS,
+} from 'actions/endpoints';
 
 export const INITIAL_STATE = [];
 

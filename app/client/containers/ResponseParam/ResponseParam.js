@@ -15,7 +15,6 @@ import DocumentationBlock, { Row } from 'components/DocumentationBlock/Documenta
 import WarningLabel from 'components/DocumentationBlock/Labels/WarningLabel';
 import JSONSEditor from 'components/JSONSEditor/JSONSEditor';
 import Select from 'components/Form/Select/Select';
-import CustomIcon from 'components/Icon/CustomIcon';
 
 import { openModal } from 'actions/modals';
 import { setStatus, saveResponseParam,
@@ -194,10 +193,10 @@ class ResponseParam extends React.Component {
     return (
       <div className={styles.root}>
         <BackLink onClick={browserHistory.goBack}><b>{endpoint.method} {`"${endpoint.url}"`}</b></BackLink>
-        <div className={styles.title}>Add Response</div>
+        <div className={styles.title}>Edit Response</div>
         <div className={styles.description}>Your request for endpoint
-          <strong> {endpoint.method} {endpoint.url}</strong>.<br />
-          <strong>Last check performed 2 hours ago.</strong></div>
+          <strong> {endpoint.method} {endpoint.url}</strong>
+        </div>
         <DocumentationBlock
           title="Response status"
           description="This description will appear on your generated public documentation."
@@ -219,6 +218,7 @@ class ResponseParam extends React.Component {
             onSave={this.onSaveJson}
           />
         </DocumentationBlock>
+        { /*
         <DocumentationBlock
           title="Response Headers"
           titleElement={this.props.hasNewHeaders && (<div className={styles.headerDetected}><CustomIcon name="warning-circle" /> Add newly detected headers!</div>)}
@@ -231,7 +231,7 @@ class ResponseParam extends React.Component {
         >
           { this.renderParams() }
         </DocumentationBlock>
-
+        */ }
         <div className={styles.buttons}>
           <Button onClick={this.onSave} variants={['primary', 'large', 'spaceRight']}>Save</Button>
           <Button variants={['body', 'large']}>Cancel</Button>

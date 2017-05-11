@@ -186,6 +186,7 @@ class RequestParam extends React.Component {
         >
           <JSONSEditor base={baseJSONSchema} draft={draftJSONSchema} onSave={this.onSaveJson} />
         </DocumentationBlock>
+        { /*
         <DocumentationBlock
           title="Request Headers"
           titleElement={this.props.hasNewHeaders && (<div className={styles.headerDetected}><CustomIcon name="warning-circle" /> Add newly detected headers!</div>)}
@@ -198,7 +199,7 @@ class RequestParam extends React.Component {
         >
           { this.renderParams() }
         </DocumentationBlock>
-
+        */ }
         <div className={styles.buttons}>
           <Button onClick={this.onSave} variants={['primary', 'large', 'spaceRight']}>Save</Button>
           <Button variants={['body', 'large']}>Cancel</Button>

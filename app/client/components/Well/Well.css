@@ -32,5 +32,5 @@ span.root {
 }
 
 .bold {
-  font-family: 'RobotoMedium', Helvetica, sans-serif;
+  font-weight: 500;
 }

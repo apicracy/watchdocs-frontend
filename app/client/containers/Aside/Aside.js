@@ -12,7 +12,7 @@ import Sidebar from 'components/Sidebar/Sidebar';
 import { filterEndpoints } from 'services/endpoint-service';
 
 import { openModal } from 'actions/modals';
-import { MODAL_NAME as ADD_NEW_MODAL } from 'modals/AddNewModal/AddNewModal';
+import { MODAL_NAME as ADD_NEW_MODAL } from 'modals/AddEndpointModal/AddEndpointModal';
 
 import {
   addNewGroup,

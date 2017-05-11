@@ -147,6 +147,7 @@
   outline: none;
   resize: none;
   overflow: hidden;
+  font-family: Menlo,Monaco,Consolas,Courier New,monospace;
 }
 
 .information {
@@ -161,6 +162,7 @@
 
 .rows{
   background: #464646;
+  font-family: Menlo,Monaco,Consolas,Courier New,monospace;
 }
 
 .acceptButton {

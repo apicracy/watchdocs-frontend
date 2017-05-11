@@ -1,12 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Modal from 'components/Modal/Modal';
-import InputGroup from 'components/Form/InputGroup/InputGroup';
-import TextInput from 'components/Form/TextInput/TextInput';
-import TextArea from 'components/Form/TextArea/TextArea';
-import CheckBox from 'components/Form/CheckBox/CheckBox';
-import Select from 'components/Form/Select/Select';
-import styles from './AddUrlParam.css';
+import UrlParamForm from 'components/UrlParamForm/UrlParamForm';
+
 import { closeModal } from 'actions/modals';
 import { addEndpointParam, updateEndpointParam } from 'services/endpointView';
 
@@ -34,34 +30,19 @@ class AddUrlParam extends React.Component {
     endpointId: React.PropTypes.number,
   }
 
+  paramTypes = [
+    { value: 'number', label: 'number' },
+    { value: 'string', label: 'string' },
+    { value: 'array', label: 'array' },
+    { value: 'boolean', label: 'boolean' },
+  ];
+
   componentWillMount() {
     this.reset();
-
-    this.paramTypes = [
-      { id: 1, name: 'number' },
-      { id: 2, name: 'string' },
-      { id: 3, name: 'array' },
-    ];
-
-    this.setState({
-      nameIsDirty: false,
-      typeIsDirty: false,
-    });
-  }
-
-  getSelectedId = (value) => {
-    const record = this.paramTypes.find(p => p.name === value);
-
-    return record ? record.id : null;
-  }
-
-  getSelectedValue = (id) => {
-    const record = this.paramTypes.find(p => p.id === id);
-
-    return record ? record.name : null;
   }
 
   componentWillReceiveProps(nextProps) {
+    // Magic happens here. Deal with it.
     const { modals, endpoint } = this.props;
 
     if (nextProps.modals.refId && modals.refId !== nextProps.modals.refId) {
@@ -81,35 +62,25 @@ class AddUrlParam extends React.Component {
     data_type: null,
     example: '',
     is_part_of_url: false,
-    nameIsDirty: false,
-    typeIsDirty: false,
   });
 
-  save = () => {
+  onSave = () => {
+    let response;
     const data = {
       ...this.state,
       endpoint_id: this.props.endpointId,
     };
 
     if (!this.state.id) {
-      this.props.dispatch(addEndpointParam(data));
+      response = this.props.dispatch(addEndpointParam(data));
     } else {
-      this.props.dispatch(updateEndpointParam(data));
+      response = this.props.dispatch(updateEndpointParam(data));
     }
 
-    this.props.dispatch(closeModal(MODAL_NAME));
-    this.reset();
-  }
-
-  onSave = () => {
-    if (this.state.name && this.state.data_type) {
-      this.save();
-    } else {
-      this.setState({
-        nameIsDirty: true,
-        typeIsDirty: true,
-      });
-    }
+    return response.then(() => {
+      this.props.dispatch(closeModal(MODAL_NAME));
+      this.reset();
+    });
   }
 
   onHide = () => {
@@ -121,7 +92,9 @@ class AddUrlParam extends React.Component {
     this.setState({ [fieldName]: nativeEvent.target.value })
   );
 
-  onTypeChange = id => this.setState({ data_type: this.getSelectedValue(id) });
+  onTypeChange = (e, newValue) => (
+    this.setState({ data_type: newValue })
+  );
 
   onRequiredChange = () => this.setState({ required: !this.state.required });
 
@@ -135,66 +108,19 @@ class AddUrlParam extends React.Component {
       <Modal
         isVisible={this.props.isVisible}
         title="URL param"
-        onSave={this.onSave}
         onHide={this.onHide}
-        saveButtonText="Save"
-        cancelButtonText="Cancel"
         message={this.shouldDisplayMessage() ? warningMessage : null}
       >
-
-        <InputGroup title="Name" description="Write here param name as it apears inside URL">
-          <TextInput
-            value={this.state.name}
-            placeholder="Param name"
-            onChange={this.onFieldChange('name')}
-            validation={new RegExp(/((^[a-zA-Z_$][a-zA-Z_$[\]0-9]*$))/ig)}
-            validationErrorMsg={'URL parameter should include only allowed URL characters.'}
-            onBlur={() => { this.setState({ nameIsDirty: true }); }}
-
-          />
-          { this.state.nameIsDirty && !this.state.name && <div className={styles.required}>
-              Required
-          </div>}
-          <CheckBox
-            activeIds={[this.state.required ? 1 : null]}
-            options={[
-              { id: 1, text: 'Param required' },
-            ]}
-            onChange={this.onRequiredChange}
-          />
-        </InputGroup>
-
-        <InputGroup title="Type" description="Give user more information about data type of param">
-          <Select
-            variants={['fullWidth', 'bordered']}
-            options={this.paramTypes}
-            activeId={this.getSelectedId(this.state.data_type)}
-            onSelect={this.onTypeChange}
-            onBlur={() => { this.setState({ typeIsDirty: true }); }}
-          />
-          { this.state.typeIsDirty && !this.state.data_type &&
-            <div className={styles.requiredSelect}>
-            Required
-          </div>}
-        </InputGroup>
-
-        <InputGroup title="Description" description="Give user more context info about the param itself">
-          <TextArea
-            rows={3}
-            value={this.state.description}
-            placeholder="Param description"
-            onChange={this.onFieldChange('description')}
-          />
-        </InputGroup>
-
-        <InputGroup title="Example" description="This examle is going to be used to generate user friendly documentation">
-          <TextInput
-            value={this.state.example}
-            placeholder="Example of param value"
-            onChange={this.onFieldChange('example')}
-          />
-        </InputGroup>
-
+        <UrlParamForm
+          {...this.state}
+          paramTypes={this.paramTypes}
+          onFieldChange={this.onFieldChange}
+          onRequiredChange={this.onRequiredChange}
+          onTypeChange={this.onTypeChange}
+          onCancel={this.onHide}
+          onSubmit={this.onSave}
+          initialValues={this.state}
+        />
       </Modal>
     );
   }

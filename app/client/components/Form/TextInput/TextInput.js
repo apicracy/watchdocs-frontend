@@ -1,8 +1,14 @@
 import React from 'react';
 import styles from './TextInput.css';
 
+const errorMessage = message => (
+  <div className={styles.error}>
+    { message }
+  </div>
+);
+
 const TextInput = ({ placeholder, value, defaultValue, onChange, iconRight,
-  validationErrorMsg, validation, variant, variants, type, onBlur }) => {
+  validationErrorMsg, validation, variant, variants, type, name, onBlur }) => {
   const variantStyles = variants.map(v => styles[v]);
   const rootClasses = [
     styles.wrapper,
@@ -42,10 +48,11 @@ const TextInput = ({ placeholder, value, defaultValue, onChange, iconRight,
           value={value || undefined}
           defaultValue={defaultValue}
           onBlur={onBlur}
+          name={name}
         />
         <span className={styles.addon}>{ iconRight }</span>
       </div>
-      { !isValid && <div className={styles.error}>{ validationErrorMsg }</div> }
+      { !isValid && errorMessage(validationErrorMsg) }
     </div>
   );
 };
@@ -62,6 +69,7 @@ TextInput.propTypes = {
   validationErrorMsg: React.PropTypes.string,
   variants: React.PropTypes.array,
   onBlur: React.PropTypes.func,
+  name: React.PropTypes.string,
 };
 
 TextInput.defaultProps = {
@@ -72,6 +80,7 @@ TextInput.defaultProps = {
   onChange: () => {},
   validation: new RegExp(/./g),
   onBlur: () => {},
+  name: '',
 };
 
 export default TextInput;
