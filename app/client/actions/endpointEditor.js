@@ -1,19 +1,19 @@
 /**
- * endpointView Actions
+ * endpointEditor Actions
  */
 
-export const SET_ENDPOINT_VIEW = 'set@endpointView';
-export const ADD_ENDPOINT_PARAM = 'addParam@endpointView';
-export const UPDATE_ENDPOINT_PARAM = 'updateParam@endpointView';
-export const REMOVE_ENDPOINT_PARAM = 'removeParam@endpointView';
-export const UPDATE_ENDPOINT_DESCRIPTION = 'updateDescription@endpointView';
-export const ADD_RESPONSE = 'addResponse@endpointView';
-export const UPDATE_RESPONSE = 'updateResponse@endpointView';
-export const ADD_REQUEST = 'addRequest@endpointView';
-export const UPDATE_REQUEST = 'updateRequest@endpointView';
-export const SET_RESPONSES = 'setResponses@endpointView';
-export const SET_REQUEST = 'setRequest@endpointView';
-export const REMOVE_RESPONSE = 'removeResponse@endpointView';
+export const SET_ENDPOINT_EDITOR = 'set@EndpointEditor';
+export const ADD_ENDPOINT_PARAM = 'addParam@EndpointEditor';
+export const UPDATE_ENDPOINT_PARAM = 'updateParam@EndpointEditor';
+export const REMOVE_ENDPOINT_PARAM = 'removeParam@EndpointEditor';
+export const UPDATE_ENDPOINT_DESCRIPTION = 'updateDescription@EndpointEditor';
+export const ADD_RESPONSE = 'addResponse@EndpointEditor';
+export const UPDATE_RESPONSE = 'updateResponse@EndpointEditor';
+export const ADD_REQUEST = 'addRequest@EndpointEditor';
+export const UPDATE_REQUEST = 'updateRequest@EndpointEditor';
+export const SET_RESPONSES = 'setResponses@EndpointEditor';
+export const SET_REQUEST = 'setRequest@EndpointEditor';
+export const REMOVE_RESPONSE = 'removeResponse@EndpointEditor';
 
 export function setRequest(request) {
   return {
@@ -29,9 +29,9 @@ export function setResponses(responses) {
   };
 }
 
-export function setEndpointView(endpointData) {
+export function setEndpointEditor(endpointData) {
   return {
-    type: SET_ENDPOINT_VIEW,
+    type: SET_ENDPOINT_EDITOR,
     payload: endpointData,
   };
 }

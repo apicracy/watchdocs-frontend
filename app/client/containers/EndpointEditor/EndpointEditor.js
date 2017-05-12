@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styles from './EndpointDoc.css';
+import styles from './EndpointEditor.css';
 
-import { loadEndpoint, removeEndpoint, removeUrlParams, removeResponse } from 'services/endpointView';
+import { loadEndpoint, removeEndpoint, removeUrlParams, removeResponse } from 'services/endpointEditor';
 
-import { loadGroup } from 'services/groupView';
+import { loadGroup } from 'services/groupEditor';
 
 import Button from 'components/Button/Button';
 
@@ -16,7 +16,7 @@ import WarningLabel from 'components/DocumentationBlock/Labels/WarningLabel';
 import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
 
 /* Actions */
-import { updateEndpointDescription } from 'actions/endpointView';
+import { updateEndpointDescription } from 'actions/endpointEditor';
 
 import {
   setMethod,
@@ -31,20 +31,17 @@ import { MODAL_NAME as EDIT_URL_MODAL } from 'modals/EditEndpointModal/EditEndpo
 import { getFullLink } from 'services/helpers';
 
 @connect(store => ({
-  endpoint: store.endpointView,
-  group: store.groupView,
-  endpointList: store.endpoints,
-  responses: store.endpointView.responses,
+  endpoint: store.endpointEditor,
+  responses: store.endpointEditor.responses,
   projectUrl: store.projects.activeProject.base_url,
-  isFetching: store.endpointView.isFetching,
+  isFetching: store.endpointEditor.isFetching,
 }))
-class EndpointDoc extends React.Component {
+class EndpointEditor extends React.Component {
 
   static propTypes = {
     params: React.PropTypes.object, // supplied by react-router
     dispatch: React.PropTypes.func,
     endpoint: React.PropTypes.object,
-    group: React.PropTypes.object,
     endpointList: React.PropTypes.array,
     router: React.PropTypes.object,
     responses: React.PropTypes.array,
@@ -57,21 +54,13 @@ class EndpointDoc extends React.Component {
   }
 
   componentDidMount() {
-    this.loadGroup();
     this.loadEndpoint();
   }
 
   componentDidUpdate(prevProps) {
     const {
       endpoint_id: endpointId,
-      group_id: groupId,
     } = this.props.params;
-
-    // Reload view when endpoints are loaded
-    if (prevProps.endpointList !== this.props.endpointList) {
-      this.loadEndpoint();
-      this.loadGroup();
-    }
 
     if (
       prevProps.params.endpoint_id !== endpointId &&
@@ -79,21 +68,10 @@ class EndpointDoc extends React.Component {
     ) {
       this.loadEndpoint();
     }
-
-    if (
-      prevProps.params.group_id !== groupId &&
-      this.props.group.id !== parseInt(groupId, 10)
-    ) {
-      this.loadGroup();
-    }
   }
 
   loadEndpoint() {
     this.props.dispatch(loadEndpoint(parseInt(this.props.params.endpoint_id, 10)));
-  }
-
-  loadGroup() {
-    this.props.dispatch(loadGroup(parseInt(this.props.params.group_id, 10)));
   }
 
   onSecutityChange = (activatedItem) => {
@@ -312,4 +290,4 @@ class EndpointDoc extends React.Component {
   }
 }
 
-export default EndpointDoc;
+export default EndpointEditor;

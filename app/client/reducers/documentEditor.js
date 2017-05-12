@@ -2,14 +2,14 @@ import {
   SET_NAME,
   SET_DESCRIPTION,
   RESET,
-} from 'actions/documentView';
+} from 'actions/documentEditor';
 
 const INITIAL_STATE = {
   name: '',
   description: '',
 };
 
-export function documentView(state = INITIAL_STATE, action) {
+export function documentEditor(state = INITIAL_STATE, action) {
   const { type, payload } = action;
 
   switch (type) {

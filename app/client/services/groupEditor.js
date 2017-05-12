@@ -1,4 +1,4 @@
-import { setGroupView } from 'actions/groupView';
+import { setGroupEditor } from 'actions/groupEditor';
 
 import { filterByIdAndType } from 'services/endpoint-service';
 
@@ -7,6 +7,6 @@ export function loadGroup(id) {
     const { endpoints } = getState();
     const group = filterByIdAndType([...endpoints], id, 'Group');
 
-    dispatch(setGroupView(group));
+    dispatch(setGroupEditor(group));
   };
 }

@@ -1,6 +1,6 @@
 import {
   SET_GROUP_VIEW,
-} from 'actions/groupView';
+} from 'actions/groupEditor';
 
 const INITIAL_STATE = {
   id: null,
@@ -9,7 +9,7 @@ const INITIAL_STATE = {
   fullPath: '',
 };
 
-export function groupView(state = INITIAL_STATE, action) {
+export function groupEditor(state = INITIAL_STATE, action) {
   const { type, payload } = action;
 
   switch (type) {

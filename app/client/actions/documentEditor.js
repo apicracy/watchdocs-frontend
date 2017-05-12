@@ -1,10 +1,10 @@
 /**
- * documentView Actions
+ * documentEditor Actions
  */
 
-export const SET_NAME = 'setName@documentView';
-export const SET_DESCRIPTION = 'setDescription@documentView';
-export const RESET = 'reset@documentView';
+export const SET_NAME = 'setName@documentEditor';
+export const SET_DESCRIPTION = 'setDescription@documentEditor';
+export const RESET = 'reset@documentEditor';
 
 export function setName(value) {
   return {

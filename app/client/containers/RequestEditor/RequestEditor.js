@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styles from './RequestParam.css';
+import styles from './RequestEditor.css';
 
-import { loadEndpoint } from 'services/endpointView';
-import { loadGroup } from 'services/groupView';
+import { loadEndpoint } from 'services/endpointEditor';
+import { loadGroup } from 'services/groupEditor';
 
 import Button from 'components/Button/Button';
 import Icon from 'components/Icon/Icon';
@@ -18,30 +18,30 @@ import CustomIcon from 'components/Icon/CustomIcon';
 
 import { openModal } from 'actions/modals';
 import { setStatus, saveRequestParam,
-  setRequestParam, addParam, reset, saveJson,
-} from 'services/requestParams';
+  loadRequest, addParam, reset, saveJson,
+} from 'services/requestEditor';
 import { getFullLink } from 'services/helpers';
 
 @connect((store) => {
-  const headers = (store.requestParams.headers) ?
-    store.requestParams.headers.sort((a, b) => a.id > b.id) : [];
+  const headers = (store.requestEditor.headers) ?
+    store.requestEditor.headers.sort((a, b) => a.id > b.id) : [];
 
   const hasNewHeaders = !!headers.find(param => param.isNew);
 
   return {
-    endpoint: store.endpointView,
-    group: store.groupView,
+    endpoint: store.endpointEditor,
+    group: store.groupEditor,
     endpointList: store.endpoints,
 
-    baseJSONSchema: store.requestParams.base,
-    draftJSONSchema: store.requestParams.draft,
+    baseJSONSchema: store.requestEditor.base,
+    draftJSONSchema: store.requestEditor.draft,
     hasNewHeaders,
     headers,
     projectUrl: store.projects.activeProject.base_url,
   };
 })
-class RequestParam extends React.Component {
 
+class RequestEditor extends React.Component {
   static propTypes = {
     params: React.PropTypes.object, // supplied by react-router
     dispatch: React.PropTypes.func,
@@ -65,7 +65,7 @@ class RequestParam extends React.Component {
     } = this.props;
 
     if (this.props.params.endpoint_id) {
-      dispatch(setRequestParam(this.props.params.endpoint_id));
+      dispatch(loadRequest(this.props.params.endpoint_id));
     } else {
       dispatch(reset());
     }
@@ -210,4 +210,4 @@ class RequestParam extends React.Component {
   }
 }
 
-export default RequestParam;
+export default RequestEditor;

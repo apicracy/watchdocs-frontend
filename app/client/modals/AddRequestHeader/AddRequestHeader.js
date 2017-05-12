@@ -7,9 +7,9 @@ import TextArea from 'components/Form/TextArea/TextArea';
 import CheckBox from 'components/Form/CheckBox/CheckBox';
 
 import { closeModal } from 'actions/modals';
-import { addHeader, updateHeader } from 'services/requestParams';
+import { addHeader, updateHeader } from 'services/requestEditor';
 
-export const MODAL_NAME = 'addRequestParam';
+export const MODAL_NAME = 'addRequestHeader';
 
 const warningMessage = {
   type: 'warning',
@@ -20,10 +20,10 @@ const warningMessage = {
 @connect(store => ({
   isVisible: !!store.modals[MODAL_NAME],
   modals: store.modals,
-
-  headers: store.requestParams.headers,
+  headers: store.requestEditor.headers,
 }))
-class addRequestParam extends React.Component {
+
+class addRequestHeader extends React.Component {
 
   static propTypes = {
     isVisible: React.PropTypes.bool,
@@ -144,4 +144,4 @@ class addRequestParam extends React.Component {
   }
 }
 
-export default addRequestParam;
+export default addRequestHeader;

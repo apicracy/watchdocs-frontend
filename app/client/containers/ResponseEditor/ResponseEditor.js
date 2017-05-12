@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styles from './ResponseParam.css';
+import styles from './ResponseEditor.css';
 
-import { loadEndpoint } from 'services/endpointView';
-import { loadGroup } from 'services/groupView';
+import { loadEndpoint } from 'services/endpointEditor';
+import { loadGroup } from 'services/groupEditor';
 
 import Button from 'components/Button/Button';
 import Icon from 'components/Icon/Icon';
@@ -18,29 +18,29 @@ import Select from 'components/Form/Select/Select';
 
 import { openModal } from 'actions/modals';
 import { setStatus, saveResponseParam,
-  setResponseParam, addParam, reset, saveJson,
-} from 'services/responseParams';
+  loadResponse, addParam, reset, saveJson,
+} from 'services/responseEditor';
 import { getFullLink } from 'services/helpers';
 
 @connect((store) => {
-  const headers = (store.responseParams.headers) ?
-    store.responseParams.headers.sort((a, b) => a.id > b.id) : [];
+  const headers = (store.responseEditor.headers) ?
+    store.responseEditor.headers.sort((a, b) => a.id > b.id) : [];
   const hasNewHeaders = !!headers.find(param => param.isNew);
 
   return {
-    endpoint: store.endpointView,
-    group: store.groupView,
+    endpoint: store.endpointEditor,
+    group: store.groupEditor,
     endpointList: store.endpoints,
 
-    status: store.responseParams.status,
-    baseJSONSchema: store.responseParams.base,
-    draftJSONSchema: store.responseParams.draft,
+    status: store.responseEditor.status,
+    baseJSONSchema: store.responseEditor.base,
+    draftJSONSchema: store.responseEditor.draft,
     headers,
     hasNewHeaders,
     projectUrl: store.projects.activeProject.base_url,
   };
 })
-class ResponseParam extends React.Component {
+class ResponseEditor extends React.Component {
 
   static propTypes = {
     params: React.PropTypes.object, // supplied by react-router
@@ -82,7 +82,7 @@ class ResponseParam extends React.Component {
     } = this.props;
 
     if (this.props.params.response_id) {
-      dispatch(setResponseParam(this.props.params.response_id));
+      dispatch(loadResponse(this.props.params.response_id));
     } else {
       dispatch(reset());
     }
@@ -242,4 +242,4 @@ class ResponseParam extends React.Component {
   }
 }
 
-export default ResponseParam;
+export default ResponseEditor;

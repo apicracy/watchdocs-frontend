@@ -4,8 +4,8 @@ import AddEndpointModal from 'modals/AddEndpointModal/AddEndpointModal';
 /* Endpoint Documentation view modals */
 import AddUrlParam from 'modals/AddUrlParam/AddUrlParam';
 import EditEndpointDescription from 'modals/EditEndpointDescription/EditEndpointDescription';
-import AddResponseParam from 'modals/AddResponseParam/AddResponseParam';
-import AddRequestParam from 'modals/AddRequestParam/AddRequestParam';
+import AddRequestHeader from 'modals/AddRequestHeader/AddRequestHeader';
+import AddResponseHeader from 'modals/AddResponseHeader/AddResponseHeader';
 import EditEndpointModal from 'modals/EditEndpointModal/EditEndpointModal';
 import AddResponse from 'modals/AddResponse/AddResponse';
 
@@ -14,8 +14,8 @@ const Modals = ({ params }) => (
     <AddEndpointModal />
     <AddUrlParam />
     <EditEndpointDescription />
-    <AddResponseParam />
-    <AddRequestParam />
+    <AddRequestHeader />
+    <AddResponseHeader />
     <EditEndpointModal />
     <AddResponse params={params} />
   </div>

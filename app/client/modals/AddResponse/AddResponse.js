@@ -8,15 +8,15 @@ import Button from 'components/Button/Button';
 import ButtonGroup from 'components/ButtonGroup/ButtonGroup';
 import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
 
-import { addResponse } from 'services/endpointView';
+import { addResponse } from 'services/endpointEditor';
 import { closeModal } from 'actions/modals';
 
 export const MODAL_NAME = 'addResponse';
 
 @connect(store => ({
   isVisible: !!store.modals[MODAL_NAME],
-  responses: store.endpointView.responses,
-  isFetching: store.endpointView.isFetching,
+  responses: store.endpointEditor.responses,
+  isFetching: store.endpointEditor.isFetching,
 }))
 
 class addResponseModal extends React.Component {

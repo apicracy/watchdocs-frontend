@@ -1,5 +1,5 @@
 import {
-  SET_ENDPOINT_VIEW,
+  SET_ENDPOINT_EDITOR,
   ADD_ENDPOINT_PARAM,
   UPDATE_ENDPOINT_PARAM,
   UPDATE_ENDPOINT_DESCRIPTION,
@@ -11,7 +11,7 @@ import {
   SET_REQUEST,
   REMOVE_ENDPOINT_PARAM,
   REMOVE_RESPONSE,
-} from 'actions/endpointView';
+} from 'actions/endpointEditor';
 
 const INITIAL_STATE = {
   isDirty: false,
@@ -25,11 +25,11 @@ const INITIAL_STATE = {
   description: null,
 };
 
-export function endpointView(state = INITIAL_STATE, action) {
+export function endpointEditor(state = INITIAL_STATE, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case SET_ENDPOINT_VIEW: return setEndpointView(state, payload);
+    case SET_ENDPOINT_EDITOR: return setEndpointEditor(state, payload);
     case ADD_ENDPOINT_PARAM: return addEndpointParam(state, payload);
     case UPDATE_ENDPOINT_PARAM: return updateEndpointParam(state, payload);
     case UPDATE_ENDPOINT_DESCRIPTION: return updateEndpointDescription(state, payload);
@@ -75,7 +75,7 @@ function setResponses(state, payload) {
   };
 }
 
-function setEndpointView(state, payload) {
+function setEndpointEditor(state, payload) {
   const newEndpointView = payload || {};
 
   return {
