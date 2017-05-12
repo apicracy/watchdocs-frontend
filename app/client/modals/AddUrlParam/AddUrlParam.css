@@ -1,0 +1,9 @@
+.required {
+  margin: -10px 0 10px 10px;
+  color: red;
+}
+
+.requiredSelect {
+  margin: 0 0 10px 10px;
+  color: red;
+}

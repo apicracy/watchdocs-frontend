@@ -8,7 +8,7 @@ const errorMessage = message => (
 );
 
 const TextInput = ({ placeholder, value, defaultValue, onChange, iconRight,
-  validationErrorMsg, validation, variant, variants, type, name }) => {
+  validationErrorMsg, validation, variant, variants, type, name, onBlur }) => {
   const variantStyles = variants.map(v => styles[v]);
   const rootClasses = [
     styles.wrapper,
@@ -47,6 +47,7 @@ const TextInput = ({ placeholder, value, defaultValue, onChange, iconRight,
           className={variantInputStyle}
           value={value || undefined}
           defaultValue={defaultValue}
+          onBlur={onBlur}
           name={name}
         />
         <span className={styles.addon}>{ iconRight }</span>
@@ -55,7 +56,6 @@ const TextInput = ({ placeholder, value, defaultValue, onChange, iconRight,
     </div>
   );
 };
-
 
 TextInput.propTypes = {
   placeholder: React.PropTypes.string,
@@ -68,6 +68,7 @@ TextInput.propTypes = {
   validation: React.PropTypes.object,
   validationErrorMsg: React.PropTypes.string,
   variants: React.PropTypes.array,
+  onBlur: React.PropTypes.func,
   name: React.PropTypes.string,
 };
 
@@ -78,6 +79,7 @@ TextInput.defaultProps = {
   value: '',
   onChange: () => {},
   validation: new RegExp(/./g),
+  onBlur: () => {},
   name: '',
 };
 

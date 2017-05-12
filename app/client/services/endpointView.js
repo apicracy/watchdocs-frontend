@@ -35,17 +35,10 @@ export function addEndpointParam(endpointParam) {
       body: JSON.stringify(endpointParam),
     };
 
-    dispatch(setEndpointView({ isFetching: true }));
     return http('/api/v1/url_params/', options)
       .then(response => response.json())
       .then((data) => {
         dispatch(addEndpointParamAction(data));
-        dispatch(setEndpointView({ isFetching: false }));
-      })
-      .catch(() => {
-        // Remove after redux-form integration
-        dispatch(setEndpointView({ isFetching: false }));
-        return Promise.reject([]);
       });
   };
 }
