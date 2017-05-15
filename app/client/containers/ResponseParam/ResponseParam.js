@@ -14,6 +14,7 @@ import { browserHistory } from 'react-router';
 import DocumentationBlock, { Row } from 'components/DocumentationBlock/DocumentationBlock';
 import WarningLabel from 'components/DocumentationBlock/Labels/WarningLabel';
 import JSONSEditor from 'components/JSONSEditor/JSONSEditor';
+import CodeEditor from 'components/CodeEditor/CodeEditor';
 import Select from 'components/Form/Select/Select';
 
 import { openModal } from 'actions/modals';
@@ -213,10 +214,9 @@ class ResponseParam extends React.Component {
           description="This is title of the section we're going
             to display in documentation and in navigation."
         >
-          <JSONSEditor
-            base={baseJSONSchema} draft={draftJSONSchema}
-            onSave={this.onSaveJson}
-          />
+        <CodeEditor base={baseJSONSchema} draft={draftJSONSchema} />
+
+
         </DocumentationBlock>
         { /*
         <DocumentationBlock

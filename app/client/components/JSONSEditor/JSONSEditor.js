@@ -2,7 +2,15 @@ import React from 'react';
 import styles from './JSONSEditor.css';
 
 import LineOfCode from './LineOfCode';
-import { JSONStoJSON, compareJSONS, acceptJSONS, rejectJSONS, cleanJSONS, JSONtoJSONS } from 'services/JSONSEditor';
+
+import {
+  JSONSchemaToJSON,
+  compareJSONSchema,
+  acceptJSONSchema,
+  rejectJSONSchema,
+  cleanJSONSchema,
+  JSONtoJSONSchema
+} from 'services/JSONSchemaEditor';
 
 class JSONSEditor extends React.Component {
   static propTypes = {
@@ -31,8 +39,8 @@ class JSONSEditor extends React.Component {
   }
 
   compare = (base, draft) => {
-    const temp = compareJSONS(base, draft);
-    const linesOfCode = JSONStoJSON(temp);
+    const temp = compareJSONSchema(base, draft);
+    const linesOfCode = JSONSchemaToJSON(temp);
     const textAreaLines = this.getLines(linesOfCode);
     this.setState({
       linesOfCode,
@@ -50,8 +58,8 @@ class JSONSEditor extends React.Component {
       temp,
     } = this.state;
 
-    const newOutput = acceptJSONS(temp, index);
-    const linesOfCode = JSONStoJSON(newOutput);
+    const newOutput = acceptJSONSchema(temp, index);
+    const linesOfCode = JSONSchemaToJSON(newOutput);
     const textAreaLines = this.getLines(linesOfCode);
     this.setState({
       linesOfCode,
@@ -67,8 +75,8 @@ class JSONSEditor extends React.Component {
       base,
     } = this.state;
 
-    const newOutput = rejectJSONS(temp, index, base);
-    const linesOfCode = JSONStoJSON(newOutput);
+    const newOutput = rejectJSONSchema(temp, index, base);
+    const linesOfCode = JSONSchemaToJSON(newOutput);
     const textAreaLines = this.getLines(linesOfCode);
     this.setState({
       linesOfCode,
@@ -77,7 +85,7 @@ class JSONSEditor extends React.Component {
       isDirty: true,
     });
 
-    this.onSave(cleanJSONS(newOutput));
+    this.onSave(cleanJSONSchema(newOutput));
   }
 
   componentDidUpdate(prevProps) {
@@ -130,8 +138,8 @@ class JSONSEditor extends React.Component {
   onChange = (event) => {
     const json = (event && event.target) ? event.target.value : {};
 
-    const jsons = JSONtoJSONS(json);
-    const lines = JSONStoJSON(jsons);
+    const jsons = JSONtoJSONSchema(json);
+    const lines = JSONSchemaToJSON(jsons);
 
     if (lines.length > 0) {
       const linesOfCode = lines;
@@ -170,7 +178,7 @@ class JSONSEditor extends React.Component {
       invalidSchema: false,
     });
 
-    this.props.onSave(cleanJSONS(this.state.output));
+    this.props.onSave(cleanJSONSchema(this.state.output));
   }
 
   render() {

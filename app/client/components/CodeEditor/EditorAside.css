@@ -1,0 +1,41 @@
+.attribute {
+  width: 50px;
+  align-items: flex-end;
+  justify-content: center;
+  display: flex;
+  height: 25px;
+}
+
+.attributeSpan {
+  color: #848484;
+  text-align: center;
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+
+  /* Rules below not implemented in browsers yet */
+  -o-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+.attributeSpanReq {
+  composes: attributeSpan;
+  color: #c9c9c9;
+}
+
+.oneLine {
+  flex: 1;
+  height: 25px;
+  display: flex;
+}
+
+.oneLineSelected {
+  composes: oneLine;
+  background: rgba(106, 106, 106, 0.8);
+}
+
+.lineContainer {
+  display: flex;
+  height: 25px;
+}

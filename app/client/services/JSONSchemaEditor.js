@@ -3,12 +3,12 @@ import generateSchema from 'generate-schema';
 
 let i = 0;
 
-export function cleanJSONS(output) {
+export function cleanJSONSchema(output) {
   const newOutput = Array.isArray(output) ? [].concat(output) : Object.assign({}, output);
   if (typeof newOutput === 'object') {
     Object.keys(newOutput).map((prop) => {
       if (typeof newOutput[prop] === 'object') {
-        newOutput[prop] = cleanJSONS(newOutput[prop]);
+        newOutput[prop] = cleanJSONSchema(newOutput[prop]);
       }
       if (newOutput[prop] === null) {
         delete newOutput[prop];
@@ -67,7 +67,7 @@ export function cleanJSONS(output) {
   return newOutput;
 }
 
-export function acceptJSONS(output, index) {
+export function acceptJSONSchema(output, index) {
   const newOutput = output;
   if (output.index && (output.index === index)) {
     newOutput.isAccepted = true;
@@ -76,7 +76,7 @@ export function acceptJSONS(output, index) {
   if (typeof output === 'object') {
     Object.keys(output).map((prop) => {
       if (typeof output[prop] === 'object') {
-        acceptJSONS(output[prop], index);
+        acceptJSONSchema(output[prop], index);
       }
 
       if (prop === 'index' && (newOutput[prop] === index)) {
@@ -110,7 +110,7 @@ export function acceptJSONS(output, index) {
   return newOutput;
 }
 
-export function rejectJSONS(output, index, base) {
+export function rejectJSONSchema(output, index, base) {
   let newOutput = Array.isArray(output) ? [].concat(output) : Object.assign({}, output);
   if (output.index && (output.index === index)) {
     newOutput = Object.assign({}, base);
@@ -120,7 +120,7 @@ export function rejectJSONS(output, index, base) {
   if (typeof output === 'object') {
     Object.keys(output).map((prop) => {
       if (typeof output[prop] === 'object') {
-        newOutput[prop] = rejectJSONS(output[prop], index, (base ? base[prop] : {}));
+        newOutput[prop] = rejectJSONSchema(output[prop], index, (base ? base[prop] : {}));
       }
 
       if (prop === 'index' && (newOutput[prop] === index)) {
@@ -135,7 +135,7 @@ export function rejectJSONS(output, index, base) {
   return newOutput;
 }
 
-export function compareJSONS(base, draft) {
+export function compareJSONSchema(base, draft) {
   i = 0;
   const output = compare(base, draft);
   return output;
@@ -252,7 +252,7 @@ export function compare(base, draft) {
   return output;
 }
 
-export function JSONtoJSONS(json) {
+export function JSONtoJSONSchema(json) {
   try {
     const obj = JSON.parse(json);
     const schema = generateSchema.json(obj);
@@ -263,10 +263,10 @@ export function JSONtoJSONS(json) {
   }
 }
 
-export function JSONStoJSON(schema) {
+export function JSONSchemaToJSON(schema) {
   let JSONObject = [];
   if (schema) {
-    JSONObject = getLines('', schema, false, 0);
+    JSONObject = getLines('', schema, true, 0);
   }
   return JSONObject;
 }
@@ -316,7 +316,7 @@ const getObjectLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove,
   const keys = Object.keys(schema.properties);
 
   const linesArray = keys.map((prop, index) => {
-    let isReqProp = false;
+    let isReqProp = true;
     if (schema.required) {
       isReqProp = schema.required.indexOf(prop) > -1;
     }
