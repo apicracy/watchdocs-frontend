@@ -133,8 +133,6 @@ export function addResponse(responseParam) {
       body: JSON.stringify(responseParam),
     };
 
-    dispatch(setEndpointEditor({ isFetching: true }));
-
     return http('/api/v1/responses/', options)
       .then(response => response.json())
       .then((data) => {
@@ -143,13 +141,7 @@ export function addResponse(responseParam) {
         const url = `/${urlFormatProjectName(name)}/editor/undefined/endpoint/${endpointId}/response/${data.id}`;
 
         browserHistory.push(url);
-        dispatch(setEndpointEditor({ isFetching: false }));
         dispatch(addResponseAction(data));
-      })
-      .catch(() => {
-        // Remove after redux-form integration
-        dispatch(setEndpointEditor({ isFetching: false }));
-        return Promise.reject([]);
       });
   };
 }

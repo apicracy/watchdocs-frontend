@@ -4,8 +4,6 @@ import styles from './EndpointEditor.css';
 
 import { loadEndpoint, removeEndpoint, removeUrlParams, removeResponse } from 'services/endpointEditor';
 
-import { loadGroup } from 'services/groupEditor';
-
 import Button from 'components/Button/Button';
 
 import Icon from 'components/Icon/Icon';
@@ -42,7 +40,6 @@ class EndpointEditor extends React.Component {
     params: React.PropTypes.object, // supplied by react-router
     dispatch: React.PropTypes.func,
     endpoint: React.PropTypes.object,
-    endpointList: React.PropTypes.array,
     router: React.PropTypes.object,
     responses: React.PropTypes.array,
     projectUrl: React.PropTypes.string,

@@ -40,7 +40,6 @@ export const httpNoAuth = (url, options = {}) => (
 
 export default function http(url, options = {}) {
   const JWT = localStorage.getItem('JWT');
-
   return fetch(`${API_URL}${url}`, {
     method: 'GET',
     headers: {

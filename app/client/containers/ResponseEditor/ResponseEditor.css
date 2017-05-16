@@ -34,3 +34,33 @@
   justify-content: space-between;
   margin: 0 15px;
 }
+
+.statusContainer {
+  transition: all 300ms ease;
+  display: flex;
+  background: white;
+  border-radius: 5px;
+  margin-bottom: 40px;
+  height: 50px;
+  padding: 0 20px;
+  width: 100%;
+  border: 0;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.status {
+  flex-grow: 1;
+  color: #7f7d94;
+  text-align: left;
+  font-size: 1.2em;
+}
+
+.statusEdit {
+  color: #d1d0d7;
+}
+
+.statusContainer:hover .statusEdit {
+  color: #7f7d94;
+}

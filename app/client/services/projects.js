@@ -53,7 +53,6 @@ function activateProject(dispatch, project) {
       browserHistory.push(`/${projectName}`);
     }
   });
-
 }
 
 function getActiveProjectFromCache(data) {
