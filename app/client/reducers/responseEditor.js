@@ -5,7 +5,7 @@ import {
   SET_DRAFT_SCHEMA,
   SET_HEADERS,
   RESET,
-} from 'actions/responseParams';
+} from 'actions/responseEditor';
 
 const INITIAL_STATE = {
   status: {},
@@ -14,7 +14,7 @@ const INITIAL_STATE = {
   headers: [],
 };
 
-export function responseParams(state = INITIAL_STATE, action) {
+export function responseEditor(state = INITIAL_STATE, action) {
   const { type, payload } = action;
 
   switch (type) {

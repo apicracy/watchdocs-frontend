@@ -1,9 +1,8 @@
-export const SET_REQUEST = 'setRequest@requestParam';
-export const SET_STATUS = 'setStatus@requestParam';
-export const SET_BASE_SCHEMA = 'setBaseSchema@requestParam';
-export const SET_DRAFT_SCHEMA = 'setDraftSchema@requestParam';
-export const SET_HEADERS = 'setHeaders@requestParam';
-export const RESET = 'reset@requestParam';
+export const SET_REQUEST = 'setRequest@requestEditor';
+export const SET_STATUS = 'setStatus@requestEditor';
+export const SET_BASE_SCHEMA = 'setBaseSchema@requestEditor';
+export const SET_DRAFT_SCHEMA = 'setDraftSchema@requestEditor';
+export const RESET = 'reset@requestEditor';
 
 export function setRequest(data) {
   return {
@@ -29,13 +28,6 @@ export function setBaseSchema(value) {
 export function setDraftSchema(value) {
   return {
     type: SET_DRAFT_SCHEMA,
-    payload: value,
-  };
-}
-
-export function setHeaders(value) {
-  return {
-    type: SET_HEADERS,
     payload: value,
   };
 }

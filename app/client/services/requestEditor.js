@@ -1,12 +1,11 @@
 import {
   setRequest as setRequestAction,
   setStatus as setStatusAction,
-  setHeaders as setHeadersAction,
   reset as resetAction,
-} from 'actions/requestParams';
+} from 'actions/requestEditor';
 import {
   setRequest,
-} from 'actions/endpointView';
+} from 'actions/endpointEditor';
 
 import http from 'services/http';
 
@@ -22,31 +21,7 @@ export function setStatus(value) {
   };
 }
 
-export function addHeader(header) {
-  return (dispatch, getState) => {
-    let newHeaders = [];
-
-    if (getState().requestParams.headers) {
-      newHeaders = newHeaders.concat(getState().requestParams.headers);
-    }
-
-    newHeaders.push(header);
-    dispatch(setHeadersAction(newHeaders));
-  };
-}
-export function updateHeader(header) {
-  return (dispatch, getState) => {
-    const {
-      headers,
-    } = getState().requestParams;
-
-    const newHeaders = headers.map(param => ((param.id === header.id) ? header : param));
-
-    dispatch(setHeadersAction(newHeaders));
-  };
-}
-
-export function saveRequestParam() {
+export function saveRequest() {
   return (dispatch, getState) => {
     const {
       requestParams,
@@ -64,7 +39,7 @@ export function saveRequestParam() {
   };
 }
 
-export function setRequestParam(id) {
+export function loadRequest(id) {
   return (dispatch) => {
     dispatch(resetAction());
 
@@ -79,20 +54,6 @@ export function setRequestParam(id) {
 
         dispatch(setRequestAction(elem));
       });
-  };
-}
-
-export function addParam(id) {
-  return (dispatch, getState) => {
-    const {
-      headers,
-    } = getState().requestParams;
-
-    const elem = headers.find(param => param.id === id);
-    const newHeaders = headers
-      .map(param => ((param.id === id) ? { ...elem, isNew: false } : param));
-
-    dispatch(setHeadersAction(newHeaders));
   };
 }
 

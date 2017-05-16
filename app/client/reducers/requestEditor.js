@@ -5,7 +5,7 @@ import {
   SET_DRAFT_SCHEMA,
   SET_HEADERS,
   RESET,
-} from 'actions/requestParams';
+} from 'actions/requestEditor';
 
 const INITIAL_STATE = {
   base: null,
@@ -13,7 +13,7 @@ const INITIAL_STATE = {
   headers: [],
 };
 
-export function requestParams(state = INITIAL_STATE, action) {
+export function requestEditor(state = INITIAL_STATE, action) {
   const { type, payload } = action;
 
   switch (type) {
