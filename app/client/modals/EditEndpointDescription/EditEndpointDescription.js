@@ -9,15 +9,15 @@ import ButtonGroup from 'components/ButtonGroup/ButtonGroup';
 import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
 
 import { closeModal } from 'actions/modals';
-import { updateEndpointDescription as save } from 'services/endpointView';
+import { updateEndpointDescription as save } from 'services/endpointEditor';
 
 export const MODAL_NAME = 'EditEndpointDescription';
 
 /* eslint react/no-unused-prop-types: 0 */
 @connect(store => ({
   isVisible: !!store.modals[MODAL_NAME],
-  endpoint: store.endpointView,
-  isFetching: store.endpointView.isFetching,
+  endpoint: store.endpointEditor,
+  isFetching: store.endpointEditor.isFetching,
 }))
 class EditEndpointDescription extends React.Component {
   static propTypes ={

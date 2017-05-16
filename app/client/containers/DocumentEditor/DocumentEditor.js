@@ -3,18 +3,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import TinyMCE from 'react-tinymce-input';
 
-import styles from './Wiki.css';
+import styles from './DocumentEditor.css';
 import Button from 'components/Button/Button';
 import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock';
 import TextInput from 'components/Form/TextInput/TextInput';
-import { loadDocument } from 'services/documentView';
+import { loadDocument } from 'services/documentEditor';
 
 @connect(state => ({
   endpointList: state.endpoints,
-  name: state.documentView.name,
-  description: state.documentView.description,
+  name: state.documentEditor.name,
+  description: state.documentEditor.description,
 }))
-export default class Document extends React.Component {
+
+export default class DocumentEditor extends React.Component {
   static propTypes = {
     params: React.PropTypes.object, // supplied by react-router
     name: React.PropTypes.string,

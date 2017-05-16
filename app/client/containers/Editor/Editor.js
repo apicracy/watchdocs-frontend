@@ -8,8 +8,8 @@ import Container from 'components/Container/Container';
 @connect(store => ({
   endpoints: store.endpoints,
 }))
-class ApiDoc extends React.Component {
 
+class Editor extends React.Component {
   static propTypes = {
     children: React.PropTypes.oneOfType([
       React.PropTypes.arrayOf(React.PropTypes.node),
@@ -20,11 +20,11 @@ class ApiDoc extends React.Component {
 
   componentWillMount() {
     // Initial check
-    ApiDoc.redirect(this.props);
+    Editor.redirect(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    ApiDoc.redirect(nextProps);
+    Editor.redirect(nextProps);
   }
 
   static redirect(props) {
@@ -57,4 +57,4 @@ class ApiDoc extends React.Component {
   }
 }
 
-export default ApiDoc;
+export default Editor;

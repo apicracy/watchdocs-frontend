@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styles from './ResponseParam.css';
+import styles from './ResponseEditor.css';
 
-import { loadEndpoint } from 'services/endpointView';
-import { loadGroup } from 'services/groupView';
+import { loadEndpoint } from 'services/endpointEditor';
+import { loadGroup } from 'services/groupEditor';
 
 import ResponseStatusForm from 'components/ResponseForm/ResponseStatusForm';
 import BackLink from 'components/BackLink/BackLink';
@@ -12,22 +12,21 @@ import { browserHistory } from 'react-router';
 import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock';
 import JSONSEditor from 'components/JSONSEditor/JSONSEditor';
 
-import { loadResponse, reset, saveJson, updateHttpStatus } from 'services/responseParams';
+import { loadResponse, reset, saveJson, updateHttpStatus } from 'services/responseEditor';
 import { getFullLink } from 'services/helpers';
 
-
 @connect(store => ({
-  endpoint: store.endpointView,
+  endpoint: store.endpointEditor,
   group: store.groupView,
   endpointList: store.endpoints,
 
-  http_status_code: store.responseParams.http_status_code,
-  baseJSONSchema: store.responseParams.base,
-  draftJSONSchema: store.responseParams.draft,
+  http_status_code: store.responseEditor.http_status_code,
+  baseJSONSchema: store.responseEditor.base,
+  draftJSONSchema: store.responseEditor.draft,
   projectUrl: store.projects.activeProject.base_url,
 }))
 
-class ResponseParam extends React.Component {
+class ResponseEditor extends React.Component {
   static propTypes = {
     params: React.PropTypes.object, // supplied by react-router
     dispatch: React.PropTypes.func,
@@ -155,4 +154,4 @@ class ResponseParam extends React.Component {
   }
 }
 
-export default ResponseParam;
+export default ResponseEditor;

@@ -1,19 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import styles from './GroupDoc.css';
+import styles from './GroupEditor.css';
 
-import { loadGroup } from 'services/groupView';
+import { loadGroup } from 'services/groupEditor';
 import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock';
 import Button from 'components/Button/Button';
 import TextInput from 'components/Form/TextInput/TextInput';
 import TinyMCE from 'react-tinymce-input';
 
 @connect(store => ({
-  group: store.groupView,
+  group: store.groupEditor,
   endpointList: store.endpoints,
 }))
-class GroupDoc extends React.Component {
+class GroupEditor extends React.Component {
 
   static propTypes = {
     params: React.PropTypes.object, // supplied by react-router
@@ -142,4 +142,4 @@ class GroupDoc extends React.Component {
   }
 }
 
-export default GroupDoc;
+export default GroupEditor;

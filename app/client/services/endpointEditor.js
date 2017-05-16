@@ -2,28 +2,28 @@ import http from 'services/http';
 import { browserHistory } from 'react-router';
 
 import {
-  setEndpointView,
+  setEndpointEditor,
   addEndpointParam as addEndpointParamAction,
   updateEndpointParam as updateEndpointParamAction,
   removeEndpointParam as removeEndpointParamAction,
   updateEndpointDescription as updateEndpointDescriptionAction,
   addResponse as addResponseAction,
   removeResponse as removeResponseAction,
-} from 'actions/endpointView';
+} from 'actions/endpointEditor';
 
 import { fetchEndpoints } from 'services/endpoints';
 import { urlFormatProjectName } from 'services/projects';
 
 export function loadEndpoint(id) {
   return (dispatch) => {
-    dispatch(setEndpointView({
+    dispatch(setEndpointEditor({
       isFetching: true,
     }));
 
     http(`/api/v1/endpoints/${id}`)
       .then(response => response.json())
       .then((data) => {
-        dispatch(setEndpointView({ ...data, isFetching: false }));
+        dispatch(setEndpointEditor({ ...data, isFetching: false }));
       });
   };
 }
@@ -50,16 +50,16 @@ export function updateEndpointParam(endpointParam) {
       body: JSON.stringify(endpointParam),
     };
 
-    dispatch(setEndpointView({ isFetching: true }));
+    dispatch(setEndpointEditor({ isFetching: true }));
     return http(`/api/v1/url_params/${endpointParam.id}`, options)
       .then(response => response.json())
       .then((data) => {
         dispatch(updateEndpointParamAction(data));
-        dispatch(setEndpointView({ isFetching: false }));
+        dispatch(setEndpointEditor({ isFetching: false }));
       })
       .catch(() => {
         // Remove after redux-form integration
-        dispatch(setEndpointView({ isFetching: false }));
+        dispatch(setEndpointEditor({ isFetching: false }));
         return Promise.reject([]);
       });
   };
@@ -71,16 +71,16 @@ export function removeUrlParams(id) {
       method: 'DELETE',
     };
 
-    dispatch(setEndpointView({ isFetching: true }));
+    dispatch(setEndpointEditor({ isFetching: true }));
     return http(`/api/v1/url_params/${id}`, options)
       .then(response => response.json())
       .then(() => {
         dispatch(removeEndpointParamAction(id));
-        dispatch(setEndpointView({ isFetching: false }));
+        dispatch(setEndpointEditor({ isFetching: false }));
       })
       .catch(() => {
         // Remove after redux-form integration
-        dispatch(setEndpointView({ isFetching: false }));
+        dispatch(setEndpointEditor({ isFetching: false }));
         return Promise.reject([]);
       });
   };
@@ -88,20 +88,20 @@ export function removeUrlParams(id) {
 
 export function removeEndpoint() {
   return (dispatch, getState) => {
-    const { id } = getState().endpointView;
+    const { id } = getState().endpointEditor;
     const name = getState().projects.activeProject.name;
     const url = urlFormatProjectName(name);
     const options = {
       method: 'DELETE',
     };
 
-    dispatch(setEndpointView({ isFetching: false }));
+    dispatch(setEndpointEditor({ isFetching: false }));
 
     return http(`/api/v1/endpoints/${id}`, options)
       .then(response => response.json())
       .then(() => {
         // Redirect only when user stayed on the same page
-        if (id === getState().endpointView.id) {
+        if (id === getState().endpointEditor.id) {
           browserHistory.push(url);
         }
         dispatch(fetchEndpoints(getState().projects.activeProject.id));
@@ -115,12 +115,12 @@ export function removeResponse(id) {
       method: 'DELETE',
     };
 
-    dispatch(setEndpointView({ isFetching: true }));
+    dispatch(setEndpointEditor({ isFetching: true }));
 
     return http(`/api/v1/responses/${id}`, options)
       .then(response => response.json())
       .then(() => {
-        dispatch(setEndpointView({ isFetching: false }));
+        dispatch(setEndpointEditor({ isFetching: false }));
         dispatch(removeResponseAction(id));
       });
   };
@@ -148,7 +148,7 @@ export function addResponse(responseParam) {
 
 export function updateEndpointDescription(description) {
   return (dispatch, getState) => {
-    const { id } = getState().endpointView;
+    const { id } = getState().endpointEditor;
     const options = {
       method: 'PUT',
       body: JSON.stringify({
@@ -156,16 +156,16 @@ export function updateEndpointDescription(description) {
         summary: description.content,
       }),
     };
-    dispatch(setEndpointView({ isFetching: true }));
+    dispatch(setEndpointEditor({ isFetching: true }));
     return http(`/api/v1/endpoints/${id}`, options)
       .then(response => response.json())
       .then(() => {
         dispatch(updateEndpointDescriptionAction(description));
-        dispatch(setEndpointView({ isFetching: false }));
+        dispatch(setEndpointEditor({ isFetching: false }));
       })
       .catch(() => {
         // Remove after redux-form integration
-        dispatch(setEndpointView({ isFetching: false }));
+        dispatch(setEndpointEditor({ isFetching: false }));
         return Promise.reject([]);
       });
   };

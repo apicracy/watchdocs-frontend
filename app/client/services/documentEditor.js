@@ -1,7 +1,7 @@
 import {
   setName,
   setDescription,
-} from 'actions/documentView';
+} from 'actions/documentEditor';
 
 import { filterById } from 'services/endpoint-service';
 

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Modal from 'components/Modal/Modal';
 import ResponseForm from 'components/ResponseForm/ResponseForm';
 
-import { addResponse } from 'services/endpointView';
+import { addResponse } from 'services/endpointEditor';
 import { closeModal } from 'actions/modals';
 
 export const MODAL_NAME = 'addResponse';

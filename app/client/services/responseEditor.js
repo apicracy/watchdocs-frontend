@@ -1,9 +1,8 @@
 import {
   setResponse as setResponseAction,
   setStatus as setStatusAction,
-  setHeaders as setHeadersAction,
   reset as resetAction,
-} from 'actions/responseParams';
+} from 'actions/responseEditor';
 import http from 'services/http';
 
 export function reset() {
@@ -11,45 +10,6 @@ export function reset() {
     dispatch(resetAction());
   };
 }
-
-export function acceptNewHeader(headerId) {
-  return (dispatch, getState) => {
-    const {
-      headers,
-    } = getState().responseParams;
-
-    const elem = headers.find(header => header.id === headerId);
-    const newHeaders = headers
-      .map(header => ((header.id === headerId) ? { ...elem, isNew: false } : header));
-    dispatch(setHeadersAction(newHeaders));
-  };
-}
-
-export function addHeader(header) {
-  return (dispatch, getState) => {
-    let newHeaders = [];
-
-    if (getState().requestParams.headers) {
-      newHeaders = newHeaders.concat(getState().responseParams.headers);
-    }
-
-    newHeaders.push(header);
-    dispatch(setHeadersAction(newHeaders));
-  };
-}
-
-export function updateHeader(header) {
-  return (dispatch, getState) => {
-    const {
-      headers,
-    } = getState().responseParams;
-
-    const newHeaders = headers.map(param => ((param.id === header.id) ? header : param));
-
-    dispatch(setHeadersAction(newHeaders));
-  };
-}
-
 
 export function loadResponse(responseId) {
   return (dispatch) => {

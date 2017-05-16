@@ -4,7 +4,7 @@ import Modal from 'components/Modal/Modal';
 import UrlParamForm from 'components/UrlParamForm/UrlParamForm';
 
 import { closeModal } from 'actions/modals';
-import { addEndpointParam, updateEndpointParam } from 'services/endpointView';
+import { addEndpointParam, updateEndpointParam } from 'services/endpointEditor';
 import { valueTypes } from 'config';
 
 export const MODAL_NAME = 'addUrlParam';
@@ -17,9 +17,9 @@ const warningMessage = {
 
 @connect(store => ({
   isVisible: !!store.modals[MODAL_NAME],
-  endpoint: store.endpointView,
+  endpoint: store.endpointEditor,
   modals: store.modals,
-  endpointId: store.endpointView.id,
+  endpointId: store.endpointEditor.id,
 }))
 class AddUrlParam extends React.Component {
 
