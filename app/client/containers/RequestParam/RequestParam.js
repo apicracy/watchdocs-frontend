@@ -13,7 +13,7 @@ import { browserHistory } from 'react-router';
 
 import DocumentationBlock, { Row } from 'components/DocumentationBlock/DocumentationBlock';
 import WarningLabel from 'components/DocumentationBlock/Labels/WarningLabel';
-import JSONSEditor from 'components/JSONSEditor/JSONSEditor';
+import ConflictResolver from 'components/ConflictResolver/ConflictResolver';
 import CustomIcon from 'components/Icon/CustomIcon';
 
 import { openModal } from 'actions/modals';
@@ -184,7 +184,7 @@ class RequestParam extends React.Component {
           description="This is title of the section we're going
             to display in documentation and in navigation."
         >
-          <JSONSEditor base={baseJSONSchema} draft={draftJSONSchema} onSave={this.onSaveJson} />
+          <ConflictResolver base={baseJSONSchema} draft={draftJSONSchema} onSave={this.onSaveJson} />
         </DocumentationBlock>
         { /*
         <DocumentationBlock

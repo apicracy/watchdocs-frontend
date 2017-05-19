@@ -13,7 +13,7 @@ import { browserHistory } from 'react-router';
 
 import DocumentationBlock, { Row } from 'components/DocumentationBlock/DocumentationBlock';
 import WarningLabel from 'components/DocumentationBlock/Labels/WarningLabel';
-import JSONSEditor from 'components/JSONSEditor/JSONSEditor';
+import ConflictResolver from 'components/ConflictResolver/ConflictResolver';
 import CodeEditor from 'components/CodeEditor/CodeEditor';
 import Select from 'components/Form/Select/Select';
 
@@ -214,8 +214,10 @@ class ResponseParam extends React.Component {
           description="This is title of the section we're going
             to display in documentation and in navigation."
         >
-        <CodeEditor base={baseJSONSchema} draft={draftJSONSchema} />
-
+          <ConflictResolver
+            base={baseJSONSchema} draft={draftJSONSchema}
+            onSave={this.onSaveJson}
+          />
 
         </DocumentationBlock>
         { /*

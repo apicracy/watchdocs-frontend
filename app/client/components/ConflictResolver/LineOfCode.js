@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './JSONSEditor.css';
+import styles from './ConflictResolver.css';
 
 class LineOfCode extends React.Component {
   static propTypes = {
@@ -13,9 +13,6 @@ class LineOfCode extends React.Component {
     onSwitchReq: React.PropTypes.func,
     isSelected: React.PropTypes.bool,
 
-    addAction: React.PropTypes.func,
-    removeAction: React.PropTypes.func,
-    changeAction: React.PropTypes.func,
     onReject: React.PropTypes.func,
     isAccepted: React.PropTypes.bool,
   };
@@ -31,9 +28,6 @@ class LineOfCode extends React.Component {
       onClick,
       isSelected,
       onSwitchReq,
-      addAction,
-      removeAction,
-      changeAction,
       onReject,
       isAccepted,
     } = this.props;
@@ -54,13 +48,6 @@ class LineOfCode extends React.Component {
     }
 
     let attributeStyle = styles.attribute;
-    if (toChange) {
-      attributeStyle = styles.yellowAttributeSpan;
-    }
-
-    if (typeChanged) {
-      attributeStyle = styles.yellowAttributeSpan;
-    }
 
     if (toAdd) {
       attributeStyle = styles.greenAttributeSpan;
@@ -86,30 +73,22 @@ class LineOfCode extends React.Component {
     let actionButton = styles.button;
     let acceptedText;
     let isAcceptedStyle;
+    let showButtons = true;
 
-    if (removeAction) {
+    if (toRemove) {
       actionText = 'remove';
-      action = removeAction;
+      action = toRemove;
       containerButtonStyles = (isAccepted !== undefined) ?
         styles.inactiveActionButton : styles.redLine;
       actionButton = styles.removeButton;
       acceptedText = 'removed';
       isAcceptedStyle = styles.removeAccepted;
+      showButtons = !toChange;
     }
 
-    if (changeAction) {
-      actionText = 'change';
-      action = changeAction;
-      containerButtonStyles = (isAccepted !== undefined) ?
-        styles.inactiveActionButton : styles.yellowLine;
-      actionButton = styles.changeButton;
-      acceptedText = 'changed';
-      isAcceptedStyle = styles.changeAccepted;
-    }
-
-    if (addAction) {
+    if (toAdd) {
       actionText = 'add';
-      action = addAction;
+      action = toAdd;
       containerButtonStyles = (isAccepted !== undefined) ?
         styles.inactiveActionButton : styles.greenLine;
       actionButton = styles.addButton;
@@ -125,8 +104,6 @@ class LineOfCode extends React.Component {
           </div>
         </div>
         <div className={containerButtonStyles}>
-          <button className={actionButton} onClick={action}>{actionText}</button>
-          <button className={styles.rejectButton} onClick={onReject}>reject</button>
         </div>
         {
           isAccepted && <div className={isAcceptedStyle}>

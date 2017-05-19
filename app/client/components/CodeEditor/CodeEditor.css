@@ -53,3 +53,15 @@
   background-color: #3c3c3c;
   border: 0;
 }
+
+/* Modifiers */
+
+.light {
+  background-color: #fff;
+}
+
+.light pre {
+  color: #3c3c3c;
+  background-color: #fff;
+  border: 0;
+}

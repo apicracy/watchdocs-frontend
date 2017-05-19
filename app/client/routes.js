@@ -15,7 +15,6 @@ import GroupDoc from 'containers/GroupDoc/GroupDoc';
 import EndpointDoc from 'containers/EndpointDoc/EndpointDoc';
 import RequestParam from 'containers/RequestParam/RequestParam';
 import ResponseParam from 'containers/ResponseParam/ResponseParam';
-import JSONSEditor from 'containers/JSONSEditor/JSONSEditor';
 import Settings from 'containers/Settings/Settings';
 import Login from 'containers/Login/Login';
 
@@ -53,8 +52,6 @@ const Routes = (
 
       <Route path="editor">
         <IndexRoute component={ApiDoc} />
-
-        <Route path="jsonseditor" component={JSONSEditor} />
 
         <Route component={ApiDoc}>
           <Route path="document/:document_id" component={Wiki} />

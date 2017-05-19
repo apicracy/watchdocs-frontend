@@ -1,8 +1,6 @@
 import deepEqual from 'deep-equal';
 import generateSchema from 'generate-schema';
 
-let i = 0;
-
 export function cleanJSONSchema(output) {
   const newOutput = Array.isArray(output) ? [].concat(output) : Object.assign({}, output);
   if (typeof newOutput === 'object') {
@@ -30,7 +28,7 @@ export function cleanJSONSchema(output) {
         delete newOutput[prop];
       }
 
-      if (prop === 'toChange') {
+      if (prop === 'requiredChanged') {
         delete newOutput[prop];
       }
 
@@ -40,7 +38,7 @@ export function cleanJSONSchema(output) {
       if (prop === 'newType') {
         delete newOutput[prop];
       }
-      if (prop === 'toChangeRequired') {
+      if (prop === 'onChangeRequired') {
         delete newOutput[prop];
       }
 
@@ -87,9 +85,9 @@ export function acceptJSONSchema(output, index) {
     });
   }
 
-  if (output.toChangeRequired) {
-    output.toChangeRequired.map((object) => {
-      if (output.properties[object].toChange) {
+  if (output.onChangeRequired) {
+    output.onChangeRequired.map((object) => {
+      if (output.properties[object].requiredChanged) {
         const indexOfObject = output.required.indexOf(object);
         if (indexOfObject === -1) {
           output.required.push(object);
@@ -136,7 +134,6 @@ export function rejectJSONSchema(output, index, base) {
 }
 
 export function compareJSONSchema(base, draft) {
-  i = 0;
   const output = compare(base, draft);
   return output;
 }
@@ -159,6 +156,7 @@ export function compare(base, draft) {
 
   // if we have two of them
   const output = Object.assign({}, draft);
+  let i = 0;
 
   if (base.type !== draft.type) {
     if (draft.type === 'object') {
@@ -170,8 +168,8 @@ export function compare(base, draft) {
       output.items.index = i;
       i += 1;
     } else {
-      output.type = base.type;
-      output.newType = draft.type;
+      output.type = draft.type;
+      output.oldSchema = base;
       output.typeChanged = true;
       output.index = i;
       i += 1;
@@ -214,16 +212,17 @@ export function compare(base, draft) {
       output.required = [].concat(base.required);
     }
 
-    output.toChangeRequired = new Array();
+    output.onChangeRequired = new Array();
 
     // check required
     if (!deepEqual(draft.required, base.required)) {
       if (draft.required) {
         draft.required.map((reqField) => {
-          if ((!base.required || base.required.indexOf(reqField) === -1)) {
-            output.properties[reqField].toChange = true;
+          if (((!base.required || base.required.indexOf(reqField) === -1) &&
+            !output.properties[reqField].toAdd)) {
+            output.properties[reqField].requiredChanged = true;
             output.properties[reqField].index = i;
-            output.toChangeRequired.push(reqField);
+            output.onChangeRequired.push(reqField);
             i += 1;
           }
           return null;
@@ -233,10 +232,11 @@ export function compare(base, draft) {
       if (base.required) {
         base.required.map((reqField) => {
           if ((output.properties[reqField] &&
-            (!draft.required || draft.required.indexOf(reqField) === -1))) {
-            output.properties[reqField].toChange = true;
+            (!draft.required || draft.required.indexOf(reqField) === -1) &&
+            (!output.properties[reqField].toRemove))) {
+            output.properties[reqField].requiredChanged = true;
             output.properties[reqField].index = i;
-            output.toChangeRequired.push(reqField);
+            output.onChangeRequired.push(reqField);
             i += 1;
           }
           return null;
@@ -263,6 +263,34 @@ export function JSONtoJSONSchema(json) {
   }
 }
 
+// This function generates lines of diff where changes are groupped
+// Each line is marked with the following lines:
+//
+// toRemove - means line is to be removed
+// toAdd - means line is to be added
+// toChange - means line is to be removed or added
+// as type or required changed
+//
+// Eg. If you have the following diff
+// {
+// - "type": "string",
+// + "new_type": "string"
+// - "type_changed": "string",
+// + "type_changed": "integer"
+// }
+// It will return
+// [
+//   Object(line: "{"),
+//   [
+//     Object(line: '"type": "string"', toRemove: true),
+//     Object(line: '"new_type": "string"', toAdd: false)
+//   ],
+//   [
+//     Object(line: '"type_changed": "string"', toChange: true, toRemove: true),
+//     Object(line: '"type_changed": "string"', toChange: true, toAdd: false)
+//   ],
+//   Object(line: "{")
+// ]
 export function JSONSchemaToJSON(schema) {
   let JSONObject = [];
   if (schema) {
@@ -271,196 +299,143 @@ export function JSONSchemaToJSON(schema) {
   return JSONObject;
 }
 
-function getLines(name, schema, isReq, space, toAdd, typeChanged, toRemove, comma) {
+function getLines(name, schema, isReq, space, toAdd, toRemove, toChange, comma) {
+  const lineToChange = toChange || schema.typeChanged || schema.requiredChanged;
+  // line could be marked to remove/add by itself (from schema) or by parent
+  const lineToAdd = toAdd || schema.toAdd || (lineToChange && !toRemove);
+  const lineToRemove = toRemove || schema.toRemove;
+
+  let lines;
   switch (schema.type) {
     /* eslint no-use-before-define: 0 */
-    case 'object': return getObjectLine(name, schema, isReq, space, toAdd, typeChanged, toRemove, comma);
-    case 'string': return getStringLine(name, schema, isReq, space, toAdd, typeChanged, toRemove, comma);
-    case 'integer': return getIntegerLine(name, schema, isReq, space, toAdd, typeChanged, toRemove, comma);
-    case 'number': return getNumberLine(name, schema, isReq, space, toAdd, typeChanged, toRemove, comma);
-    case 'array': return getArrayLine(name, schema, isReq, space, toAdd, typeChanged, toRemove, comma);
-    case 'null': return getNullLine(name, schema, isReq, space, toAdd, typeChanged, toRemove, comma);
-    case 'boolean': return getBooleanLine(name, schema, isReq, space, toAdd, typeChanged, toRemove, comma);
-    default: return [];
+    case 'object': lines = getObjectLine(name, schema, isReq, space, lineToAdd, lineToRemove, lineToChange, comma); break;
+    case 'array': lines = getArrayLine(name, schema, isReq, space, lineToAdd, lineToRemove, lineToChange, comma); break;
+    default: lines = getSingleLine(name, schema, isReq, space, lineToAdd, lineToRemove, lineToChange, comma);
   }
+  lines = [].concat(lines);
+
+  // when line changed place old version before the new one
+  if (lineToChange && !toRemove) {
+    lines = [].concat(oldLines(name, schema, isReq, space, comma)).concat(lines);
+  }
+
+  // if node has changed group new lines and old lines together
+  if (schema.toAdd || schema.toRemove || schema.typeChanged || schema.requiredChanged) {
+    return [lines];
+  }
+  return lines;
 }
 
-const getObjectLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove, comma) => {
-  let lines = [];
-  const pre = ' '.repeat(space);
-
-  let newLine = {
-    line: `${pre}{`,
-    toAdd: toAdd || schema.toAdd,
-    toRemove: toRemove || schema.toRemove,
-  };
-  if (name !== '') {
-    newLine = {
-      isOpt: !isReq,
-      isReq,
-      toAdd: toAdd || schema.toAdd,
-      toRemove: toRemove || schema.toRemove,
-      typeChanged: typeChanged || schema.typeChanged,
-      toChange: schema.toChange,
-      addAction: schema.toAdd,
-      removeAction: schema.toRemove,
-      changeAction: schema.typeChanged || schema.toChange,
-      isAccepted: schema.isAccepted,
-      index: schema.index,
-      type: 'object',
-      line: `${pre}"${name}": {`,
-    };
+const oldLines = (name, schema, isReq, space, comma) => {
+  if (schema.typeChanged) {
+    return getLines(name, schema.oldSchema, isReq, space, false, true, true, true, comma);
   }
+  if (schema.requiredChanged) {
+    const oldSchema = Object.assign({}, schema);
+    oldSchema.requiredChanged = false;
+    return getLines(name, oldSchema, !isReq, space, false, true, true, true, comma)[0];
+  }
+  // TODO: Handle case when both type and required has changed
+  return [];
+};
 
-  lines.push(newLine);
+const getObjectLine = (name, schema, isReq, space, toAdd, toRemove, toChange, comma) => {
+  let lines = [];
+  lines.push(getSingleLine(name, schema, isReq, space, toAdd, toRemove, toChange, comma));
+
+  if (schema.requiredChanged && !schema.typeChanged) {
+    // prevent items to be marked to add if only required changed
+    // Warning: HACK. To be refactored
+    toAdd = false;
+    toChange = false;
+  }
+  lines = lines.concat(...objectPropertiesLines(schema, space, toAdd, toRemove, toChange));
+  lines.push(closingSymbolLine('}', schema, space, comma, toAdd, toRemove, toChange));
+
+  return lines;
+};
+
+const objectPropertiesLines = (schema, space, toAdd, toRemove, toChange) => {
+  if (!schema.properties) {
+    return [];
+  }
   const keys = Object.keys(schema.properties);
 
-  const linesArray = keys.map((prop, index) => {
-    let isReqProp = true;
-    if (schema.required) {
-      isReqProp = schema.required.indexOf(prop) > -1;
-    }
-    return getLines(prop, schema.properties[prop], isReqProp, space + 2,
-      (toAdd || schema.toAdd), (typeChanged || schema.typeChanged),
-      (toRemove || schema.toRemove), index !== keys.length - 1);
-  });
-
-  const merged = [].concat(...linesArray);
-
-  lines = lines.concat(merged);
-
-  lines.push({
-    line: `${pre}}${comma ? ',' : ''}`,
-    toAdd: toAdd || schema.toAdd,
-    toRemove: toRemove || schema.toRemove,
-  });
-
-  return lines;
+  return (
+    keys.map((prop, index) => {
+      let isReqProp = true;
+      if (schema.required) {
+        isReqProp = schema.required.indexOf(prop) > -1;
+      }
+      return getLines(prop, schema.properties[prop], isReqProp, space + 2,
+        (toAdd || schema.toAdd), (toRemove || schema.toRemove),
+        toChange, index !== keys.length - 1);
+    })
+  );
 };
 
-const getStringLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove, comma) => {
-  const pre = ' '.repeat(space);
-  return {
-    isOpt: !isReq,
-    isReq,
-    toAdd: toAdd || schema.toAdd,
-    toRemove: toRemove || schema.toRemove,
-    typeChanged: typeChanged || schema.typeChanged,
-    toChange: schema.toChange,
-    type: 'string',
-    addAction: schema.toAdd,
-    removeAction: schema.toRemove,
-    changeAction: schema.typeChanged || schema.toChange,
-    index: schema.index,
-    line: (name !== '') ? `${pre}"${name}": "${schema.default || 'LOREM IPSUM'}"${comma ? ',' : ''}` : `${pre}"${schema.default || 'LOREM IPSUM'}"${comma ? ',' : ''}`,
-    isAccepted: schema.isAccepted,
-  };
-};
 
-const getBooleanLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove, comma) => {
-  const pre = ' '.repeat(space);
-  return {
-    isOpt: !isReq,
-    isReq,
-    toAdd: toAdd || schema.toAdd,
-    toRemove: toRemove || schema.toRemove,
-    typeChanged: typeChanged || schema.typeChanged,
-    toChange: schema.toChange,
-    type: 'boolean',
-    addAction: schema.toAdd,
-    removeAction: schema.toRemove,
-    changeAction: schema.typeChanged || schema.toChange,
-    index: schema.index,
-    line: (name !== '') ? `${pre}"${name}": ${schema.default || true}${comma ? ',' : ''}` : `${pre}${schema.default || true}${comma ? ',' : ''}`,
-    isAccepted: schema.isAccepted,
-  };
-};
-
-const getNullLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove, comma) => {
-  const pre = ' '.repeat(space);
-  return {
-    isOpt: !isReq,
-    isReq,
-    toAdd: toAdd || schema.toAdd,
-    toRemove: toRemove || schema.toRemove,
-    typeChanged: typeChanged || schema.typeChanged,
-    toChange: schema.toChange,
-    type: 'null',
-    addAction: schema.toAdd,
-    removeAction: schema.toRemove,
-    changeAction: schema.typeChanged || schema.toChange,
-    index: schema.index,
-    line: (name !== '') ? `${pre}"${name}": ${schema.default || null}${comma ? ',' : ''}` : `${pre}${schema.default || null}${comma ? ',' : ''}`,
-    isAccepted: schema.isAccepted,
-  };
-};
-
-const getIntegerLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove, comma) => {
-  const pre = ' '.repeat(space);
-  return {
-    isOpt: !isReq,
-    isReq,
-    toAdd: toAdd || schema.toAdd,
-    toRemove: toRemove || schema.toRemove,
-    typeChanged: typeChanged || schema.typeChanged,
-    toChange: schema.toChange,
-    type: 'integer',
-    addAction: schema.toAdd,
-    removeAction: schema.toRemove,
-    changeAction: schema.typeChanged || schema.toChange,
-    index: schema.index,
-    line: (name !== '') ? `${pre}"${name}": ${schema.default || '7262325'}${comma ? ',' : ''}` : `${pre}${schema.default || '7262325'}${comma ? ',' : ''}`,
-    isAccepted: schema.isAccepted,
-  };
-};
-
-const getNumberLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove, comma) => {
-  const pre = ' '.repeat(space);
-  return {
-    isOpt: !isReq,
-    isReq,
-    toAdd: toAdd || schema.toAdd,
-    toRemove: toRemove || schema.toRemove,
-    typeChanged: typeChanged || schema.typeChanged,
-    toChange: schema.toChange,
-    type: 'number',
-    addAction: schema.toAdd,
-    removeAction: schema.toRemove,
-    changeAction: schema.typeChanged || schema.toChange,
-    index: schema.index,
-    line: (name !== '') ? `${pre}"${name}": ${schema.default || '7262325'}${comma ? ',' : ''}` : `${pre}${schema.default || '7262325'}${comma ? ',' : ''}`,
-    isAccepted: schema.isAccepted,
-  };
-};
-
-const getArrayLine = (name, schema, isReq, space, toAdd, typeChanged, toRemove, comma) => {
+const getArrayLine = (name, schema, isReq, space, toAdd, toRemove, toChange, comma) => {
   let lines = [];
-  const pre = ' '.repeat(space);
-  lines.push({
-    isOpt: !isReq,
-    isReq,
-    type: 'array',
-    typeChanged: typeChanged || schema.typeChanged,
-    toRemove: toRemove || schema.toRemove,
-    toChange: schema.toChange,
-    toAdd: toAdd || schema.toAdd,
-    addAction: schema.toAdd,
-    removeAction: schema.toRemove,
-    changeAction: schema.typeChanged || schema.toChange,
-    index: schema.index,
-    line: (name !== '') ? `${pre}"${name}": [` : `${pre}[`,
-    isAccepted: schema.isAccepted,
-  });
+  lines.push(getSingleLine(name, schema, isReq, space, toAdd, toRemove, comma));
 
-  const item1 = getLines('', schema.items, false, space + 2, (toAdd || schema.toAdd), (typeChanged || schema.typeChanged), (toRemove || schema.toRemove), false);
+  if (schema.requiredChanged && !schema.typeChanged) {
+    // prevent items to be marked to add if only required changed
+    // Warning: HACK. To be refactored
+    toAdd = false;
+    toChange = false;
+  }
 
-  lines = lines.concat(item1);
+  const arrayItemsLines = getLines('', schema.items, null, space + 2,
+    toAdd, toRemove, toChange, false);
+  lines = lines.concat(arrayItemsLines);
 
-  lines.push({
-    line: `${pre}]${comma ? ',' : ''}`,
-    toAdd: toAdd || schema.toAdd,
-    toRemove: toRemove || schema.toRemove,
-  });
+  lines.push(closingSymbolLine(']', schema, space, comma, toAdd, toRemove, toChange));
 
   return lines;
+};
+
+
+const getSingleLine = (name, schema, isReq, space, toAdd, toRemove, toChange, comma) => (
+  {
+    id: Math.random(),
+    isOpt: !isReq,
+    isReq,
+    toAdd,
+    toRemove,
+    toChange,
+    index: schema.index,
+    type: schema.type,
+    line: textLine(name, schema, space, comma),
+    isAccepted: schema.isAccepted,
+  }
+);
+
+const closingSymbolLine = (symbol, schema, space, comma, toAdd, toRemove, toChange) => {
+  const id = Math.random();
+  const pre = ' '.repeat(space);
+  const line = `${pre}${symbol}${comma ? ',' : ''}`;
+  return { id, line, toAdd, toRemove, toChange };
+};
+
+const textLine = (name, schema, space, comma) => {
+  let text = ' '.repeat(space);
+  text += (name !== '') ? `"${name}":` : '';
+  text += propertyValue(schema.type, schema.default);
+  text += comma ? ',' : '';
+  return text;
+};
+
+const propertyValue = (type, schemaDefault) => {
+  switch (type) {
+    /* eslint no-use-before-define: 0 */
+    case 'object': return '{';
+    case 'array': return '[';
+    case 'string': return `"${schemaDefault || 'LOREM IPSUM'}"`;
+    case 'integer': return `${schemaDefault || '7262325'}`;
+    case 'number': return `${schemaDefault || '7262325'}`;
+    case 'null': return `${schemaDefault || null}`;
+    case 'boolean': return `${schemaDefault || true}`;
+    default: return '';
+  }
 };

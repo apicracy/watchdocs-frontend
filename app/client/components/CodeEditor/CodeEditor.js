@@ -15,6 +15,7 @@ import {
 import {
   JSONSchemaToJSON,
   compareJSONSchema,
+  cleanJSONSchema,
 } from 'services/JSONSchemaEditor';
 
 import {
@@ -42,7 +43,8 @@ class CodeEditor extends React.Component {
   }
 
   initializeEditor = (base) => {
-    const resultSchema = compareJSONSchema(base, base);
+    const cleanBase = cleanJSONSchema(base);
+    const resultSchema = compareJSONSchema(cleanBase, cleanBase);
     const json = JSONSchemaToJSON(resultSchema);
     const content = createContentState(json);
 

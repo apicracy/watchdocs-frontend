@@ -9,10 +9,10 @@
 .code {
   white-space: pre;
   display: inline;
-  background: #3c3c3c;
+  background: #fff;
   padding: 0 20px;
   width: 100%;
-  color: #c9c9c9;
+  color: #333;
   align-items: center;
   display: flex;
 }
@@ -34,13 +34,8 @@
   background: #5BB16A;
 }
 
-.yellowAttributeSpan {
-  composes: attribute;
-  background: #AF915F;
-}
-
 .attributeSpan {
-  color: #848484;
+  color: #fff;
   text-align: center;
   -webkit-user-select: none; /* Chrome/Safari */
   -moz-user-select: none; /* Firefox */
@@ -54,7 +49,7 @@
 
 .attributeSpanReq {
   composes: attributeSpan;
-  color: #c9c9c9;
+  color: #fff;
 }
 
 .oneLine {
@@ -86,53 +81,40 @@
   right: 0;
   left: 50px;
   text-align: right;
-  height: 26px;
+  height: 25px;
   padding-right: 50px;
   padding-top: 2px;
 }
 
 .redLine {
   composes: containerButtons;
-  background: rgba(176, 92, 92, 0.55);
+  background: rgba(176, 92, 92, 0.15);
 }
 
 .greenLine {
   composes: containerButtons;
-  background: rgba(91, 177, 106, 0.55);
-}
-
-.yellowLine {
-  composes: containerButtons;
-  background: rgba(175, 145, 95, 0.55);
+  background: rgba(91, 177, 106, 0.15);
 }
 
 .button {
-  background: white;
-  height: 20px;
-  width: 70px;
-  border: 1px solid gray;
+  background: transparent;
+  height: 18px;
+  width: 18px;
   padding: 0;
-  margin: 0 5px;
+  margin: 0 2px;
+  line-height: 12px
 }
 
 .addButton {
   composes: button;
   color: #5BB16A;
+  border: 1px solid transparent;
 }
 
 .removeButton {
   composes: button;
   color: #B05C5C;
-}
-
-.changeButton {
-  composes: button;
-  color: #AF915F;
-}
-
-.rejectButton {
-  composes: button;
-  color: gray;
+  border: 1px solid transparent;
 }
 
 .textareaContainer{
@@ -192,4 +174,20 @@
 .changeAccepted {
   composes: isAccepted;
   color: #AF915F;
+}
+
+.actionRequired .lineContainer:nth-of-type(2) .containerButtons {
+  border-top: 1px solid #a3b2a6;
+}
+
+.actionRequired .lineContainer:last-of-type .containerButtons {
+  border-bottom: 1px solid #a3b2a6;
+  height: 26px;
+}
+
+.buttonContainer {
+  position: absolute;
+  right: 2px;
+  margin-top: 4px;
+  z-index: 999;
 }
