@@ -5,6 +5,8 @@
  */
 @import "./styles/_bootstrap";
 @import "./styles/_browser-specific";
+@import '~react-select/dist/react-select.css';
+@import "./styles/_react-select-overrides";
 
 body, html, #app, #root {
   margin: 0;

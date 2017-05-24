@@ -11,8 +11,8 @@ import {
 } from 'actions/modifyEndpoint-actions';
 
 import {
-  setEndpointView,
-} from 'actions/endpointView';
+  setEndpointEditor,
+} from 'actions/endpointEditor';
 
 import { filterById } from 'services/endpoint-service';
 import { fetchEndpoints } from 'services/endpoints';
@@ -157,7 +157,7 @@ export function setEdit(isEdit) {
 export function editEndpoint() {
   return (dispatch, getState) => {
     const { url, method } = getState().modifyEndpoint;
-    const { id } = getState().endpointView;
+    const { id } = getState().endpointEditor;
 
     const options = {
       method: 'PUT',
@@ -171,7 +171,7 @@ export function editEndpoint() {
       .then(response => response.json())
       .then((data) => {
         if (!data.errors) {
-          dispatch(setEndpointView({
+          dispatch(setEndpointEditor({
             url,
             method,
           }));

@@ -1,0 +1,16 @@
+.Select-control {
+  height: 41px;
+
+  .Select-arrow-zone {
+    top: 2px;
+  }
+}
+
+.Select-placeholder,
+.Select--single > .Select-control .Select-value {
+  top: 3px;
+}
+
+.Select--invalid .Select-control {
+  border-color: #f00;
+}

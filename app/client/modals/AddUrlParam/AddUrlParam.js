@@ -1,17 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Modal from 'components/Modal/Modal';
-import InputGroup from 'components/Form/InputGroup/InputGroup';
-import TextInput from 'components/Form/TextInput/TextInput';
-import TextArea from 'components/Form/TextArea/TextArea';
-import CheckBox from 'components/Form/CheckBox/CheckBox';
-import Select from 'components/Form/Select/Select';
-import Button from 'components/Button/Button';
-import ButtonGroup from 'components/ButtonGroup/ButtonGroup';
-import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
+import UrlParamForm from 'components/UrlParamForm/UrlParamForm';
 
 import { closeModal } from 'actions/modals';
-import { addEndpointParam, updateEndpointParam } from 'services/endpointView';
+import { addEndpointParam, updateEndpointParam } from 'services/endpointEditor';
+import { valueTypes } from 'config';
 
 export const MODAL_NAME = 'addUrlParam';
 
@@ -23,10 +17,9 @@ const warningMessage = {
 
 @connect(store => ({
   isVisible: !!store.modals[MODAL_NAME],
-  endpoint: store.endpointView,
+  endpoint: store.endpointEditor,
   modals: store.modals,
-  endpointId: store.endpointView.id,
-  isFetching: store.endpointView.isFetching,
+  endpointId: store.endpointEditor.id,
 }))
 class AddUrlParam extends React.Component {
 
@@ -36,45 +29,25 @@ class AddUrlParam extends React.Component {
     modals: React.PropTypes.object,
     endpoint: React.PropTypes.object,
     endpointId: React.PropTypes.number,
-    isFetching: React.PropTypes.bool,
   }
+
+  paramTypes = [
+    { value: 'number', label: 'number' },
+    { value: 'string', label: 'string' },
+    { value: 'array', label: 'array' },
+    { value: 'boolean', label: 'boolean' },
+  ];
 
   componentWillMount() {
     this.reset();
-
-    this.paramTypes = [
-      { id: 1, name: 'number' },
-      { id: 2, name: 'string' },
-      { id: 3, name: 'array' },
-      { id: 4, name: 'boolean' },
-    ];
-  }
-
-  getSelectedId = (value) => {
-    const record = this.paramTypes.find(p => p.name === value);
-
-    return record ? record.id : null;
-  }
-
-  getSelectedValue = (id) => {
-    const record = this.paramTypes.find(p => p.id === id);
-
-    return record ? record.name : null;
   }
 
   componentWillReceiveProps(nextProps) {
-    const { modals, endpoint } = this.props;
-
-    if (nextProps.modals.refId && modals.refId !== nextProps.modals.refId) {
-      const currentParam = endpoint.url_params.find(param => param.id === nextProps.modals.refId);
-
-      if (currentParam) {
-        this.setState({ ...currentParam });
-      }
-    }
+    nextProps.modals.refId && this.setEditedParam(nextProps.modals.refId);
   }
 
   reset = () => this.setState({
+    id: null,
     endpoint_id: this.props.endpointId,
     name: '',
     required: false,
@@ -84,8 +57,15 @@ class AddUrlParam extends React.Component {
     is_part_of_url: false,
   });
 
-  onSave = (e) => {
-    e.preventDefault();
+  setEditedParam = (urlParamId) => {
+    const { endpoint } = this.props;
+    const currentParam = endpoint.url_params.find(param => (
+      param.id === urlParamId
+    ));
+    currentParam && this.setState({ ...currentParam });
+  }
+
+  onSave = () => {
     let response;
     const data = {
       ...this.state,
@@ -98,7 +78,7 @@ class AddUrlParam extends React.Component {
       response = this.props.dispatch(updateEndpointParam(data));
     }
 
-    response.then(() => {
+    return response.then(() => {
       this.props.dispatch(closeModal(MODAL_NAME));
       this.reset();
     });
@@ -113,7 +93,9 @@ class AddUrlParam extends React.Component {
     this.setState({ [fieldName]: nativeEvent.target.value })
   );
 
-  onTypeChange = id => this.setState({ data_type: this.getSelectedValue(id) });
+  onTypeChange = (e, newValue) => (
+    this.setState({ data_type: newValue })
+  );
 
   onRequiredChange = () => this.setState({ required: !this.state.required });
 
@@ -130,62 +112,16 @@ class AddUrlParam extends React.Component {
         onHide={this.onHide}
         message={this.shouldDisplayMessage() ? warningMessage : null}
       >
-        <form onSubmit={this.onSave}>
-          { this.props.isFetching && <LoadingIndicator fixed /> }
-          <InputGroup title="Name" description="Write here param name as it apears inside URL">
-            <TextInput
-              value={this.state.name}
-              placeholder="Param name"
-              onChange={this.onFieldChange('name')}
-              validation={new RegExp(/((^[a-zA-Z_$][a-zA-Z_$[\]0-9]*$))/ig)}
-              validationErrorMsg={'URL parameter should include only allowed URL characters.'}
-            />
-
-            <CheckBox
-              activeIds={[this.state.required ? 1 : null]}
-              options={[
-                { id: 1, text: 'Param required' },
-              ]}
-              onChange={this.onRequiredChange}
-            />
-          </InputGroup>
-
-          <InputGroup title="Type" description="Give user more information about data type of param">
-            <Select
-              variants={['fullWidth', 'bordered']}
-              options={this.paramTypes}
-              activeId={this.getSelectedId(this.state.data_type)}
-              onSelect={this.onTypeChange}
-            />
-          </InputGroup>
-
-          <InputGroup title="Description" description="Give user more context info about the param itself">
-            <TextArea
-              rows={3}
-              value={this.state.description}
-              placeholder="Param description"
-              onChange={this.onFieldChange('description')}
-            />
-          </InputGroup>
-
-          <InputGroup title="Example" description="This examle is going to be used to generate user friendly documentation">
-            <TextInput
-              value={this.state.example}
-              placeholder="Example of param value"
-              onChange={this.onFieldChange('example')}
-            />
-          </InputGroup>
-          <ButtonGroup>
-            <Button type="submit" variants={['primary', 'large']} >Save</Button>
-            <Button
-              type="button"
-              variants={['large', 'lightBorder', 'spaceLeft']}
-              onClick={this.onHide}
-            >
-              Cancel
-            </Button>
-          </ButtonGroup>
-        </form>
+        <UrlParamForm
+          {...this.state}
+          paramTypes={valueTypes}
+          onFieldChange={this.onFieldChange}
+          onRequiredChange={this.onRequiredChange}
+          onTypeChange={this.onTypeChange}
+          onCancel={this.onHide}
+          onSubmit={this.onSave}
+          initialValues={this.state}
+        />
       </Modal>
     );
   }

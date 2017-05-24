@@ -47,12 +47,12 @@ function activateProject(dispatch, project) {
   const currentPath = browserHistory.getCurrentLocation().pathname;
   const projectName = urlFormatProjectName(project.name);
 
-  if (!currentPath.includes(`/${projectName}/`)) {
-    browserHistory.push(`${projectName}`);
-  }
-
   dispatch(setActive(project));
-  dispatch(fetchEndpoints(project.id));
+  dispatch(fetchEndpoints(project.id)).then(() => {
+    if (!currentPath.includes(`/${projectName}/`)) {
+      browserHistory.push(`/${projectName}`);
+    }
+  });
 }
 
 function getActiveProjectFromCache(data) {

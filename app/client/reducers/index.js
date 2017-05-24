@@ -12,11 +12,11 @@
 
 import { endpoints } from 'reducers/endpoints';
 import { modifyEndpoint } from 'reducers/modifyEndpoint-reducer';
-import { endpointView } from 'reducers/endpointView';
-import { responseParams } from 'reducers/responseParams';
-import { requestParams } from 'reducers/requestParams';
-import { groupView } from 'reducers/groupView';
-import { documentView } from 'reducers/documentView';
+import { endpointEditor } from 'reducers/endpointEditor';
+import { responseEditor } from 'reducers/responseEditor';
+import { requestEditor } from 'reducers/requestEditor';
+import { groupEditor } from 'reducers/groupEditor';
+import { documentEditor } from 'reducers/documentEditor';
 import { projects } from 'reducers/projects';
 import { modals } from 'reducers/modals';
 import { session } from 'reducers/session';
@@ -26,13 +26,13 @@ import { documentation } from 'reducers/documentation';
 export const reducers = {
   endpoints,
   modifyEndpoint,
-  endpointView,
-  groupView,
-  documentView,
+  endpointEditor,
+  groupEditor,
+  documentEditor,
   projects,
   modals,
-  responseParams,
-  requestParams,
+  responseEditor,
+  requestEditor,
   session,
   documentation,
   /* reapp: append new reducer */

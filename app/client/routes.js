@@ -6,15 +6,15 @@ import About from 'containers/About';
 import NoMatch from 'containers/NoMatch';
 
 /* import pages */
-import Wiki from 'containers/Wiki/Wiki';
 import Loading from 'containers/Loading/Loading';
 import DocumentationViewer from 'containers/DocumentationViewer/DocumentationViewer';
 import Projects from 'containers/Projects/Projects';
-import ApiDoc from 'containers/ApiDoc/ApiDoc';
-import GroupDoc from 'containers/GroupDoc/GroupDoc';
-import EndpointDoc from 'containers/EndpointDoc/EndpointDoc';
-import RequestParam from 'containers/RequestParam/RequestParam';
-import ResponseParam from 'containers/ResponseParam/ResponseParam';
+import Editor from 'containers/Editor/Editor';
+import DocumentEditor from 'containers/DocumentEditor/DocumentEditor';
+import GroupEditor from 'containers/GroupEditor/GroupEditor';
+import EndpointEditor from 'containers/EndpointEditor/EndpointEditor';
+import RequestEditor from 'containers/RequestEditor/RequestEditor';
+import ResponseEditor from 'containers/ResponseEditor/ResponseEditor';
 import Settings from 'containers/Settings/Settings';
 import Login from 'containers/Login/Login';
 
@@ -51,15 +51,13 @@ const Routes = (
       <Route path="project-not-found" component={NoMatch} />
 
       <Route path="editor">
-        <IndexRoute component={ApiDoc} />
-
-        <Route component={ApiDoc}>
-          <Route path="document/:document_id" component={Wiki} />
-          <Route path=":group_id" component={GroupDoc} />
-          <Route path=":group_id/endpoint/:endpoint_id" component={EndpointDoc} />
-          <Route path=":group_id/endpoint/:endpoint_id/request" component={RequestParam} />
-          <Route path=":group_id/endpoint/:endpoint_id/response" component={ResponseParam} />
-          <Route path=":group_id/endpoint/:endpoint_id/response/:response_id" component={ResponseParam} />
+        <IndexRoute component={Editor} />
+        <Route component={Editor}>
+          <Route path="document/:document_id" component={DocumentEditor} />
+          <Route path=":group_id" component={GroupEditor} />
+          <Route path=":group_id/endpoint/:endpoint_id" component={EndpointEditor} />
+          <Route path=":group_id/endpoint/:endpoint_id/request" component={RequestEditor} />
+          <Route path=":group_id/endpoint/:endpoint_id/response/:response_id" component={ResponseEditor} />
         </Route>
       </Route>
 

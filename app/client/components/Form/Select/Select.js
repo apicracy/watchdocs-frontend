@@ -15,6 +15,7 @@ class Select extends React.Component {
     variants: React.PropTypes.array,
     emptyMsg: React.PropTypes.string,
     additionalInfo: React.PropTypes.string,
+    onBlur: React.PropTypes.func,
   }
 
   static defaultProps = {
@@ -22,6 +23,7 @@ class Select extends React.Component {
     onSelect: () => {},
     variants: [],
     emptyMsg: 'Please choose',
+    onBlur: () => {},
   }
 
   componentWillMount() {
@@ -46,6 +48,7 @@ class Select extends React.Component {
   toggleOpen = (forceHide) => {
     if (forceHide === true) {
       this.setState({ isOpen: false });
+      this.props.onBlur();
     } else {
       this.setState({ isOpen: !this.state.isOpen });
     }
