@@ -104,6 +104,7 @@
     "style-loader": "^0.13.x",
     "svg-inline-loader": "^0.7.1",
     "svg-url-loader": "^2.0.2",
+    "traverse": "^0.6.6",
     "url-loader": "^0.5.x",
     "webpack": "^1.12.x",
     "whatwg-fetch": "^2.0.3"

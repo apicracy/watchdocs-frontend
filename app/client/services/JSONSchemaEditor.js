@@ -1,8 +1,17 @@
 import deepEqual from 'deep-equal';
 import generateSchema from 'generate-schema';
+import traverse from 'traverse';
+import { pull } from 'lodash/array';
 
 export function cleanJSONSchema(output) {
-  const newOutput = Array.isArray(output) ? [].concat(output) : Object.assign({}, output);
+  const specialProps = [
+    'differenceId', 'toRemove', 'toAdd', 'isAccepted', 'requiredChanged',
+    'typeChanged', 'newType', 'onChangeRequired',
+  ];
+  const newOutput = Array.isArray(output) ?
+    [].concat(output) :
+    Object.assign({}, output);
+
   if (typeof newOutput === 'object') {
     Object.keys(newOutput).map((prop) => {
       if (typeof newOutput[prop] === 'object') {
@@ -11,132 +20,84 @@ export function cleanJSONSchema(output) {
       if (newOutput[prop] === null) {
         delete newOutput[prop];
       }
-
-      if (prop === 'index') {
-        delete newOutput[prop];
-      }
-
-      if (prop === 'toRemove') {
-        delete newOutput[prop];
-      }
-
-      if (prop === 'toAdd') {
-        delete newOutput[prop];
-      }
-
-      if (prop === 'isAccepted') {
-        delete newOutput[prop];
-      }
-
-      if (prop === 'requiredChanged') {
-        delete newOutput[prop];
-      }
-
-      if (prop === 'typeChanged') {
-        delete newOutput[prop];
-      }
-      if (prop === 'newType') {
-        delete newOutput[prop];
-      }
-      if (prop === 'onChangeRequired') {
+      if (specialProps.includes(prop)) {
         delete newOutput[prop];
       }
 
       return null;
     });
-  }
-
-  if (output && output.toAdd) {
-    if (!output.isAccepted) {
-      return null;
-    }
-  }
-
-  if (output && output.toRemove) {
-    if (output.isAccepted) {
-      return null;
-    }
-  }
-
-  if (output && !output.toRemove && output.isAccepted === false) {
-    return null;
   }
 
   return newOutput;
 }
 
-export function acceptJSONSchema(output, index) {
-  const newOutput = output;
-  if (output.index && (output.index === index)) {
-    newOutput.isAccepted = true;
-  }
+export function acceptChange(resultSchema, groupToAccept) {
+  const newResultSchema = resultSchema;
+  const differenceId = groupToAccept.find(line => line.differenceId).differenceId;
 
-  if (typeof output === 'object') {
-    Object.keys(output).map((prop) => {
-      if (typeof output[prop] === 'object') {
-        acceptJSONSchema(output[prop], index);
+  traverse(newResultSchema).forEach(function () {
+    if (this.node.differenceId === differenceId) {
+      const changedProperty = this.node;
+
+      if (changedProperty.toAdd) {
+        changedProperty.toAdd = false;
+        changedProperty.isAccepted = true;
+        this.update(changedProperty);
+      } else if (changedProperty.toRemove) {
+        this.delete(true);
+      } else if (changedProperty.requiredChanged) {
+        changedProperty.requiredChanged = false;
+        changedProperty.isAccepted = true;
+        this.update(changedProperty);
+      } else if (changedProperty.typeChanged) {
+        changedProperty.typeChanged = false;
+        changedProperty.isAccepted = true;
+        this.update(changedProperty);
       }
-
-      if (prop === 'index' && (newOutput[prop] === index)) {
-        newOutput.isAccepted = true;
-      }
-
-      return null;
-    });
-  }
-
-  if (output.onChangeRequired) {
-    output.onChangeRequired.map((object) => {
-      if (output.properties[object].requiredChanged) {
-        const indexOfObject = output.required.indexOf(object);
-        if (indexOfObject === -1) {
-          output.required.push(object);
-        } else {
-          output.required.splice(indexOfObject, 1);
-        }
-      }
-      return null;
-    });
-  }
-
-  if (newOutput.newType) {
-    if (newOutput.isAccepted) {
-      newOutput.type = newOutput.newType;
     }
-  }
+  });
 
-  return newOutput;
+  return newResultSchema;
 }
 
-export function rejectJSONSchema(output, index, base) {
-  let newOutput = Array.isArray(output) ? [].concat(output) : Object.assign({}, output);
-  if (output.index && (output.index === index)) {
-    newOutput = Object.assign({}, base);
-    newOutput.isAccepted = typeof newOutput.isAccepted !== 'undefined';
-  }
+export function rejectChange(resultSchema, groupToAccept) {
+  const newResultSchema = resultSchema;
+  const differenceId = groupToAccept.find(line => line.differenceId).differenceId;
 
-  if (typeof output === 'object') {
-    Object.keys(output).map((prop) => {
-      if (typeof output[prop] === 'object') {
-        newOutput[prop] = rejectJSONSchema(output[prop], index, (base ? base[prop] : {}));
+  traverse(newResultSchema).forEach(function () {
+    if (this.node.differenceId === differenceId) {
+      const changedProperty = this.node;
+
+      if (changedProperty.toRemove) {
+        changedProperty.toRemove = false;
+        this.update(changedProperty);
+      } else if (changedProperty.toAdd) {
+        this.delete(true);
+      } else if (changedProperty.requiredChanged) {
+        debugger;
+        // remove from required list of parent
+        const parentRequired = this.parent.parent.node;
+        pull(parentRequired.required, this.key);
+        this.parent.parent.update(parentRequired);
+
+        changedProperty.requiredChanged = false;
+        this.update(changedProperty);
+      } else if (changedProperty.typeChanged) {
+        this.update(changedProperty.oldSchema);
       }
+    }
+  });
 
-      if (prop === 'index' && (newOutput[prop] === index)) {
-        newOutput = Object.assign({}, base);
-        newOutput.isAccepted = typeof newOutput.isAccepted !== 'undefined';
-      }
-
-      return null;
-    });
-  }
-  // console.log(newOutput)
-  return newOutput;
+  return newResultSchema;
 }
 
 export function compareJSONSchema(base, draft) {
   const output = compare(base, draft);
   return output;
 }
+
+
+let i = 0;
 
 export function compare(base, draft) {
   // if one of them is empty
@@ -156,22 +117,21 @@ export function compare(base, draft) {
 
   // if we have two of them
   const output = Object.assign({}, draft);
-  let i = 0;
 
   if (base.type !== draft.type) {
     if (draft.type === 'object') {
       output.properties.toAdd = true;
-      output.properties.index = i;
+      output.properties.differenceId = i;
       i += 1;
     } else if (draft.type === 'array') {
       output.items.toAdd = true;
-      output.items.index = i;
+      output.items.differenceId = i;
       i += 1;
     } else {
       output.type = draft.type;
       output.oldSchema = base;
       output.typeChanged = true;
-      output.index = i;
+      output.differenceId = i;
       i += 1;
     }
   }
@@ -179,10 +139,10 @@ export function compare(base, draft) {
   if (draft.type === 'object') {
     // check props
     Object.keys(draft.properties).map((prop) => {
-      if (!deepEqual(draft.properties[prop], base.properties[prop])) {
-        if (!base.properties[prop]) {
+      if (!base.properties || !deepEqual(draft.properties[prop], base.properties[prop])) {
+        if (!base.properties || !base.properties[prop]) {
           output.properties[prop].toAdd = true;
-          output.properties[prop].index = i;
+          output.properties[prop].differenceId = i;
           i += 1;
         } else {
           output.properties[prop] = compare(base.properties[prop], draft.properties[prop]);
@@ -197,7 +157,7 @@ export function compare(base, draft) {
         if (!draft.properties[prop]) {
           output.properties[prop] = base.properties[prop];
           output.properties[prop].toRemove = true;
-          output.properties[prop].index = i;
+          output.properties[prop].differenceId = i;
           i += 1;
         } else {
           output.properties[prop] = compare(base.properties[prop], draft.properties[prop]);
@@ -208,11 +168,10 @@ export function compare(base, draft) {
     });
 
     /* eslint no-array-constructor: 0 */
+    // TODO: Not sure if correct. Output should have draft required list
     if (base.required) {
       output.required = [].concat(base.required);
     }
-
-    output.onChangeRequired = new Array();
 
     // check required
     if (!deepEqual(draft.required, base.required)) {
@@ -221,8 +180,7 @@ export function compare(base, draft) {
           if (((!base.required || base.required.indexOf(reqField) === -1) &&
             !output.properties[reqField].toAdd)) {
             output.properties[reqField].requiredChanged = true;
-            output.properties[reqField].index = i;
-            output.onChangeRequired.push(reqField);
+            output.properties[reqField].differenceId = i;
             i += 1;
           }
           return null;
@@ -235,8 +193,7 @@ export function compare(base, draft) {
             (!draft.required || draft.required.indexOf(reqField) === -1) &&
             (!output.properties[reqField].toRemove))) {
             output.properties[reqField].requiredChanged = true;
-            output.properties[reqField].index = i;
-            output.onChangeRequired.push(reqField);
+            output.properties[reqField].differenceId = i;
             i += 1;
           }
           return null;
@@ -299,7 +256,7 @@ export function JSONSchemaToJSON(schema) {
   return JSONObject;
 }
 
-function getLines(name, schema, isReq, space, toAdd, toRemove, toChange, comma) {
+function getLines(name, schema, isReq, space, toAdd, toRemove, toChange, isAccepted, comma) {
   const lineToChange = toChange || schema.typeChanged || schema.requiredChanged;
   // line could be marked to remove/add by itself (from schema) or by parent
   const lineToAdd = toAdd || schema.toAdd || (lineToChange && !toRemove);
@@ -307,14 +264,13 @@ function getLines(name, schema, isReq, space, toAdd, toRemove, toChange, comma) 
 
   let lines;
   switch (schema.type) {
-    /* eslint no-use-before-define: 0 */
-    case 'object': lines = getObjectLine(name, schema, isReq, space, lineToAdd, lineToRemove, lineToChange, comma); break;
-    case 'array': lines = getArrayLine(name, schema, isReq, space, lineToAdd, lineToRemove, lineToChange, comma); break;
-    default: lines = getSingleLine(name, schema, isReq, space, lineToAdd, lineToRemove, lineToChange, comma);
+    case 'object': lines = getObjectLine(name, schema, isReq, space, lineToAdd, lineToRemove, lineToChange, isAccepted, comma); break;
+    case 'array': lines = getArrayLine(name, schema, isReq, space, lineToAdd, lineToRemove, lineToChange, isAccepted, comma); break;
+    default: lines = getSingleLine(name, schema, isReq, space, lineToAdd, lineToRemove, lineToChange, isAccepted, comma);
   }
   lines = [].concat(lines);
 
-  // when line changed place old version before the new one
+  // when line has changed place old version before the new one
   if (lineToChange && !toRemove) {
     lines = [].concat(oldLines(name, schema, isReq, space, comma)).concat(lines);
   }
@@ -328,20 +284,20 @@ function getLines(name, schema, isReq, space, toAdd, toRemove, toChange, comma) 
 
 const oldLines = (name, schema, isReq, space, comma) => {
   if (schema.typeChanged) {
-    return getLines(name, schema.oldSchema, isReq, space, false, true, true, true, comma);
+    return getLines(name, schema.oldSchema, isReq, space, false, true, true, true, false, comma);
   }
   if (schema.requiredChanged) {
     const oldSchema = Object.assign({}, schema);
     oldSchema.requiredChanged = false;
-    return getLines(name, oldSchema, !isReq, space, false, true, true, true, comma)[0];
+    return getLines(name, oldSchema, !isReq, space, false, true, true, true, false, comma)[0];
   }
   // TODO: Handle case when both type and required has changed
   return [];
 };
 
-const getObjectLine = (name, schema, isReq, space, toAdd, toRemove, toChange, comma) => {
+const getObjectLine = (name, schema, isReq, space, toAdd, toRemove, toChange, isAccepted, comma) => {
   let lines = [];
-  lines.push(getSingleLine(name, schema, isReq, space, toAdd, toRemove, toChange, comma));
+  lines.push(getSingleLine(name, schema, isReq, space, toAdd, toRemove, toChange, isAccepted, comma));
 
   if (schema.requiredChanged && !schema.typeChanged) {
     // prevent items to be marked to add if only required changed
@@ -349,13 +305,13 @@ const getObjectLine = (name, schema, isReq, space, toAdd, toRemove, toChange, co
     toAdd = false;
     toChange = false;
   }
-  lines = lines.concat(...objectPropertiesLines(schema, space, toAdd, toRemove, toChange));
-  lines.push(closingSymbolLine('}', schema, space, comma, toAdd, toRemove, toChange));
+  lines = lines.concat(...objectPropertiesLines(schema, space, toAdd, toRemove, toChange, isAccepted));
+  lines.push(closingSymbolLine('}', schema, space, comma, toAdd, toRemove, toChange, isAccepted));
 
   return lines;
 };
 
-const objectPropertiesLines = (schema, space, toAdd, toRemove, toChange) => {
+const objectPropertiesLines = (schema, space, toAdd, toRemove, toChange, isAccepted) => {
   if (!schema.properties) {
     return [];
   }
@@ -369,15 +325,15 @@ const objectPropertiesLines = (schema, space, toAdd, toRemove, toChange) => {
       }
       return getLines(prop, schema.properties[prop], isReqProp, space + 2,
         (toAdd || schema.toAdd), (toRemove || schema.toRemove),
-        toChange, index !== keys.length - 1);
+        toChange, (isAccepted || schema.isAccepted), index !== keys.length - 1);
     })
   );
 };
 
 
-const getArrayLine = (name, schema, isReq, space, toAdd, toRemove, toChange, comma) => {
+const getArrayLine = (name, schema, isReq, space, toAdd, toRemove, toChange, isAccepted, comma) => {
   let lines = [];
-  lines.push(getSingleLine(name, schema, isReq, space, toAdd, toRemove, comma));
+  lines.push(getSingleLine(name, schema, isReq, space, toAdd, toRemove, toChange, isAccepted, comma));
 
   if (schema.requiredChanged && !schema.typeChanged) {
     // prevent items to be marked to add if only required changed
@@ -387,16 +343,16 @@ const getArrayLine = (name, schema, isReq, space, toAdd, toRemove, toChange, com
   }
 
   const arrayItemsLines = getLines('', schema.items, null, space + 2,
-    toAdd, toRemove, toChange, false);
+    toAdd, toRemove, toChange, (isAccepted || schema.isAccepted), false);
   lines = lines.concat(arrayItemsLines);
 
-  lines.push(closingSymbolLine(']', schema, space, comma, toAdd, toRemove, toChange));
+  lines.push(closingSymbolLine(']', schema, space, comma, toAdd, toRemove, toChange, isAccepted));
 
   return lines;
 };
 
 
-const getSingleLine = (name, schema, isReq, space, toAdd, toRemove, toChange, comma) => (
+const getSingleLine = (name, schema, isReq, space, toAdd, toRemove, toChange, isAccepted, comma) => (
   {
     id: Math.random(),
     isOpt: !isReq,
@@ -404,18 +360,25 @@ const getSingleLine = (name, schema, isReq, space, toAdd, toRemove, toChange, co
     toAdd,
     toRemove,
     toChange,
-    index: schema.index,
+    differenceId: schema.differenceId,
     type: schema.type,
     line: textLine(name, schema, space, comma),
-    isAccepted: schema.isAccepted,
+    isAccepted: isAccepted || schema.isAccepted,
   }
 );
 
-const closingSymbolLine = (symbol, schema, space, comma, toAdd, toRemove, toChange) => {
+const closingSymbolLine = (symbol, schema, space, comma, toAdd, toRemove, toChange, isAccepted) => {
   const id = Math.random();
   const pre = ' '.repeat(space);
   const line = `${pre}${symbol}${comma ? ',' : ''}`;
-  return { id, line, toAdd, toRemove, toChange };
+  return {
+    id,
+    line,
+    toAdd,
+    toRemove,
+    toChange,
+    isAccepted: isAccepted || schema.isAccepted,
+  };
 };
 
 const textLine = (name, schema, space, comma) => {

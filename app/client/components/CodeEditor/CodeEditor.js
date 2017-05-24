@@ -1,6 +1,7 @@
 import React from 'react';
 import CodeUtils from 'draft-js-code';
 import Draft from 'draft-js';
+import { flattenDeep } from 'lodash/array';
 
 import styles from './CodeEditor.css';
 
@@ -45,7 +46,7 @@ class CodeEditor extends React.Component {
   initializeEditor = (base) => {
     const cleanBase = cleanJSONSchema(base);
     const resultSchema = compareJSONSchema(cleanBase, cleanBase);
-    const json = JSONSchemaToJSON(resultSchema);
+    const json = flattenDeep(JSONSchemaToJSON(resultSchema));
     const content = createContentState(json);
 
     this.setState({

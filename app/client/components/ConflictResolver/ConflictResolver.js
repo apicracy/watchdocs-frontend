@@ -2,21 +2,20 @@ import React from 'react';
 import styles from './ConflictResolver.css';
 import editorStyles from '../CodeEditor/CodeEditor.css';
 import { flattenDeep } from 'lodash/array';
+import { cloneDeep } from 'lodash/lang';
 import LinesGroup from './LinesGroup';
 
 import {
   JSONSchemaToJSON,
   compareJSONSchema,
-  acceptJSONSchema,
-  rejectJSONSchema,
+  acceptChange,
+  rejectChange,
   cleanJSONSchema,
-  JSONtoJSONSchema,
 } from 'services/JSONSchemaEditor';
 
 import {
   Editor,
   EditorState,
-  RichUtils,
 } from 'draft-js';
 
 import {
@@ -49,14 +48,15 @@ class ConflictResolver extends React.Component {
   }
 
   compare = (base, draft) => {
-    const diff = compareJSONSchema(
+    const diffSchema = compareJSONSchema(
       cleanJSONSchema(base),
       cleanJSONSchema(draft),
     );
-    const linesOfCode = JSONSchemaToJSON(diff);
+    const linesOfCode = JSONSchemaToJSON(diffSchema);
     this.setState({
       linesOfCode,
-      initialLinesOfCode: linesOfCode,
+      resultSchema: diffSchema,
+      initialDiffSchema: cloneDeep(diffSchema),
       editorState: this.editorLines(linesOfCode),
     });
   }
@@ -68,25 +68,18 @@ class ConflictResolver extends React.Component {
   }
 
   onAccept = (index) => {
-    const { linesOfCode } = this.state;
+    const { resultSchema, linesOfCode } = this.state;
     const groupToAccept = linesOfCode[index];
 
     if (!groupToAccept) {
       return;
     }
 
-    let acceptedLines = groupToAccept.filter(line => !line.toRemove);
-    acceptedLines = acceptedLines.map((line) => {
-      const acceptedLine = line;
-      acceptedLine.isAccepted = true;
-      acceptedLine.toAdd = false;
-      acceptedLine.toChange = false;
-      return acceptedLine;
-    });
-    linesOfCode[index] = acceptedLines;
-    const newLines = linesOfCode.filter(group => !Array.isArray(group) || group.length > 0);
+    const newResultSchema = acceptChange(resultSchema, groupToAccept);
+    const newLines = JSONSchemaToJSON(newResultSchema);
 
     this.setState({
+      resultSchema: newResultSchema,
       linesOfCode: newLines,
       editorState: this.editorLines(newLines),
       isDirty: true,
@@ -94,25 +87,18 @@ class ConflictResolver extends React.Component {
   }
 
   onReject = (index) => {
-    const { linesOfCode } = this.state;
-    const groupToReject = linesOfCode[index];
+    const { resultSchema, linesOfCode } = this.state;
+    const groupToAccept = linesOfCode[index];
 
-    if (!groupToReject) {
+    if (!groupToAccept) {
       return;
     }
 
-    let rejectedLines = groupToReject.filter(line => !line.toAdd);
-    rejectedLines = rejectedLines.map((line) => {
-      const rejectedLine = line;
-      rejectedLine.isAccepted = true;
-      rejectedLine.toRemove = false;
-      rejectedLine.toChange = false;
-      return rejectedLine;
-    });
-    linesOfCode[index] = rejectedLines;
-    const newLines = linesOfCode.filter(group => !Array.isArray(group) || group.length > 0);
+    const newResultSchema = rejectChange(resultSchema, groupToAccept);
+    const newLines = JSONSchemaToJSON(newResultSchema);
 
     this.setState({
+      resultSchema: newResultSchema,
       linesOfCode: newLines,
       editorState: this.editorLines(newLines),
       isDirty: true,
@@ -120,29 +106,26 @@ class ConflictResolver extends React.Component {
   }
 
   onCancel = () => {
+    const { initialDiffSchema } = this.state;
+    const initialLines = JSONSchemaToJSON(initialDiffSchema);
+
     this.setState({
-      linesOfCode: this.state.initialLinesOfCode,
-      editorState: this.editorLines(this.state.initialLinesOfCode),
+      resultSchema: cloneDeep(initialDiffSchema),
+      linesOfCode: initialLines,
+      editorState: this.editorLines(initialLines),
       isDirty: false,
     });
   }
 
   onSave = () => {
-    this.setState({
-      tempLinesOfCode: this.state.linesOfCode,
-      tempTextAreaLines: this.state.textAreaLines,
-      temp: this.state.output,
-      isDirty: false,
-      invalidSchema: false,
-    });
-
-    this.props.onSave(cleanJSONSchema(this.state.output));
+    this.props.onSave(
+      cleanJSONSchema(this.state.resultSchema),
+    );
   }
 
   render() {
     const {
       linesOfCode,
-      invalidSchema,
       editorState,
     } = this.state;
 
@@ -184,7 +167,6 @@ class ConflictResolver extends React.Component {
               </div>
             </div>
           </div>
-          { invalidSchema && <div className={styles.information}>JSON Schema is not valid</div> }
         </div>
         {
           this.state.isDirty && (

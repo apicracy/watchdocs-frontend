@@ -6,14 +6,7 @@ class LineOfCode extends React.Component {
     isReq: React.PropTypes.bool,
     isOpt: React.PropTypes.bool,
     toAdd: React.PropTypes.bool,
-    typeChanged: React.PropTypes.bool,
-    toChange: React.PropTypes.bool,
     toRemove: React.PropTypes.bool,
-    onClick: React.PropTypes.func,
-    onSwitchReq: React.PropTypes.func,
-    isSelected: React.PropTypes.bool,
-
-    onReject: React.PropTypes.func,
     isAccepted: React.PropTypes.bool,
   };
 
@@ -22,19 +15,12 @@ class LineOfCode extends React.Component {
       isOpt,
       isReq,
       toAdd,
-      typeChanged,
-      toChange,
       toRemove,
-      onClick,
-      isSelected,
-      onSwitchReq,
-      onReject,
       isAccepted,
     } = this.props;
 
-    const lineStyle = isSelected ? styles.oneLineSelected : styles.oneLine;
     let attributeSpan = styles.attributeSpan;
-    let lineContainerStyles = styles.lineContainer;
+    const lineContainerStyles = styles.lineContainer;
 
     let attribute;
     if (isOpt) {
@@ -48,68 +34,27 @@ class LineOfCode extends React.Component {
     }
 
     let attributeStyle = styles.attribute;
+    let changeLineStyle = styles.unchangedLine;
 
     if (toAdd) {
       attributeStyle = styles.greenAttributeSpan;
-    }
-
-    if (toRemove) {
+      changeLineStyle = styles.greenLine;
+    } else if (toRemove) {
       attributeStyle = styles.redAttributeSpan;
-      // isAccepted could be also undefined;
-      if (isAccepted === true) {
-        lineContainerStyles = styles.lineContainerHidden;
-      }
-    }
-
-    // if accepted, restart styles
-    if (isAccepted === true || isAccepted === false) {
-      attributeStyle = styles.attribute;
-    }
-
-    /* eslint jsx-a11y/no-static-element-interactions: 0 */
-    let action = () => {};
-    let actionText = '';
-    let containerButtonStyles = styles.inactiveActionButton;
-    let actionButton = styles.button;
-    let acceptedText;
-    let isAcceptedStyle;
-    let showButtons = true;
-
-    if (toRemove) {
-      actionText = 'remove';
-      action = toRemove;
-      containerButtonStyles = (isAccepted !== undefined) ?
-        styles.inactiveActionButton : styles.redLine;
-      actionButton = styles.removeButton;
-      acceptedText = 'removed';
-      isAcceptedStyle = styles.removeAccepted;
-      showButtons = !toChange;
-    }
-
-    if (toAdd) {
-      actionText = 'add';
-      action = toAdd;
-      containerButtonStyles = (isAccepted !== undefined) ?
-        styles.inactiveActionButton : styles.greenLine;
-      actionButton = styles.addButton;
-      acceptedText = 'added';
-      isAcceptedStyle = styles.addAccepted;
+      changeLineStyle = styles.redLine;
+    } else if (isAccepted) {
+      attributeStyle = styles.acceptedAttributeSpan;
+      changeLineStyle = styles.acceptedLine;
     }
 
     return (
       <div className={lineContainerStyles}>
-        <div onClick={onClick} className={lineStyle}>
-          <div onClick={onSwitchReq} className={attributeStyle}>
+        <div className={styles.oneLine}>
+          <div className={attributeStyle}>
             <span className={attributeSpan}>{attribute}</span>
           </div>
         </div>
-        <div className={containerButtonStyles}>
-        </div>
-        {
-          isAccepted && <div className={isAcceptedStyle}>
-            {acceptedText}
-          </div>
-        }
+        <div className={changeLineStyle} />
       </div>
     );
   }

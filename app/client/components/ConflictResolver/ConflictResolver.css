@@ -29,7 +29,8 @@
   composes: attribute;
   background: #B05C5C;
 }
-.greenAttributeSpan {
+.greenAttributeSpan,
+.acceptedAttributeSpan {
   composes: attribute;
   background: #5BB16A;
 }
@@ -72,7 +73,7 @@
   display: none;
 }
 
-.inactiveActionButton {
+.unchangedLine {
   display: none;
 }
 
@@ -88,12 +89,17 @@
 
 .redLine {
   composes: containerButtons;
-  background: rgba(176, 92, 92, 0.15);
+  background: rgba(176, 92, 92, 0.3);
 }
 
 .greenLine {
   composes: containerButtons;
-  background: rgba(91, 177, 106, 0.15);
+  background: rgba(91, 177, 106, 0.3);
+}
+
+.acceptedLine {
+  composes: containerButtons;
+  background: rgba(91, 177, 106, 0.1);
 }
 
 .button {
