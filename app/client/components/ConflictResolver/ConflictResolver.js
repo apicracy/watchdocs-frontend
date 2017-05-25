@@ -50,10 +50,7 @@ class ConflictResolver extends React.Component {
   }
 
   compare = (base, draft) => {
-    const diffSchema = compareJSONSchemas(
-      cleanJSONSchema(base),
-      cleanJSONSchema(draft),
-    );
+    const diffSchema = compareJSONSchemas(base, draft);
     const linesOfCode = JSONSchemaToJSONLines(diffSchema);
     this.setState({
       linesOfCode,

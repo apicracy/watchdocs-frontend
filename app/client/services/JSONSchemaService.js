@@ -276,6 +276,9 @@ export function JSONSchemaToJSONLines(schema) {
 }
 
 function getLines(name, schema, isReq, space, toAdd, toRemove, toChange, isAccepted, comma) {
+  if (!schema){
+    return []
+  }
   const lineToChange = toChange || schema.typeChanged || schema.requiredChanged;
   // line could be marked to remove/add by itself (from schema) or by parent
   const lineToAdd = toAdd || schema.toAdd || (lineToChange && !toRemove);

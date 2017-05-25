@@ -17,7 +17,6 @@ import {
 
 import {
   JSONSchemaToJSONLines,
-  cleanJSONSchema,
   JSONtoJSONSchema,
 } from 'services/JSONSchemaService';
 
@@ -44,12 +43,11 @@ class CodeEditor extends React.Component {
   }
 
   reset = (base) => {
-    const cleanBase = cleanJSONSchema(base);
-    const json = flattenDeep(JSONSchemaToJSONLines(cleanBase));
+    const json = flattenDeep(JSONSchemaToJSONLines(base));
     const content = createContentState(json);
 
     this.setState({
-      initialSchema: cloneDeep(cleanBase),
+      initialSchema: cloneDeep(base),
       editorState: EditorState.createWithContent(content),
       isDirty: false,
       jsonIsValid: true,

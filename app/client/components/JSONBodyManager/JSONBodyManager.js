@@ -6,6 +6,8 @@ import LoadingIndicator from '../LoadingIndicator/LoadingIndicator';
 
 import { isEmpty, isEqual } from 'lodash/lang';
 
+import { cleanJSONSchema } from 'services/JSONSchemaService';
+
 class JSONBodyManager extends React.Component {
   static propTypes = {
     base: React.PropTypes.object,
@@ -31,13 +33,16 @@ class JSONBodyManager extends React.Component {
   }
 
   selectComponent = (props) => {
-    const { base, draft } = props;
+    let { base, draft } = props;
+    base = cleanJSONSchema(base);
+    draft = cleanJSONSchema(draft);
 
     if (isEmpty(draft) || isEmpty(base) || isEqual(base, draft)) {
       this.enableEditor();
     } else {
       this.enableConflictResolver();
     }
+    this.setState({base, draft});
   }
 
   enableEditor = () => {
@@ -62,7 +67,7 @@ class JSONBodyManager extends React.Component {
   }
 
   render() {
-    const { base, draft } = this.props;
+    const { base, draft } = this.state;
     const { editorEnabled, conflictResolverEnabled, submitting } = this.state;
     return (
       <div>
