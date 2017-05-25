@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import UserForm from 'components/UserForm/UserForm';
 import UnauthorizedLayout from 'components/UnauthorizedLayout/UnauthorizedLayout';
 
-import { authenticate } from 'services/session';
+import { registerUser } from 'services/registration';
 
 @connect(store => ({
   session: store.session,
 }))
 
-class Login extends React.Component {
+class Signup extends React.Component {
   static propTypes = {
     session: React.PropTypes.object,
     router: React.PropTypes.object,
@@ -31,17 +31,17 @@ class Login extends React.Component {
     }
   }
 
-  onLogin = (userParams => (
-    this.props.dispatch(authenticate(userParams))
+  onSignup = (values => (
+    this.props.dispatch(registerUser(values))
   ))
 
   render() {
     return (
       <UnauthorizedLayout>
-        <UserForm onSubmit={this.onLogin} buttonLabel="Login" />
+        <UserForm onSubmit={this.onSignup} buttonLabel="Signup" />
       </UnauthorizedLayout>
     );
   }
 }
 
-export default Login;
+export default Signup;

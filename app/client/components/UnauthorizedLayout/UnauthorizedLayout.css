@@ -1,0 +1,48 @@
+.root {
+  width: 100%;
+  min-height: 100vh;
+  flex-direction: column;
+  background: url('../../assets/login-background.jpg');
+  background-size: cover;
+  position: relative;
+}
+
+.logo {
+  text-align: center;
+  padding: 0 55px 30px;
+}
+
+.logo > img {
+  max-width: 250px;
+  width: 100%;
+  height: auto;
+}
+
+.inner {
+  background: white;
+  text-align: left;
+  padding: 40px 40px 20px;
+}
+
+.links {
+  text-align: center;
+  margin: 20px auto;
+}
+
+.links a {
+  color: white;
+  margin: 5px;
+}
+
+.links a:hover {
+  color: #eee;
+  text-decoration: underline;
+}
+
+.container {
+  max-width: 400px;
+  width: 100%;
+  position: relative;
+  padding: 70px 0;
+  margin: 0 auto;
+}
