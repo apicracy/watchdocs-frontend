@@ -1,7 +1,7 @@
 import deepEqual from 'deep-equal';
 import generateSchema from 'generate-schema';
 import traverse from 'traverse';
-import { pull } from 'lodash/array';
+import { pull, flattenDeep } from 'lodash/array';
 import { cloneDeep, isEmpty } from 'lodash/lang';
 
 export function cleanJSONSchema(output) {
@@ -30,6 +30,15 @@ export function cleanJSONSchema(output) {
   }
 
   return newOutput;
+}
+
+export function isResolved(linesOfCode) {
+  const lines = flattenDeep(linesOfCode);
+  const hasConflicts = lines.some(function (line) {
+    return line.toAdd || line.toRemove;
+  });
+
+  return !hasConflicts;
 }
 
 export function acceptChange(resultSchema, groupToAccept) {
@@ -145,7 +154,7 @@ export function compare(base, draft) {
     }
   }
 
-  if (draft.type === 'object') {
+  if (draft.properties) {
     // check props
     Object.keys(draft.properties).map((prop) => {
       if (!base.properties || !deepEqual(draft.properties[prop], base.properties[prop])) {
@@ -161,21 +170,22 @@ export function compare(base, draft) {
       return null;
     });
 
-    Object.keys(base.properties).map((prop) => {
-      if (!deepEqual(draft.properties[prop], base.properties[prop])) {
-        if (!draft.properties[prop]) {
-          output.properties[prop] = base.properties[prop];
-          output.properties[prop].toRemove = true;
-          output.properties[prop].differenceId = i;
-          i += 1;
-        } else {
-          output.properties[prop] = compare(base.properties[prop], draft.properties[prop]);
+    if (base.properties) {
+      Object.keys(base.properties).map((prop) => {
+        if (!deepEqual(draft.properties[prop], base.properties[prop])) {
+          if (!draft.properties[prop]) {
+            output.properties[prop] = base.properties[prop];
+            output.properties[prop].toRemove = true;
+            output.properties[prop].differenceId = i;
+            i += 1;
+          } else {
+            output.properties[prop] = compare(base.properties[prop], draft.properties[prop]);
+          }
         }
-      }
 
-      return null;
-    });
-
+        return null;
+      });
+    }
     /* eslint no-array-constructor: 0 */
     // TODO: Not sure if correct. Output should have draft required list
     if (base.required) {
@@ -285,8 +295,15 @@ function getLines(name, schema, isReq, space, toAdd, toRemove, toChange, isAccep
   }
 
   // if node has changed group new lines and old lines together
-  if (schema.toAdd || schema.toRemove || schema.typeChanged || schema.requiredChanged) {
+  if (schema.toAdd || schema.toRemove || schema.typeChanged) {
     return [lines];
+  }
+
+  // protect from grouping whole node when require changed
+  // it should group only first node line
+  if (schema.requiredChanged) {
+    const [oldRequired, newRequired, ...unchanged] = lines
+    return [[oldRequired, newRequired], ...unchanged];
   }
   return lines;
 }

@@ -12,6 +12,7 @@ import {
   acceptChange,
   rejectChange,
   cleanJSONSchema,
+  isResolved,
 } from 'services/JSONSchemaService';
 
 import {
@@ -128,6 +129,7 @@ class ConflictResolver extends React.Component {
     const {
       linesOfCode,
       editorState,
+      resultSchema,
     } = this.state;
 
     const editorStyle = [
@@ -172,7 +174,7 @@ class ConflictResolver extends React.Component {
         {
           this.state.isDirty && (
             <div className={styles.buttons}>
-              <Button onClick={this.onSave} variants={['primary', 'large', 'spaceRight']}>Save</Button>
+              <Button onClick={this.onSave} disabled={!isResolved(linesOfCode)} variants={['primary', 'large', 'spaceRight']}>Save</Button>
               <Button onClick={this.onCancel} variants={['body', 'large']}>Cancel</Button>
             </div>
           )
