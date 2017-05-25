@@ -2,9 +2,11 @@ import React from 'react';
 import CodeUtils from 'draft-js-code';
 import Draft from 'draft-js';
 import { flattenDeep } from 'lodash/array';
+import { cloneDeep } from 'lodash/lang';
 
 import styles from './CodeEditor.css';
 
+import Button from '../Button/Button';
 import EditorAside from './EditorAside';
 
 import {
@@ -14,10 +16,10 @@ import {
 } from 'draft-js';
 
 import {
-  JSONSchemaToJSON,
-  compareJSONSchema,
+  JSONSchemaToJSONLines,
   cleanJSONSchema,
-} from 'services/JSONSchemaEditor';
+  JSONtoJSONSchema,
+} from 'services/JSONSchemaService';
 
 import {
   editorCodeEqual,
@@ -33,24 +35,24 @@ class CodeEditor extends React.Component {
     this.setState({
       editorState: EditorState.createWithContent(createContentState([])),
       jsonIsValid: true,
+      isDirty: false,
     });
   }
 
-  componentDidUpdate(prevProps) {
-    const { base } = this.props;
-    if (prevProps.base !== base) {
-      this.initializeEditor(base);
-    }
+  componentWillReceiveProps(nextProps) {
+    this.reset(nextProps.base);
   }
 
-  initializeEditor = (base) => {
+  reset = (base) => {
     const cleanBase = cleanJSONSchema(base);
-    const resultSchema = compareJSONSchema(cleanBase, cleanBase);
-    const json = flattenDeep(JSONSchemaToJSON(resultSchema));
+    const json = flattenDeep(JSONSchemaToJSONLines(cleanBase));
     const content = createContentState(json);
 
     this.setState({
+      initialSchema: cloneDeep(cleanBase),
       editorState: EditorState.createWithContent(content),
+      isDirty: false,
+      jsonIsValid: true,
     });
     return true;
   }
@@ -72,11 +74,13 @@ class CodeEditor extends React.Component {
       this.setState({
         editorState: newEditorState,
         jsonIsValid: true,
+        isDirty: true,
       });
     } else {
       this.setState({
         editorState,
         jsonIsValid: false,
+        isDirty: true,
       });
     }
   }
@@ -152,8 +156,21 @@ class CodeEditor extends React.Component {
     return true;
   }
 
+  onCancel = () => {
+    const { initialSchema } = this.state;
+    this.reset(initialSchema);
+  }
+
+  onSave = () => {
+    const { editorState } = this.state;
+
+    const newJson = editorState.getCurrentContent().getPlainText();
+    const newSchema = JSONtoJSONSchema(newJson);
+    this.props.onSave(newSchema);
+  }
+
   render() {
-    const { editorState, jsonIsValid } = this.state;
+    const { editorState, jsonIsValid, isDirty } = this.state;
 
     // If the user changes block type before entering any text, we can
     // either style the placeholder or hide it. Let's just hide it now.
@@ -180,7 +197,6 @@ class CodeEditor extends React.Component {
             <div className={styles.codeEditor}>
               <div className={className} onClick={this.focus}>
                 <Editor
-                  customStyleMap={styleMap}
                   editorState={editorState}
                   handleKeyCommand={this.handleKeyCommand}
                   keyBindingFn={this.keyBindingFn}
@@ -196,19 +212,17 @@ class CodeEditor extends React.Component {
           </div>
         </div>
         { !jsonIsValid && <div className={styles.information}>JSON is not valid</div> }
+        {
+          isDirty && (
+            <div className={styles.buttons}>
+              <Button onClick={this.onSave} disabled={!jsonIsValid} variants={['primary', 'large', 'spaceRight']}>Save</Button>
+              <Button onClick={this.onCancel} variants={['body', 'large']}>Cancel</Button>
+            </div>
+          )
+        }
       </div>
     );
   }
 }
-
-// Custom overrides for "code" style.
-const styleMap = {
-  CODE: {
-    backgroundColor: 'rgba(0, 0, 0, 0.05)',
-    fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
-    fontSize: 16,
-    padding: 2,
-  },
-};
 
 export default CodeEditor;

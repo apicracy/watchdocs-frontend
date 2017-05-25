@@ -138,7 +138,11 @@ class RequestEditor extends React.Component {
           description="This is title of the section we're going
             to display in documentation and in navigation."
         >
-          <ConflictResolver base={baseJSONSchema} draft={draftJSONSchema} onSave={this.onSaveJson} />
+          <ConflictResolver
+            base={baseJSONSchema}
+            draft={draftJSONSchema}
+            onSave={this.onSaveJson}
+          />
         </DocumentationBlock>
       </div>
     );

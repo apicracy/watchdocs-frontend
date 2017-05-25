@@ -4,14 +4,15 @@ import editorStyles from '../CodeEditor/CodeEditor.css';
 import { flattenDeep } from 'lodash/array';
 import { cloneDeep } from 'lodash/lang';
 import LinesGroup from './LinesGroup';
+import Button from '../Button/Button';
 
 import {
-  JSONSchemaToJSON,
-  compareJSONSchema,
+  JSONSchemaToJSONLines,
+  compareJSONSchemas,
   acceptChange,
   rejectChange,
   cleanJSONSchema,
-} from 'services/JSONSchemaEditor';
+} from 'services/JSONSchemaService';
 
 import {
   Editor,
@@ -48,11 +49,11 @@ class ConflictResolver extends React.Component {
   }
 
   compare = (base, draft) => {
-    const diffSchema = compareJSONSchema(
+    const diffSchema = compareJSONSchemas(
       cleanJSONSchema(base),
       cleanJSONSchema(draft),
     );
-    const linesOfCode = JSONSchemaToJSON(diffSchema);
+    const linesOfCode = JSONSchemaToJSONLines(diffSchema);
     this.setState({
       linesOfCode,
       resultSchema: diffSchema,
@@ -76,7 +77,7 @@ class ConflictResolver extends React.Component {
     }
 
     const newResultSchema = acceptChange(resultSchema, groupToAccept);
-    const newLines = JSONSchemaToJSON(newResultSchema);
+    const newLines = JSONSchemaToJSONLines(newResultSchema);
 
     this.setState({
       resultSchema: newResultSchema,
@@ -95,7 +96,7 @@ class ConflictResolver extends React.Component {
     }
 
     const newResultSchema = rejectChange(resultSchema, groupToAccept);
-    const newLines = JSONSchemaToJSON(newResultSchema);
+    const newLines = JSONSchemaToJSONLines(newResultSchema);
 
     this.setState({
       resultSchema: newResultSchema,
@@ -107,7 +108,7 @@ class ConflictResolver extends React.Component {
 
   onCancel = () => {
     const { initialDiffSchema } = this.state;
-    const initialLines = JSONSchemaToJSON(initialDiffSchema);
+    const initialLines = JSONSchemaToJSONLines(initialDiffSchema);
 
     this.setState({
       resultSchema: cloneDeep(initialDiffSchema),
@@ -170,9 +171,9 @@ class ConflictResolver extends React.Component {
         </div>
         {
           this.state.isDirty && (
-            <div>
-              <button className={styles.acceptButton} onClick={this.onSave}>Save</button>
-              <button className={styles.acceptButton} onClick={this.onCancel}>Cancel</button>
+            <div className={styles.buttons}>
+              <Button onClick={this.onSave} variants={['primary', 'large', 'spaceRight']}>Save</Button>
+              <Button onClick={this.onCancel} variants={['body', 'large']}>Cancel</Button>
             </div>
           )
         }

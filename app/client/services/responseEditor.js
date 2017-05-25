@@ -2,6 +2,8 @@ import {
   setResponse as setResponseAction,
   setStatus as setStatusAction,
   reset as resetAction,
+  setBaseSchema as setBaseSchemaAction,
+  setDraftSchema as setDraftSchemaAction,
 } from 'actions/responseEditor';
 import http from 'services/http';
 
@@ -24,7 +26,7 @@ export function loadResponse(responseId) {
 }
 
 export function updateJsonSchema(responseId, newSchema) {
-  return () => {
+  return (dispatch) => {
     const options = {
       method: 'PUT',
       body: JSON.stringify({
@@ -32,10 +34,11 @@ export function updateJsonSchema(responseId, newSchema) {
       }),
     };
 
-    http(`/api/v1/responses/${responseId}`, options)
+    return http(`/api/v1/responses/${responseId}`, options)
       .then(response => response.json())
-      .then(() => {
-        // Do something with data
+      .then((response) => {
+        dispatch(setBaseSchemaAction(response.body));
+        dispatch(setDraftSchemaAction(response.draft));
       });
   };
 }

@@ -6,9 +6,9 @@ import {
 } from 'draft-js';
 
 import {
-  JSONSchemaToJSON,
+  JSONSchemaToJSONLines,
   JSONtoJSONSchema,
-} from 'services/JSONSchemaEditor';
+} from 'services/JSONSchemaService';
 
 
 const initialBlocks = [
@@ -55,7 +55,7 @@ export function createNewEditorState(prevEditorState, newContent) {
 
 export function formatJSON(json) {
   const jsonSchema = JSONtoJSONSchema(json);
-  return JSONSchemaToJSON(jsonSchema);
+  return JSONSchemaToJSONLines(jsonSchema);
 }
 
 export function contentStateFromPlainText(plainText, editorState) {

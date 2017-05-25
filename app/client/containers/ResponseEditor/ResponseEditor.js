@@ -10,9 +10,9 @@ import BackLink from 'components/BackLink/BackLink';
 import { browserHistory } from 'react-router';
 
 import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock';
-import ConflictResolver from 'components/ConflictResolver/ConflictResolver';
+import JSONBodyManager from 'components/JSONBodyManager/JSONBodyManager';
 
-import { loadResponse, reset, saveJson, updateHttpStatus } from 'services/responseEditor';
+import { loadResponse, reset, updateJsonSchema, updateHttpStatus } from 'services/responseEditor';
 import { getFullLink } from 'services/helpers';
 
 @connect(store => ({
@@ -21,8 +21,8 @@ import { getFullLink } from 'services/helpers';
   endpointList: store.endpoints,
 
   http_status_code: store.responseEditor.http_status_code,
-  baseJSONSchema: store.responseEditor.base,
-  draftJSONSchema: store.responseEditor.draft,
+  baseJSONSchema: store.responseEditor.body,
+  draftJSONSchema: store.responseEditor.body_draft,
   projectUrl: store.projects.activeProject.base_url,
 }))
 
@@ -111,7 +111,7 @@ class ResponseEditor extends React.Component {
       params,
     } = this.props;
 
-    dispatch(saveJson(params.response_id, json));
+    return dispatch(updateJsonSchema(params.response_id, json));
   }
 
   render() {
@@ -144,8 +144,9 @@ class ResponseEditor extends React.Component {
           description="This is title of the section we're going
             to display in documentation and in navigation."
         >
-          <ConflictResolver
-            base={baseJSONSchema} draft={draftJSONSchema}
+          <JSONBodyManager
+            base={baseJSONSchema}
+            draft={draftJSONSchema}
             onSave={this.onSaveJsonSchema}
           />
         </DocumentationBlock>

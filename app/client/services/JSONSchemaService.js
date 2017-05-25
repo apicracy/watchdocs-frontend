@@ -2,11 +2,12 @@ import deepEqual from 'deep-equal';
 import generateSchema from 'generate-schema';
 import traverse from 'traverse';
 import { pull } from 'lodash/array';
+import { cloneDeep, isEmpty } from 'lodash/lang';
 
 export function cleanJSONSchema(output) {
   const specialProps = [
     'differenceId', 'toRemove', 'toAdd', 'isAccepted', 'requiredChanged',
-    'typeChanged', 'newType', 'onChangeRequired',
+    'typeChanged', 'newType', 'onChangeRequired', 'oldSchema',
   ];
   const newOutput = Array.isArray(output) ?
     [].concat(output) :
@@ -33,7 +34,8 @@ export function cleanJSONSchema(output) {
 
 export function acceptChange(resultSchema, groupToAccept) {
   const newResultSchema = resultSchema;
-  const differenceId = groupToAccept.find(line => line.differenceId).differenceId;
+  const differenceId = groupToAccept.find(line => line.differenceId >= 0)
+                                    .differenceId;
 
   traverse(newResultSchema).forEach(function () {
     if (this.node.differenceId === differenceId) {
@@ -74,7 +76,6 @@ export function rejectChange(resultSchema, groupToAccept) {
       } else if (changedProperty.toAdd) {
         this.delete(true);
       } else if (changedProperty.requiredChanged) {
-        debugger;
         // remove from required list of parent
         const parentRequired = this.parent.parent.node;
         pull(parentRequired.required, this.key);
@@ -91,33 +92,41 @@ export function rejectChange(resultSchema, groupToAccept) {
   return newResultSchema;
 }
 
-export function compareJSONSchema(base, draft) {
+export function compareJSONSchemas(base, draft) {
   const output = compare(base, draft);
   return output;
 }
 
 
+// This is a refactoring candidate
+// What is does is it compares two json schemas
+// The output is a json schema based on draft
+// with custom properties which tells about differences.
+// Custom properties:
+//
+// differenceId - unique id of a difference on node
+// toAdd - new node from draft
+// toRemove - missing node from draft
+// typeChanged - node type changed in draft
+// requiredChanged - node required changed in draft,
+//                   it becomes required or no longer required
+// oldSchema - if type changed it stores schema for node from base
+
 let i = 0;
-
 export function compare(base, draft) {
-  // if one of them is empty
-  if (base && !draft) {
-    const newBase = base;
-    return newBase;
+  if (isEmpty(draft) && isEmpty(base)) {
+    return {};
+  }
+  if (isEmpty(draft)) {
+    return base;
+  }
+  if (isEmpty(base)) {
+    return draft;
   }
 
-  if (draft && !base) {
-    const newDraft = draft;
-    return newDraft;
-  }
+  const output = cloneDeep(draft);
 
-  if (!draft && !base) {
-    return undefined;
-  }
-
-  // if we have two of them
-  const output = Object.assign({}, draft);
-
+  // Check for node type change
   if (base.type !== draft.type) {
     if (draft.type === 'object') {
       output.properties.toAdd = true;
@@ -248,7 +257,7 @@ export function JSONtoJSONSchema(json) {
 //   ],
 //   Object(line: "{")
 // ]
-export function JSONSchemaToJSON(schema) {
+export function JSONSchemaToJSONLines(schema) {
   let JSONObject = [];
   if (schema) {
     JSONObject = getLines('', schema, true, 0);
@@ -297,7 +306,7 @@ const oldLines = (name, schema, isReq, space, comma) => {
 
 const getObjectLine = (name, schema, isReq, space, toAdd, toRemove, toChange, isAccepted, comma) => {
   let lines = [];
-  lines.push(getSingleLine(name, schema, isReq, space, toAdd, toRemove, toChange, isAccepted, comma));
+  lines.push(getSingleLine(name, schema, isReq, space, toAdd, toRemove, toChange, isAccepted, false));
 
   if (schema.requiredChanged && !schema.typeChanged) {
     // prevent items to be marked to add if only required changed
@@ -333,7 +342,7 @@ const objectPropertiesLines = (schema, space, toAdd, toRemove, toChange, isAccep
 
 const getArrayLine = (name, schema, isReq, space, toAdd, toRemove, toChange, isAccepted, comma) => {
   let lines = [];
-  lines.push(getSingleLine(name, schema, isReq, space, toAdd, toRemove, toChange, isAccepted, comma));
+  lines.push(getSingleLine(name, schema, isReq, space, toAdd, toRemove, toChange, isAccepted, false));
 
   if (schema.requiredChanged && !schema.typeChanged) {
     // prevent items to be marked to add if only required changed
@@ -383,7 +392,7 @@ const closingSymbolLine = (symbol, schema, space, comma, toAdd, toRemove, toChan
 
 const textLine = (name, schema, space, comma) => {
   let text = ' '.repeat(space);
-  text += (name !== '') ? `"${name}":` : '';
+  text += (name !== '') ? `"${name}": ` : '';
   text += propertyValue(schema.type, schema.default);
   text += comma ? ',' : '';
   return text;

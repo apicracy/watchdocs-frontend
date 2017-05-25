@@ -54,6 +54,10 @@
   border: 0;
 }
 
+.buttons {
+  margin: 50px 0;
+}
+
 /* Modifiers */
 
 .light {
