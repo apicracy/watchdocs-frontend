@@ -1,8 +1,62 @@
 import deepEqual from 'deep-equal';
 import generateSchema from 'generate-schema';
 import traverse from 'traverse';
-import { pull, flattenDeep } from 'lodash/array';
+import { pull, flattenDeep, difference } from 'lodash/array';
 import { cloneDeep, isEmpty } from 'lodash/lang';
+import { keys } from 'lodash/object';
+
+export function calculateRequired(base, draft) {
+  const resultSchema = cloneDeep(draft);
+  if (base.type !== draft.type) {
+    return fillSchemaWithRequired(draft);
+  }
+
+  if (base.type === 'object') {
+    resultSchema.required = calculateObjectRequired(base, draft);
+
+    keys(draft.properties).forEach((prop) => {
+      if (!base.properties[prop]) {
+        return null;
+      }
+      resultSchema.properties[prop] = calculateRequired(
+        base.properties[prop],
+        draft.properties[prop],
+      );
+      return null;
+    });
+  }
+
+  if (base.type === 'array') {
+    resultSchema.items = calculateRequired(base.items, draft.items);
+  }
+
+  return resultSchema;
+}
+
+const calculateObjectRequired = (base, draft) => {
+  const baseProperties = keys(base.properties);
+  const draftProperties = keys(draft.properties);
+
+  const removedProperties = difference(baseProperties, draftProperties);
+  const newProperties = difference(draftProperties, baseProperties);
+
+  return difference(base.required, removedProperties)
+         .concat(newProperties);
+};
+
+export function fillSchemaWithRequired(schema) {
+  const resultSchema = schema;
+  traverse(resultSchema).forEach(function() {
+    if (this.node.type === 'object') {
+      const node = this.node;
+      node.required = keys(node.properties);
+      this.update(node);
+    }
+  });
+
+  return resultSchema;
+}
+
 
 export function cleanJSONSchema(output) {
   const specialProps = [
@@ -348,7 +402,7 @@ const objectPropertiesLines = (schema, space, toAdd, toRemove, toChange, isAccep
 
   return (
     keys.map((prop, index) => {
-      let isReqProp = true;
+      let isReqProp = false;
       if (schema.required) {
         isReqProp = schema.required.indexOf(prop) > -1;
       }

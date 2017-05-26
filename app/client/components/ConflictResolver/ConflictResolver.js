@@ -126,7 +126,6 @@ class ConflictResolver extends React.Component {
     const {
       linesOfCode,
       editorState,
-      resultSchema,
     } = this.state;
 
     const editorStyle = [

@@ -42,7 +42,7 @@ class JSONBodyManager extends React.Component {
     } else {
       this.enableConflictResolver();
     }
-    this.setState({base, draft});
+    this.setState({ base, draft });
   }
 
   enableEditor = () => {

@@ -2,7 +2,7 @@ import React from 'react';
 import CodeUtils from 'draft-js-code';
 import Draft from 'draft-js';
 import { flattenDeep } from 'lodash/array';
-import { cloneDeep } from 'lodash/lang';
+import { cloneDeep, isEmpty } from 'lodash/lang';
 
 import styles from './CodeEditor.css';
 
@@ -18,6 +18,8 @@ import {
 import {
   JSONSchemaToJSONLines,
   JSONtoJSONSchema,
+  calculateRequired,
+  fillSchemaWithRequired,
 } from 'services/JSONSchemaService';
 
 import {
@@ -35,6 +37,7 @@ class CodeEditor extends React.Component {
       editorState: EditorState.createWithContent(createContentState([])),
       jsonIsValid: true,
       isDirty: false,
+      editMode: false,
     });
   }
 
@@ -51,7 +54,14 @@ class CodeEditor extends React.Component {
       editorState: EditorState.createWithContent(content),
       isDirty: false,
       jsonIsValid: true,
+      editMode: false,
     });
+    if (isEmpty(base)) {
+      this.setState({
+        editorState: EditorState.createWithContent(createContentState([])),
+        editMode: true,
+      });
+    }
     return true;
   }
 
@@ -115,8 +125,6 @@ class CodeEditor extends React.Component {
     return Draft.getDefaultKeyBinding(e);
   }
 
-
-  // TODO: Change tab to 2 spaces
   // TODO: Allow for multiline tabbing
   onTab = (e) => {
     const { editorState } = this.state;
@@ -144,7 +152,6 @@ class CodeEditor extends React.Component {
 
     // Create new code block on Return key
     this.onChange(state);
-    return true;
   }
 
   handlePastedText = (pastedText) => {
@@ -156,19 +163,37 @@ class CodeEditor extends React.Component {
 
   onCancel = () => {
     const { initialSchema } = this.state;
+    this.setState({ editMode: false });
     this.reset(initialSchema);
   }
 
   onSave = () => {
-    const { editorState } = this.state;
+    const { editorState, editMode, initialSchema } = this.state;
+    if (editMode) {
+      const newJson = editorState.getCurrentContent().getPlainText();
+      const newSchema = JSONtoJSONSchema(newJson);
+      let mergedSchema;
 
-    const newJson = editorState.getCurrentContent().getPlainText();
-    const newSchema = JSONtoJSONSchema(newJson);
-    this.props.onSave(newSchema);
+      if (!isEmpty(initialSchema)) {
+        mergedSchema = calculateRequired(initialSchema, newSchema);
+      } else {
+        mergedSchema = fillSchemaWithRequired(newSchema);
+      }
+      this.props.onSave(mergedSchema).then(() => {
+        this.setState({ editMode: false });
+      });
+    }
+  }
+
+  enterEditMode = () => {
+    this.setState({
+      editMode: true,
+    });
+    this.onFocus();
   }
 
   render() {
-    const { editorState, jsonIsValid, isDirty } = this.state;
+    const { editorState, jsonIsValid, isDirty, editMode } = this.state;
 
     // If the user changes block type before entering any text, we can
     // either style the placeholder or hide it. Let's just hide it now.
@@ -178,19 +203,28 @@ class CodeEditor extends React.Component {
     return (
       <div>
         <div className={styles.container}>
-          <div className={styles.aside}>
-            {lines && lines.map((object, index) => {
-              const data = object.getData().toJS();
-              return (
-                <EditorAside
-                  key={index}
-                  isSelected={false}
-                  isReq={data.isReq}
-                  isOpt={data.isOpt}
-                />
-              );
-            })}
-          </div>
+          { !editMode &&
+            <div className={styles.editButton}>
+              <Button onClick={this.enterEditMode} variants={['primary']}>
+                Edit
+              </Button>
+            </div>
+          }
+          { !editMode &&
+            <div className={styles.aside}>
+              {lines && lines.map((object, index) => {
+                const data = object.getData().toJS();
+                return (
+                  <EditorAside
+                    key={index}
+                    isSelected={false}
+                    isReq={data.isReq}
+                    isOpt={data.isOpt}
+                  />
+                );
+              })}
+            </div>
+          }
           <div className={styles.editorContainer}>
             <div className={styles.codeEditor}>
               <div className={className} onClick={this.focus}>
@@ -204,6 +238,7 @@ class CodeEditor extends React.Component {
                   spellCheck
                   handleReturn={this.onReturn}
                   onTab={this.onTab}
+                  readOnly={!editMode}
                 />
               </div>
             </div>
@@ -211,9 +246,11 @@ class CodeEditor extends React.Component {
         </div>
         { !jsonIsValid && <div className={styles.information}>JSON is not valid</div> }
         {
-          isDirty && (
+          editMode && (
             <div className={styles.buttons}>
-              <Button onClick={this.onSave} disabled={!jsonIsValid} variants={['primary', 'large', 'spaceRight']}>Save</Button>
+              { isDirty &&
+                <Button onClick={this.onSave} disabled={!jsonIsValid} variants={['primary', 'large', 'spaceRight']}>Save</Button>
+              }
               <Button onClick={this.onCancel} variants={['body', 'large']}>Cancel</Button>
             </div>
           )
