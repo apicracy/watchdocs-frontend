@@ -19,7 +19,6 @@ class JSONBodyManager extends React.Component {
     this.state = {
       conflictResolverEnabled: false,
       editorEnabled: false,
-      submitting: false,
     };
   }
 
@@ -64,7 +63,7 @@ class JSONBodyManager extends React.Component {
 
   render() {
     const { base, draft } = this.state;
-    const { editorEnabled, conflictResolverEnabled, submitting } = this.state;
+    const { editorEnabled, conflictResolverEnabled } = this.state;
     return (
       <div>
         { conflictResolverEnabled &&
@@ -72,14 +71,12 @@ class JSONBodyManager extends React.Component {
             base={base}
             draft={draft}
             onSave={this.onSave}
-            submitting={submitting}
           />
         }
         { editorEnabled &&
           <JSONEditor
             base={base}
             onSave={this.onSave}
-            submitting={submitting}
           />
         }
       </div>

@@ -9,7 +9,6 @@ import CodeEditor from '../CodeEditor/CodeEditor';
 import RequiredSwitch from './RequiredSwitch';
 import LoadingIndicator from '../LoadingIndicator/LoadingIndicator';
 
-
 import { EditorState } from 'draft-js';
 import {
   JSONSchemaToJSONLines,
@@ -32,7 +31,6 @@ class JSONEditor extends React.Component {
   static propTypes = {
     base: React.PropTypes.object,
     onSave: React.PropTypes.func,
-    submitting: React.PropTypes.bool,
   };
 
   componentWillMount() {

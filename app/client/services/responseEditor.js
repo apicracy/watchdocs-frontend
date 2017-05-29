@@ -38,7 +38,7 @@ export function updateJsonSchema(responseId, newSchema) {
       .then(response => response.json())
       .then((response) => {
         dispatch(setBaseSchemaAction(response.body));
-        dispatch(setDraftSchemaAction(response.draft));
+        dispatch(setDraftSchemaAction(response.body_draft));
       });
   };
 }

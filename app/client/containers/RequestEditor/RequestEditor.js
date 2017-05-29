@@ -9,7 +9,7 @@ import BackLink from 'components/BackLink/BackLink';
 import { browserHistory } from 'react-router';
 
 import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock';
-import ConflictResolver from 'components/ConflictResolver/ConflictResolver';
+import JSONBodyManager from 'components/JSONBodyManager/JSONBodyManager';
 
 import { setStatus, saveRequestParam,
   loadRequest, reset, saveJson,
@@ -20,8 +20,8 @@ import { getFullLink } from 'services/helpers';
   endpoint: store.endpointEditor,
   group: store.groupEditor,
   endpointList: store.endpoints,
-  baseJSONSchema: store.requestEditor.base,
-  draftJSONSchema: store.requestEditor.draft,
+  baseJSONSchema: store.requestEditor.body,
+  draftJSONSchema: store.requestEditor.body_draft,
   projectUrl: store.projects.activeProject.base_url,
 }))
 
@@ -116,7 +116,7 @@ class RequestEditor extends React.Component {
       dispatch,
     } = this.props;
 
-    dispatch(saveJson(this.props.params.endpoint_id, json));
+    return dispatch(saveJson(this.props.params.endpoint_id, json));
   }
 
   render() {
@@ -138,7 +138,7 @@ class RequestEditor extends React.Component {
           description="This is title of the section we're going
             to display in documentation and in navigation."
         >
-          <ConflictResolver
+          <JSONBodyManager
             base={baseJSONSchema}
             draft={draftJSONSchema}
             onSave={this.onSaveJson}

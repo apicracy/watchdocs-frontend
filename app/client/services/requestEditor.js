@@ -2,6 +2,8 @@ import {
   setRequest as setRequestAction,
   setStatus as setStatusAction,
   reset as resetAction,
+  setBaseSchema as setBaseSchemaAction,
+  setDraftSchema as setDraftSchemaAction,
 } from 'actions/requestEditor';
 import {
   setRequest,
@@ -46,19 +48,13 @@ export function loadRequest(id) {
     http(`/api/v1/endpoints/${id}/request`)
       .then(response => response.json())
       .then((data) => {
-        const elem = {
-          base: data.body,
-          draft: data.body_draft,
-          headers: data.headers,
-        };
-
-        dispatch(setRequestAction(elem));
+        dispatch(setRequestAction(data));
       });
   };
 }
 
 export function saveJson(id, json) {
-  return () => {
+  return (dispatch) => {
     const options = {
       method: 'PUT',
       body: JSON.stringify({
@@ -66,10 +62,11 @@ export function saveJson(id, json) {
       }),
     };
 
-    http(`/api/v1/endpoints/${id}/request`, options)
+    return http(`/api/v1/endpoints/${id}/request`, options)
       .then(response => response.json())
-      .then(() => {
-        // Do something with data
+      .then((response) => {
+        dispatch(setBaseSchemaAction(response.body));
+        dispatch(setDraftSchemaAction(response.body_draft));
       });
   };
 }

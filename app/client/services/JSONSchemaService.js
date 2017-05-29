@@ -472,11 +472,14 @@ const getArrayLine = (name, schema, isReq, space, toAdd, toRemove, toChange, isA
 };
 
 
-const getSingleLine = (name, schema, isReq, space, toAdd, toRemove, toChange, isAccepted, comma) => (
-  {
+const getSingleLine = (name, schema, isReq, space, toAdd, toRemove, toChange,
+                      isAccepted, comma) => {
+  const isRequired = name && isReq;
+  const isOptional = name && !isReq;
+  return {
     id: Math.random(),
-    isOpt: !isReq,
-    isReq,
+    isOpt: isOptional,
+    isReq: isRequired,
     toAdd,
     toRemove,
     toChange,
@@ -485,8 +488,8 @@ const getSingleLine = (name, schema, isReq, space, toAdd, toRemove, toChange, is
     type: schema.type,
     line: textLine(name, schema, space, comma),
     isAccepted: isAccepted || schema.isAccepted,
-  }
-);
+  };
+};
 
 const closingSymbolLine = (symbol, schema, space, comma, toAdd, toRemove, toChange, isAccepted) => {
   const id = Math.random();
