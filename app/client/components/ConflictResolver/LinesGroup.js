@@ -3,6 +3,16 @@ import styles from './ConflictResolver.css';
 import LineOfCode from './LineOfCode';
 
 class LinesGroup extends React.Component {
+  static propTypes = {
+    lines: React.PropTypes.oneOf([
+      React.PropTypes.object,
+      React.PropTypes.array,
+    ]),
+    index: React.PropTypes.number,
+    onAccept: React.PropTypes.func,
+    onReject: React.PropTypes.func,
+  };
+
   constructor(props) {
     super(props);
     let lines = props.lines;
@@ -34,7 +44,7 @@ class LinesGroup extends React.Component {
 
   render() {
     const { index, onAccept, onReject } = this.props;
-    let { lines } = this.state;
+    const { lines } = this.state;
 
     return (
       <div className={this.wrapperStyles()}>
@@ -44,7 +54,7 @@ class LinesGroup extends React.Component {
             <button title="Reject" onClick={() => onReject(index)} className={styles.removeButton}>✕</button>
           </div>
         }
-        { lines.map((line) => (
+        { lines.map(line => (
           <LineOfCode
             key={line.id}
             isReq={line.isReq}

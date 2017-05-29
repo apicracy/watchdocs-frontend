@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CodeEditor from '../CodeEditor/CodeEditor';
+import JSONEditor from '../JSONEditor/JSONEditor';
 import ConflictResolver from '../ConflictResolver/ConflictResolver';
 import LoadingIndicator from '../LoadingIndicator/LoadingIndicator';
 
@@ -80,7 +80,7 @@ class JSONBodyManager extends React.Component {
           />
         }
         { editorEnabled &&
-          <CodeEditor
+          <JSONEditor
             base={base}
             onSave={this.onSave}
           />

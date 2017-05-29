@@ -11,7 +11,6 @@ import {
   compareJSONSchemas,
   acceptChange,
   rejectChange,
-  cleanJSONSchema,
   isResolved,
 } from 'services/JSONSchemaService';
 

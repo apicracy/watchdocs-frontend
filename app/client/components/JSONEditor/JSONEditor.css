@@ -1,0 +1,77 @@
+.container {
+  flex: 1;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  position: relative;
+}
+
+.code {
+  white-space: pre;
+  display: inline;
+  background: #3c3c3c;
+  padding: 0 20px;
+  width: 100%;
+  color: #c9c9c9;
+  align-items: center;
+  display: flex;
+}
+
+.editorContainer{
+  flex: 1;
+}
+
+.information {
+  background: #924A4B;
+  padding: 5px 0 5px 50px;
+  border-radius: 0 0 5px 5px;
+  color: #fff;
+  position: relative;
+  top: -3px;
+}
+
+.aside{
+  background: #464646;
+  font-family: Menlo,Monaco,Consolas,Courier New,monospace;
+}
+
+.codeEditor{
+  background-color: #3c3c3c;
+  padding-top: 2px;
+  padding-left: 2px;
+}
+
+.codeEditor pre {
+  display: block;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  line-height: 25px;
+  word-break: break-all;
+  word-wrap: break-word;
+  color: #c9c9c9;
+  background-color: #3c3c3c;
+  border: 0;
+}
+
+.buttons {
+  margin: 30px 0;
+}
+
+.editButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+/* Modifiers */
+
+.light {
+  background-color: #fff;
+}
+
+.light pre {
+  color: #3c3c3c;
+  background-color: #fff;
+  border: 0;
+}

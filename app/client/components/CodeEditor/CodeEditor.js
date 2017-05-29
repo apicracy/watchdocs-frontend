@@ -1,13 +1,8 @@
 import React from 'react';
 import CodeUtils from 'draft-js-code';
 import Draft from 'draft-js';
-import { flattenDeep } from 'lodash/array';
-import { cloneDeep, isEmpty } from 'lodash/lang';
 
 import styles from './CodeEditor.css';
-
-import Button from '../Button/Button';
-import RequiredSwitch from './RequiredSwitch';
 
 import {
   Editor,
@@ -16,88 +11,36 @@ import {
 } from 'draft-js';
 
 import {
-  JSONSchemaToJSONLines,
-  JSONtoJSONSchema,
-  calculateRequired,
-  fillSchemaWithRequired,
-  indexSchemaNodes,
-  changeRequiredForNode,
-} from 'services/JSONSchemaService';
-
-import {
-  editorCodeEqual,
-  createNewEditorState,
-  formatJSON,
   contentStateFromPlainText,
-  createContentState,
 } from 'services/codeEditorService';
 
 
 class CodeEditor extends React.Component {
-  componentWillMount() {
-    this.setState({
-      editorState: EditorState.createWithContent(createContentState([])),
-      jsonIsValid: true,
-      isDirty: false,
-      editMode: false,
-    });
-  }
+  static propTypes = {
+    editorState: React.PropTypes.object,
+    jsonIsValid: React.PropTypes.bool,
+    readOnly: React.PropTypes.bool,
+    onChange: React.PropTypes.func,
+  };
 
   componentWillReceiveProps(nextProps) {
-    this.reset(nextProps.base);
+    this.checkReadOnlyChange(this.props.readOnly, nextProps.readOnly);
   }
 
-  reset = (base) => {
-    const indexedBase = indexSchemaNodes(base);
-    const json = flattenDeep(JSONSchemaToJSONLines(indexedBase));
-    const content = createContentState(json);
-
-    this.setState({
-      initialSchema: cloneDeep(indexedBase),
-      editorState: EditorState.createWithContent(content),
-      isDirty: false,
-      jsonIsValid: true,
-      editMode: false,
-    });
-    if (isEmpty(base)) {
-      this.setState({
-        editorState: EditorState.createWithContent(createContentState([])),
-        editMode: true,
-      });
+  checkReadOnlyChange = (prevReadOnly, nextReadOnly) => {
+    if (prevReadOnly && !nextReadOnly) {
+      this.onFocus();
     }
-    return true;
+  }
+
+  onChange = (newState) => {
+    this.props.onChange(newState);
   }
 
   onFocus = () => this.refs.editor.focus();
 
-  onChange = (editorState) => {
-    const prevCode = this.state.editorState.getCurrentContent().getPlainText();
-    const nextCode = editorState.getCurrentContent().getPlainText();
-    if (editorCodeEqual(prevCode, nextCode)) {
-      this.setState({ editorState });
-      return;
-    }
-
-    const formattedJSON = formatJSON(nextCode);
-    if (formattedJSON.length > 0) { // is valid?
-      const newContent = createContentState(formattedJSON);
-      const newEditorState = createNewEditorState(editorState, newContent);
-      this.setState({
-        editorState: newEditorState,
-        jsonIsValid: true,
-        isDirty: true,
-      });
-    } else {
-      this.setState({
-        editorState,
-        jsonIsValid: false,
-        isDirty: true,
-      });
-    }
-  }
-
   handleKeyCommand = (command) => {
-    const { editorState } = this.state;
+    const { editorState } = this.props;
     let newState;
 
     if (CodeUtils.hasSelectionInBlock(editorState)) {
@@ -116,7 +59,7 @@ class CodeEditor extends React.Component {
   }
 
   keyBindingFn = (e) => {
-    const { editorState } = this.state;
+    const { editorState } = this.props;
 
     if (CodeUtils.hasSelectionInBlock(editorState)) {
       const command = CodeUtils.getKeyBinding(e);
@@ -130,7 +73,7 @@ class CodeEditor extends React.Component {
 
   // TODO: Allow for multiline tabbing
   onTab = (e) => {
-    const { editorState } = this.state;
+    const { editorState } = this.props;
 
     if (!CodeUtils.hasSelectionInBlock(editorState)) {
       return;
@@ -142,7 +85,7 @@ class CodeEditor extends React.Component {
   }
 
   onReturn = () => {
-    const { editorState } = this.state;
+    const { editorState } = this.props;
 
     if (!CodeUtils.hasSelectionInBlock(editorState)) {
       return;
@@ -158,112 +101,38 @@ class CodeEditor extends React.Component {
   }
 
   handlePastedText = (pastedText) => {
-    const { editorState } = this.state;
+    const { editorState } = this.props;
     const newState = contentStateFromPlainText(pastedText, editorState);
     this.onChange(EditorState.push(editorState, newState, 'insert-fragment'));
     return true;
   }
 
-  onCancel = () => {
-    const { initialSchema } = this.state;
-    this.setState({ editMode: false });
-    this.reset(initialSchema);
-  }
-
-  onSave = () => {
-    const { editorState, initialSchema } = this.state;
-    const newJson = editorState.getCurrentContent().getPlainText();
-    const newSchema = JSONtoJSONSchema(newJson);
-    let mergedSchema;
-
-    if (!isEmpty(initialSchema)) {
-      mergedSchema = calculateRequired(initialSchema, newSchema);
-    } else {
-      mergedSchema = fillSchemaWithRequired(newSchema);
-    }
-    this.props.onSave(mergedSchema).then(() => {
-      this.setState({ editMode: false });
-    });
-  }
-
-  onRequiredChange = (nodeId) => {
-    const { initialSchema } = this.state;
-    const newSchema = changeRequiredForNode(initialSchema, nodeId);
-
-    this.props.onSave(newSchema);
-  }
-
-  enterEditMode = () => {
-    this.setState({
-      editMode: true,
-    });
-    this.onFocus();
-  }
-
   render() {
-    const { editorState, jsonIsValid, isDirty, editMode } = this.state;
+    const { editorState, jsonIsValid, readOnly } = this.props;
 
     // If the user changes block type before entering any text, we can
     // either style the placeholder or hide it. Let's just hide it now.
     const className = 'RichEditor-editor';
-    const lines = editorState.getCurrentContent().getBlocksAsArray();
 
     return (
       <div>
-        <div className={styles.container}>
-          { !editMode &&
-            <div className={styles.editButton}>
-              <Button onClick={this.enterEditMode} variants={['primary']}>
-                Edit
-              </Button>
-            </div>
-          }
-          { !editMode &&
-            <div className={styles.aside}>
-              {lines.map((object) => {
-                const data = object.getData().toJS();
-                return (
-                  <RequiredSwitch
-                    key={data.id}
-                    isReq={data.isReq}
-                    isOpt={data.isOpt}
-                    nodeId={data.nodeId}
-                    onChange={this.onRequiredChange}
-                  />
-                );
-              })}
-            </div>
-          }
-          <div className={styles.editorContainer}>
-            <div className={styles.codeEditor}>
-              <div className={className} onClick={this.focus}>
-                <Editor
-                  editorState={editorState}
-                  handleKeyCommand={this.handleKeyCommand}
-                  keyBindingFn={this.keyBindingFn}
-                  onChange={this.onChange}
-                  handlePastedText={this.handlePastedText}
-                  ref="editor"
-                  spellCheck
-                  handleReturn={this.onReturn}
-                  onTab={this.onTab}
-                  readOnly={!editMode}
-                />
-              </div>
-            </div>
+        <div className={styles.codeEditor}>
+          <div className={className} onClick={this.focus}>
+            <Editor
+              editorState={editorState}
+              handleKeyCommand={this.handleKeyCommand}
+              keyBindingFn={this.keyBindingFn}
+              onChange={this.onChange}
+              handlePastedText={this.handlePastedText}
+              ref="editor"
+              spellCheck
+              handleReturn={this.onReturn}
+              onTab={this.onTab}
+              readOnly={readOnly}
+            />
           </div>
         </div>
         { !jsonIsValid && <div className={styles.information}>JSON is not valid</div> }
-        {
-          editMode && (
-            <div className={styles.buttons}>
-              { isDirty &&
-                <Button onClick={this.onSave} disabled={!jsonIsValid} variants={['primary', 'large', 'spaceRight']}>Save</Button>
-              }
-              <Button onClick={this.onCancel} variants={['body', 'large']}>Cancel</Button>
-            </div>
-          )
-        }
       </div>
     );
   }
