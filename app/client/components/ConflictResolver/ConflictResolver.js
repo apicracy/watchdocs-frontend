@@ -5,6 +5,8 @@ import { flattenDeep } from 'lodash/array';
 import { cloneDeep } from 'lodash/lang';
 import LinesGroup from './LinesGroup';
 import Button from '../Button/Button';
+import LoadingIndicator from '../LoadingIndicator/LoadingIndicator';
+
 
 import {
   JSONSchemaToJSONLines,
@@ -116,6 +118,7 @@ class ConflictResolver extends React.Component {
   }
 
   onSave = () => {
+    this.setState({ submitting: true });
     this.props.onSave(this.state.resultSchema);
   }
 
@@ -123,6 +126,7 @@ class ConflictResolver extends React.Component {
     const {
       linesOfCode,
       editorState,
+      submitting,
     } = this.state;
 
     const editorStyle = [
@@ -132,6 +136,7 @@ class ConflictResolver extends React.Component {
 
     return (
       <div>
+        { submitting && <LoadingIndicator /> }
         <div className={styles.container}>
           <div className={styles.rows}>
             {linesOfCode.map((group, index) => {

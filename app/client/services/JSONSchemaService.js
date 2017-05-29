@@ -80,6 +80,9 @@ export function changeRequiredForNode(schema, nodeId) {
       if (parentNode.required && parentNode.required.includes(this.key)){
         pull(parentNode.required, this.key);
       } else {
+        if (!parentNode.required) {
+          parentNode.required = [];
+        }
         parentNode.required.push(this.key);
       }
       this.parent.parent.update(parentNode, true);

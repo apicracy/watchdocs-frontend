@@ -10,16 +10,20 @@ class RequiredSwitch extends React.Component {
     onChange: React.PropTypes.func,
   };
 
+  componentWillMount() {
+    const { isReq, isOpt } = this.props;
+    this.setState({ isReq, isOpt });
+  }
+
   onChange = () => {
+    const { isOpt, isReq } = this.state;
     const { nodeId, onChange } = this.props;
+    this.setState({ isReq: !isReq, isOpt: !isOpt });
     setTimeout(() => onChange(nodeId), 200);
   }
 
   render() {
-    const {
-      isOpt,
-      isReq,
-    } = this.props;
+    const { isOpt, isReq } = this.state;
 
     return (
       <div className={styles.lineContainer}>

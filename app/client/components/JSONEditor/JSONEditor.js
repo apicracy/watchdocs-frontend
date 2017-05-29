@@ -7,6 +7,8 @@ import styles from './JSONEditor.css';
 import Button from '../Button/Button';
 import CodeEditor from '../CodeEditor/CodeEditor';
 import RequiredSwitch from './RequiredSwitch';
+import LoadingIndicator from '../LoadingIndicator/LoadingIndicator';
+
 
 import { EditorState } from 'draft-js';
 import {
@@ -30,6 +32,7 @@ class JSONEditor extends React.Component {
   static propTypes = {
     base: React.PropTypes.object,
     onSave: React.PropTypes.func,
+    submitting: React.PropTypes.bool,
   };
 
   componentWillMount() {
@@ -101,6 +104,8 @@ class JSONEditor extends React.Component {
   }
 
   onSave = () => {
+    this.setState({ submitting: true });
+
     const { editorState, initialSchema } = this.state;
     const newJson = editorState.getCurrentContent().getPlainText();
     const newSchema = JSONtoJSONSchema(newJson);
@@ -112,15 +117,18 @@ class JSONEditor extends React.Component {
       mergedSchema = fillSchemaWithRequired(newSchema);
     }
     this.props.onSave(mergedSchema).then(() => {
-      this.setState({ editMode: false });
+      this.setState({ editMode: false, submitting: false });
     });
   }
 
   onRequiredChange = (nodeId) => {
+    this.setState({ submitting: true });
     const { initialSchema } = this.state;
     const newSchema = changeRequiredForNode(initialSchema, nodeId);
 
-    this.props.onSave(newSchema);
+    return this.props.onSave(newSchema).then(() => {
+      this.setState({ submitting: false });
+    });
   }
 
   enterEditMode = () => {
@@ -130,7 +138,7 @@ class JSONEditor extends React.Component {
   }
 
   render() {
-    const { editorState, jsonIsValid, isDirty, editMode } = this.state;
+    const { editorState, jsonIsValid, isDirty, editMode, submitting } = this.state;
     const lines = editorState.getCurrentContent().getBlocksAsArray();
 
     return (
@@ -160,6 +168,7 @@ class JSONEditor extends React.Component {
             </div>
           }
           <div className={styles.editorContainer}>
+            { submitting && <LoadingIndicator /> }
             <CodeEditor
               editorState={editorState}
               readOnly={!editMode}
@@ -168,7 +177,6 @@ class JSONEditor extends React.Component {
             />
           </div>
         </div>
-        { !jsonIsValid && <div className={styles.information}>JSON is not valid</div> }
         {
           editMode && (
             <div className={styles.buttons}>

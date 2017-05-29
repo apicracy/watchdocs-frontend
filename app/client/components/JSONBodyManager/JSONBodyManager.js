@@ -2,7 +2,6 @@ import React from 'react';
 
 import JSONEditor from '../JSONEditor/JSONEditor';
 import ConflictResolver from '../ConflictResolver/ConflictResolver';
-import LoadingIndicator from '../LoadingIndicator/LoadingIndicator';
 
 import { isEmpty, isEqual } from 'lodash/lang';
 
@@ -59,30 +58,28 @@ class JSONBodyManager extends React.Component {
     });
   }
 
-  onSave = (newSchema) => {
-    this.setState({ submitting: true });
-    return this.props.onSave(cleanJSONSchema(newSchema)).then(() => {
-      this.setState({ submitting: false });
-    });
-  }
+  onSave = newSchema => (
+    this.props.onSave(cleanJSONSchema(newSchema))
+  )
 
   render() {
     const { base, draft } = this.state;
     const { editorEnabled, conflictResolverEnabled, submitting } = this.state;
     return (
       <div>
-        { submitting && <LoadingIndicator /> }
         { conflictResolverEnabled &&
           <ConflictResolver
             base={base}
             draft={draft}
             onSave={this.onSave}
+            submitting={submitting}
           />
         }
         { editorEnabled &&
           <JSONEditor
             base={base}
             onSave={this.onSave}
+            submitting={submitting}
           />
         }
       </div>

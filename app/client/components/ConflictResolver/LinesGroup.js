@@ -4,7 +4,7 @@ import LineOfCode from './LineOfCode';
 
 class LinesGroup extends React.Component {
   static propTypes = {
-    lines: React.PropTypes.oneOf([
+    lines: React.PropTypes.oneOfType([
       React.PropTypes.object,
       React.PropTypes.array,
     ]),
