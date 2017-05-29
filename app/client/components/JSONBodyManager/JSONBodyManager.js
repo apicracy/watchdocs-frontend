@@ -61,7 +61,7 @@ class JSONBodyManager extends React.Component {
 
   onSave = (newSchema) => {
     this.setState({ submitting: true });
-    return this.props.onSave(newSchema).then(() => {
+    return this.props.onSave(cleanJSONSchema(newSchema)).then(() => {
       this.setState({ submitting: false });
     });
   }
@@ -71,7 +71,7 @@ class JSONBodyManager extends React.Component {
     const { editorEnabled, conflictResolverEnabled, submitting } = this.state;
     return (
       <div>
-        { submitting && <LoadingIndicator fixed /> }
+        { submitting && <LoadingIndicator /> }
         { conflictResolverEnabled &&
           <ConflictResolver
             base={base}

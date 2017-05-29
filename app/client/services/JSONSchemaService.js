@@ -46,7 +46,7 @@ const calculateObjectRequired = (base, draft) => {
 
 export function fillSchemaWithRequired(schema) {
   const resultSchema = schema;
-  traverse(resultSchema).forEach(function() {
+  traverse(resultSchema).forEach(function () {
     if (this.node.type === 'object') {
       const node = this.node;
       node.required = keys(node.properties);
@@ -57,11 +57,42 @@ export function fillSchemaWithRequired(schema) {
   return resultSchema;
 }
 
+export function indexSchemaNodes(schema) {
+  const resultSchema = schema;
+  let nodeId = 0;
+  traverse(resultSchema).forEach(function () {
+    if (this.node.type) {
+      const node = this.node;
+      node.nodeId = nodeId;
+      this.update(node);
+      nodeId += 1;
+    }
+  });
+
+  return resultSchema;
+}
+
+export function changeRequiredForNode(schema, nodeId) {
+  const resultSchema = schema;
+  traverse(resultSchema).forEach(function () {
+    if (this.node.nodeId === nodeId) {
+      const parentNode = this.parent.parent.node;
+      if (parentNode.required && parentNode.required.includes(this.key)){
+        pull(parentNode.required, this.key);
+      } else {
+        parentNode.required.push(this.key);
+      }
+      this.parent.parent.update(parentNode, true);
+    }
+  });
+
+  return resultSchema;
+}
 
 export function cleanJSONSchema(output) {
   const specialProps = [
     'differenceId', 'toRemove', 'toAdd', 'isAccepted', 'requiredChanged',
-    'typeChanged', 'newType', 'onChangeRequired', 'oldSchema',
+    'typeChanged', 'newType', 'onChangeRequired', 'oldSchema', 'nodeId',
   ];
   const newOutput = Array.isArray(output) ?
     [].concat(output) :
@@ -380,7 +411,8 @@ const oldLines = (name, schema, isReq, space, comma) => {
 
 const getObjectLine = (name, schema, isReq, space, toAdd, toRemove, toChange, isAccepted, comma) => {
   let lines = [];
-  lines.push(getSingleLine(name, schema, isReq, space, toAdd, toRemove, toChange, isAccepted, false));
+  lines.push(getSingleLine(name, schema, isReq, space, toAdd, toRemove,
+                           toChange, isAccepted, false));
 
   if (schema.requiredChanged && !schema.typeChanged) {
     // prevent items to be marked to add if only required changed
@@ -388,8 +420,10 @@ const getObjectLine = (name, schema, isReq, space, toAdd, toRemove, toChange, is
     toAdd = false;
     toChange = false;
   }
-  lines = lines.concat(...objectPropertiesLines(schema, space, toAdd, toRemove, toChange, isAccepted));
-  lines.push(closingSymbolLine('}', schema, space, comma, toAdd, toRemove, toChange, isAccepted));
+  lines = lines.concat(...objectPropertiesLines(schema, space, toAdd, toRemove,
+                                                toChange, isAccepted));
+  lines.push(closingSymbolLine('}', schema, space, comma, toAdd, toRemove,
+                               toChange, isAccepted));
 
   return lines;
 };
@@ -444,6 +478,7 @@ const getSingleLine = (name, schema, isReq, space, toAdd, toRemove, toChange, is
     toRemove,
     toChange,
     differenceId: schema.differenceId,
+    nodeId: schema.nodeId,
     type: schema.type,
     line: textLine(name, schema, space, comma),
     isAccepted: isAccepted || schema.isAccepted,

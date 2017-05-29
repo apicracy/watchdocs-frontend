@@ -117,9 +117,7 @@ class ConflictResolver extends React.Component {
   }
 
   onSave = () => {
-    this.props.onSave(
-      cleanJSONSchema(this.state.resultSchema),
-    );
+    this.props.onSave(this.state.resultSchema);
   }
 
   render() {

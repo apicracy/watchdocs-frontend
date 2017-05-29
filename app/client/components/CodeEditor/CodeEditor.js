@@ -7,7 +7,7 @@ import { cloneDeep, isEmpty } from 'lodash/lang';
 import styles from './CodeEditor.css';
 
 import Button from '../Button/Button';
-import EditorAside from './EditorAside';
+import RequiredSwitch from './RequiredSwitch';
 
 import {
   Editor,
@@ -20,6 +20,8 @@ import {
   JSONtoJSONSchema,
   calculateRequired,
   fillSchemaWithRequired,
+  indexSchemaNodes,
+  changeRequiredForNode,
 } from 'services/JSONSchemaService';
 
 import {
@@ -46,11 +48,12 @@ class CodeEditor extends React.Component {
   }
 
   reset = (base) => {
-    const json = flattenDeep(JSONSchemaToJSONLines(base));
+    const indexedBase = indexSchemaNodes(base);
+    const json = flattenDeep(JSONSchemaToJSONLines(indexedBase));
     const content = createContentState(json);
 
     this.setState({
-      initialSchema: cloneDeep(base),
+      initialSchema: cloneDeep(indexedBase),
       editorState: EditorState.createWithContent(content),
       isDirty: false,
       jsonIsValid: true,
@@ -168,21 +171,26 @@ class CodeEditor extends React.Component {
   }
 
   onSave = () => {
-    const { editorState, editMode, initialSchema } = this.state;
-    if (editMode) {
-      const newJson = editorState.getCurrentContent().getPlainText();
-      const newSchema = JSONtoJSONSchema(newJson);
-      let mergedSchema;
+    const { editorState, initialSchema } = this.state;
+    const newJson = editorState.getCurrentContent().getPlainText();
+    const newSchema = JSONtoJSONSchema(newJson);
+    let mergedSchema;
 
-      if (!isEmpty(initialSchema)) {
-        mergedSchema = calculateRequired(initialSchema, newSchema);
-      } else {
-        mergedSchema = fillSchemaWithRequired(newSchema);
-      }
-      this.props.onSave(mergedSchema).then(() => {
-        this.setState({ editMode: false });
-      });
+    if (!isEmpty(initialSchema)) {
+      mergedSchema = calculateRequired(initialSchema, newSchema);
+    } else {
+      mergedSchema = fillSchemaWithRequired(newSchema);
     }
+    this.props.onSave(mergedSchema).then(() => {
+      this.setState({ editMode: false });
+    });
+  }
+
+  onRequiredChange = (nodeId) => {
+    const { initialSchema } = this.state;
+    const newSchema = changeRequiredForNode(initialSchema, nodeId);
+
+    this.props.onSave(newSchema);
   }
 
   enterEditMode = () => {
@@ -212,14 +220,15 @@ class CodeEditor extends React.Component {
           }
           { !editMode &&
             <div className={styles.aside}>
-              {lines && lines.map((object, index) => {
+              {lines.map((object) => {
                 const data = object.getData().toJS();
                 return (
-                  <EditorAside
-                    key={index}
-                    isSelected={false}
+                  <RequiredSwitch
+                    key={data.id}
                     isReq={data.isReq}
                     isOpt={data.isOpt}
+                    nodeId={data.nodeId}
+                    onChange={this.onRequiredChange}
                   />
                 );
               })}
