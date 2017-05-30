@@ -2,9 +2,11 @@ import deepEqual from 'deep-equal';
 import generateSchema from 'generate-schema';
 import traverse from 'traverse';
 import { pull, flattenDeep, difference } from 'lodash/array';
-import { cloneDeep, isEmpty } from 'lodash/lang';
+import { cloneDeep, isEmpty, isString } from 'lodash/lang';
 import { keys } from 'lodash/object';
 
+// Copies required arrays from base to draft
+// for each object node when type of node hasn't change
 export function calculateRequired(base, draft) {
   const resultSchema = cloneDeep(draft);
   if (base.type !== draft.type) {
@@ -44,6 +46,8 @@ const calculateObjectRequired = (base, draft) => {
          .concat(newProperties);
 };
 
+// Adds required property to each object node
+// of schema all make all properies required by default
 export function fillSchemaWithRequired(schema) {
   const resultSchema = schema;
   traverse(resultSchema).forEach(function () {
@@ -57,11 +61,12 @@ export function fillSchemaWithRequired(schema) {
   return resultSchema;
 }
 
+// Add nodeId for each node of json schema
 export function indexSchemaNodes(schema) {
   const resultSchema = schema;
   let nodeId = 0;
   traverse(resultSchema).forEach(function () {
-    if (this.node.type) {
+    if (this.node.type && isString(this.node.type)) {
       const node = this.node;
       node.nodeId = nodeId;
       this.update(node);
