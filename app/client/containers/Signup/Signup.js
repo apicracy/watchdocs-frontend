@@ -37,7 +37,7 @@ class Signup extends React.Component {
 
   render() {
     return (
-      <UnauthorizedLayout>
+      <UnauthorizedLayout title={'Create an account'} description={'Watchdocs is a tool that plugs into your application to generate documentation and keep it always up to date.'}>
         <UserForm onSubmit={this.onSignup} buttonLabel="Signup" />
       </UnauthorizedLayout>
     );

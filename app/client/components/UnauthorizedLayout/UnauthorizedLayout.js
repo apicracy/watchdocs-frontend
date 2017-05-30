@@ -4,6 +4,8 @@ import logo from '../../assets/watchdocslogo_white_full.png';
 
 const UnauthorizedLayout = (props, context) => {
   const currentPath = context.router.getCurrentLocation().pathname;
+  const { title, description } = props;
+
   return (
     <div className={styles.root}>
       <div className={styles.container}>
@@ -11,6 +13,8 @@ const UnauthorizedLayout = (props, context) => {
           <img src={logo} alt="Watchdocs.io" />
         </div>
         <div className={styles.inner}>
+          {title && <h1 className={styles.title}>{title}</h1>}
+          {description && <p className={styles.description}>{description}</p>}
           {props.children}
         </div>
         <div className={styles.links}>
@@ -24,6 +28,8 @@ const UnauthorizedLayout = (props, context) => {
 
 UnauthorizedLayout.propTypes = {
   children: React.PropTypes.object,
+  title: React.PropTypes.string,
+  description: React.PropTypes.string,
 };
 
 UnauthorizedLayout.contextTypes = {
