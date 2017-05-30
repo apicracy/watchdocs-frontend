@@ -59,6 +59,12 @@
   padding: 10px;
   font-size: 14px;
 }
+
+.extra-large {
+  font-size: 18px;
+  padding: 15px;
+}
+
 .left {
   float: right;
 }
