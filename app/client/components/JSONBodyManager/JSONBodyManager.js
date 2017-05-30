@@ -5,7 +5,11 @@ import ConflictResolver from '../ConflictResolver/ConflictResolver';
 
 import { isEmpty, isEqual } from 'lodash/lang';
 
-import { cleanJSONSchema } from 'services/JSONSchemaService';
+import {
+  cleanJSONSchema,
+  compareJSONSchemas,
+  isResolved,
+} from 'services/JSONSchemaService';
 
 class JSONBodyManager extends React.Component {
   static propTypes = {
@@ -30,10 +34,31 @@ class JSONBodyManager extends React.Component {
     this.selectComponent(this.props);
   }
 
+  // There are differences in JSON Schema that
+  // are not visible after casting to JSON
+  // When we detect them we save the draft as new base.
+  checkForHiddenDifferences(base, draft) {
+    if (isEmpty(draft) || isEmpty(base) ||
+      isEqual(base, draft)) {
+      return false;
+    }
+    const differenceSchema = compareJSONSchemas(base, draft);
+    if (!isResolved(differenceSchema)) {
+      // TODO: For optimization we can pass difference schema
+      // generated here as props to ConflictResolver
+      return false;
+    }
+    this.onSave(draft);
+    return true;
+  }
+
   selectComponent = (props) => {
     let { base, draft } = props;
     base = cleanJSONSchema(base);
     draft = cleanJSONSchema(draft);
+    if (this.checkForHiddenDifferences(base, draft)) {
+      return;
+    }
 
     if (isEmpty(draft) || isEmpty(base) || isEqual(base, draft)) {
       this.enableEditor();
