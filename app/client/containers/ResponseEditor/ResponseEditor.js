@@ -56,6 +56,10 @@ class ResponseEditor extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.dispatch(reset());
+  }
+
   componentDidUpdate(prevProps) {
     const {
       endpoint_id: endpointId,
