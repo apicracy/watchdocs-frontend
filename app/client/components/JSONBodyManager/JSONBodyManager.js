@@ -1,5 +1,5 @@
 import React from 'react';
-
+import styles from './JSONBodyManager.css'
 import JSONEditor from '../JSONEditor/JSONEditor';
 import ConflictResolver from '../ConflictResolver/ConflictResolver';
 
@@ -24,6 +24,7 @@ class JSONBodyManager extends React.Component {
     this.state = {
       conflictResolverEnabled: false,
       editorEnabled: false,
+      hiddenDifferencesFound: false,
     };
   }
 
@@ -50,17 +51,19 @@ class JSONBodyManager extends React.Component {
       // generated here as props to ConflictResolver
       return false;
     }
-    this.onSave(draft);
+    this.setState({
+      hiddenDifferencesFound: true,
+    });
     return true;
   }
 
   selectComponent = (props) => {
+    this.setState({ hiddenDifferencesFound: false });
+
     let { base, draft } = props;
     base = cleanJSONSchema(base);
     draft = cleanJSONSchema(draft);
-    if (this.checkForHiddenDifferences(base, draft)) {
-      return;
-    }
+    this.checkForHiddenDifferences(base, draft);
 
     if (isEmpty(draft) || isEmpty(base) || isEqual(base, draft)) {
       this.enableEditor();
@@ -89,10 +92,24 @@ class JSONBodyManager extends React.Component {
   )
 
   render() {
-    const { base, draft } = this.state;
-    const { editorEnabled, conflictResolverEnabled } = this.state;
+    const {
+      base, draft, hiddenDifferencesFound,
+      editorEnabled, conflictResolverEnabled
+    } = this.state;
+
+    // TODO: use notice component
     return (
       <div>
+        { hiddenDifferencesFound &&
+          <div className={styles.warning}>
+            <h3 className={styles.warning__title}> Exception occured </h3>
+            <p className={styles.warning__content}>
+              We are really sorry, but you can't edit the body. We found an edge case here.
+              <br/>
+              Please report it to <a href="mailto: contact@watchdocs.io">contact@watchdocs.io</a> sending this URL: {window.location.href}
+            </p>
+          </div>
+        }
         { conflictResolverEnabled &&
           <ConflictResolver
             base={base}

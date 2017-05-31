@@ -165,9 +165,13 @@ export function acceptChange(resultSchema, groupToAccept) {
 }
 
 export function rejectChange(resultSchema, groupToAccept) {
-  const newResultSchema = resultSchema;
   const differenceId = groupToAccept.find(line => line.differenceId).differenceId;
+  // if root node type changed
+  if (resultSchema.differenceId === differenceId && resultSchema.typeChanged) {
+    return resultSchema.oldSchema;
+  }
 
+  const newResultSchema = resultSchema;
   traverse(newResultSchema).forEach(function () {
     if (this.node.differenceId === differenceId) {
       const changedProperty = this.node;
@@ -186,7 +190,7 @@ export function rejectChange(resultSchema, groupToAccept) {
         changedProperty.requiredChanged = false;
         this.update(changedProperty);
       } else if (changedProperty.typeChanged) {
-        this.update(changedProperty.oldSchema);
+        this.update(changedProperty.oldSchema, true);
       }
     }
   });
@@ -230,21 +234,11 @@ export function compare(base, draft) {
 
   // Check for node type change
   if (base.type !== draft.type) {
-    if (draft.type === 'object') {
-      output.properties.toAdd = true;
-      output.properties.differenceId = i;
-      i += 1;
-    } else if (draft.type === 'array') {
-      output.items.toAdd = true;
-      output.items.differenceId = i;
-      i += 1;
-    } else {
-      output.type = draft.type;
-      output.oldSchema = base;
-      output.typeChanged = true;
-      output.differenceId = i;
-      i += 1;
-    }
+    output.type = draft.type;
+    output.oldSchema = base;
+    output.typeChanged = true;
+    output.differenceId = i;
+    i += 1;
   }
 
   if (draft.properties) {
