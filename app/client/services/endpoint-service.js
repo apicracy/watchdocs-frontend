@@ -76,13 +76,13 @@ function filterByStatus(endpoints, status) {
       return [...state, item];
     }
 
-    if (item.endpoints) {
+    if (item.items) {
       const matched = {
         ...item,
-        endpoints: filterByStatus(item.endpoints, status),
+        items: filterByStatus(item.items, status),
       };
 
-      if (matched.endpoints.length > 0) {
+      if (matched.items.length > 0) {
         return [...state, matched];
       }
     }

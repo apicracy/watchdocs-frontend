@@ -10,6 +10,7 @@ import { browserHistory } from 'react-router';
 
 import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock';
 import JSONSEditor from 'components/JSONSEditor/JSONSEditor';
+import Notice from 'components/Notice/Notice';
 
 import { setStatus, saveRequestParam,
   loadRequest, reset, saveJson,
@@ -22,6 +23,7 @@ import { getFullLink } from 'services/helpers';
   endpointList: store.endpoints,
   baseJSONSchema: store.requestEditor.base,
   draftJSONSchema: store.requestEditor.draft,
+  status: store.requestEditor.status,
   projectUrl: store.projects.activeProject.base_url,
 }))
 
@@ -35,6 +37,7 @@ class RequestEditor extends React.Component {
 
     baseJSONSchema: React.PropTypes.object,
     draftJSONSchema: React.PropTypes.object,
+    status: React.PropTypes.string,
     projectUrl: React.PropTypes.string,
   }
 
@@ -124,6 +127,7 @@ class RequestEditor extends React.Component {
       endpoint,
       baseJSONSchema,
       draftJSONSchema,
+      status,
     } = this.props;
 
     return (
@@ -132,7 +136,10 @@ class RequestEditor extends React.Component {
         <div className={styles.title}>Update Request</div>
         <div className={styles.description}>Your request for endpoint
           <strong> {endpoint.method} {endpoint.url}</strong>.<br />
-          <strong>Last check performed 2 hours ago.</strong></div>
+        </div>
+        { status === 'outdated' && (
+          <Notice icon="chain-broken" message="This request is outdated. Resolve conflicts in your response body below" />
+        )}
         <DocumentationBlock
           title="Request Body"
           description="This is title of the section we're going

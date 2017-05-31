@@ -8,6 +8,7 @@ import Button from 'components/Button/Button';
 
 import Icon from 'components/Icon/Icon';
 import IconButton from 'components/Button/IconButton';
+import Notice from 'components/Notice/Notice';
 
 import DocumentationBlock, { Row } from 'components/DocumentationBlock/DocumentationBlock';
 import WarningLabel from 'components/DocumentationBlock/Labels/WarningLabel';
@@ -128,7 +129,8 @@ class EndpointEditor extends React.Component {
           <Button variants={['linkPrimary', 'noPaddingLeft']}>{param.name}</Button>,
           param.data_type ? `${param.data_type}, ${String.fromCharCode(160)}` : null,
           param.required ? 'required' : 'optional',
-          (!param.description || !param.example) ? <WarningLabel /> : '',
+          (!param.description || !param.example) ? <WarningLabel message="Doc missing!" /> : '',
+          (param.status === 'outdated') ? <WarningLabel message="Outdated!" /> : '',
         ]}
         actions={[
           <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editParam(param.id)} />,
@@ -155,15 +157,16 @@ class EndpointEditor extends React.Component {
     // TODO create 'order' field in model to allow ordering
     const responses = this.props.responses.sort((a, b) => a.http_status_code > b.http_status_code);
 
-    return responses.map((param, key) => (
+    return responses.map((response, key) => (
       <Row
         key={key}
         data={[
-          <div>Status <span className={styles.responseParam}>{`${param.http_status_code ? param.http_status_code : ''}`}</span></div>,
+          <div>Status <span className={styles.responseParam}>{`${response.http_status_code ? response.http_status_code : ''}`}</span></div>,
+          (response.status === 'outdated') ? <WarningLabel message="Outdated!" /> : '',
         ]}
         actions={[
-          <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editResponse(param.id)} />,
-          <IconButton icon={<Icon name="trash" size="lg" />} onClick={() => { this.onRemoveResponse(param.id); }} />,
+          <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editResponse(response.id)} />,
+          <IconButton icon={<Icon name="trash" size="lg" />} onClick={() => { this.onRemoveResponse(response.id); }} />,
         ]}
       />
     ));
@@ -177,12 +180,15 @@ class EndpointEditor extends React.Component {
 
     if (conditions.some(x => x)) return [];
 
+    const { endpoint } = this.props;
+
     return [
       <Row
         key={1}
         data={[
-          <Button variants={['linkPrimary', 'noPaddingLeft']}>{this.props.endpoint.method}</Button>,
-          this.props.endpoint.url,
+          <Button variants={['linkPrimary', 'noPaddingLeft']}>{endpoint.method}</Button>,
+          endpoint.url,
+          (endpoint.request && endpoint.request.status === 'outdated') ? <WarningLabel message="Outdated!" /> : '',
         ]}
         actions={[
           <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editRequest()} />,
@@ -204,15 +210,20 @@ class EndpointEditor extends React.Component {
   }
 
   render() {
+    const { endpoint } = this.props;
+
     return (
       <div className={styles.root}>
         { this.props.isFetching && <LoadingIndicator /> }
+        { endpoint.status === 'outdated' && (
+          <Notice icon="chain-broken" message="This endpoint is outdated. This means one of responses, url params or request is no longer up to date with data received from your app" />
+        )}
         <div className={styles.urlContainer}>
           <div className={styles.method}>
-            { this.props.endpoint && this.props.endpoint.method}
+            { endpoint && endpoint.method}
           </div>
           <div className={styles.url}>
-            { this.props.endpoint && this.props.endpoint.url }
+            { endpoint && endpoint.url }
           </div>
           <div className={styles.editUrl}>
             <IconButton icon={<Icon name="pencil" size="lg" />} onClick={this.editUrl} />

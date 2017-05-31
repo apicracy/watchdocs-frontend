@@ -14,7 +14,9 @@ const EndpointListItem = ({ url, method, id, groupId, isSelected, status }) => {
         <span className={styles.data}>
           <span className={styles.method}>{ method }</span>
           <span className={styles.path}>
-            { status === 'outdated' && <i className={`fa fa-chain-broken ${styles.outdatedIcon}`} title="Outdated endpoint"  data-toggle="tooltip" />}
+            { status === 'outdated' && (
+              <i className={`fa fa-chain-broken ${styles.outdatedIcon}`} title="Outdated endpoint" />
+            )}
             { url }
           </span>
         </span>

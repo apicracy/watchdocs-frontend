@@ -11,6 +11,7 @@ import { browserHistory } from 'react-router';
 
 import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock';
 import JSONSEditor from 'components/JSONSEditor/JSONSEditor';
+import Notice from 'components/Notice/Notice';
 
 import { loadResponse, reset, saveJson, updateHttpStatus } from 'services/responseEditor';
 import { getFullLink } from 'services/helpers';
@@ -21,6 +22,7 @@ import { getFullLink } from 'services/helpers';
   endpointList: store.endpoints,
 
   http_status_code: store.responseEditor.http_status_code,
+  status: store.responseEditor.status,
   baseJSONSchema: store.responseEditor.base,
   draftJSONSchema: store.responseEditor.draft,
   projectUrl: store.projects.activeProject.base_url,
@@ -38,6 +40,7 @@ class ResponseEditor extends React.Component {
     baseJSONSchema: React.PropTypes.object,
     draftJSONSchema: React.PropTypes.object,
     projectUrl: React.PropTypes.string,
+    status: React.PropTypes.string,
   }
 
   componentDidMount() {
@@ -120,6 +123,7 @@ class ResponseEditor extends React.Component {
       baseJSONSchema,
       draftJSONSchema,
       http_status_code,
+      status,
     } = this.props;
 
     return (
@@ -129,6 +133,9 @@ class ResponseEditor extends React.Component {
         <div className={styles.description}>Your response for endpoint
           <strong> {endpoint.method} {endpoint.url}</strong>
         </div>
+        { status === 'outdated' && (
+          <Notice icon="chain-broken" message="This response is outdated. Resolve conflicts in your response body below" />
+        )}
         <DocumentationBlock
           title="Response status"
           description="This description will appear on your generated public documentation."

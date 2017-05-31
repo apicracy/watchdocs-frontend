@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Modal from 'components/Modal/Modal';
 import UrlParamForm from 'components/UrlParamForm/UrlParamForm';
+import Notice from 'components/Notice/Notice';
 
 import { closeModal } from 'actions/modals';
 import { addEndpointParam, updateEndpointParam } from 'services/endpointEditor';
@@ -112,6 +113,9 @@ class AddUrlParam extends React.Component {
         onHide={this.onHide}
         message={this.shouldDisplayMessage() ? warningMessage : null}
       >
+        { this.state.status === 'outdated' && (
+          <Notice icon="bell" message={`It seems like this param is ${this.state.required ? 'optional' : 'always'} in a request. Please update 'Param required' field.`} />
+        )}
         <UrlParamForm
           {...this.state}
           paramTypes={valueTypes}

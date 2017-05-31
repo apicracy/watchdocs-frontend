@@ -49,6 +49,7 @@ export function loadRequest(id) {
         const elem = {
           base: data.body,
           draft: data.body_draft,
+          status: data.status,
           headers: data.headers,
         };
 
