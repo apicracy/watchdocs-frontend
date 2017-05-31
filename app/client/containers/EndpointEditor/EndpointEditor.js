@@ -129,7 +129,6 @@ class EndpointEditor extends React.Component {
           <Button variants={['linkPrimary', 'noPaddingLeft']}>{param.name}</Button>,
           param.data_type ? `${param.data_type}, ${String.fromCharCode(160)}` : null,
           param.required ? 'required' : 'optional',
-          (!param.description || !param.example) ? <WarningLabel message="Doc missing!" /> : '',
           (param.status === 'outdated') ? <WarningLabel message="Outdated!" /> : '',
         ]}
         actions={[
