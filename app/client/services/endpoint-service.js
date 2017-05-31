@@ -21,43 +21,15 @@ export const filterEndpoints = (endpoints, options) => {
 function filterByName(endpoints, search) {
   return endpoints.reduce((state, item) => {
     const test = new RegExp(search, 'i');
-    const conditions = [
-      item.groupName && item.groupName.match(test),
-      item.groupPath && item.groupPath.match(test),
-    ];
 
-    // Display only subfolders that match the name
-    const filteredChildren = item.endpoints ? filterByName(item.endpoints, search) : [];
-
-    // Get original folder endpoints
-    const childEndpoints = item.endpoints ? item.endpoints.filter(end => !!end.method) : [];
-
-    // Get original folder child folders
-    const childGroups = item.endpoints ? item.endpoints.filter(child => !!child.endpoints) : [];
-
-    // If have matches
-    if (conditions.some(e => e)) {
-      const matched = {
-        ...item,
-        endpoints: [...childEndpoints, ...filteredChildren],
-        isOpen: true,
-      };
-
-      return [...state, matched];
-    }
-
-    // if it has children check for matched elements inside leaving only folder icon
-    if (item.endpoints) {
-      if (childGroups.length > 0) {
-        const group = {
-          ...item,
-          isOpen: true,
-          endpoints: filteredChildren,
-        };
-
-        if (group.endpoints.length > 0) {
-          return [...state, group];
-        }
+    if (item.type === 'Document' && item.name.match(test)) {
+      return [...state, { ...item }];
+    } else if (item.type === 'Endpoint' && item.url.match(test)) {
+      return [...state, { ...item }];
+    } else if (item.items) {
+      const filtered = filterByName(item.items, search);
+      if (filtered.length > 0) {
+        return [...state, { ...item, isOpen: true, items: filtered }];
       }
     }
 
