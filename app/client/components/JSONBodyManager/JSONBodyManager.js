@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './JSONBodyManager.css'
 import JSONEditor from '../JSONEditor/JSONEditor';
 import ConflictResolver from '../ConflictResolver/ConflictResolver';
-
+import Notice from '../Notice/Notice';
 import { isEmpty, isEqual } from 'lodash/lang';
 
 import {
@@ -91,24 +91,26 @@ class JSONBodyManager extends React.Component {
     this.props.onSave(cleanJSONSchema(newSchema))
   )
 
+  warningMessage = () => (
+    <div>
+      We are really sorry, but you can't edit the body. We found an edge case here.
+      <br />
+      Please report it to <a href="mailto: contact@watchdocs.io">contact@watchdocs.io</a> sending this URL: {window.location.href}
+    </div>
+  )
+
   render() {
     const {
       base, draft, hiddenDifferencesFound,
       editorEnabled, conflictResolverEnabled
     } = this.state;
-
-    // TODO: use notice component
     return (
       <div>
         { hiddenDifferencesFound &&
-          <div className={styles.warning}>
-            <h3 className={styles.warning__title}> Exception occured </h3>
-            <p className={styles.warning__content}>
-              We are really sorry, but you can't edit the body. We found an edge case here.
-              <br/>
-              Please report it to <a href="mailto: contact@watchdocs.io">contact@watchdocs.io</a> sending this URL: {window.location.href}
-            </p>
-          </div>
+          <Notice
+            icon="exclamation-triangle"
+            message={this.warningMessage()}
+          />
         }
         { conflictResolverEnabled &&
           <ConflictResolver
