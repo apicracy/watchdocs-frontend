@@ -72,8 +72,6 @@ class Aside extends React.Component {
     const { group_id: groupId, endpoint_id: endpointId } = this.props.params;
     const tabData = [
       { title: 'All', id: 'all' },
-      { title: 'Valid', id: 'valid' },
-      { title: 'Invalid', id: 'invalid' },
       { title: 'Outdated', id: 'outdated' },
     ];
 

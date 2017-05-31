@@ -4,8 +4,7 @@ export const filterEndpoints = (endpoints, options) => {
   const escaped = search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
 
   const byStatus = [
-    status === 'valid',
-    status === 'invalid',
+    status === 'outdated',
   ];
 
   const byName = [
@@ -77,13 +76,13 @@ function filterByStatus(endpoints, status) {
       return [...state, item];
     }
 
-    if (item.endpoints) {
+    if (item.items) {
       const matched = {
         ...item,
-        endpoints: filterByStatus(item.endpoints, status),
+        items: filterByStatus(item.items, status),
       };
 
-      if (matched.endpoints.length > 0) {
+      if (matched.items.length > 0) {
         return [...state, matched];
       }
     }
