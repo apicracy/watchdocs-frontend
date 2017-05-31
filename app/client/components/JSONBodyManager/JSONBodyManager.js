@@ -9,6 +9,7 @@ import {
   cleanJSONSchema,
   compareJSONSchemas,
   isResolved,
+  JSONSchemaToJSONLines,
 } from 'services/JSONSchemaService';
 
 class JSONBodyManager extends React.Component {
@@ -43,7 +44,8 @@ class JSONBodyManager extends React.Component {
       return false;
     }
     const differenceSchema = compareJSONSchemas(base, draft);
-    if (!isResolved(differenceSchema)) {
+    const differenceLines = JSONSchemaToJSONLines(differenceSchema);
+    if (!isResolved(differenceLines)) {
       // TODO: For optimization we can pass difference schema
       // generated here as props to ConflictResolver
       return false;
