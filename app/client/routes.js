@@ -17,6 +17,7 @@ import RequestEditor from 'containers/RequestEditor/RequestEditor';
 import ResponseEditor from 'containers/ResponseEditor/ResponseEditor';
 import Settings from 'containers/Settings/Settings';
 import Login from 'containers/Login/Login';
+import Signup from 'containers/Signup/Signup';
 
 const requireAuth = (nextState, replace) => {
   const { pathname } = nextState.location;
@@ -44,6 +45,7 @@ const Routes = (
 
     <Route path="/project-manager" component={Projects} onEnter={requireAuth} />
     <Route path="/login" component={Login} />
+    <Route path="/signup" component={Signup} />
 
     <Route path=":project_name" component={AppLayout} onEnter={requireAuth}>
       <IndexRedirect to="editor" />

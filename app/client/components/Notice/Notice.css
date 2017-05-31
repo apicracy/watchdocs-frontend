@@ -1,0 +1,22 @@
+.root {
+  padding: 20px;
+  border-radius: 5px;
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+  margin-bottom: 30px;
+}
+
+.icon {
+  margin-right: 10px;
+  font-size: 1.5em;
+  width: 20px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.message {
+  width: calc(100% - 40px);
+  display: inline-block;
+  vertical-align: middle;
+}

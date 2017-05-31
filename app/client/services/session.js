@@ -9,9 +9,11 @@ import http, { httpNoAuth } from 'services/http';
 
 import { browserHistory } from 'react-router';
 
+import { SubmissionError } from 'redux-form';
+
 export function checkStatus(response, message) {
   if (response.status !== 200) {
-    return Promise.reject([message]);
+    throw new SubmissionError({ email: message });
   }
 
   return response;
@@ -35,7 +37,7 @@ export function authenticate({ email, password }) {
   return (dispatch) => {
     dispatch(loginRequest());
 
-    httpNoAuth('/login', {
+    return httpNoAuth('/login', {
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify({
@@ -57,11 +59,7 @@ export function authenticate({ email, password }) {
         return response;
       })
       .then(response => response.json())
-      .then(response => dispatch(loginSuccess(response)))
-      .catch((err) => {
-        localStorage.removeItem('JWT');
-        dispatch(loginFailed(err));
-      });
+      .then(response => dispatch(loginSuccess(response)));
   };
 }
 
