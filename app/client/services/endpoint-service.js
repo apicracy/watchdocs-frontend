@@ -4,8 +4,7 @@ export const filterEndpoints = (endpoints, options) => {
   const escaped = search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
 
   const byStatus = [
-    status === 'valid',
-    status === 'invalid',
+    status === 'outdated',
   ];
 
   const byName = [

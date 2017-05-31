@@ -8,6 +8,7 @@
   align-items: center;
   font-size: 14px;
   width: 100%;
+  position: relative;
 }
 
 .root:hover,
@@ -46,4 +47,8 @@
   outline: none;
   background: none;
   border: none;
+}
+
+.outdatedIcon {
+  margin-right: 5px;
 }
