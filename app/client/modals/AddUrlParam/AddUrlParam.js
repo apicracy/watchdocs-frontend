@@ -23,7 +23,6 @@ const warningMessage = {
   endpointId: store.endpointEditor.id,
 }))
 class AddUrlParam extends React.Component {
-
   static propTypes = {
     isVisible: React.PropTypes.bool,
     dispatch: React.PropTypes.func,
@@ -44,7 +43,9 @@ class AddUrlParam extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    nextProps.modals.refId && this.setEditedParam(nextProps.modals.refId);
+    if (nextProps.modals.refId) {
+      this.setEditedParam(nextProps.modals.refId);
+    }
   }
 
   reset = () => this.setState({
@@ -58,12 +59,15 @@ class AddUrlParam extends React.Component {
     is_part_of_url: false,
   });
 
+
   setEditedParam = (urlParamId) => {
     const { endpoint } = this.props;
     const currentParam = endpoint.url_params.find(param => (
       param.id === urlParamId
     ));
-    currentParam && this.setState({ ...currentParam });
+    if (currentParam) {
+      this.setState({ ...currentParam });
+    }
   }
 
   onSave = () => {
@@ -106,6 +110,7 @@ class AddUrlParam extends React.Component {
   }
 
   render() {
+    const { status, required, required_draft } = this.state;
     return (
       <Modal
         isVisible={this.props.isVisible}
@@ -113,8 +118,9 @@ class AddUrlParam extends React.Component {
         onHide={this.onHide}
         message={this.shouldDisplayMessage() ? warningMessage : null}
       >
-        { this.state.status === 'outdated' && (
-          <Notice icon="bell" message={`It seems like this param is ${this.state.required ? 'optional' : 'always'} in a request. Please update 'Param required' field.`} />
+        { /* eslint camelcase: 0*/ }
+        { status === 'outdated' && required !== required_draft && (
+          <Notice icon="bell" message={`It seems like this param is ${required_draft ? 'always' : 'optional'} in a request. Please update 'Param required' field.`} />
         )}
         <UrlParamForm
           {...this.state}
