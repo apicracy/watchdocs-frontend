@@ -28,7 +28,7 @@ function filterByName(endpoints, search) {
       return [...state, { ...item }];
     } else if (item.items) {
       const filtered = filterByName(item.items, search);
-      if (filtered.length > 0) {
+      if (item.name.match(test) || filtered.length > 0) {
         return [...state, { ...item, isOpen: true, items: filtered }];
       }
     }
