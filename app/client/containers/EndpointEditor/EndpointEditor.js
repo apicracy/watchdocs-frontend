@@ -9,6 +9,7 @@ import Button from 'components/Button/Button';
 import Icon from 'components/Icon/Icon';
 import IconButton from 'components/Button/IconButton';
 import Notice from 'components/Notice/Notice';
+import Link from 'components/NavigationLink/LinkWrapper';
 
 import DocumentationBlock, { Row } from 'components/DocumentationBlock/DocumentationBlock';
 import WarningLabel from 'components/DocumentationBlock/Labels/WarningLabel';
@@ -242,7 +243,7 @@ class EndpointEditor extends React.Component {
           description={[
             'Full link',
             <Button variants={['linkPrimary', 'highlight', 'spaceLeft']}>{ this.getFullLink() }</Button>,
-            <Button variants={['linkPrimary']}>Edit base url</Button>,
+            <Link to="/settings">Edit base url</Link>,
           ]}
           emptyMsg="You don't have any URL params set up yet."
           buttonAction={() => {
@@ -287,9 +288,7 @@ class EndpointEditor extends React.Component {
         </DocumentationBlock>
 
         <div className={styles.buttons}>
-          <Button variants={['primary', 'large', 'spaceRight']}>Save</Button>
-          <Button variants={['body', 'large']}>Cancel</Button>
-          <Button variants={['warning', 'large', 'left']} onClick={this.removeEndpoint}>Remove</Button>
+          <Button variants={['text', 'warning']} onClick={this.removeEndpoint}>Remove this endpoint</Button>
         </div>
 
       </div>

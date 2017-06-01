@@ -111,3 +111,13 @@
 .highlight {
   background-color: #dbddef;
 }
+
+.text {
+  padding: 0;
+  font-weight: bold;
+  background: transparent;
+}
+
+.text.warning {
+  color: #C51E1E;
+}
