@@ -1,0 +1,25 @@
+@value def-padding: 20px;
+
+.warning {
+  font-weight: normal;
+  background: url('assets/icons/warning-circle-white.svg?v=0.0.0') no-repeat;
+  stroke: currentColor;
+  background-size: 120px;
+  background-position: 10px center;
+  background-color: #fdb300;
+  color: white;
+  padding: calc(def-padding / 2);
+  padding-left: 150px;
+  margin-bottom: 20px;
+}
+
+.warning__title {
+  margin: 0;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.warning__content {
+  margin: 0;
+  font-size: 12px;
+}
