@@ -239,6 +239,7 @@ export function compare(base, draft) {
     output.typeChanged = true;
     output.differenceId = i;
     i += 1;
+    return output;
   }
 
   if (draft.properties) {
