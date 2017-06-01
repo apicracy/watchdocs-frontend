@@ -2,10 +2,11 @@ import {
   setResponse as setResponseAction,
   setStatus as setStatusAction,
   reset as resetAction,
-  setBaseSchema as setBaseSchemaAction,
-  setDraftSchema as setDraftSchemaAction,
 } from 'actions/responseEditor';
 import http from 'services/http';
+import {
+  fetchEndpoints,
+} from 'services/endpoints';
 
 export function reset() {
   return (dispatch) => {
@@ -26,7 +27,7 @@ export function loadResponse(responseId) {
 }
 
 export function updateJsonSchema(responseId, newSchema) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     const options = {
       method: 'PUT',
       body: JSON.stringify({
@@ -37,8 +38,8 @@ export function updateJsonSchema(responseId, newSchema) {
     return http(`/api/v1/responses/${responseId}`, options)
       .then(response => response.json())
       .then((response) => {
-        dispatch(setBaseSchemaAction(response.body));
-        dispatch(setDraftSchemaAction(response.body_draft));
+        dispatch(fetchEndpoints(getState().projects.activeProject.id));
+        dispatch(setResponseAction(response));
       });
   };
 }

@@ -44,7 +44,7 @@ export function addEndpointParam(endpointParam) {
 }
 
 export function updateEndpointParam(endpointParam) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     const options = {
       method: 'PUT',
       body: JSON.stringify(endpointParam),
@@ -54,6 +54,7 @@ export function updateEndpointParam(endpointParam) {
     return http(`/api/v1/url_params/${endpointParam.id}`, options)
       .then(response => response.json())
       .then((data) => {
+        dispatch(fetchEndpoints(getState().projects.activeProject.id));
         dispatch(updateEndpointParamAction(data));
         dispatch(setEndpointEditor({ isFetching: false }));
       })
