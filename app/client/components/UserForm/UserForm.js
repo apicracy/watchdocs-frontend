@@ -38,7 +38,7 @@ const UserForm = (props) => {
         />
       </InputGroup>
 
-      <Button type="submit" variants={['primary', 'extra-large', 'block']} disabled={!valid}>
+      <Button type="submit" variants={['primary', 'extra-large', 'block']}>
         {buttonLabel}
       </Button>
     </form>
