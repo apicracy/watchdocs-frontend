@@ -1,0 +1,37 @@
+.icon {
+  display: inline-flex;
+  align-items: center;
+  width: 16px;
+  height: 16px;
+  stroke: black;
+}
+
+.lg {
+  composes: icon;
+  width: 24px;
+  height: 24px;
+}
+
+.xl {
+  composes: icon;
+  width: 32px;
+  height: 32px;
+}
+
+.xxl {
+  composes: icon;
+  width: 48px;
+  height: 48px;
+}
+
+.xs {
+  composes: icon;
+  width: 8px;
+  height: 8px;
+}
+
+.sm {
+  composes: icon;
+  width: 12px;
+  height: 12px;
+}

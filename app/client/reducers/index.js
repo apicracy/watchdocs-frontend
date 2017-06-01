@@ -10,10 +10,30 @@
  *
  */
 
-import { appReducer } from 'reducers/app-reducer';
+import { endpoints } from 'reducers/endpoints';
+import { modifyEndpoint } from 'reducers/modifyEndpoint-reducer';
+import { endpointEditor } from 'reducers/endpointEditor';
+import { responseEditor } from 'reducers/responseEditor';
+import { requestEditor } from 'reducers/requestEditor';
+import { groupEditor } from 'reducers/groupEditor';
+import { documentEditor } from 'reducers/documentEditor';
+import { projects } from 'reducers/projects';
+import { modals } from 'reducers/modals';
+import { session } from 'reducers/session';
+import { documentation } from 'reducers/documentation';
 /* reapp: import new reducer */
 
 export const reducers = {
-  app: appReducer,
-    /* reapp: append new reducer */
+  endpoints,
+  modifyEndpoint,
+  endpointEditor,
+  groupEditor,
+  documentEditor,
+  projects,
+  modals,
+  responseEditor,
+  requestEditor,
+  session,
+  documentation,
+  /* reapp: append new reducer */
 };

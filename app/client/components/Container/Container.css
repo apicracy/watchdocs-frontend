@@ -1,0 +1,14 @@
+.root {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  margin: 0 15px;
+  height: auto;
+  min-height: min-content;
+}
+
+.center {
+  composes: root;
+
+  align-items: center;
+}

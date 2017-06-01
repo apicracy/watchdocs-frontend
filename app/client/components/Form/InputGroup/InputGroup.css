@@ -1,0 +1,18 @@
+.root {
+  margin-bottom: 20px;
+}
+
+.title {
+  margin: 0;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.description {
+  margin: 0 0 10px;
+  font-size: 12px;
+}
+
+.inputs {
+  margin-bottom: 10px;
+}

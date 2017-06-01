@@ -1,0 +1,30 @@
+.root {
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding: 15px 10px;
+}
+
+.root:not(.active) {
+  color: #7f7d94;
+}
+
+.active,
+.active:hover,
+.active:focus,
+.topLink {
+  font-weight: bold;
+}
+
+.expanded {
+  background-color: #F7F7F7;
+}
+
+.expanded .root {
+  color: #6C6AB8;
+}
+
+.expanded > .topLink {
+  background-color: #ECEFF3;
+}

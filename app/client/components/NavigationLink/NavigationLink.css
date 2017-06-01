@@ -1,0 +1,28 @@
+.navigationLink {
+  color: #b0aeec;
+  text-decoration: none;
+  padding: 25px 20px;
+  font-size: 16px;
+  font-weight: normal;
+  letter-spacing: 0.5px;
+}
+
+.navigationLink:hover {
+  background-color: #7978be;
+}
+
+.navigationLinkActive {
+  color: #FFFFFF;
+}
+
+.inner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.inner > svg,
+.inner > i {
+  color: #6fb3e3;
+  margin-right: 5px;
+}

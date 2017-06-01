@@ -1,0 +1,74 @@
+.root {
+  flex: 1 0 100%;
+  display: flex;
+  flex-direction: column;
+  color: #7f7d94;
+}
+
+.top {
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.fill {
+  composes: top;
+  flex: 1;
+}
+
+.content {
+  flex: 7 0;
+  overflow: hidden;
+}
+
+.bodyContent {
+  padding: 15px 30px;
+}
+
+.code {
+  font-weight: 500;
+  flex: 7 0;
+  position: relative;
+  background-color: #1b1d28;
+  color: #d1d0d7;
+  overflow: hidden;
+}
+
+.codeInner {
+  background-color: #1b1d28;
+  padding: 15px 30px;
+}
+
+.header {
+  font-weight: 500;
+  border-top: 1px solid #dcdee1;
+  padding: 10px 30px;
+  margin: 15px 0;
+  color: #6C6AB8;
+  font-size: 20px;
+}
+
+.headerMain {
+  border: none;
+  composes: header;
+  background-color: #FFFFFF;
+  font-size: 22px;
+}
+
+.method {
+  background: #5E5EAA;
+  color: #FFFFFF;
+  font-weight: bold;
+  text-transform: capitalize;
+  padding: 15px;
+  margin-right: 15px;
+}
+
+.section {
+  margin-bottom: 30px;
+}
+
+.addHeader {
+  font-weight: 500;
+  padding: 0 30px;
+}

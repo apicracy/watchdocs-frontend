@@ -1,0 +1,16 @@
+<svg id="radio-unchecked" data-name="Radio Unchecked" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 87 87">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #dbddef;
+        stroke: #b4d9f3;
+        stroke-width: 10px;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-miterlimit: 10;
+      }
+    </style>
+  </defs>
+  <title>radio-unchecked</title>
+  <circle class="cls-1" cx="43.5" cy="43.5" r="43.5"/>
+</svg>

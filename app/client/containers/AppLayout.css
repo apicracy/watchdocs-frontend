@@ -1,0 +1,29 @@
+.appLayout {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  height: min-content;
+  min-height: 100%;
+}
+
+.contentWrapper {
+  display: flex;
+  flex: 1;
+  position: relative;
+  padding: 25px 50px;
+  overflow-x: hidden;
+}
+
+.navigation {
+  display: inline-flex;
+  align-items: center;
+}
+
+.right {
+  display: inline-flex;
+  align-items: center;
+}
+
+.right > svg {
+  margin-left: 15px;
+}

@@ -1,0 +1,23 @@
+.root {
+  display: flex;
+  background: white;
+  border-radius: 5px;
+  margin-bottom: 40px;
+}
+
+.path {
+  padding: 10px;
+  color: #7f7d94;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  border-left: 1px #ECEEFA solid;
+  font-size: 1.2em;
+}
+
+.select {
+  display: flex;
+  color: #6C6AB8;
+  font-weight: bold;
+  padding: 10px;
+}

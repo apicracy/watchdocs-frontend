@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1010,
+    "groupName": "WatchdocsTest",
+    "groupPath": "/watchdocs",
+    "endpoints": [
+      {
+        "method": "GET",
+        "url": "/watchdocs",
+        "params": [],
+        "id": 202023,
+        "status": "valid",
+        "description": {
+          "title": "Watchdocs test call",
+          "content": "This entry indicated that you have successfully connected your app with Watchdocs. You can remove it now"
+        }
+      }
+    ]
+  }
+]

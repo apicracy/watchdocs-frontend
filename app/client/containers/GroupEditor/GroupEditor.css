@@ -1,0 +1,65 @@
+.container {
+  display: block;
+  width: 100%;
+}
+
+.root {
+  margin-bottom: 30px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  flex-direction: row;
+  padding-bottom: 5px;
+  min-height: 60px;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-size: 20px;
+  color: #6C6AB8;
+}
+
+.description {
+  color: #7f7d94;
+  flex: 0 0 100%;
+}
+
+.gettingStarted {
+  padding: 15px;
+  color: #7f7d94;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  border-left: 1px #ECEEFA solid;
+  background: white;
+  border-radius: 5px;
+  font-weight: bolder;
+  height: 50px;
+  font-size: 15px;
+}
+
+.buttonWrapper {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.iconWrapper {
+  color: #6fb3e3;
+}
+
+.blockWrapper {
+  margin-top: 10px;
+}
+
+.footer {
+  padding: 15px 20px;
+}
+
+.buttons {
+  margin: 50px 0;
+}

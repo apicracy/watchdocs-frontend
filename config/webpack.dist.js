@@ -8,7 +8,9 @@ const reappDevTools = require('reapp-dev-tools');
 
 appEnv['process.env.NODE_ENV'] = '"production"';
 
-config.entry = ['./app/client/app.prod'];
+config.entry = [
+  './app/client/app.prod',
+];
 
 config.output.filename = 'app.min.js';
 config.output.path = path.join(process.cwd(), 'dist');
@@ -27,12 +29,16 @@ config.plugins = [
       warnings: false,
     },
   }),
+  new webpack.ProvidePlugin({
+    fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch',
+  }),
 ];
 
 // remove the alias to development utilities
 config.resolve.alias = {
   'utils/main': 'utils/main-dist',
   'utils/store': 'utils/store-dist',
+  fetch: path.join('/node_modules', 'whatwg-fetch', 'fetch.js'),
 };
 
 // remove development tools

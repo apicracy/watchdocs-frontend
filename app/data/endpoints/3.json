@@ -1,0 +1,661 @@
+[
+  {
+    "id": 10844,
+    "groupName": "Getting Started",
+    "description": "HireMe is an application that connects youg talents with Opportunities submitted by Organisations. All opportunities are later being matched to candidates based on their eCV. CV consists of achievements, experiences, educations and many more.\nThe HireMe API uses HTTP methods and a RESTful endpoint structure. The API authorization is made with JWT. You format requests in JSON and the APIs return JSON-formatted responses.",
+    "wiki": true
+  },
+  {
+    "id": 1011345,
+    "groupName": "Authorization",
+    "groupPath": "/sessions",
+    "description": "Signing in and out from an application. Group of endpoints required for authorization further requests. Communication is stateles so we don't store your session but in order to authorize your request we need to know your JWT token.",
+    "endpoints": [
+      {
+        "method": "POST",
+        "url": "/sessions/sign_in",
+        "params": [],
+        "id": 20201345,
+        "status": "valid",
+        "description": {
+          "title": "Sign in a user",
+          "content": "This method can be used to sign in an user, and retrieve JWT"
+        },
+        "responses": [
+          {
+            "status": { "id": 200, "name": "200 - OK" },
+            "id": 12341343,
+            "base": {"$schema":"http://json-schema.org/draft-04/schema#","properties":{"email":{"type":"string"},"first_name":{"type":"string"},"last_name":{"type":"string"},"sign_in_count":{"type":"integer"}, "token":{"type":"string"}},"required":["token","first_name","last_name","email","sign_in_count"],"type":"object"},
+            "draft": {"$schema":"http://json-schema.org/draft-04/schema#","properties":{"email":{"type":"string"},"first_name":{"type":"string"},"last_name":{"type":"string"},"sign_in_count":{"type":"integer"}, "token":{"type":"string"}},"required":["token","first_name","last_name","email","sign_in_count"],"type":"object"}
+          }
+        ],
+        "requests": [
+          {
+            "id": 123513451,
+            "headers": [],
+            "base": { "$schema": "http://json-schema.org/draft-04/schema#", "properties": { "email": { "type": "string" }, "password": { "type": "string" } }, "type": "object" },
+            "draft": { "$schema": "http://json-schema.org/draft-04/schema#", "properties": { "email": { "type": "string" }, "password": { "type": "string" } }, "type": "object" }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10112,
+    "groupName": "Opportunities",
+    "groupPath": "/opportunities",
+    "description": "Opportunities are all job offers, and internships, open days posted by companies.",
+    "endpoints": [
+      {
+        "method": "GET",
+        "url": "/opportunities",
+        "params": [],
+        "id": 2020128,
+        "status": "valid",
+        "description": {
+          "title": "List all opportunities",
+          "content": "Returns all opportunities for current user. By default non filtering is applied."
+        },
+        "params": [
+          {"id": 98321210, "name": "active", "type": "string", "description": "filter only active opportunities ('true' or 'false')", "example": "true", "main": false },
+          {"id": 9833122, "name": "page", "type": "number", "description": "filter only active opportunities ('true' or 'false')", "example": "true", "main": false },
+          {"id": 9834123, "name": "per_page", "type": "number", "description": "filter only active opportunities ('true' or 'false')", "example": "true", "main": false }
+        ],
+        "responses": [
+          {
+            "status": { "id": 200, "name": "200 - OK" },
+            "id": 123412019,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"array","items":{"type":"object","properties":{"id":{"type":"number"},"education_category_id":{"type":"number"},"education_category_name":{"type":"string"},"work_place_id":{"type":"number"},"education_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"number"},"errors":{"type":"object","properties":{},"required":[]}},"required":["id","education_category_id","education_category_name","education_place_id","work_place_id","education_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"array","items":{"type":"object","properties":{"id":{"type":"number"},"education_category_id":{"type":"number"},"education_category_name":{"type":"string"},"work_place_id":{"type":"number"},"education_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"number"},"errors":{"type":"object","properties":{},"required":[]}},"required":["id","education_category_id","education_category_name","education_place_id","work_place_id","education_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}}
+          },
+          {
+            "status": { "id": 422, "name": "422 - Unauthorized" },
+            "id": 1220312
+          }
+        ],
+        "requests": [
+          {
+            "id": 123512,
+            "headers": [
+              {"id": 123412, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ]
+      },
+      {
+        "method": "PUT",
+        "url": "/educations/:education_id",
+        "params": [
+          {"id": 98321, "name": "education_id", "type": "number", "description": "Id of an education to be returned", "example": "2", "main": true }
+        ],
+        "id": 202119,
+        "status": "valid",
+        "description": {
+          "title": "Update education",
+          "content": "Updates all possible fields on education"
+        },
+        "requests": [
+          {
+            "id": 12361,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"education":{"type":"object","properties":{"education_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"education_place_name":{"type":"string"}},"required":["education_category_id","level","involvement","activity","start_date","end_date","description","education_place_name"]}},"required":["education"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"education":{"type":"object","properties":{"education_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"education_place_name":{"type":"string"}},"required":["education_category_id","level","involvement","activity","start_date","end_date","description","education_place_name"]}},"required":["education"]},
+            "headers": [
+              {"id": 12341, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ],
+        "responses": [
+          {
+            "status": { "id": 201, "name": "200 - OK" },
+            "id": 12371,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"education_category_id":{"type":"number"},"education_category_name":{"type":"string"},"education_place_id":{"type":"number"},"work_place_id":{"type":"number"},"education_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","education_category_id","education_category_name","education_place_id","work_place_id","education_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"education_category_id":{"type":"number"},"education_category_name":{"type":"string"},"education_place_id":{"type":"number"},"work_place_id":{"type":"number"},"education_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","education_category_id","education_category_name","education_place_id","work_place_id","education_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}
+          },
+          {
+            "status": { "id": 422, "name": "422 - Unauthorized" },
+            "id": 1237121
+          }
+        ]
+      },
+      {
+        "method": "POST",
+        "url": "/opportunities",
+        "params": [],
+        "id": 202112,
+        "status": "invalid",
+        "description": {
+          "title": "Create opportunity",
+          "content": "Creates new opportunity for authenticated user and returns newly saved object"
+        },
+        "requests": [
+          {
+            "id": 123612,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"education":{"type":"object","properties":{"education_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"education_place_name":{"type":"string"}},"required":["education_category_id","level","involvement","activity","start_date","end_date","description","education_place_name"]}},"required":["education"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"education":{"type":"object","properties":{"education_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"education_place_name":{"type":"string"}},"required":["education_category_id","level","involvement","activity","start_date","end_date","description","education_place_name"]}},"required":["education"]},
+            "headers": [
+              {"id": 123412, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ],
+        "responses": [
+          {
+            "status": { "id": 201, "name": "201 - Created" },
+            "id": 123712,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"education_category_id":{"type":"number"},"education_category_name":{"type":"string"},"education_place_id":{"type":"number"},"work_place_id":{"type":"number"},"education_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","education_category_id","education_category_name","education_place_id","work_place_id","education_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"education_category_id":{"type":"number"},"education_category_name":{"type":"string"},"education_place_id":{"type":"number"},"work_place_id":{"type":"number"},"education_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","education_category_id","education_category_name","education_place_id","work_place_id","education_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}
+          },
+          {
+            "status": { "id": 422, "name": "422 - Unauthorized" },
+            "id": 123912
+          }
+        ]
+      },
+      {
+        "method": "GET",
+        "url": "/opportunities/:opportunity_id",
+        "params": [
+          {"id": 983212, "name": "opportunity_id", "type": "number", "description": "Id of an opportunity to be returned", "example": "2", "main": true }
+        ],
+        "id": 20211299,
+        "status": "invalid",
+        "description": {
+          "title": "Get opportunity details",
+          "content": "Returns all details for given opportunity"
+        },
+        "requests": [
+          {
+            "id": 123612,
+            "headers": [
+              {"id": 123412, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ],
+        "responses": [
+          {
+            "status": { "id": 200, "name": "200 - OK" },
+            "id": 123712,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"education_category_id":{"type":"number"},"education_category_name":{"type":"string"},"education_place_id":{"type":"number"},"work_place_id":{"type":"number"},"education_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","education_category_id","education_category_name","education_place_id","work_place_id","education_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"id":{"type":"number"},"education_category_id":{"type":"number"},"education_category_name":{"type":"string"},"education_place_id":{"type":"number"},"work_place_id":{"type":"number"},"education_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["id","education_category_id","education_category_name","education_place_id","work_place_id","education_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}
+          },
+          {
+            "status": { "id": 422, "name": "422 - Unauthorized" },
+            "id": 12371212
+          }
+        ]
+      },
+      {
+        "method": "DELETE",
+        "url": "/opportunities/:opportunity_id",
+        "params": [
+          {"id": 983212, "name": "opportunity_id", "type": "number", "description": "Id of an education to be returned", "example": "2", "main": true }
+        ],
+        "id": 2021122,
+        "status": "valid",
+        "description": {
+          "title": "Remove opportunity",
+          "content": "Removes opportunity permanently"
+        },
+        "requests": [
+          {
+            "id": 123612,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"education":{"type":"object","properties":{"education_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"education_place_name":{"type":"string"}},"required":["education_category_id","level","involvement","activity","start_date","end_date","description","education_place_name"]}},"required":["education"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"education":{"type":"object","properties":{"education_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"education_place_name":{"type":"string"}},"required":["education_category_id","level","involvement","activity","start_date","end_date","description","education_place_name"]}},"required":["education"]},
+            "headers": [
+              {"id": 123412, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ],
+        "responses": [
+          {
+            "status": { "id": 201, "name": "200 - OK" },
+            "id": 123712,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"education_category_id":{"type":"number"},"education_category_name":{"type":"string"},"education_place_id":{"type":"number"},"work_place_id":{"type":"number"},"education_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","education_category_id","education_category_name","education_place_id","work_place_id","education_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"education_category_id":{"type":"number"},"education_category_name":{"type":"string"},"education_place_id":{"type":"number"},"work_place_id":{"type":"number"},"education_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","education_category_id","education_category_name","education_place_id","work_place_id","education_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}
+          },
+          {
+            "status": { "id": 422, "name": "422 - Unauthorized" },
+            "id": 12371212
+          }
+        ]
+      },
+      {
+        "method": "PUT",
+        "url": "/opportunities/:opportunity_id",
+        "params": [
+          {"id": 983213, "name": "opportunity_id", "type": "number", "description": "Id of an opportunity to be returned", "example": "2", "main": true }
+        ],
+        "id": 2021137,
+        "status": "valid",
+        "description": {
+          "title": "Update opportunity",
+          "content": "Updates all possible fields on opportunity"
+        },
+        "requests": [
+          {
+            "id": 123613,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"education":{"type":"object","properties":{"education_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"education_place_name":{"type":"string"}},"required":["education_category_id","level","involvement","activity","start_date","end_date","description","education_place_name"]}},"required":["education"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"education":{"type":"object","properties":{"education_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"education_place_name":{"type":"string"}},"required":["education_category_id","level","involvement","activity","start_date","end_date","description","education_place_name"]}},"required":["education"]},
+            "headers": [
+              {"id": 123413, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ],
+        "responses": [
+          {
+            "status": { "id": 201, "name": "200 - OK" },
+            "id": 123713,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"education_category_id":{"type":"number"},"education_category_name":{"type":"string"},"education_place_id":{"type":"number"},"work_place_id":{"type":"number"},"education_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","education_category_id","education_category_name","education_place_id","work_place_id","education_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"education_category_id":{"type":"number"},"education_category_name":{"type":"string"},"education_place_id":{"type":"number"},"work_place_id":{"type":"number"},"education_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","education_category_id","education_category_name","education_place_id","work_place_id","education_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}
+          },
+          {
+            "status": { "id": 422, "name": "422 - Unauthorized" },
+            "id": 12371213
+          }
+        ]
+      },
+      {
+        "method": "GET",
+        "url": "/opportunities/popular",
+        "params": [
+          {"id": 98321323, "name": "count", "type": "number", "description": "Count of retrieved opportunities", "example": "10", "main": false }
+        ],
+        "id": 20211332,
+        "status": "valid",
+        "description": {
+          "title": "List popular opportunities",
+          "content": "Retrieves most popular opportunities based on view count and number of applications"
+        },
+        "requests": [
+          {
+            "id": 1236132,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"education":{"type":"object","properties":{"education_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"education_place_name":{"type":"string"}},"required":["education_category_id","level","involvement","activity","start_date","end_date","description","education_place_name"]}},"required":["education"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"education":{"type":"object","properties":{"education_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"education_place_name":{"type":"string"}},"required":["education_category_id","level","involvement","activity","start_date","end_date","description","education_place_name"]}},"required":["education"]},
+            "headers": [
+              {"id": 1234132, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ],
+        "responses": [
+          {
+            "status": { "id": 201, "name": "200 - OK" },
+            "id": 1237132,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"education_category_id":{"type":"number"},"education_category_name":{"type":"string"},"education_place_id":{"type":"number"},"work_place_id":{"type":"number"},"education_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","education_category_id","education_category_name","education_place_id","work_place_id","education_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"education_category_id":{"type":"number"},"education_category_name":{"type":"string"},"education_place_id":{"type":"number"},"work_place_id":{"type":"number"},"education_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","education_category_id","education_category_name","education_place_id","work_place_id","education_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}
+          },
+          {
+            "status": { "id": 422, "name": "422 - Unauthorized" },
+            "id": 123712132
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10113,
+    "groupName": "Companies",
+    "groupPath": "/companies",
+    "description": "Companies are one type of two types of account available on HireMe. User with Company account can post opportunities on a platform.",
+    "endpoints": [
+      {
+        "method": "GET",
+        "url": "/companies",
+        "params": [],
+        "id": 202013,
+        "status": "valid",
+        "description": {
+          "title": "List all companies",
+          "content": "Returns all companies for current user. By default non filtering is applied."
+        },
+        "params": [
+          {"id": 983315, "name": "page", "type": "number", "description": "filter only active companies ('true' or 'false')", "example": "true", "main": false },
+          {"id": 983416, "name": "per_page", "type": "number", "description": "filter only active companies ('true' or 'false')", "example": "true", "main": false }
+        ],
+        "responses": [
+          {
+            "status": { "id": 200, "name": "200 - OK" },
+            "id": 123413,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"array","items":{"type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"company_category_id":{"type":"number"},"company_category_name":{"type":"string"},"company_place_id":{"type":"number"},"work_place_id":{"type":"number"},"company_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"number"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","company_category_id","company_category_name","company_place_id","work_place_id","company_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"array","items":{"type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"company_category_id":{"type":"number"},"company_category_name":{"type":"string"},"company_place_id":{"type":"number"},"work_place_id":{"type":"number"},"company_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"number"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","company_category_id","company_category_name","company_place_id","work_place_id","company_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}}
+          },
+          {
+            "status": { "id": 422, "name": "422 - Unauthorized" },
+            "id": 1220313
+          }
+        ],
+        "requests": [
+          {
+            "id": 123513,
+            "headers": [
+              {"id": 123413, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ]
+      },
+      {
+        "method": "POST",
+        "url": "/companies",
+        "params": [],
+        "id": 202113999,
+        "status": "invalid",
+        "description": {
+          "title": "Create company",
+          "content": "Creates new company for authenticated user and returns newly saved object"
+        },
+        "requests": [
+          {
+            "id": 123613,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"company":{"type":"object","properties":{"company_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"company_place_name":{"type":"string"}},"required":["company_category_id","level","involvement","activity","start_date","end_date","description","company_place_name"]}},"required":["company"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"company":{"type":"object","properties":{"company_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"company_place_name":{"type":"string"}},"required":["company_category_id","level","involvement","activity","start_date","end_date","description","company_place_name"]}},"required":["company"]},
+            "headers": [
+              {"id": 123413, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ],
+        "responses": [
+          {
+            "status": { "id": 201, "name": "201 - Created" },
+            "id": 123713,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"company_category_id":{"type":"number"},"company_category_name":{"type":"string"},"company_place_id":{"type":"number"},"work_place_id":{"type":"number"},"company_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","company_category_id","company_category_name","company_place_id","work_place_id","company_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"company_category_id":{"type":"number"},"company_category_name":{"type":"string"},"company_place_id":{"type":"number"},"work_place_id":{"type":"number"},"company_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","company_category_id","company_category_name","company_place_id","work_place_id","company_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}
+          },
+          {
+            "status": { "id": 422, "name": "422 - Unauthorized" },
+            "id": 123913
+          }
+        ]
+      },
+      {
+        "method": "GET",
+        "url": "/companies/:company_id",
+        "params": [
+          {"id": 983213, "name": "company_id", "type": "number", "description": "Id of an company to be returned", "example": "2", "main": true }
+        ],
+        "id": 202113,
+        "status": "invalid",
+        "description": {
+          "title": "Get company details",
+          "content": "Returns all details for given company"
+        },
+        "requests": [
+          {
+            "id": 123613,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"company":{"type":"object","properties":{"company_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"company_place_name":{"type":"string"}},"required":["company_category_id","level","involvement","activity","start_date","end_date","description","company_place_name"]}},"required":["company"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"company":{"type":"object","properties":{"company_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"company_place_name":{"type":"string"}},"required":["company_category_id","level","involvement","activity","start_date","end_date","description","company_place_name"]}},"required":["company"]},
+            "headers": [
+              {"id": 123413, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ],
+        "responses": [
+          {
+            "status": { "id": 201, "name": "201 - Created" },
+            "id": 123713,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"company_category_id":{"type":"number"},"company_category_name":{"type":"string"},"company_place_id":{"type":"number"},"work_place_id":{"type":"number"},"company_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","company_category_id","company_category_name","company_place_id","work_place_id","company_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"company_category_id":{"type":"number"},"company_category_name":{"type":"string"},"company_place_id":{"type":"number"},"work_place_id":{"type":"number"},"company_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","company_category_id","company_category_name","company_place_id","work_place_id","company_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}
+          },
+          {
+            "status": { "id": 422, "name": "422 - Unauthorized" },
+            "id": 12371213
+          }
+        ]
+      },
+      {
+        "method": "DELETE",
+        "url": "/companies/:company_id",
+        "params": [
+          {"id": 983213, "name": "company_id", "type": "number", "description": "Id of an company to be returned", "example": "2", "main": true }
+        ],
+        "id": 2021123,
+        "status": "valid",
+        "description": {
+          "title": "Remove company",
+          "content": "Removes company permanently"
+        },
+        "requests": [
+          {
+            "id": 123613,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"company":{"type":"object","properties":{"company_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"company_place_name":{"type":"string"}},"required":["company_category_id","level","involvement","activity","start_date","end_date","description","company_place_name"]}},"required":["company"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"company":{"type":"object","properties":{"company_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"company_place_name":{"type":"string"}},"required":["company_category_id","level","involvement","activity","start_date","end_date","description","company_place_name"]}},"required":["company"]},
+            "headers": [
+              {"id": 123413, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ],
+        "responses": [
+          {
+            "status": { "id": 201, "name": "200 - OK" },
+            "id": 123713,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"company_category_id":{"type":"number"},"company_category_name":{"type":"string"},"company_place_id":{"type":"number"},"work_place_id":{"type":"number"},"company_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","company_category_id","company_category_name","company_place_id","work_place_id","company_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"company_category_id":{"type":"number"},"company_category_name":{"type":"string"},"company_place_id":{"type":"number"},"work_place_id":{"type":"number"},"company_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","company_category_id","company_category_name","company_place_id","work_place_id","company_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}
+          },
+          {
+            "status": { "id": 422, "name": "422 - Unauthorized" },
+            "id": 12371213
+          }
+        ]
+      },
+      {
+        "method": "PUT",
+        "url": "/companies/:company_id",
+        "params": [
+          {"id": 983213, "name": "company_id", "type": "number", "description": "Id of an company to be returned", "example": "2", "main": true }
+        ],
+        "id": 2021133,
+        "status": "valid",
+        "description": {
+          "title": "Update company",
+          "content": "Updates all possible fields on company"
+        },
+        "requests": [
+          {
+            "id": 123613,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"company":{"type":"object","properties":{"company_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"company_place_name":{"type":"string"}},"required":["company_category_id","level","involvement","activity","start_date","end_date","description","company_place_name"]}},"required":["company"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"company":{"type":"object","properties":{"company_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"company_place_name":{"type":"string"}},"required":["company_category_id","level","involvement","activity","start_date","end_date","description","company_place_name"]}},"required":["company"]},
+            "headers": [
+              {"id": 12341, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ],
+        "responses": [
+          {
+            "status": { "id": 201, "name": "200 - OK" },
+            "id": 123713,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"company_category_id":{"type":"number"},"company_category_name":{"type":"string"},"company_place_id":{"type":"number"},"work_place_id":{"type":"number"},"company_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","company_category_id","company_category_name","company_place_id","work_place_id","company_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"company_category_id":{"type":"number"},"company_category_name":{"type":"string"},"company_place_id":{"type":"number"},"work_place_id":{"type":"number"},"company_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","company_category_id","company_category_name","company_place_id","work_place_id","company_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}
+          },
+          {
+            "status": { "id": 422, "name": "422 - Unauthorized" },
+            "id": 12371213
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 101134,
+    "groupName": "Users",
+    "groupPath": "/users",
+    "description": "Users are one type of two types of account available on HireMe. User with Company account can post opportunities on a platform.",
+    "endpoints": [
+      {
+        "method": "GET",
+        "url": "/users",
+        "params": [],
+        "id": 2020134,
+        "status": "valid",
+        "description": {
+          "title": "List all users",
+          "content": "Returns all users for current user. By default non filtering is applied."
+        },
+        "params": [
+          {"id": 9833154, "name": "page", "type": "number", "description": "filter only active users ('true' or 'false')", "example": "true", "main": false },
+          {"id": 9834165, "name": "per_page", "type": "number", "description": "filter only active users ('true' or 'false')", "example": "true", "main": false }
+        ],
+        "responses": [
+          {
+            "status": { "id": 200, "name": "200 - OK" },
+            "id": 1234134,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"array","items":{"type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"number"},"work_place_id":{"type":"number"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"number"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"array","items":{"type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"number"},"work_place_id":{"type":"number"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"number"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}}
+          },
+          {
+            "status": { "id": 422, "name": "422 - Unauthorized" },
+            "id": 12203134
+          }
+        ],
+        "requests": [
+          {
+            "id": 1235134,
+            "headers": [
+              {"id": 1234134, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ]
+      },
+      {
+        "method": "POST",
+        "url": "/users",
+        "params": [],
+        "id": 2021134999,
+        "status": "invalid",
+        "description": {
+          "title": "Create user",
+          "content": "Creates new user for authenticated user and returns newly saved object"
+        },
+        "requests": [
+          {
+            "id": 1236134,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"user":{"type":"object","properties":{"user_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"user_place_name":{"type":"string"}},"required":["user_category_id","level","involvement","activity","start_date","end_date","description","user_place_name"]}},"required":["user"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"user":{"type":"object","properties":{"user_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"user_place_name":{"type":"string"}},"required":["user_category_id","level","involvement","activity","start_date","end_date","description","user_place_name"]}},"required":["user"]},
+            "headers": [
+              {"id": 1234134, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ],
+        "responses": [
+          {
+            "status": { "id": 201, "name": "201 - Created" },
+            "id": 1237134,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"number"},"work_place_id":{"type":"number"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"number"},"work_place_id":{"type":"number"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}
+          },
+          {
+            "status": { "id": 422, "name": "422 - Unauthorized" },
+            "id": 1239134
+          }
+        ]
+      },
+      {
+        "method": "GET",
+        "url": "/users/:user",
+        "params": [
+          {"id": 9832134, "name": "user", "type": "number", "description": "Id of an user to be returned", "example": "2", "main": true }
+        ],
+        "id": 2021134,
+        "status": "invalid",
+        "description": {
+          "title": "Get user details",
+          "content": "Returns all details for given user"
+        },
+        "requests": [
+          {
+            "id": 1236134,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"user":{"type":"object","properties":{"user_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"user_place_name":{"type":"string"}},"required":["user_category_id","level","involvement","activity","start_date","end_date","description","user_place_name"]}},"required":["user"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"user":{"type":"object","properties":{"user_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"user_place_name":{"type":"string"}},"required":["user_category_id","level","involvement","activity","start_date","end_date","description","user_place_name"]}},"required":["user"]},
+            "headers": [
+              {"id": 1234134, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ],
+        "responses": [
+          {
+            "status": { "id": 201, "name": "201 - Created" },
+            "id": 1237134,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"number"},"work_place_id":{"type":"number"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"number"},"work_place_id":{"type":"number"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}
+          },
+          {
+            "status": { "id": 422, "name": "422 - Unauthorized" },
+            "id": 123712134
+          }
+        ]
+      },
+      {
+        "method": "DELETE",
+        "url": "/users/:user",
+        "params": [
+          {"id": 9832134, "name": "user", "type": "number", "description": "Id of an user to be returned", "example": "2", "main": true }
+        ],
+        "id": 20211234,
+        "status": "valid",
+        "description": {
+          "title": "Remove user",
+          "content": "Removes user permanently"
+        },
+        "requests": [
+          {
+            "id": 1236134,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"user":{"type":"object","properties":{"user_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"user_place_name":{"type":"string"}},"required":["user_category_id","level","involvement","activity","start_date","end_date","description","user_place_name"]}},"required":["user"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"user":{"type":"object","properties":{"user_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"user_place_name":{"type":"string"}},"required":["user_category_id","level","involvement","activity","start_date","end_date","description","user_place_name"]}},"required":["user"]},
+            "headers": [
+              {"id": 1234134, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ],
+        "responses": [
+          {
+            "status": { "id": 201, "name": "200 - OK" },
+            "id": 1237134,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"number"},"work_place_id":{"type":"number"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"number"},"work_place_id":{"type":"number"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}
+          },
+          {
+            "status": { "id": 422, "name": "422 - Unauthorized" },
+            "id": 123712134
+          }
+        ]
+      },
+      {
+        "method": "PUT",
+        "url": "/users/:user",
+        "params": [
+          {"id": 9832134, "name": "user", "type": "number", "description": "Id of an user to be returned", "example": "2", "main": true }
+        ],
+        "id": 20211334,
+        "status": "valid",
+        "description": {
+          "title": "Update user",
+          "content": "Updates all possible fields on user"
+        },
+        "requests": [
+          {
+            "id": 1236134,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"user":{"type":"object","properties":{"user_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"user_place_name":{"type":"string"}},"required":["user_category_id","level","involvement","activity","start_date","end_date","description","user_place_name"]}},"required":["user"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"user":{"type":"object","properties":{"user_category_id":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"user_place_name":{"type":"string"}},"required":["user_category_id","level","involvement","activity","start_date","end_date","description","user_place_name"]}},"required":["user"]},
+            "headers": [
+              {"id": 123414, "name": "Authorization", "type": "string", "description": "JSON Web Token provided for authorization", "required": true, "example": "Bearer <token>", "main": false}
+            ]
+          }
+        ],
+        "responses": [
+          {
+            "status": { "id": 201, "name": "200 - OK" },
+            "id": 1237134,
+            "base": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"number"},"work_place_id":{"type":"number"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]},
+            "draft": {"schema":"http://json-schema.org/draft-04/schema#","type":"object","properties":{"value":{"type":"string"},"id":{"type":"number"},"user_category_id":{"type":"number"},"user_category_name":{"type":"string"},"user_place_id":{"type":"number"},"work_place_id":{"type":"number"},"user_place_id":{"type":"number"},"place_name":{"type":"string"},"level":{"type":"string"},"involvement":{"type":"string"},"activity":{"type":"string"},"start_date":{"type":"string"},"end_date":{"type":"string"},"description":{"type":"string"},"errors":{"type":"object","properties":{},"required":[]}},"required":["value","id","user_category_id","user_category_name","user_place_id","work_place_id","user_place_id","place_name","level","involvement","activity","start_date","end_date","description","errors"]}
+          },
+          {
+            "status": { "id": 422, "name": "422 - Unauthorized" },
+            "id": 123712134
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 108492,
+    "groupName": "SDKs",
+    "description": "HireMe SDK is distributed as a source code package or compiled bundle, and can be easily integrated into a new app or an existing codebase with standard tooling. The HireMe Web SDK is built as a UMD module that can be loaded via CDN, NPM, or from source.",
+    "wiki": true
+  }
+]

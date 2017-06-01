@@ -3,3 +3,29 @@
  * you can import variables and modules from the Omorfia project which is
  * available as NPM dependency.
  */
+@import "./styles/_bootstrap";
+@import "./styles/_browser-specific";
+@import '~react-select/dist/react-select.css';
+@import "./styles/_react-select-overrides";
+
+body, html, #app, #root {
+  margin: 0;
+  font-family: 'Roboto', Helvetica, sans-serif;
+  overflow-x: hidden;
+  height: 100%;
+  min-height: min-content;
+}
+
+.mce-notification {
+  display: none;
+}
+
+
+/* syntax higlight TODO: move to separate file */
+.sh-string,
+.sh-bool,
+.sh-null,
+.sh-number,
+ {
+  color: #63AEE3;
+}

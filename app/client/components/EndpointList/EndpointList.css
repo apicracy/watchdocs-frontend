@@ -1,0 +1,47 @@
+.root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  overflow: hidden;
+  min-height: min-content;
+}
+
+.list {
+  margin: 10px 0 20px;
+}
+
+.noResults {
+  margin: 20px auto 10px;
+  color: #d1d0d7;
+  text-align: center;
+}
+
+.buttonPlus {
+  color: #69BBF3;
+}
+
+.addNewEndpointButton {
+  background: #ECEEFA;
+  color: #7f7d94;
+  font-weight: bold;
+  outline: none;
+  width: 100%;
+  padding: 10px;
+  text-align: left;
+  border: 0;
+  border-radius: 5px;
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.addNewItem {
+  margin-left: 10px;
+}
+
+.endpointIcon {
+  width: 24px;
+}

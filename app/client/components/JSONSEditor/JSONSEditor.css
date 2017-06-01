@@ -1,0 +1,195 @@
+.container {
+  flex: 1;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  position: relative;
+}
+
+.code {
+  white-space: pre;
+  display: inline;
+  background: #3c3c3c;
+  padding: 0 20px;
+  width: 100%;
+  color: #c9c9c9;
+  align-items: center;
+  display: flex;
+}
+
+.attribute {
+  width: 50px;
+  align-items: flex-end;
+  justify-content: center;
+  display: flex;
+  height: 25px;
+}
+
+.redAttributeSpan {
+  composes: attribute;
+  background: #B05C5C;
+}
+.greenAttributeSpan {
+  composes: attribute;
+  background: #5BB16A;
+}
+
+.yellowAttributeSpan {
+  composes: attribute;
+  background: #AF915F;
+}
+
+.attributeSpan {
+  color: #848484;
+  text-align: center;
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+
+  /* Rules below not implemented in browsers yet */
+  -o-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+.attributeSpanReq {
+  composes: attributeSpan;
+  color: #c9c9c9;
+}
+
+.oneLine {
+  flex: 1;
+  height: 25px;
+  display: flex;
+}
+
+.oneLineSelected {
+  composes: oneLine;
+  background: rgba(106, 106, 106, 0.8);
+}
+
+.lineContainer {
+  display: flex;
+  height: 25px;
+}
+
+.lineContainerHidden {
+  display: none;
+}
+
+.inactiveActionButton {
+  display: none;
+}
+
+.containerButtons {
+  position: absolute;
+  right: 0;
+  left: 50px;
+  text-align: right;
+  height: 26px;
+  padding-right: 50px;
+  padding-top: 2px;
+}
+
+.redLine {
+  composes: containerButtons;
+  background: rgba(176, 92, 92, 0.55);
+}
+
+.greenLine {
+  composes: containerButtons;
+  background: rgba(91, 177, 106, 0.55);
+}
+
+.yellowLine {
+  composes: containerButtons;
+  background: rgba(175, 145, 95, 0.55);
+}
+
+.button {
+  background: white;
+  height: 20px;
+  width: 70px;
+  border: 1px solid gray;
+  padding: 0;
+  margin: 0 5px;
+}
+
+.addButton {
+  composes: button;
+  color: #5BB16A;
+}
+
+.removeButton {
+  composes: button;
+  color: #B05C5C;
+}
+
+.changeButton {
+  composes: button;
+  color: #AF915F;
+}
+
+.rejectButton {
+  composes: button;
+  color: gray;
+}
+
+.textareaContainer{
+  flex: 1;
+}
+
+.textarea{
+  width: 100%;
+  background: #3c3c3c;
+  color: #c9c9c9;
+  line-height: 25px;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+  font-family: Menlo,Monaco,Consolas,Courier New,monospace;
+}
+
+.information {
+  background:#924A4B;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-left: 50px;
+  color: white;
+}
+
+.rows{
+  background: #464646;
+  font-family: Menlo,Monaco,Consolas,Courier New,monospace;
+}
+
+.acceptButton {
+  outline: none;
+  background: none;
+  border: none;
+  color: black;
+  padding-left: 70px;
+  margin-top: 10px;
+}
+
+.isAccepted {
+  position: absolute;
+  right: 50px;
+}
+
+.addAccepted {
+  composes: isAccepted;
+  color: #5BB16A;
+}
+
+.removeAccepted {
+  composes: isAccepted;
+  color: #B05C5C;
+}
+
+.changeAccepted {
+  composes: isAccepted;
+  color: #AF915F;
+}

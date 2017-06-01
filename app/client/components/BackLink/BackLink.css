@@ -1,0 +1,14 @@
+.container {
+  margin-bottom: 20px;
+  color: #7f7d94;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  opacity: 0.6;
+}
+
+.container:hover {
+  opacity: 1;
+}

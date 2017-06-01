@@ -1,0 +1,28 @@
+.root {
+  display: flex;
+  border-bottom: 1px solid #d1d0d7;
+  margin: 5px 0;
+}
+
+.link {
+  position: relative;
+  top: 1px;
+  display: inline-flex;
+  margin-right: 15px;
+  padding-bottom: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: #d1d0d7;
+}
+
+.link:focus {
+  outline: 0;
+}
+
+.active {
+  composes: link;
+  font-weight: bold;
+  color: #6C6AB8;
+  border-bottom: 3px solid #6C6AB8;
+}

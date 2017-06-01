@@ -1,0 +1,49 @@
+.root {
+  text-decoration: none;
+  color: #7f7d94;
+  display: flex;
+  flex-shrink: 1;
+  padding: 2px;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  width: 100%;
+}
+
+.root:hover,
+.root:focus,
+.root:active {
+  color: #7f7d94;
+}
+
+.selected {
+  composes: root;
+  background-color: #f7f7f7;
+}
+
+.data {
+  display: inline-flex;
+  flex: 1 10;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.method {
+  display: flex;
+  flex-shrink: 0;
+  flex-basis: 55px;
+  color: #6C6AB8;
+  font-weight: bold;
+}
+
+.path {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.moreIcon {
+  outline: none;
+  background: none;
+  border: none;
+}

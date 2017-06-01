@@ -1,0 +1,82 @@
+.root {
+  display: block;
+  width: 100%;
+  display: flex;
+}
+
+.buttons {
+  margin: 50px 0;
+}
+
+.divider::after {
+  content: ' ';
+  border-right: 1px solid #d1d0d7;
+  margin-left: 5px;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.column {
+  width: 49%;
+}
+
+.button {
+  width: 100%;
+  background: none;
+  border: none;
+  font-weight: bold;
+  outline: none;
+  color: #7f7d94;
+  text-align: left;
+  padding: 15px;
+}
+
+.active {
+  composes: button;
+  background: #ECEFF3;
+  color: #5E5CA8;
+  font-weight: bold;
+}
+
+.menu {
+  width: inherit;
+}
+
+/* Users */
+.addressWrapper{
+  background: white;
+  display: flex;
+  flex: 1;
+}
+
+.selectWrapper {
+  width: 250px;
+  display: flex;
+}
+
+.buttonWrapper {
+  width: 150px;
+  display: flex;
+}
+
+.emailWrapper {
+  margin-top: 20px;
+}
+
+/* DELETE page*/
+
+.text {
+  color: #7f7d94;
+}
+
+.deleteButton {
+  padding: 20px;
+  border: none;
+  background: #C51E1E;
+  color: white;
+  outline: none;
+  margin-top: 20px;
+}

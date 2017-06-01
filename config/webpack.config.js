@@ -27,6 +27,9 @@ module.exports = {
     new webpack.DefinePlugin(Object.assign({}, reappDevTools.json2env(appEnv), {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     })),
+    new webpack.ProvidePlugin({
+      fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch',
+    }),
   ],
   resolve: {
     extensions: ['', '.js', 'css'],
@@ -39,13 +42,14 @@ module.exports = {
     alias: {
       'utils/main': 'utils/main-dev',
       'utils/store': 'utils/store-dev',
+      fetch: path.join('/node_modules', 'whatwg-fetch', 'fetch.js'),
     },
   },
   module: {
     loaders: [
       {
         test: /\.js$/,
-        loaders: ['react-hot', 'babel'],
+        loaders: ['react-hot-loader/webpack', 'babel'],
         exclude: /(node_modules|bower_components)/,
         include: process.cwd(),
       },
@@ -55,7 +59,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader?modules=true',
+        loader: 'style-loader!css-loader?modules=true&localIdentName=[name]__[local]___[hash:base64:5]',
       },
       {
         test: /\.scss$/,
@@ -66,7 +70,7 @@ module.exports = {
         loaders: ['style', 'css', 'less'],
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i,
+        test: /\.(jpe?g|png|gif)$/i,
         loader: 'url!img?optimizationLevel=7',
       },
       {
@@ -86,7 +90,16 @@ module.exports = {
         loader: 'url?mimetype=application/vnd.ms-fontobject',
       },
       {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        test: /\.svg$/,
+        loader: 'svg-inline',
+        query: {
+          removeTags: true,
+          removingTags: ['title', 'desc'],
+          classPrefix: true,
+        },
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)$/,
         loader: 'url?mimetype=image/svg+xml',
       },
     ],

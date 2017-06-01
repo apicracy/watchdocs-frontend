@@ -1,0 +1,77 @@
+.wrapper {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.root {
+  display: inline-flex;
+  align-items: center;
+  border: #EEEEEE solid 1px;
+  border-radius: 5px;
+  padding: 10px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  flex-shrink: 0;
+  width: 100%;
+  background: white;
+}
+
+.rootWhite{
+  composes: root;
+  background: white;
+}
+
+.rootNoBorder{
+  composes: rootWhite;
+  background: white;
+  border: none;
+}
+
+.rootError {
+  composes: root;
+  border-color: red;
+}
+
+.rootErrorWhite{
+  composes: rootError;
+  background: white;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+.input {
+  border: none;
+  width: 100%;
+  box-shadow: none;
+  font-size: 14px;
+  color: #7f7d94;
+}
+
+.inputWhite {
+  composes: input;
+  color: #7f7d94;
+  font-size: 1.2em;
+}
+
+.input:focus {
+  outline: 0;
+  border: 0;
+}
+
+.addon {
+  color: #6fb3e3;
+}
+
+/* Variants */
+
+.modal > .root {
+  border-radius: 0;
+  height: 50px;
+}
+
+.modal > .rootError {
+  border-color: red;
+}

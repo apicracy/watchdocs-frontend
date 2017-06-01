@@ -17,17 +17,12 @@ import initialState from 'fixtures/initial-state-prod.fixture';
 import { browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 
-export function start(targetEl, payload) {
-  // apply the host's page payload
-  if (payload.title) {
-    initialState.app = {
-      title: payload.title,
-    };
-  }
+let history;
 
+export function start(targetEl) {
   // create the application Redux store
   const appStore = makeStore(initialState);
-  const history = syncHistoryWithStore(browserHistory, appStore);
+  history = syncHistoryWithStore(browserHistory, appStore);
 
   ReactDOM.render((
     <Main

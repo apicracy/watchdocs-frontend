@@ -1,0 +1,113 @@
+.root {
+  text-decoration: none;
+  outline: none;
+  border: none;
+  background: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.root:disabled {
+  opacity: .5;
+}
+
+.small {
+  composes: root;
+}
+
+.icon {
+  margin-left: 40px;
+}
+
+/* variants */
+.rounded {
+  justify-content: space-between;
+  border-radius: 5px;
+}
+
+.body {
+  background: white;
+  color: #7f7d94;
+  padding: 10px;
+}
+
+.primary {
+  background: #62B8F5;
+  color: white;
+}
+
+.link {
+  color: #6fb3e3;
+}
+
+.linkPrimary {
+  font-weight: bold;
+  color: #6c6ab8;
+  padding-right: 10px !important; /* do not let to override this */
+}
+
+.linkWhite {
+  font-weight: bold;
+  color: white;
+}
+
+.large {
+  width: 120px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.extra-large {
+  font-size: 18px;
+  padding: 15px;
+}
+
+.left {
+  float: right;
+}
+.warning {
+  background: #C51E1E;
+  color: white;
+}
+
+.spaceRight {
+  margin-right: 15px;
+}
+
+.lightBorder {
+  border: 1px solid #f0f0f0;
+}
+
+.spaceLeft {
+  margin-left: 10px;
+}
+
+.block {
+  display: block;
+  width: 100%;
+}
+
+.textLeft {
+  text-align: left;
+}
+
+.noPaddingLeft {
+  padding-left: 0;
+}
+
+.iconLeft {
+  padding: 5px;
+  flex-direction: row-reverse;
+}
+
+.iconLeft > .icon {
+  margin: 0;
+  margin-right: 10px;
+}
+
+.highlight {
+  background-color: #dbddef;
+}

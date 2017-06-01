@@ -1,0 +1,199 @@
+.selectWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding-left: 0;
+  cursor: pointer;
+}
+
+.selectedOption {
+  width: 100%;
+}
+
+.optionList {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  background: white;
+  z-index: 1000;
+  color: black;
+  border: 1px solid black;
+  border-radius: 0 0 5px 5px;
+  max-height: 150px;
+  overflow-y: scroll;
+}
+
+.innerSelected {
+  display: flex;
+  flex-direction: column;
+}
+
+.main,
+.additional {
+  display: inline-flex;
+}
+
+.optionList > button {
+  width: 100%;
+  text-align: left;
+  justify-content: flex-start;
+}
+
+/* Variants */
+.whiteBackground {
+  background: white;
+  color: #6C6AB8;
+  font-weight: bold;
+}
+/* Full Width Variant */
+.fullWidth {
+  width: 100%;
+}
+
+.fullWidth > .selectedOption > button {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.fullWidth > .optionList {
+  display: block;
+  flex-direction: column;
+}
+
+.fullWidth > .optionList > button {
+  justify-content: flex-start;
+}
+
+/* Bordered Variant */
+.bordered {
+  border: #eee solid 1px;
+  border-radius: 5px;
+  padding: 10px 10px 10px 0;
+  margin-bottom: 5px;
+}
+
+.bordered.open {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.bordered > .optionList {
+  left: -1px;
+  right: -1px;
+  border: #eee solid 1px;
+  margin-bottom: 5px;
+  color: currentColor;
+
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.bordered > .optionList > button {
+  padding: 10px;
+}
+
+.bordered > .optionList > button:hover {
+  background: #eee;
+}
+
+/* Inline Variant */
+.inline {
+  border-radius: 5px 0 0 5px;
+  border-right: 0;
+  height: 50px;
+}
+
+/* appBar Variant */
+
+.appBar {
+  background: #4e4c88;
+  height: 100%;
+  margin: 0;
+  margin-left: 15px;
+}
+
+.appBar:hover,
+.appBar.open {
+  background: #46447A;
+}
+
+.appBar > .optionList {
+  border: none;
+  background: #4e4c88;
+  color: white;
+}
+
+.appBar > .optionList > button {
+  padding: 10px;
+}
+
+.appBar > .optionList > button:hover {
+  background-color: #6C6AB8;
+}
+
+.appBar > .selectedOption > button {
+  display: flex;
+  font-size: 16px;
+  justify-content: flex-start;
+  height: 75px;
+  padding: 0 25px;
+}
+
+.appBar .additional {
+  font-size: 12px;
+  color: #c9c8eb;
+}
+
+/* Add new variant */
+
+.addNew {
+  background: #eee;
+  color: #828097;
+  font-weight: bold;
+  outline: none;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  border-radius: 5px;
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.addNew.open {
+  background: #83C5F3;
+  color: white;
+  margin-bottom: 150px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.addNew > .selectedOption > button {
+  flex: 1;
+  width: 100%;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.addNew > .optionList {
+  border: none;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background: #69BBF3;
+  display: flex;
+  flex-direction: column;
+  z-index: 0;
+  padding: 5px 0;
+}
+
+.addNew > .optionList > button {
+  justify-content: flex-start;
+  color: white;
+  padding: 10px 10px;
+}

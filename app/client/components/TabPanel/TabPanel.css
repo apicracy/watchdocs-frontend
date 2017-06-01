@@ -1,0 +1,61 @@
+.container {
+  width: 100%;
+  background: white;
+}
+
+.tabs {
+  margin: 0 auto;
+  background: #DDE0E5;
+}
+
+.button {
+  background: #DDE0E5;
+  border: 0;
+  height: 50px;
+  width: 150px;
+  outline: none;
+  color: #848484;
+}
+
+.button:hover {
+  background: #e9ecf2;
+}
+
+.activeButton {
+  composes: button;
+  background: white;
+}
+
+.activeButton:hover {
+  background: white;
+}
+
+.tabContainer {
+  padding: 50px;
+  color: #7f7d94;
+  background: white;
+}
+
+.code {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  background: #ECEFF3;
+  width: 100%;
+  padding: 10px;
+}
+
+.codeColor {
+  color: #5e5ca8;
+}
+
+.instruction {
+  margin-bottom: 15px;
+}
+
+.step + .step {
+  margin-top: 20px;
+}
+
+.title {
+  font-size: 1.5em;
+  margin-top: 0;
+}

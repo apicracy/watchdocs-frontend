@@ -1,0 +1,70 @@
+@value def-padding: 20px;
+
+.root {
+  font-weight: normal;
+  display: flex;
+  flex-direction: column;
+  width: 550px;
+  background-color: white;
+  color: #7f7d94;
+  font-size: 14px;
+  height: max-content;
+  max-height: calc(100vh - 100px);
+}
+
+.overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  z-index: 10000;
+  background: rgba(0, 0, 0, .8);
+}
+
+.header {
+  font-weight: normal;
+  display: flex;
+  flex: 0 0 60px;
+  padding: def-padding;
+  font-size: 20px;
+  color: #6C6AB8;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #EEEEEE;
+}
+
+.message {
+  font-weight: normal;
+  background: url('assets/icons/warning-circle-white.svg?v=0.0.0') no-repeat;
+  stroke: currentColor;
+  background-size: 120px;
+  background-position: 10px center;
+  background-color: #fdb300;
+  color: white;
+  padding: calc(def-padding / 2);
+  padding-left: 150px;
+}
+
+.message__title {
+  margin: 0;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.message__content {
+  margin: 0;
+  font-size: 12px;
+}
+
+.body {
+  padding: 10px def-padding 0;
+  flex: 2 1;
+  height: max-content;
+  overflow-y: visible;
+}

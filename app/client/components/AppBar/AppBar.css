@@ -1,0 +1,20 @@
+.appBar {
+  position: relative;
+  display: flex;
+  background: #6C6AB8;
+  color: white;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.secondary {
+  composes: appBar;
+  background: #4e4c88;
+}
+
+.footer {
+  composes: appBar;
+  background: #6fb3e3;
+  height: 30px;
+  text-align: center;
+}

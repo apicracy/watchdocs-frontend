@@ -1,0 +1,20 @@
+<svg id="Multimedia" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 54">
+  <defs>
+    <style>
+      .cls-1{
+        fill:none;
+        stroke: currentColor;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-width:2px;
+      }
+    </style>
+  </defs>
+  <title>folder-open</title>
+  <path class="cls-1" d="M169.88,413H123a2,2,0,0,1-2-2.52l7.08-26a2,2,0,0,1,2-1.48H177a2,2,0,0,1,2,2.52l-7.08,26A2,2,0,0,1,169.88,413Z" transform="translate(-120 -360)"/>
+  <path class="cls-1" d="M145,371.1s0-.06,0-.1v-2a2,2,0,0,0-2-2H129a2,2,0,0,0-2,2v2a2,2,0,0,1-2,2h-2a2,2,0,0,0-2,2v35.48" transform="translate(-120 -360)"/>
+  <line class="cls-1" x1="38.92" y1="14.86" x2="43.14" y2="19.08"/>
+  <line class="cls-1" x1="29.08" y1="16.27" x2="35.81" y2="23"/>
+  <line class="cls-1" x1="23.46" y1="21.89" x2="24.57" y2="23"/>
+  <polygon class="cls-1" points="56.89 23 57 22.89 35.11 1 13.11 23 56.89 23"/>
+</svg>

@@ -1,0 +1,49 @@
+.root {
+  display: flex;
+  flex-direction: column;
+}
+
+.link {
+  color: #828097;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.link:hover,
+.link:focus,
+.link:active {
+  color: #828097;
+}
+
+.selected {
+  composes: link;
+  background-color: #EEEEEE;
+}
+
+.groupName {
+  display: inline-flex;
+  margin-left: 5px;
+  font-size: 14px;
+  align-items: center;
+}
+
+.endpoints {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.nameWrapper {
+  display: inline-flex;
+  align-items: center;
+}
+
+.moreIcon {
+  outline: none;
+  background: none;
+  border: none;
+}
