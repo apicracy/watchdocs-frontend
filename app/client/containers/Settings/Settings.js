@@ -6,6 +6,7 @@ import Content from 'components/Content/Content';
 import styles from './Settings.css';
 import Setup from './Setup';
 import Users from './Users';
+import Integrations from './Integrations';
 import Delete from './Delete';
 
 @connect(store => ({
@@ -47,6 +48,12 @@ class Settings extends React.Component {
               Users
             </button>
             <button
+              onClick={() => { this.setPanel('integrations'); }}
+              className={this.state.activePanel === 'integrations' ? styles.active : styles.button}
+            >
+              Integrations
+            </button>
+            <button
               onClick={() => { this.setPanel('delete'); }}
               className={this.state.activePanel === 'delete' ? styles.active : styles.button}
             >
@@ -63,6 +70,9 @@ class Settings extends React.Component {
           }
           {
             this.state.activePanel === 'delete' && <Delete />
+          }
+          {
+            this.state.activePanel === 'integrations' && <Integrations />
           }
         </Content>
       </div>
