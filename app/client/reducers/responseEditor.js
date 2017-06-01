@@ -9,8 +9,8 @@ import {
 
 const INITIAL_STATE = {
   status: '',
-  base: null,
-  draft: null,
+  body: null,
+  body_draft: null,
   headers: [],
 };
 
@@ -44,14 +44,14 @@ function setStatus(state, payload) {
 function setBaseSchema(state, payload) {
   return {
     ...state,
-    base: payload,
+    body: payload,
   };
 }
 
 function setDraftSchema(state, payload) {
   return {
     ...state,
-    draft: payload,
+    body_draft: payload,
   };
 }
 

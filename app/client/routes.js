@@ -15,7 +15,6 @@ import GroupEditor from 'containers/GroupEditor/GroupEditor';
 import EndpointEditor from 'containers/EndpointEditor/EndpointEditor';
 import RequestEditor from 'containers/RequestEditor/RequestEditor';
 import ResponseEditor from 'containers/ResponseEditor/ResponseEditor';
-import JSONSEditor from 'containers/JSONSEditor/JSONSEditor';
 import Settings from 'containers/Settings/Settings';
 import Login from 'containers/Login/Login';
 import Signup from 'containers/Signup/Signup';
@@ -55,9 +54,6 @@ const Routes = (
 
       <Route path="editor">
         <IndexRoute component={Editor} />
-
-        <Route path="jsonseditor" component={JSONSEditor} />
-
         <Route component={Editor}>
           <Route path="document/:document_id" component={DocumentEditor} />
           <Route path=":group_id" component={GroupEditor} />

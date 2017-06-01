@@ -19,7 +19,7 @@ class ObjectRow extends React.Component {
       <RowGenerator
         name={propertyName}
         node={node.properties[propertyName]}
-        isRequired={node.required.includes(propertyName)}
+        isRequired={node.required && node.required.includes(propertyName)}
         key={propertyName}
       />
     ));
