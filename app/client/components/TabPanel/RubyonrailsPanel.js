@@ -33,7 +33,7 @@ class RubyonrailsPanel extends React.Component {
           <div className={styles.code}>
             Watchdocs::Rails.configure do |c|<br />
             &nbsp;&nbsp;c.app_id = <span className={styles.codeColor}>'{project.app_id}'</span><br />
-            &nbsp;&nbsp;c.app_secret = <span className={styles.codeColor}>'project.app_secret'</span><br />
+            &nbsp;&nbsp;c.app_secret = <span className={styles.codeColor}>'{project.app_secret}'</span><br />
             end
           </div>
         </div>
