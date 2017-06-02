@@ -5,10 +5,12 @@ class PhpPanel extends React.Component {
   render() {
     return (
       <div>
-        <h2 className={styles.title}>PHP installation</h2>
+        <h2 className={styles.title}>Symfony 2 installation</h2>
         <br />
         <div className={styles.step}>
-          <p className={styles.instruction}>We are working on it.</p>
+          <p className={styles.instruction}>
+            <strong>Comming soon</strong> in beta version.
+          </p>
         </div>
       </div>
     );

@@ -1,11 +1,10 @@
 import React from 'react';
 import styles from './TabPanel.css';
 
-import RubyonrailsPanel from './rubyonrailsPanel';
-import RubyPanel from './rubyPanel';
-import JavascriptPanel from './javascriptPanel';
-import PhpPanel from './phpPanel';
-import PhoenixPanel from './phoenixPanel';
+import RubyonrailsPanel from './RubyonrailsPanel';
+import ExpressPanel from './ExpressPanel';
+import SymfonyPanel from './SymfonyPanel';
+
 
 class TabPanel extends React.Component {
   componentWillMount = () => {
@@ -21,6 +20,8 @@ class TabPanel extends React.Component {
   };
 
   render() {
+    const { project } = this.props;
+
     return (
       <div className={styles.container}>
         <div className={styles.tabs}>
@@ -28,48 +29,30 @@ class TabPanel extends React.Component {
             onClick={() => { this.setActivePanel('rubyonrails'); }}
             className={this.state.activePanel === 'rubyonrails' ? styles.activeButton : styles.button}
           >
-            Ruby on rails
+            Ruby on Rails
           </button>
           <button
-            onClick={() => { this.setActivePanel('ruby'); }}
-            className={this.state.activePanel === 'ruby' ? styles.activeButton : styles.button}
+            onClick={() => { this.setActivePanel('express'); }}
+            className={this.state.activePanel === 'express' ? styles.activeButton : styles.button}
           >
-            Ruby
+            Express.js
           </button>
           <button
-            onClick={() => { this.setActivePanel('javascript'); }}
-            className={this.state.activePanel === 'javascript' ? styles.activeButton : styles.button}
+            onClick={() => { this.setActivePanel('symfony'); }}
+            className={this.state.activePanel === 'symfony' ? styles.activeButton : styles.button}
           >
-            JavaScript
-          </button>
-          <button
-            onClick={() => { this.setActivePanel('php'); }}
-            className={this.state.activePanel === 'php' ? styles.activeButton : styles.button}
-          >
-            PHP
-          </button>
-          <button
-            onClick={() => { this.setActivePanel('phoenix'); }}
-            className={this.state.activePanel === 'phoenix' ? styles.activeButton : styles.button}
-          >
-            Phoenix
+            Symfony 2
           </button>
         </div>
         <div className={styles.tabContainer}>
           {
-            this.state.activePanel === 'rubyonrails' && <RubyonrailsPanel />
+            this.state.activePanel === 'rubyonrails' && <RubyonrailsPanel project={project} />
           }
           {
-            this.state.activePanel === 'ruby' && <RubyPanel />
+            this.state.activePanel === 'express' && <ExpressPanel />
           }
           {
-            this.state.activePanel === 'javascript' && <JavascriptPanel />
-          }
-          {
-            this.state.activePanel === 'php' && <PhpPanel />
-          }
-          {
-            this.state.activePanel === 'phoenix' && <PhoenixPanel />
+            this.state.activePanel === 'symfony' && <SymfonyPanel />
           }
         </div>
       </div>

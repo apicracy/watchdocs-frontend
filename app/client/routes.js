@@ -19,7 +19,7 @@ import Settings from 'containers/Settings/Settings';
 import Login from 'containers/Login/Login';
 import Signup from 'containers/Signup/Signup';
 import NewProjectWizard from 'containers/Projects/NewProjectWizard';
-
+import InitialSetupInstructions from 'containers/InitialSetupInstructions/InitialSetupInstructions';
 
 const requireAuth = (nextState, replace) => {
   const { pathname } = nextState.location;
@@ -60,6 +60,7 @@ const Routes = (
         <Route path="editor">
           <IndexRoute component={Editor} />
           <Route component={Editor}>
+            <Route path="setup-instructions" component={InitialSetupInstructions} />
             <Route path="document/:document_id" component={DocumentEditor} />
             <Route path=":group_id" component={GroupEditor} />
             <Route path=":group_id/endpoint/:endpoint_id" component={EndpointEditor} />

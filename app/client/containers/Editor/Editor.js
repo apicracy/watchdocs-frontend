@@ -29,17 +29,30 @@ class Editor extends React.Component {
 
   static redirect(props) {
     const { children, endpoints, router, params } = props;
+    if (children || !endpoints) {
+      return;
+    }
+    if (endpoints.length === 0) {
+      Editor.showInstructions(params, router);
+    }
+    if (endpoints.length > 0) {
+      Editor.openFirstTreeElement(endpoints[0], params.project_name, router);
+    }
+  }
 
-    if (!children && endpoints && endpoints.length > 0) {
-      switch (endpoints[0].type) {
-        case 'Endpoint':
-          router.push(`/${params.project_name}/editor/undefined/endpoint/${endpoints[0].id}`);
-          break;
+  static showInstructions(params, router) {
+    router.push(`/${params.project_name}/editor/setup-instructions`);
+  }
 
-        default:
-          router.push(`/${params.project_name}/editor/${endpoints[0].id}`);
-          break;
-      }
+  static openFirstTreeElement(element, projectName, router) {
+    switch (element.type) {
+      case 'Endpoint':
+        router.push(`/${projectName}/editor/undefined/endpoint/${element.id}`);
+        break;
+
+      default:
+        router.push(`/${projectName}/editor/${element.id}`);
+        break;
     }
   }
 
