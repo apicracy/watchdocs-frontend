@@ -4,6 +4,7 @@
 
 export const FETCH_PROJECTS = 'fetch@projects';
 export const SET_ACTIVE_PROJECT = 'setActive@projects';
+export const CREATE_PROJECT = 'create@projects';
 
 export function fetchProjects(projects) {
   return {
@@ -15,6 +16,13 @@ export function fetchProjects(projects) {
 export function setActive(project) {
   return {
     type: SET_ACTIVE_PROJECT,
+    payload: project,
+  };
+}
+
+export function create(project) {
+  return {
+    type: CREATE_PROJECT,
     payload: project,
   };
 }

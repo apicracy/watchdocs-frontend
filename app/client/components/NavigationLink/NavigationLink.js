@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, IndexLink } from 'react-router';
-import { urlFormatProjectName } from 'services/projects';
 
 import styles from './NavigationLink.css';
 
 @connect(store => ({
-  projectName: urlFormatProjectName(store.projects.activeProject.name),
+  projectSlug: store.projects.activeProject.slug,
 }))
 class NavigationLink extends React.Component {
   static propTypes = {
@@ -14,14 +13,14 @@ class NavigationLink extends React.Component {
     text: React.PropTypes.string,
     index: React.PropTypes.bool,
     icon: React.PropTypes.node,
-    projectName: React.PropTypes.string,
+    projectSlug: React.PropTypes.string,
   }
 
   render() {
-    const { url = '/', text, index, icon, projectName } = this.props;
+    const { url = '/', text, index, icon, projectSlug } = this.props;
 
     const props = {
-      to: `/${projectName}${url}`,
+      to: `/${projectSlug}${url}`,
       className: styles.navigationLink,
       activeClassName: styles.navigationLinkActive,
     };

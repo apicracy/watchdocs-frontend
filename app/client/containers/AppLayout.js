@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styles from './AppLayout.css';
 
-import { fetchProjects, setActiveProject } from 'services/projects';
+import { loadProjects, setActiveProject } from 'services/projects';
 import { getCurrentUser, logout } from 'services/session';
 
 import AppBar from 'components/AppBar/AppBar';
@@ -19,16 +19,22 @@ import Modals from 'modals/Modals';
   projects: store.projects.projectList,
   activeProject: store.projects.activeProject,
 }))
+
 class AppLayout extends React.Component {
 
   componentWillMount() {
-    this.props.dispatch(getCurrentUser());
-    this.props.dispatch(fetchProjects(this.props.params.project_name));
+    const { dispatch } = this.props;
+    const projectSlug = this.props.params.project_name;
+    dispatch(getCurrentUser());
+    dispatch(loadProjects(projectSlug));
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.params.project_name !== this.props.params.project_name) {
-      this.props.dispatch(fetchProjects(nextProps.params.project_name));
+    const newSlug = nextProps.params.project_name;
+    const oldSlug = this.props.params.project_name;
+
+    if (oldSlug !== newSlug) {
+      this.props.dispatch(loadProjects(newSlug));
     }
   }
 

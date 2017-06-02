@@ -1,23 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { urlFormatProjectName } from 'services/projects';
 
 @connect(store => ({
-  projectName: urlFormatProjectName(store.projects.activeProject.name),
+  projectSlug: store.projects.activeProject.slug,
 }))
 class LinkWrapper extends React.Component {
   static propTypes = {
-    projectName: React.PropTypes.string,
+    projectSlug: React.PropTypes.string,
     to: React.PropTypes.string,
   }
 
   render() {
     const props = {
       ...this.props,
-      to: `/${this.props.projectName}${this.props.to}`,
+      to: `/${this.props.projectSlug}${this.props.to}`,
       dispatch: null,
-      projectName: null,
+      projectSlug: null,
     };
 
     return (
