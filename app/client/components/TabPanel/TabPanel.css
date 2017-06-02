@@ -43,6 +43,14 @@
   padding: 10px;
 }
 
+.inlineCode {
+  display: inline-block;
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  background: #ECEFF3;
+  padding: 1px 3px;
+  font-size: 0.9em;
+}
+
 .codeColor {
   color: #5e5ca8;
 }
@@ -58,4 +66,13 @@
 .title {
   font-size: 1.5em;
   margin-top: 0;
+}
+
+.subtitle {
+  font-size: 1.25em;
+  margin-top: 0;
+}
+
+.section{
+  font-size: 1em;
 }
