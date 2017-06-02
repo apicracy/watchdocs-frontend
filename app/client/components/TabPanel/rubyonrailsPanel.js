@@ -49,6 +49,7 @@ class RubyonrailsPanel extends React.Component {
           <p className={styles.instruction}>You can enable Watchdocs to record request while executing specs or making manual tests. You can of course do both at the same time if you want.</p>
         </div>
 
+        <br />
         <h3 className={styles.subtitle}>Specs</h3>
 
         <div className={styles.step}>
