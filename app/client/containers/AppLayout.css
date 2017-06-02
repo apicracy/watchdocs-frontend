@@ -4,6 +4,7 @@
   flex-direction: column;
   height: min-content;
   min-height: 100%;
+  align-items: stretch;
 }
 
 .contentWrapper {

@@ -3,82 +3,62 @@ import http from 'services/http';
 
 import {
   fetchProjects as load,
+  create,
   setActive,
 } from 'actions/projects';
 
 import { fetchEndpoints } from 'services/endpoints';
 
-export function fetchProjects(urlParam) {
+export function loadProjects(slugToActivate) {
   return dispatch => http('/api/v1/projects')
     .then(response => response.json())
     .then((data) => {
-      let activeProjectFromCache = null;
-      let activeProjectFromUrl = null;
-
-      if (!urlParam) {
-        activeProjectFromCache = getActiveProjectFromCache(data);
-      } else {
-        activeProjectFromUrl = getActiveProjectFromUrl(data, urlParam);
-      }
-
-      const projects = [...data];
-      const activeProject = activeProjectFromUrl || activeProjectFromCache;
+      const projects = data.map(project => ({ ...project, slug: projectSlug(project.name) }));
+      const projectToActivate = projects.find(p => p.slug === slugToActivate) || projects[0];
 
       dispatch(load(projects));
 
-      if (activeProject) {
-        activateProject(dispatch, activeProject);
+      if (projectToActivate) {
+        dispatch(setActiveProject(projectToActivate.id));
+      } else if (projects.length) {
+        browserHistory.push(`/projects-manager?notFound=${slugToActivate}`);
       } else {
-        // project does not exist
-        browserHistory.push(`/project-manager?not_found=${urlParam}`);
+        browserHistory.push('/new_project');
       }
     });
 }
 
 export function setActiveProject(id) {
   return (dispatch, getState) => {
-    const activeProject = getState().projects.projectList.find(p => p.id === id);
-    activateProject(dispatch, activeProject);
+    const project = getState().projects.projectList.find(p => p.id === id);
+    const currentPath = browserHistory.getCurrentLocation().pathname;
+
+    dispatch(setActive(project));
+    dispatch(fetchEndpoints(project.id)).then(() => {
+      if (!currentPath.includes(`/${project.slug}/`)) {
+        browserHistory.push(`/${project.slug}`);
+      }
+    });
   };
 }
 
-function activateProject(dispatch, project) {
-  localStorage.setItem('activeProject', project.id);
-  const currentPath = browserHistory.getCurrentLocation().pathname;
-  const projectName = urlFormatProjectName(project.name);
+export function createProject(projectParams) {
+  return (dispatch) => {
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(projectParams),
+    };
 
-  dispatch(setActive(project));
-  dispatch(fetchEndpoints(project.id)).then(() => {
-    if (!currentPath.includes(`/${projectName}/`)) {
-      browserHistory.push(`/${projectName}`);
-    }
-  });
+    return http('/api/v1/projects/', options)
+      .then(response => response.json())
+      .then((project) => {
+        dispatch(create(project));
+        dispatch(setActiveProject(project.id));
+      });
+  };
 }
 
-function getActiveProjectFromCache(data) {
-  const cached = parseInt(localStorage.getItem('activeProject'), 10);
-  let activeProject = null;
-
-  if (cached) {
-    activeProject = data.find(project => project.id === cached);
-  }
-
-  return activeProject || data.reduce((v, project) => {
-    if (v.id < project.id) return project;
-
-    return v;
-  }, { id: 0 });
-}
-
-function getActiveProjectFromUrl(data, name) {
-  return data.reduce((v, project) => {
-    if (urlFormatProjectName(project.name) === name) return project;
-
-    return v;
-  }, null);
-}
-
-export function urlFormatProjectName(name) {
+export function projectSlug(name) {
   if (!name) return null;
 
   const formatted = name

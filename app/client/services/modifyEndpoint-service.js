@@ -19,7 +19,6 @@ import { fetchEndpoints } from 'services/endpoints';
 
 import http from 'services/http';
 import { browserHistory } from 'react-router';
-import { urlFormatProjectName } from 'services/projects';
 
 export function addNewEndpoint() {
   return (dispatch /* , getState */) => {
@@ -59,7 +58,7 @@ export function saveEndpoint() {
       .then((response) => {
         dispatch(fetchEndpoints(getState().projects.activeProject.id));
         browserHistory.push(
-          `/${urlFormatProjectName(activeProject.name)}/editor/undefined/endpoint/${response.id}`,
+          `/${activeProject.slug}/editor/undefined/endpoint/${response.id}`,
         );
         dispatch(reset());
       });

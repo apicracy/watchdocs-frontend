@@ -12,7 +12,6 @@ import {
 } from 'actions/endpointEditor';
 
 import { fetchEndpoints } from 'services/endpoints';
-import { urlFormatProjectName } from 'services/projects';
 
 export function loadEndpoint(id) {
   return (dispatch) => {
@@ -90,8 +89,7 @@ export function removeUrlParams(id) {
 export function removeEndpoint() {
   return (dispatch, getState) => {
     const { id } = getState().endpointEditor;
-    const name = getState().projects.activeProject.name;
-    const url = urlFormatProjectName(name);
+    const projectSlug = getState().projects.activeProject.slug;
     const options = {
       method: 'DELETE',
     };
@@ -103,7 +101,7 @@ export function removeEndpoint() {
       .then(() => {
         // Redirect only when user stayed on the same page
         if (id === getState().endpointEditor.id) {
-          browserHistory.push(url);
+          browserHistory.push(projectSlug);
         }
         dispatch(fetchEndpoints(getState().projects.activeProject.id));
       });
@@ -137,9 +135,9 @@ export function addResponse(responseParam) {
     return http('/api/v1/responses/', options)
       .then(response => response.json())
       .then((data) => {
-        const name = getState().projects.activeProject.name;
+        const projectSlug = getState().projects.activeProject.slug;
         const endpointId = responseParam.endpoint_id;
-        const url = `/${urlFormatProjectName(name)}/editor/undefined/endpoint/${endpointId}/response/${data.id}`;
+        const url = `/${projectSlug}/editor/undefined/endpoint/${endpointId}/response/${data.id}`;
 
         browserHistory.push(url);
         dispatch(addResponseAction(data));
