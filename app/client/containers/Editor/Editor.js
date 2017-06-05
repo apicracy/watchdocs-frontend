@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import styles from './Editor.css';
 import Aside from 'containers/Aside/Aside';
 import Content from 'components/Content/Content';
-import Container from 'components/Container/Container';
 
 @connect(store => ({
   endpoints: store.endpoints,
@@ -16,6 +16,7 @@ class Editor extends React.Component {
       React.PropTypes.node,
     ]),
     params: React.PropTypes.object, // supplied by react-router
+    endpoints: React.PropTypes.array,
   }
 
   componentWillMount() {
@@ -57,15 +58,15 @@ class Editor extends React.Component {
   }
 
   render() {
-    const { children, params } = this.props;
+    const { children, params, endpoints } = this.props;
 
     return (
-      <Container>
-        <Aside params={params} />
+      <div className={styles.container}>
+        { endpoints.length > 0 && <Aside params={params} />}
         <Content>
           { children }
         </Content>
-      </Container>
+      </div>
     );
   }
 }

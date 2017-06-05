@@ -1,6 +1,7 @@
 .wrapper {
   position: relative;
   width: inherit;
+  margin-left: -15px;
 }
 
 .root {

@@ -11,6 +11,7 @@ const Content = ({ children, justify }) => {
 
   return (
     <section className={classes}>
+
       <div className={styles.contentWrapper}>
         { children }
       </div>
