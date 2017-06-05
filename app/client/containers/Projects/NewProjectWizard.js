@@ -32,7 +32,7 @@ class Projects extends React.Component {
         <div className={styles.cardContainer}>
           <img src={icon} className={styles.icon} alt="Create an awesome project right now" />
           <div className={styles.description}>
-            <h1 className={styles.header}>Create project</h1>
+            <h1 className={styles.header}>Create a project</h1>
             <p className={styles.description}>
               Let&#39;s create a first project that you&#39;re going to document.
               It won&#39;t take long.

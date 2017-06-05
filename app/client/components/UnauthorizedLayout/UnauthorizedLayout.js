@@ -19,7 +19,7 @@ const UnauthorizedLayout = (props, context) => {
         </div>
         <div className={styles.links}>
           {currentPath !== '/login' && <a href="/login">Already have an account?</a>}
-          {currentPath !== '/signup' && <a href="/signup">Do not yet have an account?</a>}
+          {currentPath !== '/signup' && <a href="/signup">Don&#39;t have an account yet?</a>}
         </div>
       </div>
     </div>
