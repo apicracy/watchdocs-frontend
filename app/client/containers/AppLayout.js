@@ -18,6 +18,7 @@ import Modals from 'modals/Modals';
 @connect(store => ({
   projects: store.projects.projectList,
   activeProject: store.projects.activeProject,
+  username: store.session.user && store.session.user.email,
 }))
 
 class AppLayout extends React.Component {
@@ -47,6 +48,7 @@ class AppLayout extends React.Component {
     dispatch: React.PropTypes.func,
     projects: React.PropTypes.array,
     activeProject: React.PropTypes.object,
+    username: React.PropTypes.string,
   }
 
   switchProject = (id) => {
@@ -58,7 +60,7 @@ class AppLayout extends React.Component {
   }
 
   render() {
-    const { projects, activeProject } = this.props;
+    const { projects, activeProject, username } = this.props;
 
     return (
       <div className={styles.appLayout}>
@@ -66,22 +68,22 @@ class AppLayout extends React.Component {
           <Container center>
             <div className={styles.navigation}>
               <Brand />
-              <Select
-                variants={['appBar']}
-                additionalInfo={'Saved 5 minutes ago'}
-                options={projects}
-                onSelect={this.switchProject}
-                activeId={activeProject ? activeProject.id : null}
-              />
+              { projects.length > 1 && (
+                <Select
+                  variants={['appBar']}
+                  options={projects}
+                  onSelect={this.switchProject}
+                  activeId={activeProject ? activeProject.id : null}
+                />
+              )}
               <NavLink url="/editor" text="Editor" icon={<Icon name="edit" />} />
               <NavLink url="/documentation" index={!this.props.params.group_id} text="Documentation" icon={<CustomIcon name="documentation" size="sm" />} />
               <NavLink url="/settings" text="Settings" icon={<CustomIcon name="settings" size="sm" />} />
             </div>
             <div className={styles.right}>
-              <CustomIcon name="notifications" size="lg" />
               <CustomIcon name="help" size="lg" />
               <UserMenu
-                username="WatchDocs User"
+                username={username}
                 onLogout={this.onLogout}
               />
             </div>
