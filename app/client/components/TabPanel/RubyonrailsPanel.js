@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './TabPanel.css';
+import CopyableCodeBlock from '../CopyableCodeBlock/CopyableCodeBlock';
 
 class RubyonrailsPanel extends React.Component {
   static propTypes = {
@@ -16,26 +17,23 @@ class RubyonrailsPanel extends React.Component {
 
         <div className={styles.step}>
           <p className={styles.instruction}>Add our gem to your Gemfile. It is recommended to add to <span className={styles.inlineCode}>:test, :development</span> group.</p>
-          <div className={styles.code}>
-            gem&nbsp;
-            <span className={styles.codeColor}>
-              'watchdocs-rails'
-            </span>
-          </div>
+          <CopyableCodeBlock textToCopy="gem 'watchdocs-rails'">
+            <span>gem&nbsp;<span className={styles.codeColor}>'watchdocs-rails'</span></span>
+          </CopyableCodeBlock>
         </div>
 
         <div className={styles.step}>
           <p className={styles.instruction}>Install the gem by running:</p>
-          <div className={styles.code}>
+          <CopyableCodeBlock textToCopy="bundle install">
             bundle install
-          </div>
+          </CopyableCodeBlock>
         </div>
 
         <div className={styles.step}>
           <p className={styles.instruction}>Fire the installation script and follow the instructions:</p>
-          <div className={styles.code}>
-            rails g <span className={styles.codeColor}>watchdocs:install</span> --app_id <span className={styles.codeColor}>{project.app_id}</span> --app_secret <span className={styles.codeColor}>{project.app_secret}</span>
-          </div>
+          <CopyableCodeBlock textToCopy={`rails g watchdocs:install --app_id ${project.app_id} --app_secret ${project.app_secret}`}>
+            <span>rails g watchdocs:install --app_id <span className={styles.codeColor}>{project.app_id}</span> --app_secret <span className={styles.codeColor}>{project.app_secret}</span></span>
+          </CopyableCodeBlock>
         </div>
 
         <div className={styles.step}>
