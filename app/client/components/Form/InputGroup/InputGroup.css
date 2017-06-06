@@ -16,3 +16,7 @@
 .inputs {
   margin-bottom: 10px;
 }
+
+.smallLabel .title {
+  font-size: 12px;
+}

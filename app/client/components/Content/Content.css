@@ -6,17 +6,6 @@
   overflow: visible;
 }
 
-.content:after {
-  background-color: #eceff3;
-  position: absolute;
-  display: block;
-  left: 100%;
-  top: 0;
-  bottom: 0;
-  content: '';
-  width: 1000px;
-}
-
 .contentWrapper {
   display: flex;
   flex: 1;

@@ -7,7 +7,8 @@
     "start": "NODE_ENV=development nodemon reapp.js",
     "build": "NODE_ENV=production node ./node_modules/webpack/bin/webpack --config config/webpack.dist.js",
     "build:dev": "NODE_ENV=development node ./node_modules/webpack/bin/webpack --config config/webpack.config.js",
-    "app": "npm run build && node server.js",
+    "app": "node server.js",
+    "postinstall": "npm run build",
     "lint": "eslint ./"
   },
   "pre-commit": [

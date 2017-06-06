@@ -6,19 +6,17 @@ import TextInput from 'components/Form/TextInput/TextInput';
 import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock';
 
 @connect(store => ({
-  projectUrl: store.projects.activeProject.base_url,
+  project: store.projects.activeProject,
 }))
 class Setup extends React.Component {
 
   static propTypes = {
-    params: React.PropTypes.object, // supplied by react-router
-    projectUrl: React.PropTypes.string, // supplied by react-router
+    project: React.PropTypes.object
   }
 
   render() {
     const {
-      params,
-      projectUrl,
+      project,
     } = this.props;
 
     return (
@@ -26,18 +24,18 @@ class Setup extends React.Component {
         <DocumentationBlock
           title="Application name"
         >
-          <TextInput variant="white" defaultValue={params.project_name} />
+          <TextInput variant="white" defaultValue={project.name} />
         </DocumentationBlock>
         <DocumentationBlock
           title="Base URL"
           description="This is the first part of an URL that we're going to use in documentation."
         >
-          <TextInput defaultValue={projectUrl} />
+          <TextInput defaultValue={project.base_url} />
         </DocumentationBlock>
         <DocumentationBlock
           title="Installation"
         >
-          <TabPanel />
+          <TabPanel project={project} />
         </DocumentationBlock>
       </div>
     );
