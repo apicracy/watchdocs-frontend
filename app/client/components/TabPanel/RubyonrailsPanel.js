@@ -32,14 +32,14 @@ class RubyonrailsPanel extends React.Component {
         </div>
 
         <div className={styles.step}>
-          <p className={styles.instruction}>and then fire the installation script:</p>
+          <p className={styles.instruction}>Fire the installation script and follow the instructions:</p>
           <div className={styles.code}>
             rails g <span className={styles.codeColor}>watchdocs:install</span> --app_id <span className={styles.codeColor}>{project.app_id}</span> --app_secret <span className={styles.codeColor}>{project.app_secret}</span>
           </div>
         </div>
 
         <div className={styles.step}>
-          <p className={styles.instruction}>For more configuration options <a target="_blank" rel="noopener noreferrer" href="https://github.com/apicracy/watchdocs-rails#configuration"> click here.</a></p>
+          <p className={styles.instruction}><a target="_blank" rel="noopener noreferrer" href="https://github.com/apicracy/watchdocs-rails#configuration">Click here to read more about the gem</a></p>
         </div>
      </div>
     );
