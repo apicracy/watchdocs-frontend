@@ -14,10 +14,11 @@ class NavigationLink extends React.Component {
     index: React.PropTypes.bool,
     icon: React.PropTypes.node,
     projectSlug: React.PropTypes.string,
+    id: React.PropTypes.string,
   }
 
   render() {
-    const { url = '/', text, index, icon, projectSlug } = this.props;
+    const { url = '/', text, index, icon, projectSlug, id } = this.props;
 
     const props = {
       to: `/${projectSlug}${url}`,
@@ -32,10 +33,10 @@ class NavigationLink extends React.Component {
     );
 
     if (index) {
-      return <IndexLink {...props}>{ inner }</IndexLink>;
+      return <IndexLink {...props} id={id}>{ inner }</IndexLink>;
     }
 
-    return <Link {...props}>{ inner }</Link>;
+    return <Link {...props} id={id}>{ inner }</Link>;
   }
 }
 
