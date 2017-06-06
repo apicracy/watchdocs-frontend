@@ -13,7 +13,7 @@ const buttonIcon = (
 );
 
 const DocumentationBlock = ({ title, titleElement, description,
-  buttonAction, children, emptyMsg, content }) => {
+  buttonAction, children, emptyMsg, content, id }) => {
   const parsedDescription = description && description.map ? (
     description.map((v, k) => <span key={k}>{v}</span>)
   ) : description;
@@ -30,7 +30,7 @@ const DocumentationBlock = ({ title, titleElement, description,
   ) : children;
 
   return (
-    <article className={styles.root}>
+    <article className={styles.root} id={id}>
       <header className={styles.header}>
         <div className={styles.title}>{title} {titleElement}</div>
         { buttonAction && (
@@ -71,6 +71,7 @@ DocumentationBlock.propTypes = {
     React.PropTypes.array,
     React.PropTypes.object,
   ]),
+  id: React.PropTypes.string,
 };
 
 DocumentationBlock.defaultProps = {
