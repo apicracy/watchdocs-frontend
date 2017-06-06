@@ -55,7 +55,6 @@ export const endpointEditorSteps = [
     selector: '#endpoint-editor-responses',
     text: 'Here is a list of all responses <strong>recorded</strong> in your application.',
   },
-
 ];
 
 export default class Tutorial extends React.Component {

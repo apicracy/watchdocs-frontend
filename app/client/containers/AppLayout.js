@@ -47,6 +47,7 @@ class AppLayout extends React.Component {
       React.PropTypes.node,
     ]),
     params: React.PropTypes.object, // supplied by react-router
+    location: React.PropTypes.object, // supplied by react-router
     dispatch: React.PropTypes.func,
     projects: React.PropTypes.array,
     activeProject: React.PropTypes.object,
@@ -63,11 +64,12 @@ class AppLayout extends React.Component {
   }
 
   render() {
-    const { projects, activeProject, username, endpointsLoaded } = this.props;
+    const { projects, activeProject, username, endpointsLoaded, children } = this.props;
+    const isEditor = this.props.location.pathname.includes('/editor/');
 
     return (
       <div className={styles.appLayout}>
-        <Tutorial shouldStart={endpointsLoaded} />
+        <Tutorial shouldStart={isEditor && endpointsLoaded} />
         <AppBar>
           <Container center>
             <div className={styles.navigation}>
@@ -93,7 +95,7 @@ class AppLayout extends React.Component {
             </div>
           </Container>
         </AppBar>
-        { this.props.children }
+        { children }
         <AppBar footer>
           <Container />
         </AppBar>
