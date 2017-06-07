@@ -59,8 +59,8 @@ const Routes = (
 
         <Route path="editor">
           <IndexRoute component={Editor} />
+          <Route path="setup-instructions" component={InitialSetupInstructions} />
           <Route component={Editor}>
-            <Route path="setup-instructions" component={InitialSetupInstructions} />
             <Route path="document/:document_id" component={DocumentEditor} />
             <Route path=":group_id" component={GroupEditor} />
             <Route path=":group_id/endpoint/:endpoint_id" component={EndpointEditor} />

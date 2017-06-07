@@ -13,12 +13,14 @@ import UserMenu from 'components/UserMenu/UserMenu';
 import Select from 'components/Form/Select/Select';
 import Icon from 'components/Icon/Icon';
 import CustomIcon from 'components/Icon/CustomIcon';
+import Tutorial from 'components/Tutorial/Tutorial';
 import Modals from 'modals/Modals';
 
 @connect(store => ({
   projects: store.projects.projectList,
   activeProject: store.projects.activeProject,
   username: store.session.user && store.session.user.email,
+  endpointsCount: store.endpoints.length,
 }))
 
 class AppLayout extends React.Component {
@@ -49,6 +51,7 @@ class AppLayout extends React.Component {
     projects: React.PropTypes.array,
     activeProject: React.PropTypes.object,
     username: React.PropTypes.string,
+    endpointsCount: React.PropTypes.number,
   }
 
   switchProject = (id) => {
@@ -60,10 +63,11 @@ class AppLayout extends React.Component {
   }
 
   render() {
-    const { projects, activeProject, username } = this.props;
+    const { projects, activeProject, username, children, endpointsCount } = this.props;
 
     return (
       <div className={styles.appLayout}>
+        <Tutorial />
         <AppBar>
           <Container center>
             <div className={styles.navigation}>
@@ -76,9 +80,9 @@ class AppLayout extends React.Component {
                   activeId={activeProject ? activeProject.id : null}
                 />
               )}
-              <NavLink url="/editor" text="Editor" icon={<Icon name="edit" />} />
-              <NavLink url="/documentation" index={!this.props.params.group_id} text="Documentation" icon={<CustomIcon name="documentation" size="sm" />} />
-              <NavLink url="/settings" text="Settings" icon={<CustomIcon name="settings" size="sm" />} />
+              <NavLink url="/editor" text="Editor" icon={<Icon name="edit" />} id="nav-editor" />
+              <NavLink url="/documentation" index={!this.props.params.group_id} text="Documentation" icon={<CustomIcon name="documentation" size="sm" />} id="nav-documentation" disabled={endpointsCount === 0} />
+              <NavLink url="/settings" text="Settings" icon={<CustomIcon name="settings" size="sm" />} id="nav-settings" />
             </div>
             <div className={styles.right}>
               <CustomIcon name="help" size="lg" />
@@ -89,7 +93,7 @@ class AppLayout extends React.Component {
             </div>
           </Container>
         </AppBar>
-        { this.props.children }
+        { children }
         <AppBar footer>
           <Container />
         </AppBar>

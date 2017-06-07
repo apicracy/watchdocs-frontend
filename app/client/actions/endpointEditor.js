@@ -2,6 +2,7 @@
  * endpointEditor Actions
  */
 
+export const TOGGLE_VISIBILITY = 'toggleVisibility@EndpointEditor';
 export const SET_ENDPOINT_EDITOR = 'set@EndpointEditor';
 export const ADD_ENDPOINT_PARAM = 'addParam@EndpointEditor';
 export const UPDATE_ENDPOINT_PARAM = 'updateParam@EndpointEditor';
@@ -14,6 +15,13 @@ export const UPDATE_REQUEST = 'updateRequest@EndpointEditor';
 export const SET_RESPONSES = 'setResponses@EndpointEditor';
 export const SET_REQUEST = 'setRequest@EndpointEditor';
 export const REMOVE_RESPONSE = 'removeResponse@EndpointEditor';
+
+export function toggleVisibility(newVisibility) {
+  return {
+    type: TOGGLE_VISIBILITY,
+    payload: newVisibility,
+  };
+}
 
 export function setRequest(request) {
   return {
