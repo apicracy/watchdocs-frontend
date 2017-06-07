@@ -6,7 +6,7 @@ import styles from './EndpointListItem.css';
 const EndpointListItem = ({ url, method, id, groupId, isSelected, status }) => {
   const topStyle = isSelected ? styles.selected : styles.root;
   return (
-    <div className={topStyle}>
+    <div className={topStyle} id={isSelected ? 'endpoint-list-item-selected' : ''}>
       <Link
         to={`/editor/${groupId}/endpoint/${id}`}
         className={`${styles.root} ${status === 'outdated' ? styles.outdated : ''}`}

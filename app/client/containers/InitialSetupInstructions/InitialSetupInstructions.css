@@ -1,4 +1,8 @@
 .wrapper {
+  background-color: #eceff3;
+}
+
+.inner {
   margin: auto;
   width:100%;
   max-width: 900px;

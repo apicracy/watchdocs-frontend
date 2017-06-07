@@ -84,23 +84,25 @@ class Aside extends React.Component {
     );
 
     return (
-      <Sidebar>
-        <TextInput
-          value={this.state.search}
-          placeholder="Filter"
-          iconRight={this.renderIcon()}
-          onChange={this.filter}
-        />
-        <Tabs data={tabData} onChange={this.tabChange} />
-        <EndpointList
-          endpoints={endpoints}
-          activeGroup={groupId}
-          selected={endpointId}
-          onAddNewGroup={this.addNewGroup}
-          onAddNewEndpoint={this.addNewEndpoint}
-          onAddNewDocument={this.addNewDocument}
-        />
-      </Sidebar>
+      <div id="endpoint-list">
+        <Sidebar>
+          <TextInput
+            value={this.state.search}
+            placeholder="Filter"
+            iconRight={this.renderIcon()}
+            onChange={this.filter}
+          />
+          <Tabs data={tabData} onChange={this.tabChange} />
+          <EndpointList
+            endpoints={endpoints}
+            activeGroup={groupId}
+            selected={endpointId}
+            onAddNewGroup={this.addNewGroup}
+            onAddNewEndpoint={this.addNewEndpoint}
+            onAddNewDocument={this.addNewDocument}
+          />
+        </Sidebar>
+      </div>
     );
   }
 }
