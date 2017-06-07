@@ -95,12 +95,6 @@ class DocumentationViewer extends React.Component {
       <div className={styles.container}>
         { this.props.isFetching && <LoadingIndicator fixed /> }
         <Sidebar>
-          <TextInput
-            value={this.state.search}
-            placeholder="Search"
-            iconRight={this.renderIcon()}
-            onChange={this.filter}
-          />
           <ScrollSpy>
             { this.renderMenu() }
           </ScrollSpy>

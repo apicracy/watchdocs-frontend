@@ -15,14 +15,16 @@ class NavigationLink extends React.Component {
     icon: React.PropTypes.node,
     projectSlug: React.PropTypes.string,
     id: React.PropTypes.string,
+    disabled: React.PropTypes.bool,
   }
 
   render() {
-    const { url = '/', text, index, icon, projectSlug, id } = this.props;
+    const { url = '/', text, index, icon, projectSlug, disabled, id } = this.props;
+    const classNames = [styles.navigationLink, (disabled && styles.disabled)];
 
     const props = {
       to: `/${projectSlug}${url}`,
-      className: styles.navigationLink,
+      className: classNames.join(' '),
       activeClassName: styles.navigationLinkActive,
     };
 
