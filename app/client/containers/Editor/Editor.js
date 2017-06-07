@@ -5,6 +5,8 @@ import styles from './Editor.css';
 import Aside from 'containers/Aside/Aside';
 import Content from 'components/Content/Content';
 
+import { flattenTree } from 'services/endpoints';
+
 @connect(store => ({
   endpoints: store.endpoints,
 }))
@@ -46,28 +48,10 @@ class Editor extends React.Component {
   }
 
   static openFirstEndpoint(treeElements, projectName, router) {
-    const endpointToOpen = Editor.findFirstEndpoint(treeElements);
-    if (!endpointToOpen) {
-      return;
+    const endpointToOpen = flattenTree(treeElements).find(x => x.type === 'Endpoint');
+    if (endpointToOpen) {
+      router.push(`/${projectName}/editor/undefined/endpoint/${endpointToOpen.id}`);
     }
-    router.push(`/${projectName}/editor/undefined/endpoint/${endpointToOpen.id}`);
-  }
-
-  static findFirstEndpoint(items) {
-    items.each((item) => {
-      if (item.type === 'Endpoint') {
-        return item;
-      }
-
-      if (item.items && item.items.length > 0) {
-        const endpointInItems = Editor.findFirstEndpoint(item.items);
-        if (endpointInItems) {
-          return endpointInItems;
-        }
-      }
-
-      return null;
-    });
   }
 
   render() {
