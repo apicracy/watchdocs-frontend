@@ -35,23 +35,22 @@ class Editor extends React.Component {
     if (children || !endpoints) {
       return;
     }
-    if (endpoints.length === 0) {
-      Editor.showInstructions(params, router);
-    }
-    if (endpoints.length > 0) {
-      Editor.openFirstEndpoint(endpoints, params.project_name, router);
-    }
-  }
 
-  static showInstructions(params, router) {
-    router.push(`/${params.project_name}/editor/setup-instructions`);
-  }
+    const endpointToOpen = flattenTree(endpoints).find(x => x.type === 'Endpoint');
 
-  static openFirstEndpoint(treeElements, projectName, router) {
-    const endpointToOpen = flattenTree(treeElements).find(x => x.type === 'Endpoint');
     if (endpointToOpen) {
-      router.push(`/${projectName}/editor/undefined/endpoint/${endpointToOpen.id}`);
+      Editor.openEndpoint(endpointToOpen, params.project_name, router);
+    } else {
+      Editor.showInstructions(params.project_name, router);
     }
+  }
+
+  static showInstructions(projectName, router) {
+    router.push(`/${projectName}/editor/setup-instructions`);
+  }
+
+  static openEndpoint(endpoint, projectName, router) {
+    router.push(`/${projectName}/editor/undefined/endpoint/${endpoint.id}`);
   }
 
   render() {
