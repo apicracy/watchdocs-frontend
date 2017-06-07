@@ -11,6 +11,8 @@
   padding: 2px;
   justify-content: flex-start;
   width: 100%;
+  cursor: pointer;
+  user-select: none;
 }
 
 .link:hover,
