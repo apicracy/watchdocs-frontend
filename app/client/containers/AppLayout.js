@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styles from './AppLayout.css';
 
-import { loadProjects, setActiveProject } from 'services/projects';
-import { getCurrentUser, logout } from 'services/session';
+import { logout } from 'services/session';
+import { browserHistory } from 'react-router';
 
 import AppBar from 'components/AppBar/AppBar';
 import Container from 'components/Container/Container';
@@ -25,22 +25,6 @@ import Modals from 'modals/Modals';
 
 class AppLayout extends React.Component {
 
-  componentWillMount() {
-    const { dispatch } = this.props;
-    const projectSlug = this.props.params.project_name;
-    dispatch(getCurrentUser());
-    dispatch(loadProjects(projectSlug));
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const newSlug = nextProps.params.project_name;
-    const oldSlug = this.props.params.project_name;
-
-    if (oldSlug !== newSlug) {
-      this.props.dispatch(loadProjects(newSlug));
-    }
-  }
-
   static propTypes = {
     children: React.PropTypes.oneOfType([
       React.PropTypes.arrayOf(React.PropTypes.node),
@@ -55,7 +39,11 @@ class AppLayout extends React.Component {
   }
 
   switchProject = (id) => {
-    this.props.dispatch(setActiveProject(id));
+    const { projects } = this.props;
+    const selectedProject = projects.find(project => project.id === id);
+    if (!selectedProject) { return false; }
+    browserHistory.push(`/${selectedProject.slug}`);
+    return true;
   }
 
   onLogout = () => {
