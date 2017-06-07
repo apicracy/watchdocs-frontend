@@ -62,7 +62,7 @@ class Editor extends React.Component {
 
     return (
       <div className={styles.container}>
-        { endpoints.length > 0 && <Aside params={params} />}
+        <Aside params={params} />
         <Content>
           { children }
         </Content>

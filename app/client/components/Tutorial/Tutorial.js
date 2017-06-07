@@ -13,14 +13,9 @@ export const endpointEditorSteps = [
     text: 'In documentation view you can see all your documentation in one place in easy-to-read format.',
   },
   {
-    title: 'Project settings',
-    selector: '#nav-settings',
-    text: 'Add more users here, setup integrations or modify project.',
-  },
-  {
-    title: 'Tree view',
+    title: 'Endpoints tree',
     selector: '#endpoint-list',
-    text: 'Here, in editor mode, are listed all endpoints discovered in your app. You can add new manually with button below',
+    text: 'Here, in editor mode, are listed all endpoints discovered in your app.',
     position: 'right',
     style: {
       width: '300px',
@@ -29,10 +24,10 @@ export const endpointEditorSteps = [
   {
     title: 'Endpoint editor',
     selector: '#endpoint-editor',
-    text: 'Endpoint editor contains all recorder and user-provided informations about given endpoint',
+    text: 'Endpoint editor contains all <strong>recorded</strong> and user-provided informations about given endpoint',
     position: 'left',
     style: {
-      width: '300px',
+      width: '200px',
     },
   },
   {
@@ -53,29 +48,47 @@ export const endpointEditorSteps = [
   {
     title: 'Request',
     selector: '#endpoint-editor-request',
-    text: 'Here we hold recorded information about request that was made, for which server returned successfull response.',
+    text: 'Here we hold <strong>recorded</strong> information about request that was made, for which server returned successfull response.',
   },
   {
     title: 'Responses',
     selector: '#endpoint-editor-responses',
-    text: 'Here is a list of all responses recorded in your application.',
+    text: 'Here is a list of all responses <strong>recorded</strong> in your application.',
   },
-
 ];
 
-const Tutorial = ({ start }) => (
-  <div>
-    <Joyride
-      steps={endpointEditorSteps}
-      type="continuous"
-      run={start}
-      autoStart
-    />
-  </div>
-);
+export default class Tutorial extends React.Component {
+  static propTypes = {
+    shouldStart: React.PropTypes.bool,
+  }
 
-Tutorial.propTypes = {
-  start: React.PropTypes.bool,
-};
+  joyrideCallback = ({ action, index, type }) => {
+    if (action === 'next' || action === 'back') {
+      localStorage.setItem('tutorial-step', index);
+    } else if (type === 'finished') {
+      localStorage.setItem('tutorial-finished', true);
+    }
+  }
 
-export default Tutorial;
+  render() {
+    const { shouldStart } = this.props;
+    const startIndex = parseInt(localStorage.getItem('tutorial-step'), 10);
+    const tutorialFinished = localStorage.getItem('tutorial-finished');
+
+    return (
+      <div>
+        <Joyride
+          steps={endpointEditorSteps}
+          type="continuous"
+          // Change stepIndex at the same time as shouldStart
+          // otherwise it won't work start from given stepIndex :(
+          stepIndex={shouldStart && startIndex}
+          callback={this.joyrideCallback}
+          run={!tutorialFinished && shouldStart}
+          debug
+
+        />
+      </div>
+    );
+  }
+}
