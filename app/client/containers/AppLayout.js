@@ -20,7 +20,6 @@ import Modals from 'modals/Modals';
   projects: store.projects.projectList,
   activeProject: store.projects.activeProject,
   username: store.session.user && store.session.user.email,
-  endpointsLoaded: store.endpoints.length > 0,
 }))
 
 class AppLayout extends React.Component {
@@ -47,12 +46,10 @@ class AppLayout extends React.Component {
       React.PropTypes.node,
     ]),
     params: React.PropTypes.object, // supplied by react-router
-    location: React.PropTypes.object, // supplied by react-router
     dispatch: React.PropTypes.func,
     projects: React.PropTypes.array,
     activeProject: React.PropTypes.object,
     username: React.PropTypes.string,
-    endpointsLoaded: React.PropTypes.bool,
   }
 
   switchProject = (id) => {
@@ -64,12 +61,11 @@ class AppLayout extends React.Component {
   }
 
   render() {
-    const { projects, activeProject, username, endpointsLoaded, children } = this.props;
-    const isEditor = this.props.location.pathname.includes('/editor/');
+    const { projects, activeProject, username, children } = this.props;
 
     return (
       <div className={styles.appLayout}>
-        <Tutorial shouldStart={isEditor && endpointsLoaded} />
+        <Tutorial />
         <AppBar>
           <Container center>
             <div className={styles.navigation}>

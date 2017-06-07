@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Joyride from 'react-joyride';
 
 export const endpointEditorSteps = [
@@ -57,9 +58,13 @@ export const endpointEditorSteps = [
   },
 ];
 
-export default class Tutorial extends React.Component {
+@connect(store => ({
+  endpointEditorVisible: store.endpointEditor.isOpen,
+}))
+
+class Tutorial extends React.Component {
   static propTypes = {
-    shouldStart: React.PropTypes.bool,
+    endpointEditorVisible: React.PropTypes.bool,
   }
 
   joyrideCallback = ({ action, index, type }) => {
@@ -71,24 +76,26 @@ export default class Tutorial extends React.Component {
   }
 
   render() {
-    const { shouldStart } = this.props;
+    const { endpointEditorVisible } = this.props;
     const startIndex = parseInt(localStorage.getItem('tutorial-step'), 10);
     const tutorialFinished = localStorage.getItem('tutorial-finished');
 
     return (
       <div>
         <Joyride
+          ref={c => (this.joyride = c)}
           steps={endpointEditorSteps}
           type="continuous"
           // Change stepIndex at the same time as shouldStart
           // otherwise it won't work start from given stepIndex :(
-          stepIndex={shouldStart && startIndex}
+          stepIndex={endpointEditorVisible && startIndex}
           callback={this.joyrideCallback}
-          run={!tutorialFinished && shouldStart}
+          run={!tutorialFinished && endpointEditorVisible}
           debug
-
         />
       </div>
     );
   }
 }
+
+export default Tutorial;

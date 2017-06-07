@@ -2,9 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styles from './EndpointEditor.css';
 
-import { loadEndpoint, removeEndpoint, removeUrlParams, removeResponse } from 'services/endpointEditor';
+import {
+  openEditor,
+  closeEditor,
+  loadEndpoint,
+  removeEndpoint,
+  removeUrlParams,
+  removeResponse,
+} from 'services/endpointEditor';
 
 import Button from 'components/Button/Button';
+import Tutorial from 'components/Tutorial/Tutorial';
+
 
 import Icon from 'components/Icon/Icon';
 import IconButton from 'components/Button/IconButton';
@@ -50,6 +59,11 @@ class EndpointEditor extends React.Component {
 
   componentWillMount() {
     this.setState({ security: null });
+    this.props.dispatch(openEditor());
+  }
+
+  componentWillUnmount() {
+    this.props.dispatch(closeEditor());
   }
 
   componentDidMount() {

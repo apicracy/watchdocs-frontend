@@ -58,7 +58,7 @@ class Editor extends React.Component {
   }
 
   render() {
-    const { children, params, endpoints } = this.props;
+    const { children, params } = this.props;
 
     return (
       <div className={styles.container}>
