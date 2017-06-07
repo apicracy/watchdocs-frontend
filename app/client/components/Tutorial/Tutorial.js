@@ -77,7 +77,8 @@ class Tutorial extends React.Component {
 
   render() {
     const { endpointEditorVisible } = this.props;
-    const startIndex = parseInt(localStorage.getItem('tutorial-step'), 10);
+    const cachedTutorialStep = localStorage.getItem('tutorial-step');
+    const startIndex = cachedTutorialStep ? parseInt(cachedTutorialStep, 10) : 0;
     const tutorialFinished = localStorage.getItem('tutorial-finished');
 
     return (
@@ -91,7 +92,6 @@ class Tutorial extends React.Component {
           stepIndex={endpointEditorVisible && startIndex}
           callback={this.joyrideCallback}
           run={!tutorialFinished && endpointEditorVisible}
-          debug
         />
       </div>
     );
