@@ -37,7 +37,7 @@ class Editor extends React.Component {
       Editor.showInstructions(params, router);
     }
     if (endpoints.length > 0) {
-      Editor.openFirstTreeElement(endpoints[0], params.project_name, router);
+      Editor.openFirstEndpoint(endpoints, params.project_name, router);
     }
   }
 
@@ -45,16 +45,29 @@ class Editor extends React.Component {
     router.push(`/${params.project_name}/editor/setup-instructions`);
   }
 
-  static openFirstTreeElement(element, projectName, router) {
-    switch (element.type) {
-      case 'Endpoint':
-        router.push(`/${projectName}/editor/undefined/endpoint/${element.id}`);
-        break;
-
-      default:
-        router.push(`/${projectName}/editor/${element.id}`);
-        break;
+  static openFirstEndpoint(treeElements, projectName, router) {
+    const endpointToOpen = Editor.findFirstEndpoint(treeElements);
+    if (!endpointToOpen) {
+      return;
     }
+    router.push(`/${projectName}/editor/undefined/endpoint/${endpointToOpen.id}`);
+  }
+
+  static findFirstEndpoint(items) {
+    items.each((item) => {
+      if (item.type === 'Endpoint') {
+        return item;
+      }
+
+      if (item.items && item.items.length > 0) {
+        const endpointInItems = Editor.findFirstEndpoint(item.items);
+        if (endpointInItems) {
+          return endpointInItems;
+        }
+      }
+
+      return null;
+    });
   }
 
   render() {
