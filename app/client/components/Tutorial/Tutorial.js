@@ -92,6 +92,7 @@ class Tutorial extends React.Component {
           stepIndex={endpointEditorVisible && startIndex}
           callback={this.joyrideCallback}
           run={!tutorialFinished && endpointEditorVisible}
+          autoStart
         />
       </div>
     );
