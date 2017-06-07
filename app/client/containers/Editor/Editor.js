@@ -48,7 +48,7 @@ class Editor extends React.Component {
   static openFirstTreeElement(element, projectName, router) {
     switch (element.type) {
       case 'Endpoint':
-        router.push(`/${projectName}/editor/undefined/endpoint/${element.id}`);
+        router.push(`/${projectName}/editor/endpoint/${element.id}`);
         break;
 
       default:

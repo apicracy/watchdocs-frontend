@@ -113,8 +113,8 @@ class EndpointEditor extends React.Component {
 
   /* Params section */
   editParam = id => () => this.props.dispatch(openModal('addUrlParam', id));
-  editResponse = id => () => this.props.router.push(`/${this.props.params.project_name}/editor/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/response/${id}`);
-  editRequest = () => () => this.props.router.push(`/${this.props.params.project_name}/editor/${this.props.params.group_id}/endpoint/${this.props.params.endpoint_id}/request`);
+  editResponse = id => () => this.props.router.push(`/${this.props.params.project_name}/editor/endpoint/${this.props.params.endpoint_id}/response/${id}`);
+  editRequest = () => () => this.props.router.push(`/${this.props.params.project_name}/editor/endpoint/${this.props.params.endpoint_id}/request`);
 
   renderParams() {
     if (!this.props.endpoint || !this.props.endpoint.url_params) return [];

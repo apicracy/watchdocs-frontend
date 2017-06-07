@@ -137,7 +137,7 @@ export function addResponse(responseParam) {
       .then((data) => {
         const projectSlug = getState().projects.activeProject.slug;
         const endpointId = responseParam.endpoint_id;
-        const url = `/${projectSlug}/editor/undefined/endpoint/${endpointId}/response/${data.id}`;
+        const url = `/${projectSlug}/editor/endpoint/${endpointId}/response/${data.id}`;
 
         browserHistory.push(url);
         dispatch(addResponseAction(data));
