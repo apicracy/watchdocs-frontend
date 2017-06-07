@@ -26,3 +26,9 @@
   color: #6fb3e3;
   margin-right: 5px;
 }
+
+.disabled {
+  opacity: 0.4;
+  cursor: normal;
+  pointer-events: none;
+}
