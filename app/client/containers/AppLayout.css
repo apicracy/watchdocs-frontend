@@ -28,3 +28,12 @@
 .right > svg {
   margin-left: 15px;
 }
+
+.helpLink {
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+}
+
+.helpLink:hover {
+  color: white
+}

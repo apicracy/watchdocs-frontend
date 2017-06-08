@@ -54,6 +54,12 @@ class AppLayout extends React.Component {
     this.props.dispatch(logout());
   }
 
+  openHelp = () => {
+    window.drift.on('ready', (api) => {
+      api.sidebar.open();
+    });
+  }
+
   render() {
     const { projects, activeProject, username, children, endpointsCount } = this.props;
 
@@ -77,7 +83,9 @@ class AppLayout extends React.Component {
               <NavLink url="/settings" text="Settings" icon={<CustomIcon name="settings" size="sm" />} id="nav-settings" />
             </div>
             <div className={styles.right}>
-              <CustomIcon name="help" size="lg" />
+              <a className={styles.helpLink} onClick={this.openHelp}>
+                <CustomIcon name="help" size="lg" />
+              </a>
               <UserMenu
                 username={username}
                 onLogout={this.onLogout}
