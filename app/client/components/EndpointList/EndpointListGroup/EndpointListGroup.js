@@ -5,7 +5,6 @@ import styles from './EndpointListGroup.css';
 import EndpointListItem from '../EndpointListItem/EndpointListItem';
 import DocumentListItem from '../DocumentListItem/DocumentListItem';
 import Icon from 'components/Icon/Icon';
-import Link from 'components/NavigationLink/LinkWrapper';
 
 class EndpointListGroup extends React.Component {
 
@@ -124,10 +123,10 @@ class EndpointListGroup extends React.Component {
     return (
       <div className={styles.root}>
         <div className={topStyle}>
-          <Link to={`/editor/${id}`} className={styles.link} onClick={this.toggleOpen}>
+          <div className={styles.link} onClick={this.toggleOpen}>
             { this.renderIcon() }
             <span className={styles.groupName}>{ name }</span>
-          </Link>
+          </div>
         </div>
         <div className={styles.endpoints}>
           { this.renderEndpointList(items) }

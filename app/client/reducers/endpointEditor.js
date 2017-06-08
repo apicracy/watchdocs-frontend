@@ -1,4 +1,5 @@
 import {
+  TOGGLE_VISIBILITY,
   SET_ENDPOINT_EDITOR,
   ADD_ENDPOINT_PARAM,
   UPDATE_ENDPOINT_PARAM,
@@ -14,6 +15,7 @@ import {
 } from 'actions/endpointEditor';
 
 const INITIAL_STATE = {
+  isOpen: false,
   isDirty: false,
   method: '',
   url_params: [],
@@ -29,6 +31,7 @@ export function endpointEditor(state = INITIAL_STATE, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case TOGGLE_VISIBILITY: return setEditorVisibility(state, payload);
     case SET_ENDPOINT_EDITOR: return setEndpointEditor(state, payload);
     case ADD_ENDPOINT_PARAM: return addEndpointParam(state, payload);
     case UPDATE_ENDPOINT_PARAM: return updateEndpointParam(state, payload);
@@ -43,6 +46,13 @@ export function endpointEditor(state = INITIAL_STATE, action) {
     case REMOVE_RESPONSE: return removeResponse(state, payload);
     default: return state;
   }
+}
+
+function setEditorVisibility(state, visibilityFlag) {
+  return {
+    ...state,
+    isOpen: visibilityFlag,
+  };
 }
 
 function removeEndpointParam(state, payload) {

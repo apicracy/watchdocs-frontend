@@ -1,0 +1,43 @@
+.codeBlock {
+  position: relative;
+}
+
+.code {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  background: #ECEFF3;
+  width: 100%;
+  padding: 10px;
+  white-space: nowrap;
+  overflow: auto;
+}
+
+.copy {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: none;
+}
+
+.copy__button {
+  height: 39px;
+  width: 39px;
+  border: 0;
+  background: #dedede;
+  text-align: center;
+}
+
+.copy__notification {
+  position: absolute;
+  top: -30px;
+  background: #333;
+  padding: 4px;
+  color: #fff;
+  font-size: 11px;
+  white-space: nowrap;
+  left:-80%;
+}
+
+
+.codeBlock:hover .copy {
+  display: block;
+}

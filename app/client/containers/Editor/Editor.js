@@ -5,6 +5,8 @@ import styles from './Editor.css';
 import Aside from 'containers/Aside/Aside';
 import Content from 'components/Content/Content';
 
+import { flattenTree } from 'services/endpoints';
+
 @connect(store => ({
   endpoints: store.endpoints,
 }))
@@ -33,36 +35,30 @@ class Editor extends React.Component {
     if (children || !endpoints) {
       return;
     }
-    if (endpoints.length === 0) {
-      Editor.showInstructions(params, router);
-    }
-    if (endpoints.length > 0) {
-      Editor.openFirstTreeElement(endpoints[0], params.project_name, router);
+
+    const endpointToOpen = flattenTree(endpoints).find(x => x.type === 'Endpoint');
+
+    if (endpointToOpen) {
+      Editor.openEndpoint(endpointToOpen, params.project_name, router);
+    } else {
+      Editor.showInstructions(params.project_name, router);
     }
   }
 
-  static showInstructions(params, router) {
-    router.push(`/${params.project_name}/editor/setup-instructions`);
+  static showInstructions(projectName, router) {
+    router.push(`/${projectName}/editor/setup-instructions`);
   }
 
-  static openFirstTreeElement(element, projectName, router) {
-    switch (element.type) {
-      case 'Endpoint':
-        router.push(`/${projectName}/editor/endpoint/${element.id}`);
-        break;
-
-      default:
-        router.push(`/${projectName}/editor/${element.id}`);
-        break;
-    }
+  static openEndpoint(endpoint, projectName, router) {
+    router.push(`/${projectName}/editor/endpoint/${endpoint.id}`);
   }
 
   render() {
-    const { children, params, endpoints } = this.props;
+    const { children, params } = this.props;
 
     return (
       <div className={styles.container}>
-        { endpoints.length > 0 && <Aside params={params} />}
+        <Aside params={params} />
         <Content>
           { children }
         </Content>

@@ -2,6 +2,7 @@ import http from 'services/http';
 import { browserHistory } from 'react-router';
 
 import {
+  toggleVisibility,
   setEndpointEditor,
   addEndpointParam as addEndpointParamAction,
   updateEndpointParam as updateEndpointParamAction,
@@ -12,6 +13,18 @@ import {
 } from 'actions/endpointEditor';
 
 import { fetchEndpoints } from 'services/endpoints';
+
+export function openEditor() {
+  return (dispatch) => {
+    dispatch(toggleVisibility(true));
+  };
+}
+
+export function closeEditor() {
+  return (dispatch) => {
+    dispatch(toggleVisibility(false));
+  };
+}
 
 export function loadEndpoint(id) {
   return (dispatch) => {
