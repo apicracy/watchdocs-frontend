@@ -50,7 +50,7 @@ class Editor extends React.Component {
   }
 
   static openEndpoint(endpoint, projectName, router) {
-    router.push(`/${projectName}/editor/undefined/endpoint/${endpoint.id}`);
+    router.push(`/${projectName}/editor/endpoint/${endpoint.id}`);
   }
 
   render() {
