@@ -11,7 +11,7 @@ const SampleProjectLink = ({ projectList }) => {
   }
   return (
     <span>
-      In the meantime you can relax and checkout <Link to={`/${sampleProject.slug}`}>Sample Project</Link>
+      In the meantime you can relax and checkout the <Link to={`/${sampleProject.slug}`}>Sample Project</Link>
     </span>
   );
 };
