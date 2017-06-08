@@ -1,4 +1,8 @@
-import { fetchEndpoints as load } from 'actions/endpoints';
+import {
+  fetchEndpoints as load,
+  removeEndpoint as remove,
+} from 'actions/endpointsTree';
+
 import http from 'services/http';
 
 export function fetchEndpoints(projectId) {
@@ -6,6 +10,12 @@ export function fetchEndpoints(projectId) {
     http(`/api/v1/projects/${projectId}`)
       .then(response => response.json())
       .then(data => dispatch(load(data.tree)))
+  );
+}
+
+export function removeEndpoint(endpointId) {
+  return dispatch => (
+    dispatch(remove(endpointId))
   );
 }
 

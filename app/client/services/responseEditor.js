@@ -6,7 +6,7 @@ import {
 import http from 'services/http';
 import {
   fetchEndpoints,
-} from 'services/endpoints';
+} from 'services/endpointsTree';
 
 export function reset() {
   return (dispatch) => {

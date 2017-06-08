@@ -14,8 +14,13 @@ import {
   setEndpointEditor,
 } from 'actions/endpointEditor';
 
-import { filterById } from 'services/endpoint-service';
-import { fetchEndpoints } from 'services/endpoints';
+import {
+  filterById,
+} from 'services/endpoint-service';
+
+import {
+  fetchEndpoints,
+} from 'services/endpointsTree';
 
 import http from 'services/http';
 import { browserHistory } from 'react-router';

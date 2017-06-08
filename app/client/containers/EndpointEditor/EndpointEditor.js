@@ -12,8 +12,6 @@ import {
 } from 'services/endpointEditor';
 
 import Button from 'components/Button/Button';
-import Tutorial from 'components/Tutorial/Tutorial';
-
 
 import Icon from 'components/Icon/Icon';
 import IconButton from 'components/Button/IconButton';
