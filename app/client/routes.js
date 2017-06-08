@@ -67,10 +67,10 @@ const getRoutes = store => (
 
         <Route path="editor" component={Editor} onEnter={requireProjects(store)}>
           <Route path="document/:document_id" component={DocumentEditor} />
-          <Route path=":group_id" component={GroupEditor} />
-          <Route path=":group_id/endpoint/:endpoint_id" component={EndpointEditor} />
-          <Route path=":group_id/endpoint/:endpoint_id/request" component={RequestEditor} />
-          <Route path=":group_id/endpoint/:endpoint_id/response/:response_id" component={ResponseEditor} />
+          <Route path="group/:group_id" component={GroupEditor} />
+          <Route path="endpoint/:endpoint_id" component={EndpointEditor} />
+          <Route path="endpoint/:endpoint_id/request" component={RequestEditor} />
+          <Route path="endpoint/:endpoint_id/response/:response_id" component={ResponseEditor} />
         </Route>
 
         <Route path="setup-instructions" component={InitialSetupInstructions} />

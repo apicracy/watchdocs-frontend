@@ -5,8 +5,6 @@ import styles from './Editor.css';
 import Aside from 'containers/Aside/Aside';
 import Content from 'components/Content/Content';
 
-import { flattenTree } from 'services/endpoints';
-
 @connect(store => ({
   endpoints: store.endpoints,
 }))

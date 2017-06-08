@@ -58,7 +58,7 @@ export function saveEndpoint() {
       .then((response) => {
         dispatch(fetchEndpoints(getState().projects.activeProject.id));
         browserHistory.push(
-          `/${activeProject.slug}/editor/undefined/endpoint/${response.id}`,
+          `/${activeProject.slug}/editor/endpoint/${response.id}`,
         );
         dispatch(reset());
       });

@@ -38,7 +38,7 @@ export function setActiveProject(id) {
       const endpointToOpen = flattenTree(endpoints).find(x => x.type === 'Endpoint');
 
       if (endpointToOpen) {
-        browserHistory.push(`/${project.slug}/editor/undefined/endpoint/${endpointToOpen.id}`);
+        browserHistory.push(`/${project.slug}/editor/endpoint/${endpointToOpen.id}`);
       } else {
         browserHistory.push(`/${project.slug}/setup-instructions`);
       }

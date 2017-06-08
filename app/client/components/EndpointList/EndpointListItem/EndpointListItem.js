@@ -3,12 +3,12 @@ import Link from 'components/NavigationLink/LinkWrapper';
 
 import styles from './EndpointListItem.css';
 
-const EndpointListItem = ({ url, method, id, groupId, isSelected, status }) => {
+const EndpointListItem = ({ url, method, id, isSelected, status }) => {
   const topStyle = isSelected ? styles.selected : styles.root;
   return (
     <div className={topStyle} id={isSelected ? 'endpoint-list-item-selected' : ''}>
       <Link
-        to={`/editor/${groupId}/endpoint/${id}`}
+        to={`/editor/endpoint/${id}`}
         className={`${styles.root} ${status === 'outdated' ? styles.outdated : ''}`}
       >
         <span className={styles.data}>
@@ -29,7 +29,6 @@ EndpointListItem.propTypes = {
   url: React.PropTypes.string,
   method: React.PropTypes.string,
   id: React.PropTypes.number,
-  groupId: React.PropTypes.number,
   isSelected: React.PropTypes.bool,
   status: React.PropTypes.string,
 };
