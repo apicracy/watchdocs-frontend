@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styles from './AppLayout.css';
 
-import { logout } from 'services/session';
+import { logout, getCurrentUser } from 'services/session';
 import { browserHistory } from 'react-router';
 
 import AppBar from 'components/AppBar/AppBar';
@@ -36,6 +36,10 @@ class AppLayout extends React.Component {
     activeProject: React.PropTypes.object,
     username: React.PropTypes.string,
     endpointsCount: React.PropTypes.number,
+  }
+
+  componentWillMount() {
+    this.props.dispatch(getCurrentUser());
   }
 
   switchProject = (id) => {
@@ -92,7 +96,3 @@ class AppLayout extends React.Component {
 }
 
 export default AppLayout;
-
-AppLayout.propTypes = {
-  children: React.PropTypes.object,
-};
