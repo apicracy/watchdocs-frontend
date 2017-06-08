@@ -7,7 +7,7 @@ import {
   setActive,
 } from 'actions/projects';
 
-import { fetchEndpoints } from 'services/endpoints';
+import { fetchEndpoints, flattenTree } from 'services/endpoints';
 
 export function loadProjects(slugToActivate) {
   return dispatch => http('/api/v1/projects')
@@ -31,12 +31,16 @@ export function loadProjects(slugToActivate) {
 export function setActiveProject(id) {
   return (dispatch, getState) => {
     const project = getState().projects.projectList.find(p => p.id === id);
-    const currentPath = browserHistory.getCurrentLocation().pathname;
 
     dispatch(setActive(project));
     dispatch(fetchEndpoints(project.id)).then(() => {
-      if (!currentPath.includes(`/${project.slug}/`)) {
-        browserHistory.push(`/${project.slug}`);
+      const endpoints = getState().endpoints;
+      const endpointToOpen = flattenTree(endpoints).find(x => x.type === 'Endpoint');
+
+      if (endpointToOpen) {
+        browserHistory.push(`/${project.slug}/editor/endpoint/${endpointToOpen.id}`);
+      } else {
+        browserHistory.push(`/${project.slug}/setup-instructions`);
       }
     });
   };

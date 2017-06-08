@@ -5,7 +5,7 @@ import { createDevTools } from 'redux-devtools';
 import LogMonitor from 'redux-devtools-log-monitor';
 import DockMonitor from 'redux-devtools-dock-monitor';
 import { IntlProvider } from 'react-intl';
-import routes from 'routes';
+import getRoutes from 'routes';
 
 import { Router } from 'react-router';
 
@@ -71,7 +71,7 @@ export class Main extends React.Component {
       <IntlProvider locale="en">
         <Provider store={store}>
           <div id="root">
-            <Router history={history} routes={routes} />
+            <Router history={history} routes={getRoutes(store)} />
             {showDebug ? <DevTools /> : null}
           </div>
         </Provider>
