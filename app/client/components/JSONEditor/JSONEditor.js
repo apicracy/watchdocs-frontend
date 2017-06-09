@@ -138,6 +138,7 @@ class JSONEditor extends React.Component {
   render() {
     const { editorState, jsonIsValid, isDirty, editMode, submitting } = this.state;
     const lines = editorState.getCurrentContent().getBlocksAsArray();
+    const showCancel = isDirty || !isEmpty(this.props.base);
 
     return (
       <div>
@@ -181,7 +182,9 @@ class JSONEditor extends React.Component {
               { isDirty &&
                 <Button onClick={this.onSave} disabled={!jsonIsValid} variants={['primary', 'large', 'spaceRight']}>Save</Button>
               }
-              <Button onClick={this.onCancel} variants={['body', 'large']}>Cancel</Button>
+              { showCancel &&
+                <Button onClick={this.onCancel} variants={['body', 'large']}>Cancel</Button>
+              }
             </div>
           )
         }
