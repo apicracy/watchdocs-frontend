@@ -42,16 +42,6 @@
         }();
         drift.SNIPPET_VERSION = '0.3.1';
         drift.load('65hm4d2fv95p');
-        drift.on('ready', function(api) {
-            if (typeof(Storage) !== "undefined") {
-                if (localStorage.getItem('already-visited')) {
-                    api.hideWelcomeMessage();
-                } else {
-                    localStorage.setItem('already-visited', true);
-                    api.showWelcomeOrAwayMessage();
-                }
-            }
-        });
         </script>
         <!-- End of Async Drift Code -->
         <!-- Hotjar Tracking Code for http://app.watchdocs.io -->

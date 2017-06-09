@@ -40,6 +40,7 @@ class AppLayout extends React.Component {
 
   componentWillMount() {
     this.props.dispatch(getCurrentUser());
+    this.openDrift();
   }
 
   switchProject = (id) => {
@@ -57,6 +58,19 @@ class AppLayout extends React.Component {
   openHelp = () => {
     window.drift.on('ready', (api) => {
       api.sidebar.open();
+    });
+  }
+
+  openDrift = () => {
+    window.drift.on('ready', (api) => {
+      if (typeof (Storage) !== 'undefined') {
+        if (localStorage.getItem('drift-welcomed')) {
+          api.hideWelcomeMessage();
+        } else {
+          localStorage.setItem('drift-welcomed', true);
+          api.showWelcomeOrAwayMessage();
+        }
+      }
     });
   }
 
