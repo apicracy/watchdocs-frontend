@@ -10,7 +10,7 @@
  *
  */
 
-import { endpoints } from 'reducers/endpoints';
+import { endpoints } from 'reducers/endpointsTree';
 import { modifyEndpoint } from 'reducers/modifyEndpoint-reducer';
 import { endpointEditor } from 'reducers/endpointEditor';
 import { responseEditor } from 'reducers/responseEditor';

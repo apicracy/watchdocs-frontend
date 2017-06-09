@@ -8,7 +8,7 @@ import {
 } from 'actions/endpointEditor';
 import {
   fetchEndpoints,
-} from 'services/endpoints';
+} from 'services/endpointsTree';
 
 import http from 'services/http';
 

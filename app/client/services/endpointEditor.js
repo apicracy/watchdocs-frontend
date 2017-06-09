@@ -12,7 +12,13 @@ import {
   removeResponse as removeResponseAction,
 } from 'actions/endpointEditor';
 
-import { fetchEndpoints } from 'services/endpoints';
+import {
+  fetchEndpoints,
+} from 'services/endpointsTree';
+
+import {
+  openFirstEndpoint,
+} from 'services/projects';
 
 export function openEditor() {
   return (dispatch) => {
@@ -102,7 +108,7 @@ export function removeUrlParams(id) {
 export function removeEndpoint() {
   return (dispatch, getState) => {
     const { id } = getState().endpointEditor;
-    const projectSlug = getState().projects.activeProject.slug;
+    const activeProject = getState().projects.activeProject;
     const options = {
       method: 'DELETE',
     };
@@ -111,12 +117,11 @@ export function removeEndpoint() {
 
     return http(`/api/v1/endpoints/${id}`, options)
       .then(response => response.json())
+      .then(() => (dispatch(fetchEndpoints(activeProject.id))))
       .then(() => {
-        // Redirect only when user stayed on the same page
         if (id === getState().endpointEditor.id) {
-          browserHistory.push(projectSlug);
+          openFirstEndpoint(activeProject.slug, getState().endpoints);
         }
-        dispatch(fetchEndpoints(getState().projects.activeProject.id));
       });
   };
 }

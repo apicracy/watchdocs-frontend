@@ -7,7 +7,7 @@ import {
   setActive,
 } from 'actions/projects';
 
-import { fetchEndpoints, flattenTree } from 'services/endpoints';
+import { fetchEndpoints, flattenTree } from 'services/endpointsTree';
 
 export function loadProjects(slugToActivate) {
   return dispatch => http('/api/v1/projects')
@@ -34,14 +34,7 @@ export function setActiveProject(id) {
 
     dispatch(setActive(project));
     dispatch(fetchEndpoints(project.id)).then(() => {
-      const endpoints = getState().endpoints;
-      const endpointToOpen = flattenTree(endpoints).find(x => x.type === 'Endpoint');
-
-      if (endpointToOpen) {
-        browserHistory.push(`/${project.slug}/editor/endpoint/${endpointToOpen.id}`);
-      } else {
-        browserHistory.push(`/${project.slug}/setup-instructions`);
-      }
+      openFirstEndpoint(project.slug, getState().endpoints);
     });
   };
 }
@@ -72,4 +65,14 @@ export function projectSlug(name) {
     .toLowerCase();
 
   return formatted;
+}
+
+export function openFirstEndpoint(slug, endpoints) {
+  const endpointToOpen = flattenTree(endpoints).find(x => x.type === 'Endpoint');
+
+  if (endpointToOpen) {
+    browserHistory.push(`/${slug}/editor/endpoint/${endpointToOpen.id}`);
+  } else {
+    browserHistory.push(`/${slug}/setup-instructions`);
+  }
 }
