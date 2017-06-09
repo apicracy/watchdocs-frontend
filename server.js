@@ -9,16 +9,16 @@ const env = process.env.NODE_ENV || 'development';
 const app = express();
 app.use(compression());
 
-const forceSsl = (req, res, next) => {
-  if (req.headers['x-forwarded-proto'] !== 'https') {
-    return res.redirect(301, ['https://', req.get('Host'), req.url].join(''));
-  }
-  return next();
-};
+// const forceSsl = (req, res, next) => {
+//   if (req.headers['x-forwarded-proto'] !== 'https') {
+//     return res.redirect(301, ['https://', req.get('Host'), req.url].join(''));
+//   }
+//   return next();
+// };
 
-if (env === 'production') {
-  app.use(forceSsl);
-}
+// if (env === 'production') {
+//   app.use(forceSsl);
+// }
 
 // serve our static stuff like index.css
 app.use(express.static(path.join(__dirname, 'dist')));
