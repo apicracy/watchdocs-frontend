@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import UserForm from 'components/UserForm/UserForm';
+import SignupForm from 'components/UserForm/SignupForm';
 import UnauthorizedLayout from 'components/UnauthorizedLayout/UnauthorizedLayout';
 
 import { registerUser } from 'services/registration';
@@ -38,7 +38,7 @@ class Signup extends React.Component {
   render() {
     return (
       <UnauthorizedLayout title={'Create an account'} description={'Watchdocs is a tool that plugs into your application to generate documentation and keep it always up to date.'}>
-        <UserForm onSubmit={this.onSignup} buttonLabel="Signup" />
+        <SignupForm onSubmit={this.onSignup} buttonLabel="Signup" />
       </UnauthorizedLayout>
     );
   }

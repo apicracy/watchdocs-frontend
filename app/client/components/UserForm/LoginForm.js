@@ -18,8 +18,8 @@ const validate = values => (
 );
 
 
-const UserForm = (props) => {
-  const { handleSubmit, submitting, valid, buttonLabel } = props;
+const LoginForm = (props) => {
+  const { handleSubmit, submitting, buttonLabel } = props;
 
   return (
     <form onSubmit={handleSubmit}>
@@ -45,15 +45,14 @@ const UserForm = (props) => {
   );
 };
 
-UserForm.propTypes = {
+LoginForm.propTypes = {
   handleSubmit: React.PropTypes.func,
   submitting: React.PropTypes.bool,
-  valid: React.PropTypes.bool,
   buttonLabel: React.PropTypes.string,
 };
 
 export default reduxForm({
-  form: 'UserForm',
+  form: 'LoginForm',
   validate,
-})(UserForm);
+})(LoginForm);
 
