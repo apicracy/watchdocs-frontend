@@ -1,7 +1,7 @@
 import { browserHistory } from 'react-router';
 import { SubmissionError } from 'redux-form';
 
-const API_URL = 'http://watchdocs-backend-dev.herokuapp.com';
+const API_URL = 'https://watchdocs-backend-dev.herokuapp.com';
 
 export const checkIfAuthorised = (response) => {
   if (response.status === 401) {

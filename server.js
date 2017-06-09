@@ -4,24 +4,21 @@ const path = require('path');
 const compression = require('compression');
 const fs = require('fs');
 
+const env = process.env.NODE_ENV || 'development';
+
 const app = express();
 app.use(compression());
 
-/*
- * Middleware applied to serve static json files to mock data on prod server.
- * To be removed once we have real API
- */
-const mockServer = fs.readdirSync('app/server');
-const mockServerRoutes = mockServer.map((resource) => {
-  if (resource === '.gitkeep') return null;
-  const resourcePath = `/${resource.replace('.js', '')}`;
+const forceSsl = (req, res, next) => {
+  if (req.headers['x-forwarded-proto'] !== 'https') {
+    return res.redirect(301, ['https://', req.get('Host'), req.url].join(''));
+  }
+  return next();
+};
 
-  return {
-    path: resourcePath,
-    resource,
-  };
-}).filter(x => x);
-
+if (env === 'production') {
+  app.use(forceSsl);
+}
 
 // serve our static stuff like index.css
 app.use(express.static(path.join(__dirname, 'dist')));
@@ -31,10 +28,6 @@ const sendIndex = (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 };
 
-/* eslint-disable */
-mockServerRoutes.forEach(x =>
-  app.use(x.path, require(`./app/server/${x.resource}`))
-);
 /* eslint-enable */
 
 app.get('*', sendIndex);
