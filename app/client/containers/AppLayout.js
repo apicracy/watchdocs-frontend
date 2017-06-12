@@ -40,6 +40,7 @@ class AppLayout extends React.Component {
 
   componentWillMount() {
     this.props.dispatch(getCurrentUser());
+    this.openDrift();
   }
 
   switchProject = (id) => {
@@ -52,6 +53,25 @@ class AppLayout extends React.Component {
 
   onLogout = () => {
     this.props.dispatch(logout());
+  }
+
+  openHelp = () => {
+    window.drift.on('ready', (api) => {
+      api.sidebar.open();
+    });
+  }
+
+  openDrift = () => {
+    window.drift.on('ready', (api) => {
+      if (typeof (Storage) !== 'undefined') {
+        if (localStorage.getItem('drift-welcomed')) {
+          api.hideWelcomeMessage();
+        } else {
+          localStorage.setItem('drift-welcomed', true);
+          api.showWelcomeOrAwayMessage();
+        }
+      }
+    });
   }
 
   render() {
@@ -77,7 +97,9 @@ class AppLayout extends React.Component {
               <NavLink url="/settings" text="Settings" icon={<CustomIcon name="settings" size="sm" />} id="nav-settings" />
             </div>
             <div className={styles.right}>
-              <CustomIcon name="help" size="lg" />
+              <a className={styles.helpLink} onClick={this.openHelp}>
+                <CustomIcon name="help" size="lg" />
+              </a>
               <UserMenu
                 username={username}
                 onLogout={this.onLogout}
