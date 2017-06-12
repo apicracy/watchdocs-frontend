@@ -19,6 +19,7 @@ import { fetchDocumentation } from 'services/documentation';
   projectUrl: store.projects.activeProject.base_url,
   activeProject: store.projects.activeProject,
 }))
+
 class DocumentationViewer extends React.Component {
   static propTypes = {
     documentation: React.PropTypes.array,
