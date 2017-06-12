@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import UserForm from 'components/UserForm/UserForm';
+import LoginForm from 'components/UserForm/LoginForm';
 import UnauthorizedLayout from 'components/UnauthorizedLayout/UnauthorizedLayout';
 
 import { authenticate } from 'services/session';
@@ -38,7 +38,7 @@ class Login extends React.Component {
   render() {
     return (
       <UnauthorizedLayout>
-        <UserForm onSubmit={this.onLogin} buttonLabel="Login" />
+        <LoginForm onSubmit={this.onLogin} buttonLabel="Login" />
       </UnauthorizedLayout>
     );
   }
