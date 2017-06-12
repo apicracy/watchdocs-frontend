@@ -2,9 +2,9 @@ import React from 'react';
 
 import { Provider } from 'react-redux';
 
-import routes from 'routes';
 import { Router } from 'react-router';
 import Modals from 'modals/Modals';
+import getRoutes from 'routes';
 
 export class Main extends React.Component {
   static propTypes = {
@@ -23,7 +23,7 @@ export class Main extends React.Component {
     return (
       <Provider store={store}>
         <div>
-          <Router history={history} routes={routes} />
+          <Router history={history} routes={getRoutes(store)} />
           <Modals />
         </div>
       </Provider>

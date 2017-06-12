@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './CopyableCodeBlock.css';
-import CopyToClipboard from 'react-copy-to-clipboard';
+import ClipboardButton from 'react-clipboard.js';
 import Icon from '../Icon/Icon';
 
 class CopyableCodeBlock extends React.Component {
@@ -43,9 +43,13 @@ class CopyableCodeBlock extends React.Component {
               Copied to clipboard!
             </div>
           }
-          <CopyToClipboard text={textToCopy} onCopy={() => this.toggleCopied(true)}>
-            <button className={styles.copy__button}><Icon name="clipboard" /></button>
-          </CopyToClipboard>
+          <ClipboardButton
+            className={styles.copy__button}
+            data-clipboard-text={textToCopy}
+            onSuccess={() => this.toggleCopied(true)}
+          >
+            <Icon name="clipboard" />
+          </ClipboardButton>
         </div>
       </div>
     );
