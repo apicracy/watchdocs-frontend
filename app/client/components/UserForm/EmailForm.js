@@ -1,9 +1,6 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { presence, email } from 'redux-form-validators';
-import { Link } from 'react-router';
-
-import style from './UserForm.css';
 
 import Button from 'components/Button/Button';
 import RFTextInput from 'components/Form/RFTextInput/RFTextInput';
@@ -16,7 +13,6 @@ import { validationErrors } from 'services/formService';
 const validate = values => (
   validationErrors({
     email: [presence(), email()],
-    password: [presence()],
   }, values)
 );
 
@@ -32,15 +28,6 @@ const LoginForm = (props) => {
           component={RFTextInput}
           name="email"
         />
-      </InputGroup>
-      <InputGroup title="Password">
-        <Field
-          type="password"
-          component={RFTextInput}
-          name="password"
-        />
-
-        <Link to="/forgot_password" className={style.smallLabel} >Forgot your password?</Link>
       </InputGroup>
 
       <Button type="submit" variants={['primary', 'extra-large', 'block']}>

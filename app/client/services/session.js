@@ -3,6 +3,7 @@ import {
   loginFailed,
   loginSuccess,
   logout as logoutAction,
+  passwordResetRequest as passwordResetRequestAction,
 } from 'actions/session';
 
 import http, { httpNoAuth } from 'services/http';
@@ -19,6 +20,7 @@ export function checkStatus(response, message) {
   return response;
 }
 
+
 export function getCurrentUser() {
   return (dispatch) => {
     dispatch(loginRequest());
@@ -30,6 +32,19 @@ export function getCurrentUser() {
         localStorage.removeItem('JWT');
         dispatch(loginFailed(err));
       });
+  };
+}
+
+export function requestPasswordReset(email) {
+  return (dispatch) => {
+    const options = {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+    };
+
+    return http('/api/v1/users/reset_password_token', options)
+      .then(response => response.json())
+      .then(data => dispatch(passwordResetRequestAction(email)));
   };
 }
 
