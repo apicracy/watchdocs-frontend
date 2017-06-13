@@ -47,7 +47,7 @@ class AppLayout extends React.Component {
     const { projects } = this.props;
     const selectedProject = projects.find(project => project.id === id);
     if (!selectedProject) { return false; }
-    browserHistory.push(`/${selectedProject.slug}`);
+    browserHistory.push(`/${selectedProject.slug}/editor`);
     return true;
   }
 
