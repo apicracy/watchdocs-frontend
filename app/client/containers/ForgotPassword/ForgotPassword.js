@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import ResetPasswordForm from 'components/UserForm/ResetPasswordForm';
+import ForgotPasswordForm from 'components/UserForm/ForgotPasswordForm';
 import UnauthorizedLayout from 'components/UnauthorizedLayout/UnauthorizedLayout';
 
 import { requestPasswordReset } from 'services/session';
@@ -22,7 +22,7 @@ class ForgotPassword extends React.Component {
 
     return (
       <UnauthorizedLayout title={title} description={description}>
-        <ResetPasswordForm onSubmit={this.onPasswordResetRequest} buttonLabel="Reset password" />
+        <ForgotPasswordForm onSubmit={this.onPasswordResetRequest} buttonLabel="Reset password" />
       </UnauthorizedLayout>
     );
   }

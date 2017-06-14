@@ -18,7 +18,7 @@ const validate = values => (
 );
 
 
-const ResetPasswordForm = (props) => {
+const ForgotPasswordForm = (props) => {
   const { handleSubmit, submitting, buttonLabel, submitSucceeded, reset } = props;
 
   const successMessage = (
@@ -30,10 +30,8 @@ const ResetPasswordForm = (props) => {
     </div>
   );
 
-  return (
-    <form onSubmit={handleSubmit}>
-      { submitting && <LoadingIndicator fixed /> }
-      { submitSucceeded && successMessage }
+  const emailForm = (
+    <div>
       <InputGroup title="Email">
         <Field
           component={RFTextInput}
@@ -44,11 +42,18 @@ const ResetPasswordForm = (props) => {
       <Button type="submit" variants={['primary', 'extra-large', 'block']} disabled={submitSucceeded}>
         {buttonLabel}
       </Button>
+    </div>
+  );
+
+  return (
+    <form onSubmit={handleSubmit}>
+      { submitting && <LoadingIndicator fixed /> }
+      { submitSucceeded ? successMessage : emailForm }
     </form>
   );
 };
 
-ResetPasswordForm.propTypes = {
+ForgotPasswordForm.propTypes = {
   handleSubmit: React.PropTypes.func,
   submitting: React.PropTypes.bool,
   buttonLabel: React.PropTypes.string,
@@ -57,7 +62,7 @@ ResetPasswordForm.propTypes = {
 };
 
 export default reduxForm({
-  form: 'ResetPasswordForm',
+  form: 'ForgotPasswordForm',
   validate,
-})(ResetPasswordForm);
+})(ForgotPasswordForm);
 
