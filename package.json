@@ -105,7 +105,7 @@
     "reapp-dev-tools": "0.2.x",
     "redux": "^3.6.0",
     "redux-form": "^6.6.3",
-    "redux-form-validators": "^1.0.1",
+    "redux-form-validators": "^1.0.2",
     "redux-thunk": "^2.2.x",
     "sass-loader": "^6.0.x",
     "style-loader": "^0.13.x",

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, IndexRoute, IndexRedirect, next } from 'react-router';
+import { Route, IndexRoute } from 'react-router';
 
 import AppLayout from 'containers/AppLayout';
 import About from 'containers/About';
@@ -18,6 +18,7 @@ import ResponseEditor from 'containers/ResponseEditor/ResponseEditor';
 import Settings from 'containers/Settings/Settings';
 import Login from 'containers/Login/Login';
 import Signup from 'containers/Signup/Signup';
+import ForgotPassword from 'containers/ForgotPassword/ForgotPassword';
 import NewProjectWizard from 'containers/Projects/NewProjectWizard';
 import InitialSetupInstructions from 'containers/InitialSetupInstructions/InitialSetupInstructions';
 
@@ -54,6 +55,7 @@ const getRoutes = store => (
   <Route>
     <Route path="/login" component={Login} />
     <Route path="/signup" component={Signup} />
+    <Route path="/forgot_password" component={ForgotPassword} />
 
     <Route onEnter={requireAuth}>
       <Route exact path="/" component={AppLayout} onEnter={requireProjects(store)}>

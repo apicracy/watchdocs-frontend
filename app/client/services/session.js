@@ -19,6 +19,7 @@ export function checkStatus(response, message) {
   return response;
 }
 
+
 export function getCurrentUser() {
   return (dispatch) => {
     dispatch(loginRequest());
@@ -31,6 +32,17 @@ export function getCurrentUser() {
         dispatch(loginFailed(err));
       });
   };
+}
+
+export function requestPasswordReset(email) {
+  return (dispatch) => {
+    const options = {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+    };
+
+    return http('/api/v1/users/reset_password_token', options);
+  }
 }
 
 export function authenticate({ email, password }) {
