@@ -41,7 +41,7 @@ export function requestPasswordReset(email) {
       body: JSON.stringify({ email }),
     };
 
-    return http('/api/v1/users/reset_password_token', options);
+    return http('/api/v1/users/reset_password_tokens', options);
   }
 }
 
