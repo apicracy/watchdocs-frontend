@@ -6,6 +6,7 @@ import LogMonitor from 'redux-devtools-log-monitor';
 import DockMonitor from 'redux-devtools-dock-monitor';
 import { IntlProvider } from 'react-intl';
 import getRoutes from 'routes';
+import ActionCableProvider from 'react-actioncable-provider';
 
 import { Router } from 'react-router';
 
@@ -69,12 +70,14 @@ export class Main extends React.Component {
 
     return (
       <IntlProvider locale="en">
-        <Provider store={store}>
-          <div id="root">
-            <Router history={history} routes={getRoutes(store)} />
-            {showDebug ? <DevTools /> : null}
-          </div>
-        </Provider>
+        <ActionCableProvider url="wss://action-cable-exlabsy.herokuapp.com/cable">
+          <Provider store={store}>
+            <div id="root">
+              <Router history={history} routes={getRoutes(store)} />
+              {showDebug ? <DevTools /> : null}
+            </div>
+          </Provider>
+        </ActionCableProvider>
       </IntlProvider>
     );
   }

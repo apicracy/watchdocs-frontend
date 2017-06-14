@@ -22,6 +22,7 @@ import ForgotPassword from 'containers/ForgotPassword/ForgotPassword';
 import NewProjectWizard from 'containers/Projects/NewProjectWizard';
 import InitialSetupInstructions from 'containers/InitialSetupInstructions/InitialSetupInstructions';
 
+import NotificationsList from 'components/NotificationsList';
 import { loadProjects } from 'services/projects';
 
 const requireAuth = (nextState, replace) => {
@@ -56,6 +57,7 @@ const getRoutes = store => (
     <Route path="/login" component={Login} />
     <Route path="/signup" component={Signup} />
     <Route path="/forgot_password" component={ForgotPassword} />
+    <Route path="/notifications" component={NotificationsList} />
 
     <Route onEnter={requireAuth}>
       <Route exact path="/" component={AppLayout} onEnter={requireProjects(store)}>
