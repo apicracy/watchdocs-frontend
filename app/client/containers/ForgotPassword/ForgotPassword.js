@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 import EmailForm from 'components/UserForm/EmailForm';
@@ -7,16 +6,9 @@ import UnauthorizedLayout from 'components/UnauthorizedLayout/UnauthorizedLayout
 
 import { requestPasswordReset } from 'services/session';
 
-@connect(store => ({
-  session: store.session,
-}))
-
-class Login extends React.Component {
+class ForgotPassword extends React.Component {
   static propTypes = {
-    session: React.PropTypes.object,
-    router: React.PropTypes.object,
     dispatch: React.PropTypes.func,
-    location: React.PropTypes.object,
   }
 
   constructor(props) {
@@ -24,19 +16,6 @@ class Login extends React.Component {
     this.state = {
       requestSentTo: null,
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { session, location } = nextProps;
-    const { redirect } = location.query;
-
-    if (session.isAuthenticated) {
-      if (redirect) {
-        this.props.router.push(redirect);
-      } else {
-        this.props.router.push('/');
-      }
-    }
   }
 
   onPasswordResetRequest = ({ email }) => {
@@ -77,4 +56,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default ForgotPassword;

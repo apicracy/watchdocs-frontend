@@ -3,7 +3,6 @@ import {
   loginFailed,
   loginSuccess,
   logout as logoutAction,
-  passwordResetRequest as passwordResetRequestAction,
 } from 'actions/session';
 
 import http, { httpNoAuth } from 'services/http';
@@ -42,10 +41,7 @@ export function requestPasswordReset(email) {
       body: JSON.stringify({ email }),
     };
 
-    return http('/api/v1/users/reset_password_token', options)
-      .then(response => response.json())
-      .then(data => dispatch(passwordResetRequestAction(email)));
-  };
+    return http('/api/v1/users/reset_password_token', options);
 }
 
 export function authenticate({ email, password }) {
