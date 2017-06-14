@@ -29,7 +29,7 @@ const UnauthorizedLayout = (props, context) => {
 };
 
 UnauthorizedLayout.propTypes = {
-  children: React.PropTypes.object,
+  children: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.bool]),
   title: React.PropTypes.string,
   description: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.object]),
 };

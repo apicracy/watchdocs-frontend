@@ -42,6 +42,7 @@ export function requestPasswordReset(email) {
     };
 
     return http('/api/v1/users/reset_password_token', options);
+  }
 }
 
 export function authenticate({ email, password }) {

@@ -2,6 +2,7 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { presence, email } from 'redux-form-validators';
 
+import styles from './UserForm.css';
 import Button from 'components/Button/Button';
 import RFTextInput from 'components/Form/RFTextInput/RFTextInput';
 import InputGroup from 'components/Form/InputGroup/InputGroup';
@@ -17,12 +18,22 @@ const validate = values => (
 );
 
 
-const LoginForm = (props) => {
-  const { handleSubmit, submitting, buttonLabel } = props;
+const ResetPasswordForm = (props) => {
+  const { handleSubmit, submitting, buttonLabel, submitSucceeded, reset } = props;
+
+  const successMessage = (
+    <div className={styles.submittedInfo}>
+      Okay, we sent an email with a link to reset your password.
+      If you don&#39;t receive the email within a few minutes, please
+      { ' ' }
+      <a onClick={reset} >try again.</a>
+    </div>
+  );
 
   return (
     <form onSubmit={handleSubmit}>
       { submitting && <LoadingIndicator fixed /> }
+      { submitSucceeded && successMessage }
       <InputGroup title="Email">
         <Field
           component={RFTextInput}
@@ -30,21 +41,23 @@ const LoginForm = (props) => {
         />
       </InputGroup>
 
-      <Button type="submit" variants={['primary', 'extra-large', 'block']}>
+      <Button type="submit" variants={['primary', 'extra-large', 'block']} disabled={submitSucceeded}>
         {buttonLabel}
       </Button>
     </form>
   );
 };
 
-LoginForm.propTypes = {
+ResetPasswordForm.propTypes = {
   handleSubmit: React.PropTypes.func,
   submitting: React.PropTypes.bool,
   buttonLabel: React.PropTypes.string,
+  submitSucceeded: React.PropTypes.bool,
+  reset: React.PropTypes.func,
 };
 
 export default reduxForm({
-  form: 'LoginForm',
+  form: 'ResetPasswordForm',
   validate,
-})(LoginForm);
+})(ResetPasswordForm);
 
