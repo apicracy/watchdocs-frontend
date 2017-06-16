@@ -19,6 +19,7 @@ import Settings from 'containers/Settings/Settings';
 import Login from 'containers/Login/Login';
 import Signup from 'containers/Signup/Signup';
 import ForgotPassword from 'containers/ForgotPassword/ForgotPassword';
+import ResetPassword from 'containers/ResetPassword/ResetPassword';
 import NewProjectWizard from 'containers/Projects/NewProjectWizard';
 import InitialSetupInstructions from 'containers/InitialSetupInstructions/InitialSetupInstructions';
 
@@ -56,6 +57,7 @@ const getRoutes = store => (
     <Route path="/login" component={Login} />
     <Route path="/signup" component={Signup} />
     <Route path="/forgot_password" component={ForgotPassword} />
+    <Route path="/reset_password" component={ResetPassword} />
 
     <Route onEnter={requireAuth}>
       <Route exact path="/" component={AppLayout} onEnter={requireProjects(store)}>
