@@ -47,7 +47,7 @@ export function requestPasswordReset(email) {
 export function resetPassword(token, passwords) {
   return () => {
     const options = {
-      method: 'POST',
+      method: 'PUT',
       body: JSON.stringify(passwords),
     };
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { presence, confirmation } from 'redux-form-validators';
+import { Link } from 'react-router';
 
 import styles from './UserForm.css';
 import Button from 'components/Button/Button';
@@ -20,12 +21,24 @@ const validate = values => (
 
 
 const ResetPasswordForm = (props) => {
-  const { handleSubmit, submitting, buttonLabel, submitSucceeded } = props;
+  const { handleSubmit, submitting, buttonLabel, submitSucceeded, submitFailed } = props;
 
-  return (
-    <form onSubmit={handleSubmit}>
-      { submitting && <LoadingIndicator fixed /> }
+  const successMessage = (
+    <div className={styles.submittedInfo}>
+      Per your request, we have successfully changed your password.
+      You can now proceed to <Link to="/login">Login page</Link>
+    </div>
+  );
 
+  const failureMessage = (
+    <div className={styles.submittedError}>
+      Your password reset token has expired. Please{' '}
+      <Link to="/forgot_password">request a new one</Link>
+    </div>
+  );
+
+  const passwordForm = (
+    <div>
       <InputGroup title="New password">
         <Field
           type="password"
@@ -41,9 +54,17 @@ const ResetPasswordForm = (props) => {
         />
       </InputGroup>
 
-      <Button type="submit" variants={['primary', 'extra-large', 'block']} disabled={submitSucceeded}>
+      <Button type="submit" variants={['primary', 'extra-large', 'block']}>
         {buttonLabel}
       </Button>
+    </div>
+  );
+
+  return (
+    <form onSubmit={handleSubmit}>
+      { submitting && <LoadingIndicator fixed /> }
+      { submitFailed ? failureMessage : '' }
+      { submitSucceeded ? successMessage : passwordForm }
     </form>
   );
 };

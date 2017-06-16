@@ -12,7 +12,7 @@ const UnauthorizedLayout = (props, context) => {
     <div className={styles.root}>
       <div className={styles.container}>
         <div className={styles.logo}>
-          <img src={logo} alt="Watchdocs.io" />
+          <Link to="/"><img src={logo} alt="Watchdocs.io" /></Link>
         </div>
         <div className={styles.inner}>
           {title && <h1 className={styles.title}>{title}</h1>}
