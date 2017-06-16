@@ -54,6 +54,11 @@
   color: white;
 }
 
+.medium {
+  padding: 10px;
+  font-size: 14px;
+}
+
 .large {
   width: 120px;
   padding: 10px;

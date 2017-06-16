@@ -40,9 +40,10 @@
 }
 
 .header {
+  position: relative;
   font-weight: 500;
   border-top: 1px solid #dcdee1;
-  padding: 10px 30px;
+  padding: 20px 30px;
   margin: 15px 0;
   color: #6C6AB8;
   font-size: 20px;
@@ -53,6 +54,11 @@
   composes: header;
   background-color: #FFFFFF;
   font-size: 22px;
+}
+
+.title {
+  display: inline-block;
+  padding-right: 26px;
 }
 
 .method {
@@ -71,4 +77,10 @@
 .addHeader {
   font-weight: 500;
   padding: 0 30px;
+}
+
+.editButton {
+  position: absolute;
+  right: 16px;
+  top: 16px;
 }

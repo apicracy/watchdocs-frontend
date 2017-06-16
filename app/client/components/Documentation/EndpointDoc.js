@@ -1,15 +1,30 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router';
+
 import styles from './DocLayout.css';
 import Heading from 'components/Heading/Heading';
 import Well from 'components/Well/Well';
 import Code from 'components/Code/Code';
 import ParamTable from 'components/ParamTable/ParamTable';
 import SchemaTable from 'components/SchemaTable/SchemaTable';
+import Button from 'components/Button/Button';
 
-const EndpointDoc = ({ topLevel, projectUrl, doc }) => (
+const showEndpointDocs = ({ topLevel, projectUrl, doc, projectSlug }) => (
   <div className={styles.top} >
     <article className={styles.content}>
-      <div className={topLevel ? styles.headerMain : styles.header}>{ doc.title }</div>
+      <div className={topLevel ? styles.headerMain : styles.header}>
+        <span className={styles.title}>
+          { doc.title }
+        </span>
+        <div className={styles.editButton}>
+          <Link to={`/${projectSlug}/editor/endpoint/${doc.id}`}>
+            <Button variants={['primary', 'rounded', 'medium']}>
+              Edit
+            </Button>
+          </Link>
+        </div>
+      </div>
       { doc.description &&
         doc.description.content &&
         <div className={styles.addHeader}>{ doc.description.content }</div> }
@@ -79,10 +94,15 @@ const EndpointDoc = ({ topLevel, projectUrl, doc }) => (
   </div>
 );
 
-EndpointDoc.propTypes = {
+showEndpointDocs.propTypes = {
   doc: React.PropTypes.object,
   projectUrl: React.PropTypes.string,
   topLevel: React.PropTypes.bool,
+  projectSlug: React.PropTypes.string,
 };
+
+const EndpointDoc = connect(store => ({
+  projectSlug: store.projects.activeProject.slug,
+}))(showEndpointDocs);
 
 export default EndpointDoc;
