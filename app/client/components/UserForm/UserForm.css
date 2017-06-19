@@ -2,16 +2,25 @@
   font-size: .8em;
 }
 
-.submittedInfo {
-  background-color: #16a085;
+.submittedInfo,
+.submittedError {
   color: white;
   padding: 20px;
   margin-bottom: 20px;
 }
 
-.submittedInfo a {
+.submittedInfo a,
+.submittedError a {
   color: white;
   text-decoration: underline;
   font-weight: bold;
   cursor: pointer;
+}
+
+.submittedInfo {
+  background-color: #16a085;
+}
+
+.submittedError {
+  background-color: #e74c3c;
 }
