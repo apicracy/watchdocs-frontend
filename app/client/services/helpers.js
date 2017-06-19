@@ -1,5 +1,5 @@
 export function getFullLink(domain, endpoint) {
-  const basePath = `${domain}${endpoint.url}`;
+  const basePath = `${domain || ''}${endpoint.url}`;
 
   if (endpoint.params) {
     const mainParam = endpoint.url_params.find(p => p.is_part_of_url);
