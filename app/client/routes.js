@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
+import { Route, IndexRoute, IndexRedirect, browserHistory } from 'react-router';
 
 import AppLayout from 'containers/AppLayout';
 import About from 'containers/About';
@@ -22,7 +22,9 @@ import ForgotPassword from 'containers/ForgotPassword/ForgotPassword';
 import NewProjectWizard from 'containers/Projects/NewProjectWizard';
 import InitialSetupInstructions from 'containers/InitialSetupInstructions/InitialSetupInstructions';
 
-import { loadProjects } from 'services/projects';
+import { loadProjects, openFirstEndpoint } from 'services/projects';
+import { fetchEndpoints } from 'services/endpointsTree';
+import { clearProjects } from 'actions/projects';
 
 const requireAuth = (nextState, replace) => {
   const { pathname } = nextState.location;
@@ -42,32 +44,86 @@ const requireAuth = (nextState, replace) => {
   }
 };
 
-const requireProjects = store => (
-  (nextState, _replace, callback) => {
-    const projectSlug = nextState.params.project_name;
-    store.dispatch(loadProjects(projectSlug)).then(() => {
+const fetchProjects = (store, redirect = false) => (
+  (nextState, replace, callback) => {
+    const currentProjectSlug = store.getState().projects.activeProject.slug;
+    const newProjectSlug = nextState.params.project_name;
+    if (currentProjectSlug && (currentProjectSlug === newProjectSlug)) {
       callback();
-    });
+    } else {
+      store.dispatch(loadProjects(newProjectSlug)).then(() => {
+        if (redirect) {
+          browserHistory.push(`/${store.getState().projects.activeProject.slug}`);
+        } else {
+          callback();
+        }
+      });
+    }
   }
 );
 
+
+const fetchProjectTree = (store, nextState, callback) => {
+  const endpoints = store.getState().endpoints;
+  const activeProject = store.getState().projects.activeProject;
+  const endpointId = nextState.params.endpoint_id;
+  if (endpoints.length > 0) {
+    if (!endpointId) {
+      openFirstEndpoint(activeProject.slug, store.getState().endpoints);
+    }
+    callback();
+  } else {
+    store.dispatch(fetchEndpoints(activeProject.id)).then(() => {
+      if (!endpointId) {
+        openFirstEndpoint(activeProject.slug, store.getState().endpoints);
+      }
+      callback();
+    });
+  }
+};
+
+const prepareProjectTreeOnChange = store => (
+  (_prevState, nextState, _replace, callback) => {
+    fetchProjectTree(store, nextState, callback);
+  }
+);
+
+const prepareProjectTreeOnEnter = store => (
+  (nextState, _replace, callback) => {
+    fetchProjectTree(store, nextState, callback);
+  }
+);
+
+const resetProjects = store => (
+  (_nextState, _replace, callback) => {
+    store.dispatch(clearProjects());
+    callback();
+  }
+);
+
+
 const getRoutes = store => (
   <Route>
-    <Route path="/login" component={Login} />
-    <Route path="/signup" component={Signup} />
+    <Route path="/login" component={Login} onEnter={resetProjects(store)} />
+    <Route path="/signup" component={Signup} onEnter={resetProjects(store)} />
     <Route path="/forgot_password" component={ForgotPassword} />
 
     <Route onEnter={requireAuth}>
-      <Route exact path="/" component={AppLayout} onEnter={requireProjects(store)}>
+      <Route exact path="/" component={AppLayout} onEnter={fetchProjects(store, true)}>
         <IndexRoute component={LoadingIndicator} />
       </Route>
 
       <Route path="new_project" component={NewProjectWizard} />
 
-      <Route path=":project_name" component={AppLayout} onEnter={requireProjects(store)}>
-        <IndexRoute component={Editor} />
+      <Route path=":project_name" component={AppLayout} onEnter={fetchProjects(store)}>
+        <IndexRedirect to="editor" />
 
-        <Route path="editor" component={Editor} onEnter={requireProjects(store)}>
+        <Route
+          path="editor"
+          component={Editor}
+          onChange={prepareProjectTreeOnChange(store)}
+          onEnter={prepareProjectTreeOnEnter(store)}
+        >
           <Route path="document/:document_id" component={DocumentEditor} />
           <Route path="group/:group_id" component={GroupEditor} />
           <Route path="endpoint/:endpoint_id" component={EndpointEditor} />
