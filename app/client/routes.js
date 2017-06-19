@@ -44,7 +44,7 @@ const requireAuth = (nextState, replace) => {
   }
 };
 
-const fetchProjects = (store, redirect = false) => (
+const fetchProjects = (store) => (
   (nextState, replace, callback) => {
     const currentProjectSlug = store.getState().projects.activeProject.slug;
     const newProjectSlug = nextState.params.project_name;
@@ -52,10 +52,10 @@ const fetchProjects = (store, redirect = false) => (
       callback();
     } else {
       store.dispatch(loadProjects(newProjectSlug)).then(() => {
-        if (redirect) {
-          browserHistory.push(`/${store.getState().projects.activeProject.slug}`);
-        } else {
+        if (newProjectSlug) {
           callback();
+        } else {
+          browserHistory.push(`/${store.getState().projects.activeProject.slug}`);
         }
       });
     }
@@ -109,7 +109,7 @@ const getRoutes = store => (
     <Route path="/forgot_password" component={ForgotPassword} />
 
     <Route onEnter={requireAuth}>
-      <Route exact path="/" component={AppLayout} onEnter={fetchProjects(store, true)}>
+      <Route exact path="/" component={AppLayout} onEnter={fetchProjects(store)}>
         <IndexRoute component={LoadingIndicator} />
       </Route>
 
