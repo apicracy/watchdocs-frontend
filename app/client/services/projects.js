@@ -7,7 +7,8 @@ import {
   setActive,
 } from 'actions/projects';
 
-import { fetchEndpoints, flattenTree } from 'services/endpointsTree';
+import { clearEndpoints } from 'actions/endpointsTree';
+import { flattenTree } from 'services/endpointsTree';
 
 export function loadProjects(slugToActivate) {
   return dispatch => http('/api/v1/projects')
@@ -31,11 +32,8 @@ export function loadProjects(slugToActivate) {
 export function setActiveProject(id) {
   return (dispatch, getState) => {
     const project = getState().projects.projectList.find(p => p.id === id);
-
     dispatch(setActive(project));
-    dispatch(fetchEndpoints(project.id)).then(() => {
-      openFirstEndpoint(project.slug, getState().endpoints);
-    });
+    dispatch(clearEndpoints());
   };
 }
 
@@ -50,7 +48,7 @@ export function createProject(projectParams) {
       .then(response => response.json())
       .then((project) => {
         dispatch(create(project));
-        dispatch(setActiveProject(project.id));
+        browserHistory.push(`/${projectSlug(project.name)}`);
       });
   };
 }

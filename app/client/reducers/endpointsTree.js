@@ -1,5 +1,6 @@
 import {
   FETCH_ENDPOINTS,
+  CLEAR_ENDPOINTS,
 } from 'actions/endpointsTree';
 
 export const INITIAL_STATE = [];
@@ -9,6 +10,7 @@ export function endpoints(state = INITIAL_STATE, action) {
 
   switch (type) {
     case FETCH_ENDPOINTS: return fetchEndpoints(state, payload);
+    case CLEAR_ENDPOINTS: return INITIAL_STATE;
     default: return state;
   }
 }
