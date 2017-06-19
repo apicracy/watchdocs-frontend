@@ -11,8 +11,6 @@
   flex: 1;
   justify-content: space-between;
   margin: 0;
-  height: 100%;
-  min-height: min-content;
   align-items: stretch;
 }
 
