@@ -11,8 +11,8 @@
 }
 
 .content {
-  margin-top: 75px;
-  min-height: calc(100% - 75px);
+  padding-top: 75px;
+  min-height: 100%;
   z-index: 1;
   position: relative;
 }
