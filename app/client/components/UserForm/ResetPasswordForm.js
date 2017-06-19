@@ -21,7 +21,7 @@ const validate = values => (
 
 
 const ResetPasswordForm = (props) => {
-  const { handleSubmit, submitting, buttonLabel, submitSucceeded, submitFailed } = props;
+  const { handleSubmit, submitting, buttonLabel, submitSucceeded, error } = props;
 
   const successMessage = (
     <div className={styles.submittedInfo}>
@@ -32,8 +32,9 @@ const ResetPasswordForm = (props) => {
 
   const failureMessage = (
     <div className={styles.submittedError}>
-      Your password reset token has expired. Please{' '}
-      <Link to="/forgot_password">request a new one</Link>
+      { error }
+      { ' ' }
+      <Link to="/forgot_password">Please try again</Link>
     </div>
   );
 
@@ -63,7 +64,7 @@ const ResetPasswordForm = (props) => {
   return (
     <form onSubmit={handleSubmit}>
       { submitting && <LoadingIndicator fixed /> }
-      { submitFailed ? failureMessage : '' }
+      { error ? failureMessage : '' }
       { submitSucceeded ? successMessage : passwordForm }
     </form>
   );
@@ -74,7 +75,7 @@ ResetPasswordForm.propTypes = {
   submitting: React.PropTypes.bool,
   buttonLabel: React.PropTypes.string,
   submitSucceeded: React.PropTypes.bool,
-  submitFailed: React.PropTypes.bool,
+  error: React.PropTypes.any,
 };
 
 export default reduxForm({

@@ -51,7 +51,9 @@ export function resetPassword(token, passwords) {
       body: JSON.stringify(passwords),
     };
 
-    return http(`/api/v1/users/passwords/${token}`, options);
+    return http(`/api/v1/users/passwords/${token}`, options).catch((message) => {
+      throw new SubmissionError({ _error: 'Your password reset token has expired' });
+    });
   };
 }
 
