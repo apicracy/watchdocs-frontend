@@ -44,7 +44,7 @@ const requireAuth = (nextState, replace) => {
   }
 };
 
-const fetchProjects = (store) => (
+const fetchProjects = store => (
   (nextState, replace, callback) => {
     const currentProjectSlug = store.getState().projects.activeProject.slug;
     const newProjectSlug = nextState.params.project_name;
