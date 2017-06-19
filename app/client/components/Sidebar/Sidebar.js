@@ -4,6 +4,7 @@ import styles from './Sidebar.css';
 class Sidebar extends React.Component {
   static propTypes = {
     children: React.PropTypes.node,
+    id: React.PropTypes.string,
   }
 
   componentWillMount() {
@@ -42,9 +43,9 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    const { children } = this.props;
+    const { children, id } = this.props;
     return (
-      <aside className={styles.sideBar} style={{ width: this.state.width }}>
+      <aside className={styles.sideBar} style={{ width: this.state.width }} id={id}>
         <div
           draggable
           onDragStart={this.onDragStart}

@@ -84,7 +84,7 @@ class Aside extends React.Component {
     );
 
     return (
-      <Sidebar>
+      <Sidebar id="endpoint-list">
         <TextInput
           value={this.state.search}
           placeholder="Filter"
