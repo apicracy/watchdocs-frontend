@@ -13,7 +13,7 @@
 .fixed {
   background-color: #FFFFFF;
   position: fixed;
-  top: 0;
+  top: 75px;
   bottom: 0;
   width: inherit;
   border-right: 1px solid #dcdee1;

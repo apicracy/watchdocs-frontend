@@ -78,39 +78,40 @@ class AppLayout extends React.Component {
     const { projects, activeProject, username, children, endpointsCount } = this.props;
 
     return (
-      <div className={styles.appLayout}>
+      <div className={styles.container}>
         <Tutorial />
-        <AppBar>
-          <Container center>
-            <div className={styles.navigation}>
-              <Brand />
-              { projects.length > 1 && (
-                <Select
-                  variants={['appBar']}
-                  options={projects}
-                  onSelect={this.switchProject}
-                  activeId={activeProject ? activeProject.id : null}
+        <div className={styles.header}>
+          <AppBar>
+            <Container center>
+              <div className={styles.navigation}>
+                <Brand />
+                { projects.length > 1 && (
+                  <Select
+                    variants={['appBar']}
+                    options={projects}
+                    onSelect={this.switchProject}
+                    activeId={activeProject ? activeProject.id : null}
+                  />
+                )}
+                <NavLink url="/editor" text="Editor" icon={<Icon name="edit" />} id="nav-editor" />
+                <NavLink url="/documentation" index={!this.props.params.group_id} text="Documentation" icon={<CustomIcon name="documentation" size="sm" />} id="nav-documentation" disabled={endpointsCount === 0} />
+                <NavLink url="/settings" text="Settings" icon={<CustomIcon name="settings" size="sm" />} id="nav-settings" />
+              </div>
+              <div className={styles.right}>
+                <a className={styles.helpLink} onClick={this.openHelp}>
+                  <CustomIcon name="help" size="lg" />
+                </a>
+                <UserMenu
+                  username={username}
+                  onLogout={this.onLogout}
                 />
-              )}
-              <NavLink url="/editor" text="Editor" icon={<Icon name="edit" />} id="nav-editor" />
-              <NavLink url="/documentation" index={!this.props.params.group_id} text="Documentation" icon={<CustomIcon name="documentation" size="sm" />} id="nav-documentation" disabled={endpointsCount === 0} />
-              <NavLink url="/settings" text="Settings" icon={<CustomIcon name="settings" size="sm" />} id="nav-settings" />
-            </div>
-            <div className={styles.right}>
-              <a className={styles.helpLink} onClick={this.openHelp}>
-                <CustomIcon name="help" size="lg" />
-              </a>
-              <UserMenu
-                username={username}
-                onLogout={this.onLogout}
-              />
-            </div>
-          </Container>
-        </AppBar>
-        { children }
-        <AppBar footer>
-          <Container />
-        </AppBar>
+              </div>
+            </Container>
+          </AppBar>
+        </div>
+        <div className={styles.content}>
+          { children }
+        </div>
         <Modals params={this.props.params} />
       </div>
     );

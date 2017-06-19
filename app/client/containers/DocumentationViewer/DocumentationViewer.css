@@ -3,6 +3,7 @@
   flex-direction: column;
   flex: 2;
   background-color: #eceff3;
+  overflow: auto;
 }
 
 .container {
@@ -10,8 +11,9 @@
   flex: 1;
   justify-content: space-between;
   margin: 0;
-  height: auto;
+  height: 100%;
   min-height: min-content;
+  align-items: stretch;
 }
 
 .scrollSpy {

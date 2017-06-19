@@ -11,10 +11,3 @@
   composes: appBar;
   background: #4e4c88;
 }
-
-.footer {
-  composes: appBar;
-  background: #6fb3e3;
-  height: 30px;
-  text-align: center;
-}

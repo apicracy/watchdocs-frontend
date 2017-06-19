@@ -4,4 +4,5 @@
   justify-content: space-between;
   height: auto;
   min-height: min-content;
+  align-items: stretch;
 }

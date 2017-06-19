@@ -61,6 +61,7 @@ class ScrollSpy extends React.Component {
   });
 
   setCurrentSection = () => {
+    console.log("scrolled");
     const { sections } = this.state;
     const sectionCount = sections.length;
 
