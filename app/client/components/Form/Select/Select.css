@@ -106,47 +106,6 @@
   height: 50px;
 }
 
-/* appBar Variant */
-
-.appBar {
-  background: #4e4c88;
-  height: 100%;
-  margin: 0;
-  margin-left: 15px;
-}
-
-.appBar:hover,
-.appBar.open {
-  background: #46447A;
-}
-
-.appBar > .optionList {
-  border: none;
-  background: #4e4c88;
-  color: white;
-}
-
-.appBar > .optionList > button {
-  padding: 10px;
-}
-
-.appBar > .optionList > button:hover {
-  background-color: #6C6AB8;
-}
-
-.appBar > .selectedOption > button {
-  display: flex;
-  font-size: 16px;
-  justify-content: flex-start;
-  height: 75px;
-  padding: 0 25px;
-}
-
-.appBar .additional {
-  font-size: 12px;
-  color: #c9c8eb;
-}
-
 /* Add new variant */
 
 .addNew {

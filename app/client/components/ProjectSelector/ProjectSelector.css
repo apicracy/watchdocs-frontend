@@ -1,0 +1,86 @@
+.selectWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding-left: 0;
+  cursor: pointer;
+  background: #4e4c88;
+  height: 100%;
+  margin: 0;
+  margin-left: 15px;
+  min-width: 200px;
+}
+
+.selectedOption {
+  width: 100%;
+}
+
+.arrowButton {
+  position: absolute;
+  right: 20px;
+}
+
+.selectWrapper:hover,
+.open {
+  background: #46447A;
+}
+
+.selectedOption > button {
+  display: flex;
+  font-size: 16px;
+  justify-content: flex-start;
+  height: 75px;
+  padding: 0 45px 0 15px;
+  width: 100%;
+}
+
+.optionList {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  background: white;
+  z-index: 1000;
+  color: black;
+  border: 1px solid black;
+  border-radius: 0 0 5px 5px;
+  overflow-y: scroll;
+  border: none;
+  background: #4e4c88;
+  color: white;
+}
+
+.innerSelected {
+  display: flex;
+  flex-direction: column;
+}
+
+.main,
+.additional {
+  display: inline-flex;
+}
+
+.optionList > button {
+  width: 100%;
+  text-align: left;
+  justify-content: flex-start;
+  padding: 20px 15px;
+}
+
+.optionList > button:hover {
+  background-color: #6C6AB8;
+}
+
+.additional {
+  font-size: 12px;
+  color: #c9c8eb;
+}
+
+.selectWrapper .badge {
+  position: absolute;
+  float: right;
+  right: 15px;
+  background: #69bbf3;
+  padding: 5px 7px;
+  font-size: 11px;
+}
