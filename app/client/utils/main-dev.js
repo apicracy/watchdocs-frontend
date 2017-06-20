@@ -70,7 +70,7 @@ export class Main extends React.Component {
 
     return (
       <IntlProvider locale="en">
-        <ActionCableProvider url="wss://action-cable-exlabsy.herokuapp.com/cable">
+        <ActionCableProvider url="ws://localhost:3005/cable">
           <Provider store={store}>
             <div id="root">
               <Router history={history} routes={getRoutes(store)} />
