@@ -5,6 +5,7 @@ import {
   fetchProjects as load,
   create,
   setActive,
+  updateActive,
 } from 'actions/projects';
 
 import { clearEndpoints } from 'actions/endpointsTree';
@@ -13,8 +14,7 @@ import { flattenTree } from 'services/endpointsTree';
 export function loadProjects(slugToActivate) {
   return dispatch => http('/api/v1/projects')
     .then(response => response.json())
-    .then((data) => {
-      const projects = data.map(project => ({ ...project, slug: projectSlug(project.name) }));
+    .then((projects) => {
       const projectToActivate = projects.find(p => p.slug === slugToActivate) || projects[0];
 
       dispatch(load(projects));
@@ -48,21 +48,24 @@ export function createProject(projectParams) {
       .then(response => response.json())
       .then((project) => {
         dispatch(create(project));
-        browserHistory.push(`/${projectSlug(project.name)}`);
+        browserHistory.push(`/${project.slug}`);
       });
   };
 }
 
-export function projectSlug(name) {
-  if (!name) return null;
+export function updateProject(projectId, projectParams) {
+  return (dispatch) => {
+    const options = {
+      method: 'PUT',
+      body: JSON.stringify(projectParams),
+    };
 
-  const formatted = name
-    .replace(/[A-Z]/g, match => `-${match}`)
-    .replace(/\s/g, '-')
-    .replace(/^-/, '')
-    .toLowerCase();
-
-  return formatted;
+    return http(`/api/v1/projects/${projectId}`, options)
+      .then(response => response.json())
+      .then((project) => {
+        dispatch(updateActive(project));
+      });
+  };
 }
 
 export function openFirstEndpoint(slug, endpoints) {

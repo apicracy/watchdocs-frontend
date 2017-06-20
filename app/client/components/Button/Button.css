@@ -19,7 +19,7 @@
 }
 
 .icon {
-  margin-left: 40px;
+  margin-left: 30px;
 }
 
 /* variants */
@@ -31,7 +31,6 @@
 .body {
   background: white;
   color: #7f7d94;
-  padding: 10px;
 }
 
 .primary {

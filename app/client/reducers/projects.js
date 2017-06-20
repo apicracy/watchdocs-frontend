@@ -3,6 +3,7 @@ import {
   SET_ACTIVE_PROJECT,
   CREATE_PROJECT,
   CLEAR_PROJECTS,
+  UPDATE_ACTIVE_PROJECT,
 } from 'actions/projects';
 
 const INITIAL_STATE = {
@@ -16,6 +17,7 @@ export function projects(state = INITIAL_STATE, action) {
   switch (type) {
     case FETCH_PROJECTS: return fetchProjects(state, payload);
     case SET_ACTIVE_PROJECT: return setActive(state, payload);
+    case UPDATE_ACTIVE_PROJECT: return updateActiveProject(state, payload);
     case CREATE_PROJECT: return create(state, payload);
     case CLEAR_PROJECTS: return clearProjects();
     default: return state;
@@ -30,6 +32,22 @@ function fetchProjects(state, payload) {
   return {
     ...state,
     projectList: [...payload],
+  };
+}
+
+function updateActiveProject(state, payload) {
+  const activeProject = { ...state.activeProject, ...payload };
+  const projectList = state.projectList.filter(p => p.id !== payload.id);
+
+  return {
+    ...state,
+    activeProject: {
+      ...activeProject,
+    },
+    projectList: [
+      ...projectList,
+      { ...payload },
+    ],
   };
 }
 

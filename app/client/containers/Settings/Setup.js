@@ -2,8 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import TabPanel from 'components/TabPanel/TabPanel';
-import TextInput from 'components/Form/TextInput/TextInput';
 import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock';
+import UpdateProjectNameForm from 'components/ProjectForm/UpdateProjectNameForm';
+import UpdateProjectBaseUrlForm from 'components/ProjectForm/UpdateProjectBaseUrlForm';
+
+import { updateProject } from 'services/projects';
 
 @connect(store => ({
   project: store.projects.activeProject,
@@ -11,7 +14,16 @@ import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock
 class Setup extends React.Component {
 
   static propTypes = {
-    project: React.PropTypes.object
+    project: React.PropTypes.object,
+    dispatch: React.PropTypes.func,
+  }
+
+  onSave = (values) => {
+    const { dispatch, project } = this.props;
+    return dispatch(updateProject(project.id, {
+      name: values.name,
+      base_url: values.base_url,
+    }));
   }
 
   render() {
@@ -21,16 +33,17 @@ class Setup extends React.Component {
 
     return (
       <div>
-        <DocumentationBlock
-          title="Application name"
-        >
-          <TextInput variant="white" defaultValue={project.name} />
+        <DocumentationBlock title="Application name">
+          <UpdateProjectNameForm initialValues={{ name: project.name }} onSubmit={this.onSave} />
         </DocumentationBlock>
         <DocumentationBlock
           title="Base URL"
           description="This is the first part of an URL that we're going to use in documentation."
         >
-          <TextInput defaultValue={project.base_url} />
+          <UpdateProjectBaseUrlForm
+            initialValues={{ base_url: project.base_url }}
+            onSubmit={this.onSave}
+          />
         </DocumentationBlock>
         <DocumentationBlock
           title="Installation"
