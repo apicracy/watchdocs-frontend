@@ -29,14 +29,6 @@ let NewProjectForm = (props) => {
           placeholder="e.g. My Home API"
         />
       </InputGroup>
-      <InputGroup title="Base URL" variants={['smallLabel']}>
-        <Field
-          name="base_url"
-          component={RFTextInput}
-          placeholder="http://example.com"
-          type="url"
-        />
-      </InputGroup>
       <Button
         type="submit"
         variants={['primary', 'large', 'block']}

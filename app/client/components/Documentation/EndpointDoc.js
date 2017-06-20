@@ -32,7 +32,7 @@ const showEndpointDocs = ({ topLevel, projectUrl, doc, projectSlug }) => (
         <div className={styles.section}>
           <Heading>HTTP Request</Heading>
           <Well variants={['body', 'bold', 'noPadding']}>
-            <span className={styles.method}>{doc.method}</span> {`${projectUrl}${doc.url}`}
+            <span className={styles.method}>{doc.method}</span> {`${projectUrl || ''}${doc.url}`}
           </Well>
         </div>
 
