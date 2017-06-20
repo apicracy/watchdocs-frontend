@@ -10,7 +10,7 @@ import Container from 'components/Container/Container';
 import Brand from 'components/Brand/Brand';
 import NavLink from 'components/NavigationLink/NavigationLink';
 import UserMenu from 'components/UserMenu/UserMenu';
-import Select from 'components/Form/Select/Select';
+import ProjectSelector from 'components/ProjectSelector/ProjectSelector';
 import Icon from 'components/Icon/Icon';
 import CustomIcon from 'components/Icon/CustomIcon';
 import Tutorial from 'components/Tutorial/Tutorial';
@@ -86,11 +86,10 @@ class AppLayout extends React.Component {
               <div className={styles.navigation}>
                 <Brand />
                 { projects.length > 1 && (
-                  <Select
-                    variants={['appBar']}
-                    options={projects}
+                  <ProjectSelector
+                    projects={projects}
                     onSelect={this.switchProject}
-                    activeId={activeProject ? activeProject.id : null}
+                    activeProject={activeProject}
                   />
                 )}
                 <NavLink url="/editor" text="Editor" icon={<Icon name="edit" />} id="nav-editor" />
