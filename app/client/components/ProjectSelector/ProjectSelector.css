@@ -48,6 +48,9 @@
   border: none;
   background: #4e4c88;
   color: white;
+  -webkit-box-shadow: 1px 13px 62px -26px rgba(0,0,0,0.54);
+  -moz-box-shadow: 1px 13px 62px -26px rgba(0,0,0,0.54);
+  box-shadow: 1px 13px 62px -26px rgba(0,0,0,0.54);
 }
 
 .innerSelected {
@@ -68,7 +71,7 @@
 }
 
 .optionList > button:hover {
-  background-color: #6C6AB8;
+  background-color: #7978be;
 }
 
 .additional {

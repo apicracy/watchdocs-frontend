@@ -14,7 +14,7 @@ const SampleProjectLink = ({ projectList }) => {
     <span>
       In the meantime you can relax and checkout the sample project
       <br />
-      <Link to={`/${sampleProject.slug}`} className={styles.sampleLink}>Checkout Sample Project</Link>
+      <Link to={`/${sampleProject.slug}`} className={styles.sampleLink} target="_blank">Checkout Sample Project</Link>
     </span>
   );
 };
@@ -29,6 +29,12 @@ export default class InitialSetupInstructions extends React.Component {
     projectList: React.PropTypes.array,
   }
 
+  openHelp = () => {
+    window.drift.on('ready', (api) => {
+      api.sidebar.open();
+    });
+  }
+
   render() {
     const { activeProject, projectList } = this.props;
 
@@ -37,15 +43,24 @@ export default class InitialSetupInstructions extends React.Component {
         <div className={styles.color}>
           <h1 className={styles.welcome__header}>Integrate your application</h1>
           <p className={styles.welcome}>
-              We're waiting for recordings from your app. Follow instructions below to start documenting your API.
+            We're waiting for recordings from your app.
+            <br />
+            Follow instructions below to start documenting your API.
+            <br />
+            <SampleProjectLink projectList={projectList} />
           </p>
         </div>
         <div className={styles.inner}>
           <div className={styles.tab}>
             <TabPanel project={activeProject} />
           </div>
-          <div className={styles.sampleLinkContainer}>
-            <SampleProjectLink projectList={projectList} />
+          <div className={styles.help}>
+            Having problem with integration? Your framework is not listed?
+            <br />
+            {' '}
+            <a onClick={this.openHelp} className={styles.helpLink}>Contact us</a>
+            {' '}
+            to get a help.
           </div>
         </div>
       </div>
