@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './InitialSetupInstructions.css';
 import { connect } from 'react-redux';
 import TabPanel from 'components/TabPanel/TabPanel';
+import logo from '../../assets/watchdocslogo_white_full.png';
 import { Link } from 'react-router';
 
 const SampleProjectLink = ({ projectList }) => {
@@ -11,7 +12,9 @@ const SampleProjectLink = ({ projectList }) => {
   }
   return (
     <span>
-      In the meantime you can relax and checkout the <Link to={`/${sampleProject.slug}`}>Sample Project</Link>
+      In the meantime you can relax and checkout the sample project
+      <br />
+      <Link to={`/${sampleProject.slug}`} className={styles.sampleLink}>Checkout Sample Project</Link>
     </span>
   );
 };
@@ -31,17 +34,19 @@ export default class InitialSetupInstructions extends React.Component {
 
     return (
       <div className={styles.wrapper}>
+        <div className={styles.color}>
+          <h1 className={styles.welcome__header}>Integrate your application</h1>
+          <p className={styles.welcome}>
+              We're waiting for recordings from your app. Follow instructions below to start documenting your API.
+          </p>
+        </div>
         <div className={styles.inner}>
-          <div className={styles.welcome}>
-            <h1 className={styles.welcome__header}>You are only one step away from your Living Documentation.</h1>
-            <p>
-              Below you can find instructions on how to send data about API
-              endpoints from your <strong>{activeProject.name}</strong> application.
-              <br />
-              We are looking forward to your data... <SampleProjectLink projectList={projectList} />
-            </p>
+          <div className={styles.tab}>
+            <TabPanel project={activeProject} />
           </div>
-          <TabPanel project={activeProject} />
+          <div className={styles.sampleLinkContainer}>
+            <SampleProjectLink projectList={projectList} />
+          </div>
         </div>
       </div>
     );
