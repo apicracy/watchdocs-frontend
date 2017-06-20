@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import TabPanel from 'components/TabPanel/TabPanel';
+import InputLink from 'components/Form/InputLink/InputLink';
 import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock';
-import UpdateProjectNameForm from 'components/ProjectForm/UpdateProjectNameForm';
-import UpdateProjectBaseUrlForm from 'components/ProjectForm/UpdateProjectBaseUrlForm';
 
-import { updateProject } from 'services/projects';
+import { openModal } from 'actions/modals';
+import { MODAL_NAME as UPDATE_PROJECT_MODAL } from 'modals/EditProject/EditProject';
 
 @connect(store => ({
   project: store.projects.activeProject,
@@ -18,12 +18,8 @@ class Setup extends React.Component {
     dispatch: React.PropTypes.func,
   }
 
-  onSave = (values) => {
-    const { dispatch, project } = this.props;
-    return dispatch(updateProject(project.id, {
-      name: values.name,
-      base_url: values.base_url,
-    }));
+  openProjectEditModal = () => {
+    this.props.dispatch(openModal(UPDATE_PROJECT_MODAL));
   }
 
   render() {
@@ -33,17 +29,16 @@ class Setup extends React.Component {
 
     return (
       <div>
-        <DocumentationBlock title="Application name">
-          <UpdateProjectNameForm initialValues={{ name: project.name }} onSubmit={this.onSave} />
+        <DocumentationBlock
+          title="Application name"
+        >
+          <InputLink text={project.name} onClick={this.openProjectEditModal} placeholder="This project has not name yet" />
         </DocumentationBlock>
         <DocumentationBlock
           title="Base URL"
           description="This is the first part of an URL that we're going to use in documentation."
         >
-          <UpdateProjectBaseUrlForm
-            initialValues={{ base_url: project.base_url }}
-            onSubmit={this.onSave}
-          />
+          <InputLink text={project.base_url} onClick={this.openProjectEditModal} placeholder="http://api.example.com" />
         </DocumentationBlock>
         <DocumentationBlock
           title="Installation"
