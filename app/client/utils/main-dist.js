@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import Modals from 'modals/Modals';
 import getRoutes from 'routes';
+import { IntlProvider } from 'react-intl';
 
 export class Main extends React.Component {
   static propTypes = {
@@ -21,12 +22,14 @@ export class Main extends React.Component {
     const { store, history } = this.props;
 
     return (
-      <Provider store={store}>
-        <div>
-          <Router history={history} routes={getRoutes(store)} />
-          <Modals />
-        </div>
-      </Provider>
+      <IntlProvider locale="en">
+        <Provider store={store}>
+          <div>
+            <Router history={history} routes={getRoutes(store)} />
+            <Modals />
+          </div>
+        </Provider>
+      </IntlProvider>
     );
   }
 }
