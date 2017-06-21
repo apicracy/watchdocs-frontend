@@ -8,6 +8,7 @@ import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock
 import Button from 'components/Button/Button';
 import TextInput from 'components/Form/TextInput/TextInput';
 import TinyMCE from 'react-tinymce-input';
+import UpdateGroupForm from 'components/GroupForm/UpdateGroupForm';
 
 @connect(store => ({
   group: store.groupEditor,
@@ -82,7 +83,8 @@ class GroupEditor extends React.Component {
     })
   );
 
-  onSave = () => {
+  onSave = (values) => {
+    console.log(values);
     // TODO make an API call to save endpoint & refresh data in endpoint tree
   }
 
@@ -98,45 +100,7 @@ class GroupEditor extends React.Component {
 
     return (
       <div className={styles.container}>
-        <DocumentationBlock
-          title="Group title"
-          description="This is title of the section we're going
-            to display in documentation and in navigation."
-        >
-          <TextInput
-            value={name}
-            variant="white"
-            onChange={this.onFieldChange('name')}
-          />
-        </DocumentationBlock>
-
-        <DocumentationBlock
-          title="Additional description"
-          description="This description will
-            appear on your generated public documentation."
-        >
-          <TinyMCE
-            value={description || ''}
-            tinymceConfig={{
-              plugins: 'autolink link image lists preview',
-              toolbar: 'undo redo | bold italic underline',
-            }}
-            onChange={this.onGroupDescriptionChange}
-          />
-        </DocumentationBlock>
-
-        <div className={styles.buttons}>
-          <Button
-            variants={['primary', 'large', 'spaceRight']}
-            onClick={this.onSave}
-          >Save</Button>
-          <Button
-            variants={['body', 'large']}
-            onClick={this.onReset}
-          >
-            Cancel
-          </Button>
-        </div>
+        <UpdateGroupForm onSubmit={this.onSave} />
       </div>
     );
   }
