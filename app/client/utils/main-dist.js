@@ -24,7 +24,6 @@ export class Main extends React.Component {
       <Provider store={store}>
         <div>
           <Router history={history} routes={getRoutes(store)} />
-          <Modals />
         </div>
       </Provider>
     );
