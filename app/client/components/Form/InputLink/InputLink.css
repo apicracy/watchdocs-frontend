@@ -1,0 +1,25 @@
+.root {
+  border: #EEEEEE solid 1px;
+  border-radius: 5px;
+  padding: 10px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  flex-shrink: 0;
+  width: 100%;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.action {
+  color: #d1d0d7;
+}
+
+.text {
+  color: #7f7d94;
+}
+
+.placeholder {
+  color: #ccc;
+}

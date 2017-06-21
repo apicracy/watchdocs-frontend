@@ -4,6 +4,7 @@
   flex: 2;
   background-color: #eceff3;
   overflow: auto;
+  min-height: 100%;
 }
 
 .container {
