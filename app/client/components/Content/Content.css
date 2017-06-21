@@ -1,21 +1,9 @@
 .content {
   position: relative;
-  display: flex;
-  flex: 2;
   background: #eceff3;
-  overflow: visible;
-}
-
-.contentWrapper {
-  display: flex;
-  flex: 1;
-  position: relative;
   padding: 25px 35px;
+  overflow: visible;
   overflow-x: hidden;
-  flex-direction: column;
-}
-
-.justify {
-  composes: content;
-  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
 }

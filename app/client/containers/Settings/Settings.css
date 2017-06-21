@@ -3,7 +3,6 @@
   width: 100%;
   display: flex;
   min-height: calc(100vh - 105px);
-  margin-left: -15px;
 }
 
 .buttons {
@@ -45,6 +44,7 @@
 
 .menu {
   width: inherit;
+  margin-left: -15px;
 }
 
 /* Users */
