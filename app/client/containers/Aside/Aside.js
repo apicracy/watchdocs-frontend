@@ -12,13 +12,11 @@ import Sidebar from 'components/Sidebar/Sidebar';
 import { filterEndpoints } from 'services/endpoint-service';
 
 import { openModal } from 'actions/modals';
-import { MODAL_NAME as ADD_NEW_MODAL } from 'modals/AddEndpointModal/AddEndpointModal';
+import { MODAL_NAME as NEW_ENDPOINT_MODAL } from 'modals/AddEndpointModal/AddEndpointModal';
+import { MODAL_NAME as NEW_GROUP_MODAL } from 'modals/AddGroupModal/AddGroupModal';
 
-import {
-  addNewGroup,
-  addNewEndpoint,
-  addNewDocument,
-} from 'services/modifyEndpoint-service';
+
+import { addNewEndpoint } from 'services/modifyEndpoint-service';
 
 @connect(store => ({
   endpoints: store.endpoints,
@@ -55,17 +53,14 @@ class Aside extends React.Component {
 
   addNewEndpoint = () => {
     this.props.dispatch(addNewEndpoint());
-    this.props.dispatch(openModal(ADD_NEW_MODAL));
+    this.props.dispatch(openModal(NEW_ENDPOINT_MODAL));
   }
 
   addNewGroup = () => {
-    this.props.dispatch(addNewGroup());
-    this.props.dispatch(openModal(ADD_NEW_MODAL));
+    this.props.dispatch(openModal(NEW_GROUP_MODAL));
   }
 
   addNewDocument = () => {
-    this.props.dispatch(addNewDocument());
-    this.props.dispatch(openModal(ADD_NEW_MODAL));
   }
 
   render() {
