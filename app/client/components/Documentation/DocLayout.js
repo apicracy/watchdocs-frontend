@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './DocLayout.css';
-import FolderDoc from './FolderDoc';
+import GroupDoc from './GroupDoc';
 import EndpointDoc from './EndpointDoc';
 
 const DocLayout = ({ topLevel, doc, children, projectUrl }) => {
@@ -10,7 +10,7 @@ const DocLayout = ({ topLevel, doc, children, projectUrl }) => {
         return <EndpointDoc topLevel={topLevel} doc={doc} projectUrl={projectUrl} />;
 
       default:
-        return <FolderDoc topLevel={topLevel} doc={doc} projectUrl={projectUrl} />;
+        return <GroupDoc topLevel={topLevel} doc={doc} projectUrl={projectUrl} />;
     }
   };
 

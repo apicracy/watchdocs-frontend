@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import TinyMCE from 'react-tinymce';
+import TinyMCE from 'react-tinymce-input';
 
 export default class RFRichTextArea extends Component {
   static propTypes = {
@@ -19,21 +19,17 @@ export default class RFRichTextArea extends Component {
   }
 
   editorConfig = {
-    plugins: 'link,image,lists,paste,code',
-    toolbar: 'undo redo | formatselect bullist numlist | bold italic link | image code paste',
-    block_formats: 'Paragraph=p;Heading 3=h3',
+    plugins: 'autolink link image lists preview',
+    toolbar: 'undo redo | formatselect bullist numlist | bold italic link underline | image code paste',
+    block_formats: 'Heading 1=h1;Heading 2=h2;Heading 3=h3;Paragraph=p',
     menubar: false,
     statusbar: false,
-    body_class: 'editable-field-content',
     paste_word_valid_elements: 'b,strong,i,em,h1,h2,h3,p,li,ul,ol,a',
     paste_retain_style_properties: 'none',
     paste_strip_class_attributes: 'none',
     paste_remove_styles: true,
   }
 
-  editorContent = () => {
-    return tinyMCE.get(this.props.id) ? tinyMCE.get(this.props.id).getContent() : '';
-  }
 
   render() {
 
@@ -42,13 +38,8 @@ export default class RFRichTextArea extends Component {
 
     return (
       <TinyMCE
-        id={id}
-        content={value}
-        config={this.editorConfig}
-        onBlur={() => {
-          onBlur();
-          onChange(this.editorContent());
-        }}
+        tinymceConfig={this.editorConfig}
+        { ...this.props.input }
       />
     );
   }

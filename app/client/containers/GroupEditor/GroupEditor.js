@@ -3,11 +3,7 @@ import { connect } from 'react-redux';
 
 import styles from './GroupEditor.css';
 
-import { loadGroup } from 'services/groupEditor';
-import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock';
-import Button from 'components/Button/Button';
-import TextInput from 'components/Form/TextInput/TextInput';
-import TinyMCE from 'react-tinymce-input';
+import { loadGroup, updateGroup } from 'services/groupEditor';
 import UpdateGroupForm from 'components/GroupForm/UpdateGroupForm';
 
 @connect(store => ({
@@ -20,32 +16,18 @@ class GroupEditor extends React.Component {
     params: React.PropTypes.object, // supplied by react-router
     dispatch: React.PropTypes.func,
     group: React.PropTypes.object,
-    endpointList: React.PropTypes.array,
-  }
-
-  componentWillMount() {
-    this.setState({
-      description: '',
-      name: '',
-      isDirty: false,
-    });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const conditions = [
-      JSON.stringify(nextProps.group) !== JSON.stringify(this.props.group),
-      this.state.description === '' && nextProps.group.description !== '',
-      this.state.name === '' && nextProps.group.name !== '',
-    ];
-
-    // If at least one of above conditions is met, reload state.
-    if (conditions.some(x => x)) {
-      this.setState(nextProps.group);
-    }
   }
 
   componentDidMount() {
     this.loadGroup();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { group_id } = this.props.params;
+
+    if (prevProps.params.group_id !== group_id) {
+      this.loadGroup();
+    }
   }
 
   loadGroup() {
@@ -53,54 +35,21 @@ class GroupEditor extends React.Component {
     this.props.dispatch(loadGroup(groupId));
   }
 
-  componentDidUpdate(prevProps) {
-    const {
-      group_id: groupId,
-    } = this.props.params;
-
-    // Reload view when endpoints are loaded
-    if (prevProps.endpointList !== this.props.endpointList) {
-      this.loadGroup();
-    }
-
-    if (
-      prevProps.params.group_id !== groupId &&
-      this.props.group.id !== parseInt(groupId, 10)
-    ) {
-      this.loadGroup();
-    }
-  }
-
-  onGroupDescriptionChange = description => this.setState({
-    description,
-    isDirty: true,
-  });
-
-  onFieldChange = fieldName => ({ nativeEvent }) => (
-    this.setState({
-      [fieldName]: nativeEvent.target.value,
-      isDirty: true,
-    })
-  );
-
   onSave = (values) => {
-    console.log(values);
-    // TODO make an API call to save endpoint & refresh data in endpoint tree
-  }
-
-  onReset = () => {
-    this.setState(this.props.group);
+    const { id } = this.props.group;
+    return this.props.dispatch(updateGroup(id, values));
   }
 
   render() {
-    const {
-      description,
-      name,
-    } = this.state;
+    const { group } = this.props;
 
     return (
       <div className={styles.container}>
-        <UpdateGroupForm onSubmit={this.onSave} />
+        <UpdateGroupForm
+          enableReinitialize // Refresh when group loads
+          onSubmit={this.onSave}
+          initialValues={{ name: group.name, description: group.description }}
+        />
       </div>
     );
   }

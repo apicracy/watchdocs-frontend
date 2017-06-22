@@ -108,6 +108,7 @@ class JSONBodyManager extends React.Component {
       <div>
         { hiddenDifferencesFound &&
           <Notice
+            type="warning"
             icon="exclamation-triangle"
             message={this.warningMessage()}
           />
