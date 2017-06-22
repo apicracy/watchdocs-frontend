@@ -228,7 +228,7 @@ class EndpointEditor extends React.Component {
       <div className={styles.root} id="endpoint-editor">
         { this.props.isFetching && <LoadingIndicator /> }
         { endpoint.status === 'outdated' && (
-          <Notice icon="chain-broken" message="This endpoint is outdated. This means one of responses, url params or request is no longer up to date with data received from your app" />
+          <Notice type="warning" icon="chain-broken" message="This endpoint is outdated. This means one of responses, url params or request is no longer up to date with data received from your app" />
         )}
         <div className={styles.urlContainer} id="endpoint-editor-method">
           <div className={styles.method}>

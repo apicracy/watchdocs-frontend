@@ -93,3 +93,19 @@
   right: 16px;
   top: 16px;
 }
+
+.bodyContent h1 {
+  font-size: 20px;
+}
+
+.bodyContent h2 {
+  font-size: 17px;
+}
+
+.bodyContent h3 {
+  font-size: 14px;
+}
+
+.bodyContent img {
+  max-width: 100%;
+}

@@ -143,7 +143,7 @@ class RequestEditor extends React.Component {
           <strong> {endpoint.method} {endpoint.url}</strong>.<br />
         </div>
         { status === 'outdated' && (
-          <Notice icon="chain-broken" message="This request is outdated. Resolve conflicts in your response body below" />
+          <Notice type="warning" icon="chain-broken" message="This request is outdated. Resolve conflicts in your response body below" />
         )}
         <DocumentationBlock
           title="Request Body"

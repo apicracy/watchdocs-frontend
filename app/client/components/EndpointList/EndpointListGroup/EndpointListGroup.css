@@ -28,7 +28,6 @@
 
 .groupName {
   display: inline-flex;
-  margin-left: 5px;
   font-size: 14px;
   align-items: center;
 }
@@ -48,4 +47,10 @@
   outline: none;
   background: none;
   border: none;
+}
+
+.toggle {
+  padding: 3px 0;
+  width: 25px;
+  text-align: center;
 }

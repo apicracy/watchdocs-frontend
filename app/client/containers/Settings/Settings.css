@@ -2,7 +2,7 @@
   display: block;
   width: 100%;
   display: flex;
-  min-height: calc(100vh - 105px);
+  min-height: calc(100vh - 75px);
 }
 
 .buttons {

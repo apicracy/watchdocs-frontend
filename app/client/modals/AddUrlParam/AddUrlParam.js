@@ -120,7 +120,7 @@ class AddUrlParam extends React.Component {
       >
         { /* eslint camelcase: 0*/ }
         { status === 'outdated' && required !== required_draft && (
-          <Notice icon="bell" message={`It seems like this param is ${required_draft ? 'always' : 'optional'} in a request. Please update 'Param required' field.`} />
+          <Notice type="warning" icon="bell" message={`It seems like this param is ${required_draft ? 'always' : 'optional'} in a request. Please update 'Param required' field.`} />
         )}
         <UrlParamForm
           {...this.state}

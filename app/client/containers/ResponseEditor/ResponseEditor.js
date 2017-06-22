@@ -138,7 +138,7 @@ class ResponseEditor extends React.Component {
           <strong> {endpoint.method} {endpoint.url}</strong>
         </div>
         { status === 'outdated' && (
-          <Notice icon="chain-broken" message="This response is outdated. Resolve conflicts in your response body below" />
+          <Notice type="warning" icon="chain-broken" message="This response is outdated. Resolve conflicts in your response body below" />
         )}
         <DocumentationBlock
           title="Response status"
