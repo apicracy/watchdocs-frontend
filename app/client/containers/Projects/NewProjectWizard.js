@@ -18,9 +18,7 @@ class Projects extends React.Component {
     dispatch: React.PropTypes.func,
   }
 
-  onSave = (values) => {
-    return this.props.dispatch(createProject(values));
-  }
+  onSave = values => (this.props.dispatch(createProject(values)))
 
   onLogout = () => {
     this.props.dispatch(logout());

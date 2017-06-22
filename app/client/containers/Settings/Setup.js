@@ -2,8 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import TabPanel from 'components/TabPanel/TabPanel';
-import TextInput from 'components/Form/TextInput/TextInput';
+import InputLink from 'components/Form/InputLink/InputLink';
 import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock';
+
+import { openModal } from 'actions/modals';
+import { MODAL_NAME as UPDATE_PROJECT_MODAL } from 'modals/EditProject/EditProject';
 
 @connect(store => ({
   project: store.projects.activeProject,
@@ -11,7 +14,12 @@ import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock
 class Setup extends React.Component {
 
   static propTypes = {
-    project: React.PropTypes.object
+    project: React.PropTypes.object,
+    dispatch: React.PropTypes.func,
+  }
+
+  openProjectEditModal = () => {
+    this.props.dispatch(openModal(UPDATE_PROJECT_MODAL));
   }
 
   render() {
@@ -24,13 +32,13 @@ class Setup extends React.Component {
         <DocumentationBlock
           title="Application name"
         >
-          <TextInput variant="white" defaultValue={project.name} />
+          <InputLink text={project.name} onClick={this.openProjectEditModal} placeholder="This project has not name yet" />
         </DocumentationBlock>
         <DocumentationBlock
           title="Base URL"
           description="This is the first part of an URL that we're going to use in documentation."
         >
-          <TextInput defaultValue={project.base_url} />
+          <InputLink text={project.base_url} onClick={this.openProjectEditModal} placeholder="http://api.example.com" />
         </DocumentationBlock>
         <DocumentationBlock
           title="Installation"

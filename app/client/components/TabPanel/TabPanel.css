@@ -78,3 +78,8 @@
 .section{
   font-size: 1em;
 }
+
+.fadeOutLink {
+  color: #ccc;
+  text-decoration: underline;
+}
