@@ -26,6 +26,8 @@ class GroupEditor extends React.Component {
     const { group_id } = this.props.params;
 
     if (prevProps.params.group_id !== group_id) {
+      console.log(`loading for ${group_id}`);
+      console.log(`old one is ${prevProps.params.group_id}`);
       this.loadGroup();
     }
   }
