@@ -18,6 +18,10 @@ const validate = values => (
 
 let UpdateGroupForm = (props) => {
   const { handleSubmit, submitting, reset, submitSucceeded } = props;
+  const handleReset = (event) => {
+    event.preventDefault();
+    reset();
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -60,7 +64,7 @@ let UpdateGroupForm = (props) => {
       >Save</Button>
       <Button
         variants={['body', 'large']}
-        onClick={reset}
+        onClick={handleReset}
       >
         Cancel
       </Button>

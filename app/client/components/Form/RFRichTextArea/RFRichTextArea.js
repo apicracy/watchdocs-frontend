@@ -3,7 +3,6 @@ import TinyMCE from 'react-tinymce-input';
 
 export default class RFRichTextArea extends Component {
   static propTypes = {
-    id: PropTypes.string.isRequired,
     input: PropTypes.shape({
       name: PropTypes.string.isRequired,
       value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
@@ -23,6 +22,7 @@ export default class RFRichTextArea extends Component {
     toolbar: 'undo redo | formatselect bullist numlist | bold italic link underline | image code paste',
     block_formats: 'Heading 1=h1;Heading 2=h2;Heading 3=h3;Paragraph=p',
     menubar: false,
+    height: 300,
     statusbar: false,
     paste_word_valid_elements: 'b,strong,i,em,h1,h2,h3,p,li,ul,ol,a',
     paste_retain_style_properties: 'none',
@@ -32,14 +32,10 @@ export default class RFRichTextArea extends Component {
 
 
   render() {
-
-    const { id } = this.props;
-    const { onBlur, value, onChange } = this.props.input;
-
     return (
       <TinyMCE
         tinymceConfig={this.editorConfig}
-        { ...this.props.input }
+        {...this.props.input}
       />
     );
   }

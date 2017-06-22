@@ -31,7 +31,11 @@ class EndpointListGroup extends React.Component {
     const open = (this.state.isOpen || (!this.state.force && this.props.isOpen));
     const icon = open ? 'caret-down' : 'caret-right';
 
-    return <Icon name={icon} />;
+    return (
+      <span className={styles.toggle} onClick={this.toggleOpen}>
+        <Icon name={icon} />
+      </span>
+    );
   }
 
   renderEndpoint(endpoint) {
@@ -95,6 +99,7 @@ class EndpointListGroup extends React.Component {
   }
 
   toggleOpen = () => {
+    console.log("open");
     const { isOpen } = this.props;
 
     const conditions = [
@@ -124,8 +129,8 @@ class EndpointListGroup extends React.Component {
     return (
       <div className={styles.root}>
         <div className={topStyle}>
-          <Link to={`/editor/group/${id}`} className={styles.link} onClick={this.toggleOpen}>
-            { this.renderIcon() }
+          { this.renderIcon() }
+          <Link to={`/editor/group/${id}`} className={styles.link}>
             <span className={styles.groupName}>{ name }</span>
           </Link>
         </div>
