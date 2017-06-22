@@ -12,7 +12,7 @@ import { validationErrors } from 'services/formService';
 
 const validate = values => (
   validationErrors({
-    username: [presence(), email()],
+    email: [presence(), email()],
     password: [presence()],
     password_confirmation: [presence(), confirmation({ field: 'password' })],
   }, values)
