@@ -3,12 +3,14 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import reduxThunk from 'redux-thunk';
 import { reducers } from 'reducers';
 import { routerReducer } from 'react-router-redux';
+import { reducer as toastrReducer } from 'react-redux-toastr';
 import { reducer as formReducer } from 'redux-form';
 
 const reducer = combineReducers({
   ...reducers,
   routing: routerReducer,
   form: formReducer,
+  toastr: toastrReducer,
 });
 
 // Commented out for a moment as we decided to use regular dev tools

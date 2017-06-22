@@ -1,6 +1,7 @@
 import { setGroupEditor } from 'actions/groupEditor';
 import http from 'services/http';
 import { filterByIdAndType } from 'services/endpoint-service';
+import { toastr } from 'react-redux-toastr';
 
 import {
   fetchEndpoints,
@@ -22,8 +23,12 @@ export function updateGroup(groupId, params) {
       body: JSON.stringify(params),
     };
 
-    return http(`/api/v1/groups/${groupId}`, options).then(() => (
-      dispatch(fetchEndpoints(getState().projects.activeProject.id))
-    ));
+    return http(`/api/v1/groups/${groupId}`, options).then(() => {
+      dispatch(fetchEndpoints(getState().projects.activeProject.id));
+      toastr.success(
+        'Group has been updated',
+        'Your group documentation has been updated successfully.',
+      );
+    });
   };
 }

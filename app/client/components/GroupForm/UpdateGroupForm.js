@@ -7,32 +7,26 @@ import RFRichTextArea from 'components/Form/RFRichTextArea/RFRichTextArea';
 import Button from 'components/Button/Button';
 import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
 import DocumentationBlock from 'components/DocumentationBlock/DocumentationBlock';
-import Notice from 'components/Notice/Notice';
 
 import { validationErrors } from 'services/formService';
 
 const validate = values => (
   validationErrors({
+    name: [presence()],
   }, values)
 );
 
 let UpdateGroupForm = (props) => {
-  const { handleSubmit, submitting, reset, submitSucceeded } = props;
+  const { handleSubmit, submitting, reset } = props;
+
   const handleReset = (event) => {
     event.preventDefault();
     reset();
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit}>
       { submitting && <LoadingIndicator fixed /> }
-      { submitSucceeded && (
-        <Notice
-          type="success"
-          icon="check"
-          message="Group documentation has been updated"
-        />
-      )}
       <DocumentationBlock
         title="Group title"
         description="This is title of the section we're going
@@ -76,7 +70,6 @@ UpdateGroupForm.propTypes = {
   handleSubmit: React.PropTypes.func,
   reset: React.PropTypes.func,
   submitting: React.PropTypes.bool,
-  submitSucceeded: React.PropTypes.bool,
 };
 
 export default UpdateGroupForm = reduxForm({

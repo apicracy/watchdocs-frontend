@@ -5,6 +5,8 @@ import styles from './AppLayout.css';
 import { logout, getCurrentUser } from 'services/session';
 import { browserHistory } from 'react-router';
 
+import ReduxToastr from 'react-redux-toastr'
+
 import AppBar from 'components/AppBar/AppBar';
 import Container from 'components/Container/Container';
 import Brand from 'components/Brand/Brand';
@@ -112,6 +114,15 @@ class AppLayout extends React.Component {
           { children }
         </div>
         <Modals params={this.props.params} />
+        <ReduxToastr
+          timeOut={4000}
+          newestOnTop={false}
+          preventDuplicates
+          position="top-right"
+          transitionIn="fadeIn"
+          transitionOut="fadeOut"
+          progressBar
+        />
       </div>
     );
   }
