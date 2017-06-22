@@ -37,7 +37,7 @@ class RubyonrailsPanel extends React.Component {
         </div>
 
         <div className={styles.step}>
-          <p className={styles.instruction}><a target="_blank" rel="noopener noreferrer" href="https://github.com/apicracy/watchdocs-rails#configuration">Click here to read more about the gem</a></p>
+          <p className={styles.instruction}><a target="_blank" rel="noopener noreferrer" href="https://github.com/apicracy/watchdocs-rails#configuration" className={styles.fadeOutLink}>Click here to read more about the gem</a></p>
         </div>
      </div>
     );

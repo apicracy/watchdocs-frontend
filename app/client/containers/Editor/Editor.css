@@ -3,6 +3,6 @@
   flex: 1;
   justify-content: space-between;
   height: auto;
-  min-height: min-content;
+  min-height: 100%;
   align-items: stretch;
 }
