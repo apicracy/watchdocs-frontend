@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 
 import styles from './GroupEditor.css';
 
-import { loadGroup, updateGroup } from 'services/groupEditor';
+import { loadGroup, updateGroup, removeGroup } from 'services/groupEditor';
 import UpdateGroupForm from 'components/GroupForm/UpdateGroupForm';
+import Button from 'components/Button/Button';
 
 @connect(store => ({
   group: store.groupEditor,
@@ -37,7 +38,16 @@ class GroupEditor extends React.Component {
 
   onSave = (values) => {
     const { id } = this.props.group;
-    return this.props.dispatch(updateGroup(id, values));
+    const { dispatch } = this.props;
+
+    return dispatch(updateGroup(id, values));
+  }
+
+  removeGroup = () => {
+    const { id } = this.props.group;
+    const { dispatch } = this.props;
+
+    return dispatch(removeGroup(id));
   }
 
   render() {
@@ -50,6 +60,7 @@ class GroupEditor extends React.Component {
           onSubmit={this.onSave}
           initialValues={{ name: group.name, description: group.description }}
         />
+        <Button variants={['text', 'warning']} onClick={this.removeGroup}>Remove this group</Button>
       </div>
     );
   }
