@@ -27,8 +27,6 @@ class GroupEditor extends React.Component {
     const { group_id } = this.props.params;
 
     if (prevProps.params.group_id !== group_id) {
-      console.log(`loading for ${group_id}`);
-      console.log(`old one is ${prevProps.params.group_id}`);
       this.loadGroup();
     }
   }
@@ -48,8 +46,9 @@ class GroupEditor extends React.Component {
   removeGroup = () => {
     const { id } = this.props.group;
     const { dispatch } = this.props;
-
-    return dispatch(removeGroup(id));
+    if (confirm('Are you sure you want to remove this group? This action can not be undone and all endpoints and groups within will be lost')) {
+      return dispatch(removeGroup(id));
+    }
   }
 
   render() {
