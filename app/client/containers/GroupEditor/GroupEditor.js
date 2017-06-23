@@ -6,6 +6,8 @@ import styles from './GroupEditor.css';
 import { loadGroup, updateGroup, removeGroup } from 'services/groupEditor';
 import UpdateGroupForm from 'components/GroupForm/UpdateGroupForm';
 import Button from 'components/Button/Button';
+import Header from 'components/Header/Header';
+import Icon from 'components/Icon/Icon';
 
 @connect(store => ({
   group: store.groupEditor,
@@ -56,12 +58,16 @@ class GroupEditor extends React.Component {
 
     return (
       <div className={styles.container}>
+        <Header title="Group editor">
+          <Button variants={['rounded', 'body']} icon={<Icon name="trash" size="lg" />} onClick={this.removeGroup}>
+            Remove group
+          </Button>
+        </Header>
         <UpdateGroupForm
           enableReinitialize // Refresh when group loads
           onSubmit={this.onSave}
           initialValues={{ name: group.name, description: group.description }}
         />
-        <Button variants={['text', 'warning']} onClick={this.removeGroup}>Remove this group</Button>
       </div>
     );
   }

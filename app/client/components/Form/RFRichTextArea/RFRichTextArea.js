@@ -22,7 +22,7 @@ export default class RFRichTextArea extends Component {
     toolbar: 'undo redo | formatselect bullist numlist | bold italic link underline | image code paste',
     block_formats: 'Heading 1=h1;Heading 2=h2;Heading 3=h3;Paragraph=p',
     menubar: false,
-    height: 260,
+    height: 220,
     statusbar: false,
     paste_word_valid_elements: 'b,strong,i,em,h1,h2,h3,p,li,ul,ol,a',
     paste_retain_style_properties: 'none',
