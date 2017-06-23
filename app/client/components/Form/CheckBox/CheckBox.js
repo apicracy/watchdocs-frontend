@@ -21,6 +21,7 @@ const CheckBox = ({ title, options, onChange, activeIds }) => {
               variants={['iconLeft', 'spaceRight']}
               icon={<CustomIcon name={activeIds.includes(option.id) ? 'checkbox-checked' : 'checkbox-unchecked'} size="lg" />}
               onClick={() => onChange(option)}
+              type="button"
             >
               { option.text }
             </Button>
