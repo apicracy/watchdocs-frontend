@@ -12,6 +12,7 @@ import {
 } from 'services/endpointEditor';
 
 import Button from 'components/Button/Button';
+import Header from 'components/Header/Header';
 
 import Icon from 'components/Icon/Icon';
 import IconButton from 'components/Button/IconButton';
@@ -227,6 +228,13 @@ class EndpointEditor extends React.Component {
     return (
       <div className={styles.root} id="endpoint-editor">
         { this.props.isFetching && <LoadingIndicator /> }
+
+        <Header title="Endpoint editor">
+          <Button variants={['rounded', 'body']} icon={<Icon name="trash" size="lg" />} onClick={this.removeEndpoint}>
+            Remove endpoint
+          </Button>
+        </Header>
+
         { endpoint.status === 'outdated' && (
           <Notice type="warning" icon="chain-broken" message="This endpoint is outdated. This means one of responses, url params or request is no longer up to date with data received from your app" />
         )}
@@ -272,21 +280,6 @@ class EndpointEditor extends React.Component {
           description="API's methods can support or require various HTTP headers."
           emptyMsg="You don't have request set up yet."
           id="endpoint-editor-request"
-          // content={(
-          //   <Radio
-          //     title={[
-          //       'Select applicable authentications mechanisms.',
-          //       <span className={styles.divider} />,
-          //       <Button variants={['linkPrimary']}>Edit secure schemas</Button>,
-          //     ]}
-          //     activeId={this.state.security}
-          //     options={[
-          //       { id: 0, text: 'JWT' },
-          //       { id: 1, text: 'OAuth 2.0' },
-          //     ]}
-          //     onChange={this.onSecutityChange}
-          //   />
-          // )}
         >
           { this.renderRequest() }
         </DocumentationBlock>
@@ -304,7 +297,7 @@ class EndpointEditor extends React.Component {
         </DocumentationBlock>
 
         <div className={styles.buttons}>
-          <Button variants={['text', 'warning']} onClick={this.removeEndpoint}>Remove this endpoint</Button>
+
         </div>
 
       </div>

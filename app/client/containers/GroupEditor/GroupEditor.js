@@ -3,8 +3,11 @@ import { connect } from 'react-redux';
 
 import styles from './GroupEditor.css';
 
-import { loadGroup, updateGroup } from 'services/groupEditor';
+import { loadGroup, updateGroup, removeGroup } from 'services/groupEditor';
 import UpdateGroupForm from 'components/GroupForm/UpdateGroupForm';
+import Button from 'components/Button/Button';
+import Header from 'components/Header/Header';
+import Icon from 'components/Icon/Icon';
 
 @connect(store => ({
   group: store.groupEditor,
@@ -26,8 +29,6 @@ class GroupEditor extends React.Component {
     const { group_id } = this.props.params;
 
     if (prevProps.params.group_id !== group_id) {
-      console.log(`loading for ${group_id}`);
-      console.log(`old one is ${prevProps.params.group_id}`);
       this.loadGroup();
     }
   }
@@ -39,7 +40,17 @@ class GroupEditor extends React.Component {
 
   onSave = (values) => {
     const { id } = this.props.group;
-    return this.props.dispatch(updateGroup(id, values));
+    const { dispatch } = this.props;
+
+    return dispatch(updateGroup(id, values));
+  }
+
+  removeGroup = () => {
+    const { id } = this.props.group;
+    const { dispatch } = this.props;
+    if (confirm('Are you sure you want to remove this group? This action can not be undone and all endpoints and groups within will be lost')) {
+      return dispatch(removeGroup(id));
+    }
   }
 
   render() {
@@ -47,6 +58,11 @@ class GroupEditor extends React.Component {
 
     return (
       <div className={styles.container}>
+        <Header title="Group editor">
+          <Button variants={['rounded', 'body']} icon={<Icon name="trash" size="lg" />} onClick={this.removeGroup}>
+            Remove group
+          </Button>
+        </Header>
         <UpdateGroupForm
           enableReinitialize // Refresh when group loads
           onSubmit={this.onSave}
