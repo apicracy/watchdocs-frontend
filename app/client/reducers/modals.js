@@ -12,7 +12,7 @@ export function modals(state = INITIAL_STATE, action) {
 
   switch (type) {
     case OPEN_MODAL: return openModal(state, payload);
-    case CLOSE_MODAL: return closeModal(state, payload);
+    case CLOSE_MODAL: return closeModal(state);
     default: return state;
   }
 }
@@ -20,15 +20,15 @@ export function modals(state = INITIAL_STATE, action) {
 function openModal(state, payload) {
   return {
     ...state,
-    [payload.id]: true,
+    opened: payload.id,
     refId: payload.refId,
   };
 }
 
-function closeModal(state, id) {
+function closeModal(state) {
   return {
     ...state,
-    [id]: false,
+    opened: null,
     refId: null,
   };
 }

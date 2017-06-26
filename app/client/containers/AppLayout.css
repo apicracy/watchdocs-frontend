@@ -47,3 +47,8 @@
 .helpLink:hover {
   color: white
 }
+
+.modalOpened {
+  height: 100%;
+  overflow-x: hidden;
+}

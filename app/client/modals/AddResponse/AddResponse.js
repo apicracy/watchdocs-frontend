@@ -10,7 +10,7 @@ import { closeModal } from 'actions/modals';
 export const MODAL_NAME = 'addResponse';
 
 @connect(store => ({
-  isVisible: !!store.modals[MODAL_NAME],
+  isVisible: store.modals.opened === MODAL_NAME,
 }))
 
 class addResponseModal extends React.Component {

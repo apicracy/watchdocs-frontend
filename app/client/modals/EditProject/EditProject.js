@@ -10,7 +10,7 @@ import { updateProject } from 'services/projects';
 export const MODAL_NAME = 'EditProject';
 
 @connect(state => ({
-  isVisible: state.modals[MODAL_NAME],
+  isVisible: state.modals.opened === MODAL_NAME,
   project: state.projects.activeProject,
 }))
 class EditModal extends React.Component {

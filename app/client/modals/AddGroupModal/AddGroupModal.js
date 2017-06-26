@@ -13,7 +13,7 @@ import {
 export const MODAL_NAME = 'AddNewGroup';
 
 @connect(state => ({
-  isVisible: state.modals[MODAL_NAME],
+  isVisible: state.modals.opened === MODAL_NAME,
   activeProjectId: state.projects.activeProject.id,
 }))
 class AddGroupModal extends React.Component {

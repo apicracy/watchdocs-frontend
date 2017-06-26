@@ -15,7 +15,7 @@ import {
 export const MODAL_NAME = 'EditEndpoint';
 
 @connect(state => ({
-  isVisible: state.modals[MODAL_NAME],
+  isVisible: state.modals.opened === MODAL_NAME,
   isEdit: state.modifyEndpoint.isEdit,
   endpointType: state.modifyEndpoint.method,
 }))

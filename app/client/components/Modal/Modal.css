@@ -2,20 +2,19 @@
 
 .root {
   font-weight: normal;
-  display: flex;
-  flex-direction: column;
+  max-height: 100%;
+  overflow: auto;
   width: 550px;
   background-color: white;
   color: #7f7d94;
   font-size: 14px;
-  height: max-content;
-  max-height: calc(100vh - 100px);
 }
 
 .overlay {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 
   position: fixed;
   top: 0;
