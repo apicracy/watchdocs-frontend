@@ -17,7 +17,7 @@ const warningMessage = {
 };
 
 @connect(store => ({
-  isVisible: !!store.modals[MODAL_NAME],
+  isVisible: store.modals.opened === MODAL_NAME,
   endpoint: store.endpointEditor,
   modals: store.modals,
   endpointId: store.endpointEditor.id,

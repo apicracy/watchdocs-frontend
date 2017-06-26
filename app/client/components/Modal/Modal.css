@@ -2,26 +2,21 @@
 
 .root {
   font-weight: normal;
-  display: flex;
-  flex-direction: column;
   width: 550px;
   background-color: white;
   color: #7f7d94;
   font-size: 14px;
-  height: max-content;
-  max-height: calc(100vh - 100px);
+  margin: 40px auto;
 }
 
-.overlay {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 
+.overlay {
   position: fixed;
   top: 0;
-  bottom: 0;
+  height: 100%;
   right: 0;
   left: 0;
+  overflow: scroll;
 
   z-index: 10000;
   background: rgba(0, 0, 0, .8);

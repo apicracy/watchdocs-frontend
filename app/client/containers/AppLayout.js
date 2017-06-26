@@ -23,6 +23,7 @@ import Modals from 'modals/Modals';
   activeProject: store.projects.activeProject,
   username: store.session.user && store.session.user.email,
   endpointsCount: store.endpoints.length,
+  isModalOpened: !!store.modals.opened,
 }))
 
 class AppLayout extends React.Component {
@@ -38,6 +39,7 @@ class AppLayout extends React.Component {
     activeProject: React.PropTypes.object,
     username: React.PropTypes.string,
     endpointsCount: React.PropTypes.number,
+    isModalOpened: React.PropTypes.bool,
   }
 
   componentWillMount() {
@@ -77,7 +79,14 @@ class AppLayout extends React.Component {
   }
 
   render() {
-    const { projects, activeProject, username, children, endpointsCount } = this.props;
+    const {
+      projects,
+      activeProject,
+      username,
+      children,
+      endpointsCount,
+      isModalOpened
+    } = this.props;
 
     return (
       <div className={styles.container}>
@@ -110,7 +119,7 @@ class AppLayout extends React.Component {
             </Container>
           </AppBar>
         </div>
-        <div className={styles.content}>
+        <div className={`${styles.content} ${isModalOpened ? styles.modalOpened : ''}`}>
           { children }
         </div>
         <Modals params={this.props.params} />
