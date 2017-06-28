@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import styles from './DocLayout.css';
 import DOMPurify from 'dompurify';
@@ -35,6 +34,4 @@ GroupDoc.propTypes = {
   projectSlug: React.PropTypes.string,
 };
 
-export default connect(store => ({
-  projectSlug: store.projects.activeProject.slug,
-}))(GroupDoc);
+export default GroupDoc;

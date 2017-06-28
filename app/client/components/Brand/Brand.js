@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Brand.css';
 import img from 'assets/watchdocslogo_white.png';
-import Link from 'components/NavigationLink/LinkWrapper';
+import { Link } from 'react-router';
 
 const Brand = ({ href = '/', center }) => (
   <Link to={href} className={center ? styles.center : styles.brand}>

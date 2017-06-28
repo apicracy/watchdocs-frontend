@@ -5,7 +5,6 @@ const API_URL = process.env.API_URL;
 
 export const checkIfAuthorised = (response) => {
   if (response.status === 401) {
-    browserHistory.push('/login');
     return Promise.reject([]);
   }
   return response;

@@ -28,11 +28,13 @@
 .navigation {
   display: inline-flex;
   align-items: center;
+  height: 100%;
 }
 
 .right {
   display: inline-flex;
   align-items: center;
+  height: 100%;
 }
 
 .right > svg {

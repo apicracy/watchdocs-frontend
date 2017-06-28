@@ -23,7 +23,7 @@ export function getCurrentUser() {
   return (dispatch) => {
     dispatch(loginRequest());
 
-    http('/api/v1/users/me')
+    return http('/api/v1/users/me')
       .then(response => response.json())
       .then(response => dispatch(loginSuccess(response)))
       .catch((err) => {

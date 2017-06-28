@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styles from './DocumentationViewer.css';
 
+import AppLayout from 'containers/AppLayout';
+
 import Sidebar from 'components/Sidebar/Sidebar';
 import TextInput from 'components/Form/TextInput/TextInput';
 import Icon from 'components/Icon/Icon';
@@ -16,8 +18,8 @@ import { fetchDocumentation } from 'services/documentation';
 @connect(store => ({
   documentation: store.documentation.data,
   isFetching: store.documentation.isFetching,
-  projectUrl: store.projects.activeProject.base_url,
-  activeProject: store.projects.activeProject,
+  projectUrl: store.documentation.data.base_url,
+  currentUser: store.session.user,
 }))
 
 class DocumentationViewer extends React.Component {
@@ -26,27 +28,25 @@ class DocumentationViewer extends React.Component {
     projectUrl: React.PropTypes.string,
     dispatch: React.PropTypes.func,
     isFetching: React.PropTypes.bool,
-    activeProject: React.PropTypes.object,
+    params: React.PropTypes.object,
+    currentUser: React.PropTypes.object,
   }
 
   componentWillMount() {
-    const { dispatch, activeProject } = this.props;
+    const { dispatch, params: { project_name } } = this.props;
 
     this.setState({
       search: '',
     });
 
-    if (activeProject.id) {
-      dispatch(fetchDocumentation(activeProject.id));
-    }
+    dispatch(fetchDocumentation(project_name));
   }
 
   componentWillReceiveProps(nextProps) {
     const { dispatch } = this.props;
-    const { activeProject } = nextProps;
 
-    if (activeProject.id && activeProject.id !== this.props.activeProject.id) {
-      dispatch(fetchDocumentation(activeProject.id));
+    if (nextProps.params.project_name && nextProps.params.project_name !== this.props.params.project_name) {
+      dispatch(fetchDocumentation(nextProps.params.project_name));
     }
   }
 
@@ -67,6 +67,7 @@ class DocumentationViewer extends React.Component {
   renderDoc(documentation, isTop) {
     const {
       projectUrl,
+      params: { project_name: projectSlug },
     } = this.props;
 
     return documentation.map((v, i) => (
@@ -75,6 +76,7 @@ class DocumentationViewer extends React.Component {
         topLevel={isTop}
         doc={v}
         projectUrl={projectUrl}
+        projectSlug={projectSlug}
       >
         { v.items && this.renderDoc(v.items, false) }
       </DocLayout>
@@ -90,11 +92,11 @@ class DocumentationViewer extends React.Component {
   }
 
   render() {
-    const { documentation } = this.props;
+    const { documentation, isFetching } = this.props;
 
     return (
       <div className={styles.container}>
-        { this.props.isFetching && <LoadingIndicator fixed /> }
+        { isFetching && <LoadingIndicator fixed /> }
         <Sidebar>
           <ScrollSpy>
             { this.renderMenu() }
