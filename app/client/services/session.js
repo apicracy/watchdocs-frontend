@@ -5,7 +5,7 @@ import {
   logout as logoutAction,
 } from 'actions/session';
 
-import http, { httpNoAuth } from 'services/http';
+import http, { httpNoAuth, httpAuth } from 'services/http';
 
 import { browserHistory } from 'react-router';
 
@@ -23,7 +23,7 @@ export function getCurrentUser() {
   return (dispatch) => {
     dispatch(loginRequest());
 
-    return http('/api/v1/users/me')
+    return http('/api/v1/users/me', {}, { unauthorizedRedirect: false })
       .then(response => response.json())
       .then(response => dispatch(loginSuccess(response)))
       .catch((err) => {

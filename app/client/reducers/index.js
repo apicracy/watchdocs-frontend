@@ -11,6 +11,7 @@
  */
 
 import { endpoints } from 'reducers/endpointsTree';
+import { appLayout } from 'reducers/appLayout';
 import { modifyEndpoint } from 'reducers/modifyEndpoint-reducer';
 import { endpointEditor } from 'reducers/endpointEditor';
 import { responseEditor } from 'reducers/responseEditor';
@@ -35,5 +36,6 @@ export const reducers = {
   requestEditor,
   session,
   documentation,
+  appLayout,
   /* reapp: append new reducer */
 };

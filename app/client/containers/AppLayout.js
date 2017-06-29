@@ -25,6 +25,8 @@ import Modals from 'modals/Modals';
   endpointsCount: store.endpoints.list.length,
   isModalOpened: !!store.modals.opened,
   currentUser: store.session.user,
+  title: store.appLayout.title,
+  subtitle: store.appLayout.subtitle,
 }))
 
 class AppLayout extends React.Component {
@@ -42,6 +44,8 @@ class AppLayout extends React.Component {
     isModalOpened: React.PropTypes.bool,
     currentUser: React.PropTypes.object,
     location: React.PropTypes.object,
+    title: React.PropTypes.string,
+    subtitle: React.PropTypes.string,
   }
 
   componentDidMount() {
@@ -49,8 +53,6 @@ class AppLayout extends React.Component {
 
     dispatch(getCurrentUser())
       .then(() => dispatch(loadProjects(params.project_name)))
-      .then(() => dispatch())
-      .catch(() => {});
     this.openDrift();
   }
 
@@ -87,7 +89,9 @@ class AppLayout extends React.Component {
     return (
       <Container center>
         <div className={styles.navigation}>
-          <Brand />
+          <Link href="/">
+            <Brand />
+          </Link>
           <ProjectSelector
             projects={projects}
             onSelect={this.switchProject}
@@ -100,7 +104,7 @@ class AppLayout extends React.Component {
         <div className={styles.right}>
           <a className={styles.helpLink} onClick={this.openHelp}>
             <CustomIcon name="help" size="lg" />
-          </a>
+        </a>
           <UserMenu
             username={currentUser.email}
             onLogout={this.onLogout}
@@ -114,10 +118,12 @@ class AppLayout extends React.Component {
     return (
       <Container center>
         <div className={styles.navigation}>
-          <Brand href={`${this.props.location.pathname}`} />
+          <a href="https://watchdocs.io">
+            <Brand />
+          </a>
           <div className={styles.titleContainer}>
-            <h1 className={styles.title}>Watchdocs.io</h1>
-            <h2 className={styles.subtitle}>Public API documentation</h2>
+            <h1 className={styles.title}>{this.props.title}</h1>
+            <h2 className={styles.subtitle}>{this.props.subtitle}</h2>
           </div>
         </div>
         <div className={styles.right}>

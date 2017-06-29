@@ -111,8 +111,8 @@ const getRoutes = () => (
           <Route path="endpoint/:endpoint_id/response/:response_id" component={ResponseEditor} />
         </Route>
 
-        <Route path="documentation" component={DocumentationViewer} />
         <Route path="setup-instructions" component={InitialSetupInstructions} />
+        <Route path="documentation" component={DocumentationViewer} />
         <Route path="about" component={About} />
         <Route path="settings" component={Settings} />
       </Route>

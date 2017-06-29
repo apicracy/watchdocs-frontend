@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styles from './DocumentationViewer.css';
+// HACK: Importing to plug into css selector for scrollspy :)
+import appLayoutStyles from 'containers/AppLayout.css';
 
 import AppLayout from 'containers/AppLayout';
 
@@ -102,7 +104,8 @@ class DocumentationViewer extends React.Component {
       <div className={styles.container}>
         { isFetching && <LoadingIndicator fixed /> }
         <Sidebar>
-          <ScrollSpy>
+          { /* Hack: Connect to appLayout styles to obtain selector */ }
+          <ScrollSpy rootEl={`.${appLayoutStyles.content}`}>
             { this.renderMenu() }
           </ScrollSpy>
         </Sidebar>
