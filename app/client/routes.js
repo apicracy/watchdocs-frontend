@@ -27,65 +27,6 @@ import { openFirstEndpoint } from 'services/projects';
 import { fetchEndpoints } from 'services/endpointsTree';
 import { clearProjects } from 'actions/projects';
 
-// const requireAuth = (nextState, replace) => {
-//   const { pathname } = nextState.location;
-//   if (!localStorage.getItem('JWT')) {
-//     if (pathname && pathname !== '/') {
-//       replace({
-//         pathname: '/login',
-//         query: {
-//           redirect: pathname,
-//         },
-//       });
-//     } else {
-//       replace({
-//         pathname: '/login',
-//       });
-//     }
-//   }
-// };
-
-// const fetchProjectTree = (store, nextState, callback) => {
-//   const endpoints = store.getState().endpoints;
-//   const activeProject = store.getState().projects.activeProject;
-//   const endpointId = nextState.params.endpoint_id;
-//   const groupId = nextState.params.group_id;
-
-//   if (endpoints.length > 0) {
-//     if (!endpointId && !groupId) {
-//       openFirstEndpoint(activeProject.slug, store.getState().endpoints);
-//     }
-//     callback();
-//   } else {
-//     store.dispatch(fetchEndpoints(activeProject.id)).then(() => {
-//       if (!endpointId && !groupId) {
-//         openFirstEndpoint(activeProject.slug, store.getState().endpoints);
-//       }
-//       callback();
-//     });
-//   }
-// };
-
-// const prepareProjectTreeOnChange = store => (
-//   (_prevState, nextState, _replace, callback) => {
-//     fetchProjectTree(store, nextState, callback);
-//   }
-// );
-
-// const prepareProjectTreeOnEnter = store => (
-//   (nextState, _replace, callback) => {
-//     fetchProjectTree(store, nextState, callback);
-//   }
-// );
-
-// const resetProjects = store => (
-//   (_nextState, _replace, callback) => {
-//     store.dispatch(clearProjects());
-//     callback();
-//   }
-// );
-
-
 const getRoutes = () => (
   <Route>
     <Route path="/login" component={Login} />
