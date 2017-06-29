@@ -23,6 +23,19 @@ export function flattenTree(tree) {
   return tree.reduce(flat, []);
 }
 
+export function parseTreeItem(item) {
+  const parsedItem = item;
+  if (item.type !== 'Group') parsedItem.leaf = true;
+  if (!item.items) return parsedItem;
+
+  parsedItem.children = item.items.map(treeItem => (
+    parseTreeItem(treeItem)
+  ));
+  return parsedItem;
+}
+
+// private
+
 function flat(list, item) {
   const newItem = {};
   Object.keys(item).forEach((key) => {

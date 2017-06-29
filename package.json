@@ -72,6 +72,7 @@
     "dompurify": "^0.8.9",
     "draft-js": "^0.10.1",
     "draft-js-code": "mazikwyry/draft-js-code",
+    "draggable-react-tree-component": "^1.0.16",
     "estraverse-fb": "^1.3.1",
     "exports-loader": "^0.6.4",
     "express": "^4.13.x",
@@ -88,6 +89,7 @@
     "lodash": "^4.17.4",
     "node-sass": "^3.4.x",
     "object-hash": "^1.1.8",
+    "rc-animate": "^2.4.0",
     "rc-switch": "^1.4.4",
     "react": "^15.5.4",
     "react-clipboard.js": "^1.1.2",
@@ -113,6 +115,7 @@
     "svg-inline-loader": "^0.7.1",
     "svg-url-loader": "^2.0.2",
     "traverse": "^0.6.6",
+    "react-ui-tree": "mazikwyry/react-ui-tree",
     "url-loader": "^0.5.x",
     "webpack": "^1.12.x",
     "whatwg-fetch": "^2.0.3"
