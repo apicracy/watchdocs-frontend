@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import styles from './AppLayout.css';
 
 import { logout, getCurrentUser } from 'services/session';
-import { browserHistory } from 'react-router';
+import { loadProjects, setActiveProject } from 'services/projects';
+import { Link } from 'react-router';
 
-import ReduxToastr from 'react-redux-toastr'
+import ReduxToastr from 'react-redux-toastr';
 
 import AppBar from 'components/AppBar/AppBar';
 import Container from 'components/Container/Container';
@@ -21,9 +22,11 @@ import Modals from 'modals/Modals';
 @connect(store => ({
   projects: store.projects.projectList,
   activeProject: store.projects.activeProject,
-  username: store.session.user && store.session.user.email,
-  endpointsCount: store.endpoints.length,
+  endpointsCount: store.endpoints.list.length,
   isModalOpened: !!store.modals.opened,
+  currentUser: store.session.user,
+  title: store.appLayout.title,
+  subtitle: store.appLayout.subtitle,
 }))
 
 class AppLayout extends React.Component {
@@ -37,22 +40,25 @@ class AppLayout extends React.Component {
     dispatch: React.PropTypes.func,
     projects: React.PropTypes.array,
     activeProject: React.PropTypes.object,
-    username: React.PropTypes.string,
     endpointsCount: React.PropTypes.number,
     isModalOpened: React.PropTypes.bool,
+    currentUser: React.PropTypes.object,
+    location: React.PropTypes.object,
+    title: React.PropTypes.string,
+    subtitle: React.PropTypes.string,
   }
 
-  componentWillMount() {
-    this.props.dispatch(getCurrentUser());
+  componentDidMount() {
+    const { dispatch, params } = this.props;
+
+    dispatch(getCurrentUser())
+      .then(() => dispatch(loadProjects(params.project_name)))
     this.openDrift();
   }
 
   switchProject = (id) => {
-    const { projects } = this.props;
-    const selectedProject = projects.find(project => project.id === id);
-    if (!selectedProject) { return false; }
-    browserHistory.push(`/${selectedProject.slug}/editor`);
-    return true;
+    const { dispatch } = this.props;
+    dispatch(setActiveProject(id));
   }
 
   onLogout = () => {
@@ -78,14 +84,61 @@ class AppLayout extends React.Component {
     });
   }
 
+  userMenu = () => {
+    const { projects, activeProject, currentUser, endpointsCount } = this.props;
+    return (
+      <Container center>
+        <div className={styles.navigation}>
+          <Link href="/">
+            <Brand />
+          </Link>
+          <ProjectSelector
+            projects={projects}
+            onSelect={this.switchProject}
+            activeProject={activeProject}
+          />
+          <NavLink url="/editor" text="Editor" icon={<Icon name="edit" />} id="nav-editor" />
+          <NavLink url="/documentation" text="Documentation" icon={<CustomIcon name="documentation" size="sm" />} id="nav-documentation" disabled={endpointsCount === 0} />
+          <NavLink url="/settings" text="Settings" icon={<CustomIcon name="settings" size="sm" />} id="nav-settings" />
+        </div>
+        <div className={styles.right}>
+          <a className={styles.helpLink} onClick={this.openHelp}>
+            <CustomIcon name="help" size="lg" />
+        </a>
+          <UserMenu
+            username={currentUser.email}
+            onLogout={this.onLogout}
+          />
+        </div>
+      </Container>
+    );
+  }
+
+  guestMenu = () => {
+    return (
+      <Container center>
+        <div className={styles.navigation}>
+          <a href="https://watchdocs.io">
+            <Brand />
+          </a>
+          <div className={styles.titleContainer}>
+            <h1 className={styles.title}>{this.props.title}</h1>
+            <h2 className={styles.subtitle}>{this.props.subtitle}</h2>
+          </div>
+        </div>
+        <div className={styles.right}>
+          <Link to="/login" className={styles.navigationLink}>Login</Link>
+          <Link to="/signup" className={styles.navigationLink}>Signup</Link>
+        </div>
+      </Container>
+    );
+  }
+
   render() {
     const {
-      projects,
-      activeProject,
-      username,
+      currentUser,
       children,
-      endpointsCount,
-      isModalOpened
+      isModalOpened,
     } = this.props;
 
     return (
@@ -93,30 +146,7 @@ class AppLayout extends React.Component {
         <Tutorial />
         <div className={styles.header}>
           <AppBar>
-            <Container center>
-              <div className={styles.navigation}>
-                <Brand />
-                { projects.length > 1 && (
-                  <ProjectSelector
-                    projects={projects}
-                    onSelect={this.switchProject}
-                    activeProject={activeProject}
-                  />
-                )}
-                <NavLink url="/editor" text="Editor" icon={<Icon name="edit" />} id="nav-editor" />
-                <NavLink url="/documentation" index={!this.props.params.group_id} text="Documentation" icon={<CustomIcon name="documentation" size="sm" />} id="nav-documentation" disabled={endpointsCount === 0} />
-                <NavLink url="/settings" text="Settings" icon={<CustomIcon name="settings" size="sm" />} id="nav-settings" />
-              </div>
-              <div className={styles.right}>
-                <a className={styles.helpLink} onClick={this.openHelp}>
-                  <CustomIcon name="help" size="lg" />
-                </a>
-                <UserMenu
-                  username={username}
-                  onLogout={this.onLogout}
-                />
-              </div>
-            </Container>
+            { currentUser ? this.userMenu() : this.guestMenu() }
           </AppBar>
         </div>
         <div className={`${styles.content} ${isModalOpened ? styles.modalOpened : ''}`}>

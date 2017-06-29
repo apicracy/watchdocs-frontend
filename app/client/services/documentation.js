@@ -1,14 +1,20 @@
 import parseJsonSchema from './json-schema-parser';
 import http from 'services/http';
 import { fetchDocumentation as fetchDoc, fetchRequest } from 'actions/documentation';
+import { setTitles } from 'actions/appLayout';
 
 export function fetchDocumentation(projectId) {
   return (dispatch) => {
     dispatch(fetchRequest());
     http(`/api/v1/projects/${projectId}/documentation`)
       .then(response => response.json())
-      .then(response => buildDocumentation(response.documentation))
-      .then(response => dispatch(fetchDoc(response)));
+      .then(response => {
+        dispatch(setTitles(response.name, 'Living API documentation'));
+        return buildDocumentation(response.documentation);
+      })
+      .then(response => {
+        return dispatch(fetchDoc(response));
+      });
   };
 }
 

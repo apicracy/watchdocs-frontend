@@ -1,16 +1,24 @@
 import {
-  fetchEndpoints as load,
+  fetchEndpointsStart as fetchStart,
+  fetchEndpointsError as fetchError,
+  fetchEndpointsSuccess as fetchSuccess,
   removeEndpoint as remove,
 } from 'actions/endpointsTree';
 
 import http from 'services/http';
 
 export function fetchEndpoints(projectId) {
-  return dispatch => (
-    http(`/api/v1/projects/${projectId}`)
+  return (dispatch) => {
+    dispatch(fetchStart());
+
+    return http(`/api/v1/projects/${projectId}`)
       .then(response => response.json())
-      .then(data => dispatch(load(data.tree)))
-  );
+      .then(data => dispatch(fetchSuccess(data.tree)))
+      .catch(() => {
+        dispatch(fetchError());
+        return Promise.reject([]);
+      });
+  };
 }
 
 export function removeEndpoint(endpointId) {

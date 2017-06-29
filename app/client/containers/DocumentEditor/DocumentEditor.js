@@ -10,7 +10,7 @@ import TextInput from 'components/Form/TextInput/TextInput';
 import { loadDocument } from 'services/documentEditor';
 
 @connect(state => ({
-  endpointList: state.endpoints,
+  endpointList: state.endpoints.list,
   name: state.documentEditor.name,
   description: state.documentEditor.description,
 }))

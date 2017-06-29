@@ -5,6 +5,7 @@ import styles from './ScrollSpy.css';
 class ScrollSpy extends React.Component {
   static propTypes = {
     children: React.PropTypes.node,
+    rootEl: React.PropTypes.string.isRequired,
   }
 
   static childContextTypes = {
@@ -30,11 +31,13 @@ class ScrollSpy extends React.Component {
 
   componentDidMount() {
     this.setCurrentSection();
-    window.addEventListener('scroll', this.setCurrentSection);
+    const el = this.props.rootEl ? document.querySelector(this.props.rootEl) : window
+    el.addEventListener('scroll', this.setCurrentSection);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.setCurrentSection);
+    const el = this.props.rootEl ? document.querySelector(this.props.rootEl) : window
+    el.removeEventListener('scroll', this.setCurrentSection);
   }
 
   registerLink = (section) => {
@@ -63,7 +66,6 @@ class ScrollSpy extends React.Component {
   setCurrentSection = () => {
     const { sections } = this.state;
     const sectionCount = sections.length;
-
     this.floatingMenu();
 
     if (!sectionCount) return;
