@@ -9,7 +9,7 @@ export function fetchEndpoints(projectId) {
   return dispatch => (
     http(`/api/v1/projects/${projectId}`)
       .then(response => response.json())
-      .then(data => dispatch(load(data.tree)))
+      .then(data => dispatch(load(data.tree, data.tree_root_id)))
   );
 }
 
@@ -17,6 +17,21 @@ export function removeEndpoint(endpointId) {
   return dispatch => (
     dispatch(remove(endpointId))
   );
+}
+
+export function moveTreeItem(itemToMoveId, params, reloadTree) {
+  return (dispatch) => {
+    const options = {
+      method: 'PUT',
+      body: JSON.stringify(params),
+    };
+
+    return http(`/api/v1/tree_items/${itemToMoveId}`, options)
+      .then(response => response.json())
+      .then((data) => {
+        if (reloadTree) dispatch(load(data.tree, data.tree_root_id));
+      });
+  };
 }
 
 export function flattenTree(tree) {

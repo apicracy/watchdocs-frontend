@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './EndpointList.css';
+import { connect } from 'react-redux';
 
 import EndpointListGroup from './EndpointListGroup/EndpointListGroup';
 import EndpointListItem from './EndpointListItem/EndpointListItem';
@@ -12,9 +13,13 @@ import ProjectTree from 'components/ProjectTree/ProjectTree';
 
 import { parseTreeItem } from 'services/endpointsTree';
 
+@connect(store => ({
+  treeRootId: store.endpoints.treeRootId,
+}))
 class EndpointList extends React.Component {
   static propTypes = {
     endpoints: React.PropTypes.array,
+    treeRootId: React.PropTypes.number,
     activeGroup: React.PropTypes.string,
     selected: React.PropTypes.string,
     onAddNewEndpoint: React.PropTypes.func,
@@ -34,16 +39,16 @@ class EndpointList extends React.Component {
   );
 
   projectTree = () => {
-    const { endpoints } = this.props;
+    const { endpoints, treeRootId } = this.props;
     return {
-      tree_item_id: -1,
+      tree_item_id: treeRootId,
       children: endpoints.map(treeItem => parseTreeItem(treeItem)),
     };
   }
 
   render() {
     /* eslint no-unused-vars: 0 */
-    const { endpoints, activeGroup, selected,
+    const { endpoints, activeGroup, selected, treeRootId,
       onAddNewEndpoint, onAddNewGroup, onAddNewDocument,
     } = this.props;
     return (
@@ -53,6 +58,7 @@ class EndpointList extends React.Component {
             tree={this.projectTree()}
             activeGroup={activeGroup}
             selected={selected}
+            treeRootId={treeRootId}
           />
           { (!endpoints || endpoints.length === 0) && this.renderNoItems() }
         </div>

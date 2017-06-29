@@ -1,10 +1,10 @@
 export const FETCH_ENDPOINTS = 'fetch@endpoints';
 export const CLEAR_ENDPOINTS = 'clear@endpoints';
 
-export function fetchEndpoints(endpoints) {
+export function fetchEndpoints(tree, treeRootId) {
   return {
     type: FETCH_ENDPOINTS,
-    payload: endpoints,
+    payload: { tree, treeRootId },
   };
 }
 

@@ -5,7 +5,7 @@ import styles from './AppLayout.css';
 import { logout, getCurrentUser } from 'services/session';
 import { browserHistory } from 'react-router';
 
-import ReduxToastr from 'react-redux-toastr'
+import ReduxToastr from 'react-redux-toastr';
 
 import AppBar from 'components/AppBar/AppBar';
 import Container from 'components/Container/Container';
@@ -22,7 +22,7 @@ import Modals from 'modals/Modals';
   projects: store.projects.projectList,
   activeProject: store.projects.activeProject,
   username: store.session.user && store.session.user.email,
-  endpointsCount: store.endpoints.length,
+  endpointsCount: store.endpoints.tree.length,
 }))
 
 class AppLayout extends React.Component {

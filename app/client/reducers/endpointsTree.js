@@ -3,7 +3,10 @@ import {
   CLEAR_ENDPOINTS,
 } from 'actions/endpointsTree';
 
-export const INITIAL_STATE = [];
+export const INITIAL_STATE = {
+  tree: [],
+  treeRootId: null,
+};
 
 export function endpoints(state = INITIAL_STATE, action) {
   const { type, payload } = action;
@@ -16,5 +19,5 @@ export function endpoints(state = INITIAL_STATE, action) {
 }
 
 function fetchEndpoints(_state, payload) {
-  return [...payload];
+  return { ...payload };
 }

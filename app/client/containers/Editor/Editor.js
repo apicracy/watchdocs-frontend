@@ -6,7 +6,7 @@ import Aside from 'containers/Aside/Aside';
 import Content from 'components/Content/Content';
 
 @connect(store => ({
-  endpoints: store.endpoints,
+  endpoints: store.endpoints.tree,
 }))
 
 class Editor extends React.Component {
