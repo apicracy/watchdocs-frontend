@@ -23,7 +23,7 @@ let APP_ENV = {
 if (process.env.NODE_ENV === 'development') {
   APP_ENV = Object.assign({}, APP_ENV, {
     BASE_PATH: '/dist/',
-    'process.env.API_URL': 'http://localhost:3001',
+    'process.env.API_URL': 'https://watchdocs-backend-dev.herokuapp.com',
   });
 }
 
