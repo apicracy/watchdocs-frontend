@@ -41,6 +41,8 @@ class EndpointList extends React.Component {
   projectTree = () => {
     const { endpoints, treeRootId } = this.props;
     return {
+      type: 'Group',
+      name: 'root',
       tree_item_id: treeRootId,
       children: endpoints.map(treeItem => parseTreeItem(treeItem)),
     };

@@ -107,7 +107,7 @@ class ProjectTree extends Component {
     // from what what we received in params
     if (destinationId === this.props.treeRootId) {
       reload = true;
-      const firstItemInRoot = tree.children[1];
+      const firstItemInRoot = tree.children[0];
       if (!firstItemInRoot) params = { to: this.props.treeRootId };
       params = { before: firstItemInRoot.tree_item_id };
     }

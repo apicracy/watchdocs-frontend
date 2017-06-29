@@ -65,20 +65,20 @@ const fetchProjects = store => (
 
 
 const fetchProjectTree = (store, nextState, callback) => {
-  const endpoints = store.getState().endpoints;
+  const endpoints = store.getState().endpoints.tree;
   const activeProject = store.getState().projects.activeProject;
   const endpointId = nextState.params.endpoint_id;
   const groupId = nextState.params.group_id;
 
   if (endpoints.length > 0) {
     if (!endpointId && !groupId) {
-      openFirstEndpoint(activeProject.slug, store.getState().endpoints);
+      openFirstEndpoint(activeProject.slug, store.getState().endpoints.tree);
     }
     callback();
   } else {
     store.dispatch(fetchEndpoints(activeProject.id)).then(() => {
       if (!endpointId && !groupId) {
-        openFirstEndpoint(activeProject.slug, store.getState().endpoints);
+        openFirstEndpoint(activeProject.slug, store.getState().endpoints.tree);
       }
       callback();
     });

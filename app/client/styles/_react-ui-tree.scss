@@ -59,14 +59,11 @@
   overflow-y: auto;
 }
 
+// Hack to hide tree root
 .m-tree{
-  & > .m-node{
-    & > .inner {
-      display: none;
-    }
-  }
   position: relative;
-  left: -20px;
+  left: -10px;
+  top: -27px;
 }
 
 .m-node {
