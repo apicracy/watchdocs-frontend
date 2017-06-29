@@ -9,20 +9,17 @@ import {
 } from 'actions/projects';
 
 import { clearEndpoints } from 'actions/endpointsTree';
-import { flattenTree } from 'services/endpointsTree';
+import { flattenTree, fetchEndpoints } from 'services/endpointsTree';
 
 export function loadProjects(slugToActivate) {
   return dispatch => http('/api/v1/projects')
     .then(response => response.json())
     .then((projects) => {
       const projectToActivate = projects.find(p => p.slug === slugToActivate) || projects[0];
-
       dispatch(load(projects));
 
       if (projectToActivate) {
         dispatch(setActiveProject(projectToActivate.id));
-      } else if (projects.length) {
-        browserHistory.push(`/projects-manager?notFound=${slugToActivate}`);
       } else {
         browserHistory.push('/new_project');
       }
@@ -32,8 +29,10 @@ export function loadProjects(slugToActivate) {
 export function setActiveProject(id) {
   return (dispatch, getState) => {
     const project = getState().projects.projectList.find(p => p.id === id);
-    dispatch(setActive(project));
     dispatch(clearEndpoints());
+    dispatch(setActive(project));
+    dispatch(fetchEndpoints(project.id));
+    browserHistory.push(`/${project.slug}/editor`);
   };
 }
 

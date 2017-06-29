@@ -23,111 +23,28 @@ import ResetPassword from 'containers/ResetPassword/ResetPassword';
 import NewProjectWizard from 'containers/Projects/NewProjectWizard';
 import InitialSetupInstructions from 'containers/InitialSetupInstructions/InitialSetupInstructions';
 
-import { loadProjects, openFirstEndpoint } from 'services/projects';
+import { openFirstEndpoint } from 'services/projects';
 import { fetchEndpoints } from 'services/endpointsTree';
 import { clearProjects } from 'actions/projects';
 
-const requireAuth = (nextState, replace) => {
-  const { pathname } = nextState.location;
-  if (!localStorage.getItem('JWT')) {
-    if (pathname && pathname !== '/') {
-      replace({
-        pathname: '/login',
-        query: {
-          redirect: pathname,
-        },
-      });
-    } else {
-      replace({
-        pathname: '/login',
-      });
-    }
-  }
-};
-
-const fetchProjects = store => (
-  (nextState, replace, callback) => {
-    const currentProjectSlug = store.getState().projects.activeProject.slug;
-    const newProjectSlug = nextState.params.project_name;
-    if (currentProjectSlug && (currentProjectSlug === newProjectSlug)) {
-      callback();
-    } else {
-      store.dispatch(loadProjects(newProjectSlug)).then(() => {
-        if (newProjectSlug) {
-          callback();
-        } else {
-          browserHistory.push(`/${store.getState().projects.activeProject.slug}`);
-        }
-      });
-    }
-  }
-);
-
-
-const fetchProjectTree = (store, nextState, callback) => {
-  const endpoints = store.getState().endpoints;
-  const activeProject = store.getState().projects.activeProject;
-  const endpointId = nextState.params.endpoint_id;
-  const groupId = nextState.params.group_id;
-
-  if (endpoints.length > 0) {
-    if (!endpointId && !groupId) {
-      openFirstEndpoint(activeProject.slug, store.getState().endpoints);
-    }
-    callback();
-  } else {
-    store.dispatch(fetchEndpoints(activeProject.id)).then(() => {
-      if (!endpointId && !groupId) {
-        openFirstEndpoint(activeProject.slug, store.getState().endpoints);
-      }
-      callback();
-    });
-  }
-};
-
-const prepareProjectTreeOnChange = store => (
-  (_prevState, nextState, _replace, callback) => {
-    fetchProjectTree(store, nextState, callback);
-  }
-);
-
-const prepareProjectTreeOnEnter = store => (
-  (nextState, _replace, callback) => {
-    fetchProjectTree(store, nextState, callback);
-  }
-);
-
-const resetProjects = store => (
-  (_nextState, _replace, callback) => {
-    store.dispatch(clearProjects());
-    callback();
-  }
-);
-
-
-const getRoutes = store => (
+const getRoutes = () => (
   <Route>
-    <Route path="/login" component={Login} onEnter={resetProjects(store)} />
-    <Route path="/signup" component={Signup} onEnter={resetProjects(store)} />
+    <Route path="/login" component={Login} />
+    <Route path="/signup" component={Signup} />
     <Route path="/forgot_password" component={ForgotPassword} />
     <Route path="/reset_password" component={ResetPassword} />
 
-    <Route onEnter={requireAuth}>
-      <Route exact path="/" component={AppLayout} onEnter={fetchProjects(store)}>
+    <Route>
+      <Route exact path="/" component={AppLayout}>
         <IndexRoute component={LoadingIndicator} />
       </Route>
 
       <Route path="new_project" component={NewProjectWizard} />
 
-      <Route path=":project_name" component={AppLayout} onEnter={fetchProjects(store)}>
+      <Route path=":project_name" component={AppLayout}>
         <IndexRedirect to="editor" />
 
-        <Route
-          path="editor"
-          component={Editor}
-          onChange={prepareProjectTreeOnChange(store)}
-          onEnter={prepareProjectTreeOnEnter(store)}
-        >
+        <Route path="editor" component={Editor} >
           <Route path="document/:document_id" component={DocumentEditor} />
           <Route path="group/:group_id" component={GroupEditor} />
           <Route path="endpoint/:endpoint_id" component={EndpointEditor} />
@@ -142,9 +59,11 @@ const getRoutes = store => (
       </Route>
 
       <Route path="/project-manager" component={Projects} />
-      <Route path="*" component={AppLayout}>
-        <IndexRoute component={NoMatch} />
-      </Route>
+    </Route>
+
+
+    <Route path="*" component={AppLayout}>
+      <IndexRoute component={NoMatch} />
     </Route>
   </Route>
 );

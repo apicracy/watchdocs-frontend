@@ -5,8 +5,17 @@ import styles from './Editor.css';
 import Aside from 'containers/Aside/Aside';
 import Content from 'components/Content/Content';
 
+import { openFirstEndpoint } from 'services/projects';
+
+function openFirstEndpointIfNeeded(props) {
+  if (props.endpointsFetched && !props.children) {
+    openFirstEndpoint(props.params.project_name, props.endpoints);
+  }
+}
+
 @connect(store => ({
-  endpoints: store.endpoints,
+  endpoints: store.endpoints.list,
+  endpointsFetched: store.endpoints.isFetched,
 }))
 
 class Editor extends React.Component {
@@ -15,7 +24,17 @@ class Editor extends React.Component {
       React.PropTypes.arrayOf(React.PropTypes.node),
       React.PropTypes.node,
     ]),
+    endpoints: React.PropTypes.array,
+    endpointsFetched: React.PropTypes.bool,
     params: React.PropTypes.object, // supplied by react-router
+  }
+
+  componentDidMount() {
+    openFirstEndpointIfNeeded(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    openFirstEndpointIfNeeded(nextProps);
   }
 
   render() {
