@@ -22,7 +22,7 @@ import Modals from 'modals/Modals';
 @connect(store => ({
   projects: store.projects.projectList,
   activeProject: store.projects.activeProject,
-  endpointsCount: store.endpoints.length,
+  endpointsCount: store.endpoints.list.length,
   isModalOpened: !!store.modals.opened,
   currentUser: store.session.user,
 }))
@@ -47,8 +47,10 @@ class AppLayout extends React.Component {
   componentDidMount() {
     const { dispatch, params } = this.props;
 
-    dispatch(getCurrentUser());
-    dispatch(loadProjects(params.project_name));
+    dispatch(getCurrentUser())
+      .then(() => dispatch(loadProjects(params.project_name)))
+      .then(() => dispatch())
+      .catch(() => {});
     this.openDrift();
   }
 
@@ -113,9 +115,14 @@ class AppLayout extends React.Component {
       <Container center>
         <div className={styles.navigation}>
           <Brand href={`${this.props.location.pathname}`} />
+          <div className={styles.titleContainer}>
+            <h1 className={styles.title}>Watchdocs.io</h1>
+            <h2 className={styles.subtitle}>Public API documentation</h2>
+          </div>
         </div>
         <div className={styles.right}>
-          <Link to="/login">Login</Link>
+          <Link to="/login" className={styles.navigationLink}>Login</Link>
+          <Link to="/signup" className={styles.navigationLink}>Signup</Link>
         </div>
       </Container>
     );

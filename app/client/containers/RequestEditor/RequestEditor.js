@@ -21,7 +21,7 @@ import { getFullLink } from 'services/helpers';
 @connect(store => ({
   endpoint: store.endpointEditor,
   group: store.groupEditor,
-  endpointList: store.endpoints,
+  endpointList: store.endpoints.list,
   baseJSONSchema: store.requestEditor.body,
   draftJSONSchema: store.requestEditor.body_draft,
   status: store.requestEditor.status,

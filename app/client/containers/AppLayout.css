@@ -37,6 +37,10 @@
   height: 100%;
 }
 
+.right a {
+  color: white;
+}
+
 .right > svg {
   margin-left: 15px;
 }
@@ -53,4 +57,24 @@
 .modalOpened {
   height: 100%;
   overflow-x: hidden;
+}
+
+.titleContainer {
+  margin-left: 20px;
+}
+
+.title {
+  font-size: 18px;
+  margin: 0 0 5px;
+}
+
+.subtitle {
+  font-size: 11px;
+  font-weight: normal;
+  margin: 0;
+  opacity: 0.6;
+}
+
+.navigationLink {
+  padding: 5px 10px;
 }

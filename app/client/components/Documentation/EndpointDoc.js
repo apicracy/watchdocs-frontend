@@ -9,20 +9,22 @@ import ParamTable from 'components/ParamTable/ParamTable';
 import SchemaTable from 'components/SchemaTable/SchemaTable';
 import Button from 'components/Button/Button';
 
-const EndpointDoc = ({ topLevel, projectUrl, doc, projectSlug }) => (
+const EndpointDoc = ({ topLevel, projectUrl, doc, projectSlug, canEdit }) => (
   <div className={styles.top} >
     <article className={styles.content}>
       <div className={topLevel ? styles.headerMain : styles.header}>
         <span className={styles.title}>
           { doc.title }
         </span>
-        <div className={styles.editButton}>
-          <Link to={`/${projectSlug}/editor/endpoint/${doc.id}`}>
-            <Button variants={['primary', 'rounded', 'medium']}>
-              Edit
-            </Button>
-          </Link>
-        </div>
+        { canEdit && (
+          <div className={styles.editButton}>
+            <Link to={`/${projectSlug}/editor/endpoint/${doc.id}`}>
+              <Button variants={['primary', 'rounded', 'medium']}>
+                Edit
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
       { doc.description &&
         doc.description.content &&
@@ -98,6 +100,7 @@ EndpointDoc.propTypes = {
   projectUrl: React.PropTypes.string,
   topLevel: React.PropTypes.bool,
   projectSlug: React.PropTypes.string,
+  canEdit: React.PropTypes.bool,
 };
 
 export default EndpointDoc;

@@ -20,6 +20,7 @@ import { fetchDocumentation } from 'services/documentation';
   isFetching: store.documentation.isFetching,
   projectUrl: store.documentation.data.base_url,
   currentUser: store.session.user,
+  canEdit: store.session.user && store.session.user.id === store.documentation.data.user_id
 }))
 
 class DocumentationViewer extends React.Component {
@@ -30,6 +31,7 @@ class DocumentationViewer extends React.Component {
     isFetching: React.PropTypes.bool,
     params: React.PropTypes.object,
     currentUser: React.PropTypes.object,
+    canEdit: React.PropTypes.bool,
   }
 
   componentWillMount() {
@@ -67,6 +69,7 @@ class DocumentationViewer extends React.Component {
   renderDoc(documentation, isTop) {
     const {
       projectUrl,
+      canEdit,
       params: { project_name: projectSlug },
     } = this.props;
 
@@ -77,6 +80,7 @@ class DocumentationViewer extends React.Component {
         doc={v}
         projectUrl={projectUrl}
         projectSlug={projectSlug}
+        canEdit={canEdit}
       >
         { v.items && this.renderDoc(v.items, false) }
       </DocLayout>

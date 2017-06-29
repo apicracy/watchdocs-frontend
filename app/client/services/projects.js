@@ -8,6 +8,7 @@ import {
   updateActive,
 } from 'actions/projects';
 
+import { clearEndpoints } from 'actions/endpointsTree';
 import { flattenTree, fetchEndpoints } from 'services/endpointsTree';
 
 export function loadProjects(slugToActivate) {
@@ -28,6 +29,7 @@ export function loadProjects(slugToActivate) {
 export function setActiveProject(id) {
   return (dispatch, getState) => {
     const project = getState().projects.projectList.find(p => p.id === id);
+    dispatch(clearEndpoints());
     dispatch(setActive(project));
     dispatch(fetchEndpoints(project.id));
     browserHistory.push(`/${project.slug}/editor`);

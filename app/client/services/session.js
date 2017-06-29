@@ -29,6 +29,7 @@ export function getCurrentUser() {
       .catch((err) => {
         localStorage.removeItem('JWT');
         dispatch(loginFailed(err));
+        return Promise.reject([]);
       });
   };
 }
