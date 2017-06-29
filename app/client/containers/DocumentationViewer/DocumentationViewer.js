@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import styles from './DocumentationViewer.css';
 
 import Sidebar from 'components/Sidebar/Sidebar';
-import TextInput from 'components/Form/TextInput/TextInput';
 import Icon from 'components/Icon/Icon';
 import CustomIcon from 'components/Icon/CustomIcon';
 import IconButton from 'components/Button/IconButton';
@@ -11,6 +10,8 @@ import DocLayout from 'components/Documentation/DocLayout';
 import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
 import { ScrollSpy, Link } from 'components/ScrollSpy/ScrollSpy';
 
+import { openModal } from 'actions/modals';
+import { MODAL_NAME as UPDATE_PROJECT_VISIBILITY_MODAL } from 'modals/ProjectVisibilityModal/ProjectVisibilityModal';
 import { fetchDocumentation } from 'services/documentation';
 
 @connect(store => ({
@@ -89,19 +90,38 @@ class DocumentationViewer extends React.Component {
     ));
   }
 
+  openPublicitySettings() {
+    this.props.dispatch(openModal(UPDATE_PROJECT_VISIBILITY_MODAL));
+  }
+
   render() {
-    const { documentation } = this.props;
+    const { documentation, activeProject } = this.props;
 
     return (
-      <div className={styles.container}>
-        { this.props.isFetching && <LoadingIndicator fixed /> }
-        <Sidebar>
-          <ScrollSpy>
-            { this.renderMenu() }
-          </ScrollSpy>
-        </Sidebar>
-        <div className={styles.docView}>
-          { this.renderDoc(documentation, true) }
+      <div>
+        { activeProject && activeProject.public && (
+          <div className={styles.publicDocumentation}>
+            <Icon name="globe" />
+            Your documentation is public.
+            Share this link with your teammates.
+
+            <div className={styles.publicityToggle}>
+              <a onClick={() => this.openPublicitySettings()}>
+                Change visibility
+              </a>
+            </div>
+          </div>
+        )}
+        <div className={styles.container}>
+          { this.props.isFetching && <LoadingIndicator fixed /> }
+          <Sidebar>
+            <ScrollSpy>
+              { this.renderMenu() }
+            </ScrollSpy>
+          </Sidebar>
+          <div className={styles.docView}>
+            { this.renderDoc(documentation, true) }
+          </div>
         </div>
       </div>
     );
