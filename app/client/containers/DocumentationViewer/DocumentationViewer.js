@@ -103,7 +103,8 @@ class DocumentationViewer extends React.Component {
   }
 
   render() {
-    const { documentation, activeProject, isFetching } = this.props;
+    const { documentation, activeProject, isFetching, params } = this.props;
+    const documentationPath = `https://watchdocs.io/${params.project_name}/documentation`
 
     return (
       <div>
@@ -112,7 +113,11 @@ class DocumentationViewer extends React.Component {
           <div className={styles.publicDocumentation}>
             <Icon name="globe" />
             Your documentation is public.
-            Share this link with your teammates.
+            Share
+            <a href={documentationPath} className={styles.publicLink}>
+              {documentationPath}
+            </a>
+            with your teammates.
 
             <div className={styles.publicityToggle}>
               <a onClick={() => this.openPublicitySettings()}>

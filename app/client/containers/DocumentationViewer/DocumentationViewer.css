@@ -21,16 +21,14 @@
 
 .publicDocumentation {
   background-color: #1abc9c;
-  padding: 0 20px;
+  padding: 10px 20px;
   color: white;
-  height: 40px;
-  line-height: 40px;
 }
 
 .publicDocumentation i {
   font-size: 1.5em;
   margin-right: 10px;
-  vertical-align: middle;
+  vertical-align: sub;
 }
 
 .publicityToggle {
@@ -42,4 +40,12 @@
   color: white;
   text-decoration: underline;
   cursor: pointer;
+}
+
+.publicLink {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 4px;
+  color: white;
+  text-decoration: underline;
 }

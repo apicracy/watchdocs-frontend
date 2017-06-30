@@ -44,7 +44,6 @@ class EditModal extends React.Component {
 
   onSave = (values) => {
     const { dispatch, project } = this.props;
-    console.log(values);
     return dispatch(updateProject(project.id, {
       public: values.public,
     })).then(() => {

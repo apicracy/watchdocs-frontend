@@ -57,12 +57,12 @@ class Setup extends React.Component {
           <InputLink onClick={this.openProjectVisibilityModal}>
             { project.public && (
               <div>
-                <Icon name="globe" /> Public project
+                <Icon name="globe" /> Public documentation
               </div>
             )}
             { !project.public && (
               <div>
-                <Icon name="lock" /> Private project
+                <Icon name="lock" /> Private documentation
               </div>
             )}
           </InputLink>
