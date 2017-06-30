@@ -3,14 +3,14 @@ import styles from './DocLayout.css';
 import GroupDoc from './GroupDoc';
 import EndpointDoc from './EndpointDoc';
 
-const DocLayout = ({ topLevel, doc, children, projectUrl }) => {
+const DocLayout = ({ topLevel, doc, children, projectUrl, projectSlug, canEdit }) => {
   const renderBody = (type) => {
     switch (type) {
       case 'Endpoint':
-        return <EndpointDoc topLevel={topLevel} doc={doc} projectUrl={projectUrl} />;
+        return <EndpointDoc {...{ topLevel, doc, projectUrl, projectSlug, canEdit }} />;
 
       default:
-        return <GroupDoc topLevel={topLevel} doc={doc} projectUrl={projectUrl} />;
+        return <GroupDoc {...{ topLevel, doc, projectUrl, projectSlug, canEdit }} />;
     }
   };
 
@@ -32,6 +32,8 @@ DocLayout.propTypes = {
   doc: React.PropTypes.object,
   children: React.PropTypes.node,
   projectUrl: React.PropTypes.string,
+  projectSlug: React.PropTypes.string,
+  canEdit: React.PropTypes.bool,
 };
 
 export default DocLayout;

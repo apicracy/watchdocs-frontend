@@ -16,7 +16,7 @@ import {
 export const MODAL_NAME = 'AddNewEndpoint';
 
 @connect(state => ({
-  isVisible: state.modals[MODAL_NAME],
+  isVisible: state.modals.opened === MODAL_NAME,
   endpointType: state.modifyEndpoint.method,
 }))
 class AddEndpointModal extends React.Component {

@@ -3,9 +3,11 @@ import { SubmissionError } from 'redux-form';
 
 const API_URL = process.env.API_URL;
 
-export const checkIfAuthorised = (response) => {
+export const checkIfAuthorised = (response, shouldRedirect) => {
   if (response.status === 401) {
-    browserHistory.push('/login');
+    if (shouldRedirect) {
+      browserHistory.push('/login');
+    }
     return Promise.reject([]);
   }
   return response;
@@ -22,10 +24,12 @@ const validationErrors = (errorData) => {
   return paresedErrors;
 };
 
-export const checkIfValid = (response) => {
+export const checkIfValid = (response, shouldThrowError) => {
   if (response.status === 400) {
     return response.json().then((errorData) => {
-      throw new SubmissionError(validationErrors(errorData));
+      if (shouldThrowError) {
+        throw new SubmissionError(validationErrors(errorData));
+      }
     });
   }
   return response;
@@ -38,7 +42,7 @@ export const httpNoAuth = (url, options = {}) => (
   })
 );
 
-export default function http(url, options = {}) {
+export default function http(url, options = {}, callbackOptions={ unauthorizedRedirect: true, submissionError: true }) {
   const JWT = localStorage.getItem('JWT');
   return fetch(`${API_URL}${url}`, {
     method: 'GET',
@@ -48,6 +52,6 @@ export default function http(url, options = {}) {
       'Content-Type': 'application/json',
     },
     ...options,
-  }).then(response => checkIfAuthorised(response))
-    .then(response => checkIfValid(response));
+  }).then(response => checkIfAuthorised(response, callbackOptions.unauthorizedRedirect))
+    .then(response => checkIfValid(response, callbackOptions.submissionError));
 }

@@ -1,18 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Modal from 'components/Modal/Modal';
-import UpdateProjectForm from 'components/ProjectForm/UpdateProjectForm';
+import UpdateProjectVisibilityForm from 'components/ProjectForm/UpdateProjectVisibilityForm';
 
 import { closeModal } from 'actions/modals';
 
 import { updateProject } from 'services/projects';
 
-export const MODAL_NAME = 'EditProject';
+export const MODAL_NAME = 'ProjectVisibility';
 
 @connect(state => ({
   isVisible: state.modals.opened === MODAL_NAME,
   project: state.projects.activeProject,
 }))
+
 class EditModal extends React.Component {
   static propTypes = {
     isVisible: React.PropTypes.bool,
@@ -29,16 +30,14 @@ class EditModal extends React.Component {
     return (
       <Modal
         isVisible={isVisible}
-        title="Edit project"
+        title="Visibility"
         onHide={this.onHide}
       >
-        { project && (
-          <UpdateProjectForm
-            initialValues={{ name: project.name, base_url: project.base_url }}
-            onSubmit={this.onSave}
-            onCancel={this.onHide}
-          />
-        )}
+        <UpdateProjectVisibilityForm
+          initialValues={{ public: project.public }}
+          onSubmit={this.onSave}
+          onCancel={this.onHide}
+        />
       </Modal>
     );
   }
@@ -46,8 +45,7 @@ class EditModal extends React.Component {
   onSave = (values) => {
     const { dispatch, project } = this.props;
     return dispatch(updateProject(project.id, {
-      name: values.name,
-      base_url: values.base_url,
+      public: values.public,
     })).then(() => {
       this.props.dispatch(closeModal(MODAL_NAME));
     });

@@ -43,7 +43,6 @@ const ParamForm = (props) => {
           component={RFTextInput}
           placeholder="Param name"
           onChange={onFieldChange('name')}
-          autofocus
         />
         <CheckBox
           activeIds={[required ? 1 : null]}

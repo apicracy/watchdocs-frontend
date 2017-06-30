@@ -5,13 +5,13 @@ import Icon from 'components/Icon/Icon';
 import IconButton from 'components/Button/IconButton';
 
 const InputLink = (props) => {
-  const { text, placeholder, onClick } = props;
+  const { children, placeholder, onClick } = props;
 
   return (
     <div className={styles.root}>
       <div className={styles.text}>
-        { text }
-        { !text && placeholder && (
+        { children }
+        { !children && placeholder && (
           <span className={styles.placeholder}>{ placeholder }</span>
         )}
       </div>
@@ -23,9 +23,13 @@ const InputLink = (props) => {
 };
 
 InputLink.propTypes = {
-  text: React.PropTypes.string,
   placeholder: React.PropTypes.string,
   onClick: React.PropTypes.func,
+  children: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.array,
+    React.PropTypes.node,
+  ]),
 };
 
 export default InputLink;

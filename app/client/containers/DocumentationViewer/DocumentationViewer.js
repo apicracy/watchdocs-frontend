@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styles from './DocumentationViewer.css';
+// HACK: Importing to plug into css selector for scrollspy :)
+import appLayoutStyles from 'containers/AppLayout.css';
 
 import Sidebar from 'components/Sidebar/Sidebar';
-import TextInput from 'components/Form/TextInput/TextInput';
 import Icon from 'components/Icon/Icon';
 import CustomIcon from 'components/Icon/CustomIcon';
 import IconButton from 'components/Button/IconButton';
@@ -11,12 +12,16 @@ import DocLayout from 'components/Documentation/DocLayout';
 import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
 import { ScrollSpy, Link } from 'components/ScrollSpy/ScrollSpy';
 
+import { openModal } from 'actions/modals';
+import { MODAL_NAME as UPDATE_PROJECT_VISIBILITY_MODAL } from 'modals/ProjectVisibilityModal/ProjectVisibilityModal';
 import { fetchDocumentation } from 'services/documentation';
 
 @connect(store => ({
   documentation: store.documentation.data,
   isFetching: store.documentation.isFetching,
-  projectUrl: store.projects.activeProject.base_url,
+  projectUrl: store.documentation.data.base_url,
+  currentUser: store.session.user,
+  canEdit: store.session.user && store.session.user.id === store.documentation.data.user_id,
   activeProject: store.projects.activeProject,
 }))
 
@@ -26,27 +31,27 @@ class DocumentationViewer extends React.Component {
     projectUrl: React.PropTypes.string,
     dispatch: React.PropTypes.func,
     isFetching: React.PropTypes.bool,
+    params: React.PropTypes.object,
+    currentUser: React.PropTypes.object,
+    canEdit: React.PropTypes.bool,
     activeProject: React.PropTypes.object,
   }
 
   componentWillMount() {
-    const { dispatch, activeProject } = this.props;
+    const { dispatch, params: { project_name } } = this.props;
 
     this.setState({
       search: '',
     });
 
-    if (activeProject.id) {
-      dispatch(fetchDocumentation(activeProject.id));
-    }
+    dispatch(fetchDocumentation(project_name));
   }
 
   componentWillReceiveProps(nextProps) {
     const { dispatch } = this.props;
-    const { activeProject } = nextProps;
 
-    if (activeProject.id && activeProject.id !== this.props.activeProject.id) {
-      dispatch(fetchDocumentation(activeProject.id));
+    if (nextProps.params.project_name && nextProps.params.project_name !== this.props.params.project_name) {
+      dispatch(fetchDocumentation(nextProps.params.project_name));
     }
   }
 
@@ -67,6 +72,8 @@ class DocumentationViewer extends React.Component {
   renderDoc(documentation, isTop) {
     const {
       projectUrl,
+      canEdit,
+      params: { project_name: projectSlug },
     } = this.props;
 
     return documentation.map((v, i) => (
@@ -75,6 +82,8 @@ class DocumentationViewer extends React.Component {
         topLevel={isTop}
         doc={v}
         projectUrl={projectUrl}
+        projectSlug={projectSlug}
+        canEdit={canEdit}
       >
         { v.items && this.renderDoc(v.items, false) }
       </DocLayout>
@@ -89,19 +98,44 @@ class DocumentationViewer extends React.Component {
     ));
   }
 
+  openPublicitySettings() {
+    this.props.dispatch(openModal(UPDATE_PROJECT_VISIBILITY_MODAL));
+  }
+
   render() {
-    const { documentation } = this.props;
+    const { documentation, activeProject, isFetching, params } = this.props;
+    const documentationPath = `https://app.watchdocs.io/${params.project_name}/documentation`;
 
     return (
-      <div className={styles.container}>
-        { this.props.isFetching && <LoadingIndicator fixed /> }
-        <Sidebar>
-          <ScrollSpy>
-            { this.renderMenu() }
-          </ScrollSpy>
-        </Sidebar>
-        <div className={styles.docView}>
-          { this.renderDoc(documentation, true) }
+      <div>
+        { isFetching && <LoadingIndicator fixed /> }
+        { activeProject && activeProject.public && (
+          <div className={styles.publicDocumentation}>
+            <Icon name="globe" />
+            Your documentation is public.
+            Share
+            <a href={documentationPath} className={styles.publicLink}>
+              {documentationPath}
+            </a>
+            with your teammates.
+
+            <div className={styles.publicityToggle}>
+              <a onClick={() => this.openPublicitySettings()}>
+                Change visibility
+              </a>
+            </div>
+          </div>
+        )}
+        <div className={styles.container}>
+          { this.props.isFetching && <LoadingIndicator fixed /> }
+          <Sidebar>
+            <ScrollSpy rootEl={`.${appLayoutStyles.content}`}>
+              { this.renderMenu() }
+            </ScrollSpy>
+          </Sidebar>
+          <div className={styles.docView}>
+            { this.renderDoc(documentation, true) }
+          </div>
         </div>
       </div>
     );

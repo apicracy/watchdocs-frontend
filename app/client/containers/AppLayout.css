@@ -3,16 +3,15 @@
 }
 
 .header {
-  position: fixed;
-  top: 0;
   width: 100%;
   height: 75px;
   z-index: 2;
+  position: relative;
 }
 
 .content {
-  padding-top: 75px;
-  min-height: 100%;
+  height: calc(100% - 75px);
+  overflow: auto;
   z-index: 1;
   position: relative;
 }
@@ -28,11 +27,17 @@
 .navigation {
   display: inline-flex;
   align-items: center;
+  height: 100%;
 }
 
 .right {
   display: inline-flex;
   align-items: center;
+  height: 100%;
+}
+
+.right a {
+  color: white;
 }
 
 .right > svg {
@@ -46,4 +51,29 @@
 
 .helpLink:hover {
   color: white
+}
+
+.modalOpened {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+.titleContainer {
+  margin-left: 20px;
+}
+
+.title {
+  font-size: 18px;
+  margin: 0 0 5px;
+}
+
+.subtitle {
+  font-size: 11px;
+  font-weight: normal;
+  margin: 0;
+  opacity: 0.6;
+}
+
+.navigationLink {
+  padding: 5px 10px;
 }

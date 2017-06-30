@@ -18,3 +18,33 @@
 .scrollSpy {
   margin-left: -10px;
 }
+
+.publicDocumentation {
+  background-color: #1abc9c;
+  padding: 10px 20px;
+  color: white;
+}
+
+.publicDocumentation i {
+  font-size: 1.5em;
+  margin-right: 10px;
+  vertical-align: sub;
+}
+
+.publicityToggle {
+  display: inline-block;
+  float: right;
+}
+
+.publicityToggle a {
+  color: white;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.publicLink {
+  display: inline-block;
+  margin: 0 4px;
+  color: white;
+  text-decoration: underline;
+}
