@@ -79,7 +79,7 @@ function createEndpoint(item, parentGroup) {
   };
 }
 
-function endpointReadyForDocumentation(endpoint) {
+export function endpointReadyForDocumentation(endpoint) {
   return endpoint.responses
     && endpoint.responses.length > 0
     && endpoint.responses.some(response =>
