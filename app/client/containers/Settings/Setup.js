@@ -20,14 +20,6 @@ class Setup extends React.Component {
     dispatch: React.PropTypes.func,
   }
 
-  openProjectEditModal = () => {
-    this.props.dispatch(openModal(UPDATE_PROJECT_MODAL));
-  }
-
-  openProjectVisibilityModal = () => {
-    this.props.dispatch(openModal(UPDATE_PROJECT_VISIBILITY_MODAL));
-  }
-
   render() {
     const {
       project,
@@ -35,38 +27,6 @@ class Setup extends React.Component {
 
     return (
       <div>
-        <DocumentationBlock
-          title="Application name"
-        >
-          <InputLink onClick={this.openProjectEditModal} placeholder="This project has not name yet">
-            {project.name}
-          </InputLink>
-        </DocumentationBlock>
-        <DocumentationBlock
-          title="Base URL"
-          description="This is the first part of an URL that we're going to use in documentation."
-        >
-          <InputLink onClick={this.openProjectEditModal} placeholder="http://api.example.com">
-            {project.base_url}
-          </InputLink>
-        </DocumentationBlock>
-        <DocumentationBlock
-          title="Visibility"
-          description="Seting your project to 'public' will enable access to our documentation for non-loged users."
-        >
-          <InputLink onClick={this.openProjectVisibilityModal}>
-            { project.public && (
-              <div>
-                <Icon name="globe" /> Public documentation
-              </div>
-            )}
-            { !project.public && (
-              <div>
-                <Icon name="lock" /> Private documentation
-              </div>
-            )}
-          </InputLink>
-        </DocumentationBlock>
         <DocumentationBlock
           title="Installation"
         >
