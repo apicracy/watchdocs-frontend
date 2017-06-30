@@ -49,7 +49,7 @@ export function buildDocumentation(endpointList, parentGroup = '') {
       default:
         return state;
     }
-  }, []);
+  }, []).filter(item => item);
 }
 
 function buildSectionId(string) {
@@ -61,6 +61,8 @@ function buildSectionId(string) {
 }
 
 function createEndpoint(item, parentGroup) {
+  if (!endpointReadyForDocumentation(item)) return null;
+
   const group = parentGroup !== '' ? `${parentGroup}-` : '';
   const section = (item.description && item.description.title) ? (
     buildSectionId(`${group}${item.description.title}`)
@@ -75,4 +77,12 @@ function createEndpoint(item, parentGroup) {
       parseJsonSchema(item.responses[0].body) : null,
     exampleRequest: item.request ? parseJsonSchema(item.request.body) : null,
   };
+}
+
+function endpointReadyForDocumentation(endpoint) {
+  return endpoint.responses
+    && endpoint.responses.length > 0
+    && endpoint.responses.some(response =>
+        response.http_status_code.toString().startsWith('2')
+       );
 }
