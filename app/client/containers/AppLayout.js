@@ -8,6 +8,7 @@ import { Link, browserHistory } from 'react-router';
 
 import ReduxToastr from 'react-redux-toastr';
 
+import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
 import AppBar from 'components/AppBar/AppBar';
 import Container from 'components/Container/Container';
 import Brand from 'components/Brand/Brand';
@@ -27,6 +28,7 @@ import Modals from 'modals/Modals';
   currentUser: store.session.user,
   title: store.appLayout.title,
   subtitle: store.appLayout.subtitle,
+  isFetching: store.appLayout.isFetching,
 }))
 
 class AppLayout extends React.Component {
@@ -46,6 +48,7 @@ class AppLayout extends React.Component {
     location: React.PropTypes.object,
     title: React.PropTypes.string,
     subtitle: React.PropTypes.string,
+    isFetching: React.PropTypes.bool,
   }
 
   componentDidMount() {
@@ -90,9 +93,10 @@ class AppLayout extends React.Component {
   }
 
   userMenu = () => {
-    const { projects, activeProject, currentUser, endpointsCount } = this.props;
+    const { projects, activeProject, currentUser, endpointsCount, isFetching } = this.props;
     return (
       <Container center>
+        { isFetching && <LoadingIndicator fixed /> }
         <div className={styles.navigation}>
           <Link href="/">
             <Brand />

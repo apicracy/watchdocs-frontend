@@ -8,6 +8,7 @@ import {
   updateActive,
 } from 'actions/projects';
 
+import { setFetching as setAppLayoutFetching } from 'actions/appLayout';
 import { clearEndpoints } from 'actions/endpointsTree';
 import { flattenTree, fetchEndpoints } from 'services/endpointsTree';
 
@@ -63,6 +64,25 @@ export function updateProject(projectId, projectParams) {
       .then(response => response.json())
       .then((project) => {
         dispatch(updateActive(project));
+      });
+  };
+}
+
+export function removeProject(projectId) {
+  return (dispatch) => {
+    const options = {
+      method: 'DELETE',
+    };
+
+    dispatch(setAppLayoutFetching(true));
+
+    return http(`/api/v1/projects/${projectId}`, options)
+      .then(response => response.json())
+      .then(() => dispatch(loadProjects()))
+      .then(() => dispatch(setAppLayoutFetching(false)))
+      .catch((error) => {
+        dispatch(setAppLayoutFetching(false));
+        return Promise.reject(error);
       });
   };
 }

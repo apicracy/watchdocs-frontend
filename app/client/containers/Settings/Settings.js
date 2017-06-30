@@ -9,13 +9,18 @@ import Users from './Users';
 import Integrations from './Integrations';
 import Delete from './Delete';
 
+import { removeProject } from 'services/projects';
+
 @connect(store => ({
   projectUrl: store.projects.activeProject.base_url,
+  projectId: store.projects.activeProject.id,
 }))
 class Settings extends React.Component {
 
   static propTypes = {
     params: React.PropTypes.object, // supplied by react-router
+    dispatch: React.PropTypes.func,
+    projectId: React.PropTypes.number
   }
 
   componentWillMount() {
@@ -28,6 +33,13 @@ class Settings extends React.Component {
     this.setState({
       activePanel: panel,
     });
+  }
+  onRemoveProject = () => {
+    const { projectId, dispatch } = this.props;
+
+    if (confirm('Are you sure you want to remove this project and its data? This action can not be undone.')) {
+      dispatch(removeProject(projectId));
+    }
   }
 
   render() {
@@ -69,7 +81,7 @@ class Settings extends React.Component {
             this.state.activePanel === 'users' && <Users params={this.props.params} />
           }
           {
-            this.state.activePanel === 'delete' && <Delete />
+            this.state.activePanel === 'delete' && <Delete handleRemoveProject={this.onRemoveProject} />
           }
           {
             this.state.activePanel === 'integrations' && <Integrations />
