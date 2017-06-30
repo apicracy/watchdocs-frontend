@@ -4,7 +4,7 @@ import styles from './AppLayout.css';
 
 import { logout, getCurrentUser } from 'services/session';
 import { loadProjects, setActiveProject } from 'services/projects';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 
 import ReduxToastr from 'react-redux-toastr';
 
@@ -52,10 +52,15 @@ class AppLayout extends React.Component {
   }
 
   componentDidMount() {
-    const { dispatch, params } = this.props;
+    const { dispatch, params, location } = this.props;
 
     dispatch(getCurrentUser())
-      .then(() => dispatch(loadProjects(params.project_name)))
+      .catch(() => {
+        if (location.pathName === '/') {
+          browserHistory.push('/login');
+        }
+      })
+      .then(() => dispatch(loadProjects(params.project_name)));
     this.openDrift();
   }
 
