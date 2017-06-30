@@ -99,7 +99,6 @@ class EndpointListGroup extends React.Component {
   }
 
   toggleOpen = () => {
-    console.log("open");
     const { isOpen } = this.props;
 
     const conditions = [

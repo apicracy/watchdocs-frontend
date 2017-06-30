@@ -1,0 +1,24 @@
+.error {
+  color: #f00;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.label {
+  margin-left: 10px;
+}
+
+.clickLabel {
+  display: inline-block;
+}
+
+.clickLabel,
+.icon {
+  cursor: pointer;
+}

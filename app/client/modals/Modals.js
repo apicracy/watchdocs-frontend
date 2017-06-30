@@ -10,6 +10,7 @@ import EditEndpointModal from 'modals/EditEndpointModal/EditEndpointModal';
 import AddResponse from 'modals/AddResponse/AddResponse';
 import AddGroupModal from 'modals/AddGroupModal/AddGroupModal';
 import EditProject from 'modals/EditProject/EditProject';
+import ProjectVisibilityModal from 'modals/ProjectVisibilityModal/ProjectVisibilityModal';
 
 const Modals = ({ params }) => (
   <div>
@@ -21,6 +22,7 @@ const Modals = ({ params }) => (
     <AddResponseHeader />
     <EditEndpointModal />
     <EditProject />
+    <ProjectVisibilityModal />
     <AddResponse params={params} />
   </div>
 );
