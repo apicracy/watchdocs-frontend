@@ -108,8 +108,11 @@ class ProjectTree extends Component {
     if (destinationId === this.props.treeRootId) {
       reload = true;
       const firstItemInRoot = tree.children[0];
-      if (!firstItemInRoot) params = { to: this.props.treeRootId };
-      params = { before: firstItemInRoot.tree_item_id };
+      if (!firstItemInRoot || placementType === 'after') {
+        params = { to: this.props.treeRootId };
+      } else {
+        params = { before: firstItemInRoot.tree_item_id };
+      }
     }
 
     this.props.dispatch(moveTreeItem(itemToMoveId, params, reload));
