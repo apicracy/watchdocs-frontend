@@ -19,7 +19,7 @@ export function removeEndpoint(endpointId) {
   );
 }
 
-export function moveTreeItem(itemToMoveId, params, reloadTree) {
+export function moveTreeItem(itemToMoveId, params) {
   return (dispatch) => {
     const options = {
       method: 'PUT',
@@ -29,7 +29,7 @@ export function moveTreeItem(itemToMoveId, params, reloadTree) {
     return http(`/api/v1/tree_items/${itemToMoveId}`, options)
       .then(response => response.json())
       .then((data) => {
-        if (reloadTree) dispatch(load(data.tree, data.tree_root_id));
+        dispatch(load(data.tree, data.tree_root_id));
       });
   };
 }

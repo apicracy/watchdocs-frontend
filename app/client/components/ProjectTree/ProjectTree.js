@@ -97,7 +97,6 @@ class ProjectTree extends Component {
 
   handleChange = (tree, itemToMoveId, destinationId, placementType) => {
     let params = { to: destinationId };
-    let reload = false;
 
     if (placementType === 'before') params = { before: destinationId };
     if (placementType === 'after') params = { after: destinationId };
@@ -106,7 +105,6 @@ class ProjectTree extends Component {
     // We need to reload list as the movement will be different
     // from what what we received in params
     if (destinationId === this.props.treeRootId) {
-      reload = true;
       const firstItemInRoot = tree.children[0];
       if (!firstItemInRoot || placementType === 'after') {
         params = { to: this.props.treeRootId };
@@ -115,8 +113,8 @@ class ProjectTree extends Component {
       }
     }
 
-    this.props.dispatch(moveTreeItem(itemToMoveId, params, reload));
-    if (!reload) this.setState({ tree });
+    this.props.dispatch(moveTreeItem(itemToMoveId, params));
+    this.setState({ tree });
   }
 }
 
