@@ -12,11 +12,13 @@ class Delete extends React.Component {
 
   static propTypes = {
     projectName: React.PropTypes.string, // supplied by react-router
+    handleRemoveProject: React.PropTypes.func,
   }
 
   render() {
     const {
       projectName,
+      handleRemoveProject,
     } = this.props;
 
     return (
@@ -27,7 +29,7 @@ class Delete extends React.Component {
           <p className={styles.text}><b>Warning</b> Deleting this project will cause all of
             its associated data to be deleted immediately.</p>
           <p className={styles.text}><b>This action can not be undone.</b></p>
-          <button className={styles.deleteButton}>
+          <button className={styles.deleteButton} onClick={handleRemoveProject} >
             I understand -- Delete this project ({projectName}) and its data</button>
         </DocumentationBlock>
       </div>
