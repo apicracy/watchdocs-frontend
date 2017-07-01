@@ -20,20 +20,21 @@ export function loadProjects(slugToActivate) {
       dispatch(load(projects));
 
       if (projectToActivate) {
-        dispatch(setActiveProject(projectToActivate.id));
+        dispatch(setActiveProject(projectToActivate.slug));
       } else {
         browserHistory.push('/new_project');
       }
     });
 }
 
-export function setActiveProject(id) {
+export function setActiveProject(slug) {
   return (dispatch, getState) => {
-    const project = getState().projects.projectList.find(p => p.id === id);
-    dispatch(clearEndpoints());
-    dispatch(setActive(project));
-    dispatch(fetchEndpoints(project.id));
-    browserHistory.push(`/${project.slug}/editor`);
+    const project = getState().projects.projectList.find(p => p.slug === slug);
+    return Promise.all([
+      dispatch(clearEndpoints()),
+      dispatch(setActive(project)),
+      dispatch(fetchEndpoints(project.id)),
+    ]);
   };
 }
 

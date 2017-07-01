@@ -64,9 +64,9 @@ class AppLayout extends React.Component {
     this.openDrift();
   }
 
-  switchProject = (id) => {
+  switchProject = (slug) => {
     const { dispatch } = this.props;
-    dispatch(setActiveProject(id));
+    dispatch(setActiveProject(slug)).then(browserHistory.push(`/${slug}/editor`));
   }
 
   onLogout = () => {
