@@ -7,31 +7,32 @@ import RFRadiobutton from 'components/Form/RFRadiobutton/RFRadiobutton';
 import Button from 'components/Button/Button';
 import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
 
+export const publicLabel = (
+  <div className={styles.optionlabel}>
+    <div className={styles.optionIcon}><Icon name="globe" /></div>
+    <div>
+      <div className={styles.optionLabelTitle}>Public</div>
+      <div className={styles.optionLabelDescription}>
+        Anyone with a link can see a documentation.
+      </div>
+    </div>
+  </div>
+);
+
+export const privateLabel = (
+  <div className={styles.optionlabel}>
+    <div className={styles.optionIcon}><Icon name="lock" /></div>
+    <div>
+      <div className={styles.optionLabelTitle}>Private</div>
+      <div className={styles.optionLabelDescription}>
+        Only you can see a documentation.
+      </div>
+    </div>
+  </div>
+);
+
 let UpdateProjectVisibilityForm = (props) => {
   const { handleSubmit, submitting } = props;
-  const publicLabel = (
-    <div className={styles.optionlabel}>
-      <div className={styles.optionIcon}><Icon name="globe" /></div>
-      <div>
-        <div className={styles.optionLabelTitle}>Public</div>
-        <div className={styles.optionLabelDescription}>
-          Anyone with a link can see a documentation.
-        </div>
-      </div>
-    </div>
-  );
-
-  const privateLabel = (
-    <div className={styles.optionlabel}>
-      <div className={styles.optionIcon}><Icon name="lock" /></div>
-      <div>
-        <div className={styles.optionLabelTitle}>Private</div>
-        <div className={styles.optionLabelDescription}>
-          Only you can see a documentation.
-        </div>
-      </div>
-    </div>
-  );
 
   return (
     <form onSubmit={handleSubmit}>

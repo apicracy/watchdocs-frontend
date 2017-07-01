@@ -86,3 +86,14 @@
   padding: 5px 7px;
   font-size: 11px;
 }
+
+.addNew {
+  background-color: rgba(0,0,0,0.2);
+  display: block;
+  padding: 10px 15px;
+  color: white;
+}
+
+.addNew:hover {
+  background-color: rgba(0,0,0,0.1);
+}

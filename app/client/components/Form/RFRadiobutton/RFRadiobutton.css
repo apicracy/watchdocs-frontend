@@ -22,3 +22,7 @@
 .icon {
   cursor: pointer;
 }
+
+.wrapper {
+  margin: 30px 0;
+}

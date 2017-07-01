@@ -48,7 +48,7 @@ export function createProject(projectParams) {
       .then(response => response.json())
       .then((project) => {
         dispatch(create(project));
-        browserHistory.push(`/${project.slug}`);
+        dispatch(loadProjects(project.slug));
       });
   };
 }
