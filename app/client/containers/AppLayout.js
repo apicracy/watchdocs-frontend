@@ -20,6 +20,9 @@ import CustomIcon from 'components/Icon/CustomIcon';
 import Tutorial from 'components/Tutorial/Tutorial';
 import Modals from 'modals/Modals';
 
+import { openModal } from 'actions/modals';
+import { MODAL_NAME as ADD_PROJECT_MODAL } from 'modals/AddProjectModal/AddProjectModal';
+
 @connect(store => ({
   projects: store.projects.projectList,
   activeProject: store.projects.activeProject,
@@ -69,6 +72,11 @@ class AppLayout extends React.Component {
     dispatch(setActiveProject(slug)).then(browserHistory.push(`/${slug}/editor`));
   }
 
+  addProject = () => {
+    const { dispatch } = this.props;
+    dispatch(openModal(ADD_PROJECT_MODAL));
+  }
+
   onLogout = () => {
     this.props.dispatch(logout());
   }
@@ -104,6 +112,7 @@ class AppLayout extends React.Component {
           <ProjectSelector
             projects={projects}
             onSelect={this.switchProject}
+            onAddNew={this.addProject}
             activeProject={activeProject}
           />
           <NavLink url="/editor" text="Editor" icon={<Icon name="edit" />} id="nav-editor" />

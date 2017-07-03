@@ -8,6 +8,7 @@ class ProjectSelector extends React.Component {
     projects: React.PropTypes.array,
     activeProject: React.PropTypes.object,
     onSelect: React.PropTypes.func,
+    onAddNew: React.PropTypes.func,
   }
 
   static defaultProps = {
@@ -26,6 +27,11 @@ class ProjectSelector extends React.Component {
   handleOptionClick = slug => () => {
     this.close();
     this.props.onSelect(slug);
+  }
+
+  handleAddClick = () => {
+    this.close();
+    this.props.onAddNew();
   }
 
   onOutsideClick = (e) => {
@@ -79,6 +85,7 @@ class ProjectSelector extends React.Component {
             }
           </Button>
         )) }
+        <a onClick={this.handleAddClick} className={styles.addNew}>Add new +</a>
       </div>
     );
 

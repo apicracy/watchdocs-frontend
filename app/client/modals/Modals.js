@@ -3,6 +3,7 @@ import AddEndpointModal from 'modals/AddEndpointModal/AddEndpointModal';
 
 /* Endpoint Documentation view modals */
 import AddUrlParam from 'modals/AddUrlParam/AddUrlParam';
+import AddProjectModal from 'modals/AddProjectModal/AddProjectModal';
 import EditEndpointDescription from 'modals/EditEndpointDescription/EditEndpointDescription';
 import AddRequestHeader from 'modals/AddRequestHeader/AddRequestHeader';
 import AddResponseHeader from 'modals/AddResponseHeader/AddResponseHeader';
@@ -17,6 +18,7 @@ const Modals = ({ params }) => (
     <AddEndpointModal />
     <AddGroupModal />
     <AddUrlParam />
+    <AddProjectModal />
     <EditEndpointDescription />
     <AddRequestHeader />
     <AddResponseHeader />
