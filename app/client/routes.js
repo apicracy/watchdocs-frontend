@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, IndexRoute, IndexRedirect, browserHistory } from 'react-router';
+import { Route, IndexRoute, IndexRedirect } from 'react-router';
 
 import AppLayout from 'containers/AppLayout';
 import About from 'containers/About';
@@ -22,10 +22,6 @@ import ForgotPassword from 'containers/ForgotPassword/ForgotPassword';
 import ResetPassword from 'containers/ResetPassword/ResetPassword';
 import NewProjectWizard from 'containers/Projects/NewProjectWizard';
 import InitialSetupInstructions from 'containers/InitialSetupInstructions/InitialSetupInstructions';
-
-import { openFirstEndpoint } from 'services/projects';
-import { fetchEndpoints } from 'services/endpointsTree';
-import { clearProjects } from 'actions/projects';
 
 const getRoutes = () => (
   <Route>

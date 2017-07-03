@@ -23,7 +23,8 @@ import Modals from 'modals/Modals';
 @connect(store => ({
   projects: store.projects.projectList,
   activeProject: store.projects.activeProject,
-  endpointsCount: store.endpoints.list.length,
+  username: store.session.user && store.session.user.email,
+  endpointsCount: store.endpoints.tree.length,
   isModalOpened: !!store.modals.opened,
   currentUser: store.session.user,
   title: store.appLayout.title,
@@ -45,7 +46,6 @@ class AppLayout extends React.Component {
     endpointsCount: React.PropTypes.number,
     isModalOpened: React.PropTypes.bool,
     currentUser: React.PropTypes.object,
-    location: React.PropTypes.object,
     title: React.PropTypes.string,
     subtitle: React.PropTypes.string,
     isFetching: React.PropTypes.bool,
@@ -113,7 +113,7 @@ class AppLayout extends React.Component {
         <div className={styles.right}>
           <a className={styles.helpLink} onClick={this.openHelp}>
             <CustomIcon name="help" size="lg" />
-        </a>
+          </a>
           <UserMenu
             username={currentUser.email}
             onLogout={this.onLogout}
@@ -127,7 +127,7 @@ class AppLayout extends React.Component {
     return (
       <Container center>
         <div className={styles.navigation}>
-          <a href="https://watchdocs.io">
+          <a href="/">
             <Brand />
           </a>
           <div className={styles.titleContainer}>

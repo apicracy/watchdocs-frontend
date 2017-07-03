@@ -14,7 +14,7 @@ function openFirstEndpointIfNeeded(props) {
 }
 
 @connect(store => ({
-  endpoints: store.endpoints.list,
+  endpoints: store.endpoints.tree,
   endpointsFetched: store.endpoints.isFetched,
 }))
 

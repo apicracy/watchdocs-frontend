@@ -19,7 +19,7 @@ import { MODAL_NAME as NEW_GROUP_MODAL } from 'modals/AddGroupModal/AddGroupModa
 import { addNewEndpoint } from 'services/modifyEndpoint-service';
 
 @connect(store => ({
-  endpoints: store.endpoints.list,
+  endpoints: store.endpoints.tree,
 }))
 class Aside extends React.Component {
   static propTypes = {

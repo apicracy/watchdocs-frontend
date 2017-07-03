@@ -13,7 +13,7 @@ export function fetchEndpoints(projectId) {
 
     return http(`/api/v1/projects/${projectId}`)
       .then(response => response.json())
-      .then(data => dispatch(fetchSuccess(data.tree)))
+      .then(data => dispatch(fetchSuccess(data.tree, data.tree_root_id)))
       .catch(() => {
         dispatch(fetchError());
         return Promise.reject([]);
@@ -27,9 +27,40 @@ export function removeEndpoint(endpointId) {
   );
 }
 
+export function moveTreeItem(itemToMoveId, params) {
+  return (dispatch) => {
+    const options = {
+      method: 'PUT',
+      body: JSON.stringify(params),
+    };
+
+    dispatch(fetchStart());
+    return http(`/api/v1/tree_items/${itemToMoveId}`, options)
+      .then(response => response.json())
+      .then(data => dispatch(fetchSuccess(data.tree, data.tree_root_id)))
+      .catch(() => {
+        dispatch(fetchError());
+        return Promise.reject([]);
+      });
+  };
+}
+
 export function flattenTree(tree) {
   return tree.reduce(flat, []);
 }
+
+export function parseTreeItem(item) {
+  const parsedItem = item;
+  if (item.type !== 'Group') parsedItem.leaf = true;
+  if (!item.items) return parsedItem;
+
+  parsedItem.children = item.items.map(treeItem => (
+    parseTreeItem(treeItem)
+  ));
+  return parsedItem;
+}
+
+// private
 
 function flat(list, item) {
   const newItem = {};

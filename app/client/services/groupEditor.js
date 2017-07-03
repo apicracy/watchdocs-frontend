@@ -60,7 +60,7 @@ export function removeGroup(groupId) {
         // When data is fetched, we see if user has not navigated away
         // if not navigated away, we jump to first endpoint
         if (groupId === getState().groupEditor.id) {
-          openFirstEndpoint(activeProject.slug, getState().endpoints);
+          openFirstEndpoint(activeProject.slug, getState().endpoints.tree);
         }
       })
       .catch(() => {

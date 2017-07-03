@@ -10,6 +10,7 @@ $joyride-color: #00b2df;
 @import '~react-select/dist/react-select.css';
 @import '~react-joyride/lib/react-joyride';
 @import "./styles/_react-select-overrides";
+@import "./styles/_react-ui-tree";
 @import '~react-redux-toastr/src/styles/index';
 
 body, html, #app, #root {

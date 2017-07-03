@@ -104,7 +104,7 @@ class DocumentationViewer extends React.Component {
 
   render() {
     const { documentation, activeProject, isFetching, params } = this.props;
-    const documentationPath = `https://watchdocs.io/${params.project_name}/documentation`
+    const documentationPath = `https://app.watchdocs.io/${params.project_name}/documentation`;
 
     return (
       <div>

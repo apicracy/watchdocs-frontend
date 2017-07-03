@@ -11,7 +11,7 @@ import Icon from 'components/Icon/Icon';
 
 @connect(store => ({
   group: store.groupEditor,
-  endpointList: store.endpoints.list,
+  endpointList: store.endpoints.tree,
 }))
 class GroupEditor extends React.Component {
 

@@ -6,9 +6,10 @@ import {
 } from 'actions/endpointsTree';
 
 export const INITIAL_STATE = {
+  tree: [],
+  treeRootId: null,
   isFetching: false,
   isFetched: false,
-  list: [],
 };
 
 export function endpoints(state = INITIAL_STATE, action) {
@@ -28,7 +29,7 @@ function fetchEndpointsStart(state) {
     ...state,
     isFetching: true,
     isFetched: false,
-    list: [],
+    tree: [],
   };
 }
 
@@ -45,6 +46,6 @@ function fetchEndpointsSuccess(state, payload) {
     ...state,
     isFetching: false,
     isFetched: true,
-    list: [...payload],
+    ...payload,
   };
 }

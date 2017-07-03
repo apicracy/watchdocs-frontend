@@ -120,7 +120,7 @@ export function removeEndpoint() {
       .then(() => (dispatch(fetchEndpoints(activeProject.id))))
       .then(() => {
         if (id === getState().endpointEditor.id) {
-          openFirstEndpoint(activeProject.slug, getState().endpoints);
+          openFirstEndpoint(activeProject.slug, getState().endpoints.tree);
         }
       });
   };

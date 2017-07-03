@@ -15,10 +15,10 @@ export function fetchEndpointsError() {
   };
 }
 
-export function fetchEndpointsSuccess(endpoints) {
+export function fetchEndpointsSuccess(tree, treeRootId) {
   return {
     type: FETCH_ENDPOINTS_SUCCESS,
-    payload: endpoints,
+    payload: { tree, treeRootId },
   };
 }
 
