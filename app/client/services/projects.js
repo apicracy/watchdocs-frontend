@@ -24,6 +24,8 @@ export function loadProjects(slugToActivate) {
       } else {
         browserHistory.push('/new_project');
       }
+
+      return projects;
     });
 }
 

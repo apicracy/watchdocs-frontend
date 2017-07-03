@@ -63,7 +63,12 @@ class AppLayout extends React.Component {
           browserHistory.push('/login');
         }
       })
-      .then(() => dispatch(loadProjects(params.project_name)));
+      .then(() => dispatch(loadProjects(params.project_name)))
+      .then((projects) => {
+        if (!location.pathName) {
+          browserHistory.push(`/${projects[0].slug}/editor`);
+        }
+      });
     this.openDrift();
   }
 
