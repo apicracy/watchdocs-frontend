@@ -58,15 +58,17 @@ class AppLayout extends React.Component {
     const { dispatch, params, location } = this.props;
 
     dispatch(getCurrentUser())
-      .catch(() => {
-        if (location.pathName === '/') {
-          browserHistory.push('/login');
+      .then(() => {
+        return dispatch(loadProjects(params.project_name))
+      })
+      .then((projects) => {
+        if (!location.pathname) {
+          browserHistory.push(`/${projects[0].slug}/editor`);
         }
       })
-      .then(() => dispatch(loadProjects(params.project_name)))
-      .then((projects) => {
-        if (!location.pathName) {
-          browserHistory.push(`/${projects[0].slug}/editor`);
+      .catch(() => {
+        if (location.pathname === '/') {
+          browserHistory.push('/login');
         }
       });
     this.openDrift();
