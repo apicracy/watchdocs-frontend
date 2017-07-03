@@ -96,6 +96,8 @@ class ProjectTree extends Component {
   }
 
   handleChange = (tree, itemToMoveId, destinationId, placementType) => {
+    if (!itemToMoveId) { return; }
+
     let params = { to: destinationId };
 
     if (placementType === 'before') params = { before: destinationId };

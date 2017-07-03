@@ -10,11 +10,13 @@ import Select from 'components/Form/Select/AddNewSelect';
 import Button from 'components/Button/Button';
 import DocumentListItem from './DocumentListItem/DocumentListItem';
 import ProjectTree from 'components/ProjectTree/ProjectTree';
+import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
 
 import { parseTreeItem } from 'services/endpointsTree';
 
 @connect(store => ({
   treeRootId: store.endpoints.treeRootId,
+  isFetching: store.endpoints.isFetching,
 }))
 class EndpointList extends React.Component {
   static propTypes = {
@@ -25,6 +27,7 @@ class EndpointList extends React.Component {
     onAddNewEndpoint: React.PropTypes.func,
     onAddNewGroup: React.PropTypes.func,
     onAddNewDocument: React.PropTypes.func,
+    isFetching: React.PropTypes.bool,
   };
 
   componentWillMount() {
@@ -51,11 +54,12 @@ class EndpointList extends React.Component {
   render() {
     /* eslint no-unused-vars: 0 */
     const { endpoints, activeGroup, selected, treeRootId,
-      onAddNewEndpoint, onAddNewGroup, onAddNewDocument,
+      onAddNewEndpoint, onAddNewGroup, onAddNewDocument, isFetching,
     } = this.props;
     return (
       <div className={styles.root}>
         <div className={styles.list}>
+          { isFetching && <LoadingIndicator /> }
           <ProjectTree
             tree={this.projectTree()}
             activeGroup={activeGroup}
