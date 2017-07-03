@@ -23,9 +23,9 @@ class ProjectSelector extends React.Component {
   close = () => this.setState({ isOpen: false });
   toggle = () => this.setState({ isOpen: !this.state.isOpen });
 
-  handleOptionClick = id => () => {
+  handleOptionClick = slug => () => {
     this.close();
-    this.props.onSelect(id);
+    this.props.onSelect(slug);
   }
 
   onOutsideClick = (e) => {
@@ -71,7 +71,7 @@ class ProjectSelector extends React.Component {
         { projects.map(project => (
           <Button
             key={project.id}
-            onClick={this.handleOptionClick(project.id)}
+            onClick={this.handleOptionClick(project.slug)}
           >
             {project.name}
             {project.sample &&

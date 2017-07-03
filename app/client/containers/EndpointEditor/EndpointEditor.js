@@ -11,6 +11,8 @@ import {
   removeResponse,
 } from 'services/endpointEditor';
 
+import { endpointReadyForDocumentation } from 'services/documentation';
+
 import Button from 'components/Button/Button';
 import Header from 'components/Header/Header';
 
@@ -222,6 +224,14 @@ class EndpointEditor extends React.Component {
     }
   }
 
+  notDocumentationReadyWarning = () => (
+    <Notice
+      type="warning"
+      icon="eye-slash"
+      message="This endpoint will not appear in the documentation. Add at least one success response to make it visible."
+    />
+  )
+
   render() {
     const { endpoint } = this.props;
 
@@ -238,6 +248,9 @@ class EndpointEditor extends React.Component {
         { endpoint.status === 'outdated' && (
           <Notice type="warning" icon="chain-broken" message="This endpoint is outdated. This means one of responses, url params or request is no longer up to date with data received from your app" />
         )}
+        { !endpointReadyForDocumentation(endpoint)
+          && this.notDocumentationReadyWarning()
+        }
         <div className={styles.urlContainer} id="endpoint-editor-method">
           <div className={styles.method}>
             { endpoint && endpoint.method}

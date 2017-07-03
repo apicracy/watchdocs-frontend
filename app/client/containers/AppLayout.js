@@ -4,10 +4,11 @@ import styles from './AppLayout.css';
 
 import { logout, getCurrentUser } from 'services/session';
 import { loadProjects, setActiveProject } from 'services/projects';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 
 import ReduxToastr from 'react-redux-toastr';
 
+import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
 import AppBar from 'components/AppBar/AppBar';
 import Container from 'components/Container/Container';
 import Brand from 'components/Brand/Brand';
@@ -28,6 +29,7 @@ import Modals from 'modals/Modals';
   currentUser: store.session.user,
   title: store.appLayout.title,
   subtitle: store.appLayout.subtitle,
+  isFetching: store.appLayout.isFetching,
 }))
 
 class AppLayout extends React.Component {
@@ -46,19 +48,25 @@ class AppLayout extends React.Component {
     currentUser: React.PropTypes.object,
     title: React.PropTypes.string,
     subtitle: React.PropTypes.string,
+    isFetching: React.PropTypes.bool,
   }
 
   componentDidMount() {
-    const { dispatch, params } = this.props;
+    const { dispatch, params, location } = this.props;
 
     dispatch(getCurrentUser())
-      .then(() => dispatch(loadProjects(params.project_name)))
+      .catch(() => {
+        if (location.pathName === '/') {
+          browserHistory.push('/login');
+        }
+      })
+      .then(() => dispatch(loadProjects(params.project_name)));
     this.openDrift();
   }
 
-  switchProject = (id) => {
+  switchProject = (slug) => {
     const { dispatch } = this.props;
-    dispatch(setActiveProject(id));
+    dispatch(setActiveProject(slug)).then(browserHistory.push(`/${slug}/editor`));
   }
 
   onLogout = () => {
@@ -85,9 +93,10 @@ class AppLayout extends React.Component {
   }
 
   userMenu = () => {
-    const { projects, activeProject, currentUser, endpointsCount } = this.props;
+    const { projects, activeProject, currentUser, endpointsCount, isFetching } = this.props;
     return (
       <Container center>
+        { isFetching && <LoadingIndicator fixed /> }
         <div className={styles.navigation}>
           <Link href="/">
             <Brand />

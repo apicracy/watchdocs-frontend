@@ -22,14 +22,14 @@ class GroupEditor extends React.Component {
   }
 
   componentDidMount() {
-    this.loadGroup();
+    this.loadGroup(this.props.params.group_id);
   }
 
   componentDidUpdate(prevProps) {
     const { group_id } = this.props.params;
 
     if (prevProps.params.group_id !== group_id) {
-      this.loadGroup();
+      this.loadGroup(group_id);
     }
   }
 

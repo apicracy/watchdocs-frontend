@@ -42,4 +42,5 @@
 .user {
   background-color: rgba(0,0,0,0.03);
   padding: 6px 15px;
+  word-break: break-word;
 }
