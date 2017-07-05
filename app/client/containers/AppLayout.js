@@ -27,7 +27,7 @@ import { MODAL_NAME as ADD_PROJECT_MODAL } from 'modals/AddProjectModal/AddProje
   projects: store.projects.projectList,
   activeProject: store.projects.activeProject,
   username: store.session.user && store.session.user.email,
-  endpointsCount: store.endpoints.tree.length,
+  endpointsCount: store.endpoints.tree && store.endpoints.tree.length,
   isModalOpened: !!store.modals.opened,
   currentUser: store.session.user,
   title: store.appLayout.title,
@@ -59,15 +59,15 @@ class AppLayout extends React.Component {
 
     dispatch(getCurrentUser())
       .then(() => {
-        return dispatch(loadProjects(params.project_name))
+        return dispatch(loadProjects(params.project_name));
       })
       .then((projects) => {
-        if (!location.pathname) {
+        if (!params.project_name) {
           browserHistory.push(`/${projects[0].slug}/editor`);
         }
       })
       .catch(() => {
-        if (location.pathname === '/') {
+        if (!location.pathname === '/') {
           browserHistory.push('/login');
         }
       });
