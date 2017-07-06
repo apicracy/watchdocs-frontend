@@ -30,11 +30,17 @@ class Editor extends React.Component {
   }
 
   componentDidMount() {
+    this.container.scrollIntoView();
     openFirstEndpointIfNeeded(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.container.scrollIntoView();
+    const { endpoint_id } = this.props.params;
+
+    if (nextProps.params.endpoint_id !== endpoint_id) {
+      this.container.scrollIntoView();
+    }
+
     openFirstEndpointIfNeeded(nextProps);
   }
 
