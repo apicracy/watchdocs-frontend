@@ -42,7 +42,8 @@ export const httpNoAuth = (url, options = {}) => (
   })
 );
 
-export default function http(url, options = {}, callbackOptions={ unauthorizedRedirect: true, submissionError: true }) {
+// eslint-disable-next-line
+export default function http(url, options = {}, callbackOptions = { unauthorizedRedirect: true, submissionError: true }) {
   const JWT = localStorage.getItem('JWT');
   return fetch(`${API_URL}${url}`, {
     method: 'GET',

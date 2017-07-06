@@ -4,6 +4,7 @@ import styles from './DocLayout.css';
 import DOMPurify from 'dompurify';
 import Button from 'components/Button/Button';
 
+/* eslint-disable */
 const GroupDoc = ({ topLevel, doc, projectSlug, canEdit }) => (
   <div className={styles.top} >
     <article className={styles.content}>
@@ -29,6 +30,7 @@ const GroupDoc = ({ topLevel, doc, projectSlug, canEdit }) => (
     <article className={styles.code} />
   </div>
 );
+/* eslint-enable */
 
 GroupDoc.propTypes = {
   doc: React.PropTypes.object,

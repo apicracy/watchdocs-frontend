@@ -24,8 +24,6 @@ class Editor extends React.Component {
       React.PropTypes.arrayOf(React.PropTypes.node),
       React.PropTypes.node,
     ]),
-    endpoints: React.PropTypes.array,
-    endpointsFetched: React.PropTypes.bool,
     params: React.PropTypes.object, // supplied by react-router
   }
 

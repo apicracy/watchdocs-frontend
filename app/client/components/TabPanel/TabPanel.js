@@ -7,6 +7,10 @@ import SymfonyPanel from './SymfonyPanel';
 
 
 class TabPanel extends React.Component {
+  static propTypes = {
+    project: React.PropTypes.object,
+  };
+
   componentWillMount = () => {
     this.setState({
       activePanel: 'rubyonrails',

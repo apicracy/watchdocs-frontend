@@ -53,7 +53,9 @@ class Setup extends React.Component {
         </DocumentationBlock>
         <div className={styles.overflow}>
           <div className={styles.overflowTitle}>Coming soon</div>
-          <div className={styles.overflowDescription}>We're going to bring you team access for your app soon</div>
+          <div className={styles.overflowDescription}>
+            We&#8217;re going to bring you team access for your app soon
+          </div>
         </div>
       </div>
     );

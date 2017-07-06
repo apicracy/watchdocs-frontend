@@ -8,7 +8,7 @@ export const SET_FETCHING = 'setFetching@appLayout';
 export function setTitles(title, subtitle) {
   return {
     type: SET_TITLES,
-    payload: { title: title, subtitle: subtitle },
+    payload: { title, subtitle },
   };
 }
 

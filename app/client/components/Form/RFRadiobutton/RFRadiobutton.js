@@ -11,9 +11,9 @@ RFRadiobutton.propTypes = {
     onFocus: PropTypes.func.isRequired,
   }).isRequired,
   options: PropTypes.arrayOf(PropTypes.shape({
-     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
-     label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-   })).isRequired,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
+    label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  })).isRequired,
   meta: PropTypes.object,
 };
 
@@ -24,10 +24,10 @@ const errorMessage = message => (
 );
 
 export default function RFRadiobutton({ input, options, meta }) {
-  const { name, value, onBlur, onChange, onFocus } = input;
+  const { value, onChange } = input;
   const { touched, error } = meta;
   const showError = touched && error;
-
+  /* eslint-disable */
   const optionsList = options.map(option => (
     <div className={styles.option} key={option.value}>
       <div className={styles.icon} onClick={() => onChange(option.value)}>
@@ -40,6 +40,7 @@ export default function RFRadiobutton({ input, options, meta }) {
       </div>
     </div>
   ));
+  /* eslint-enable */
 
   return (
     <div className={styles.wrapper}>

@@ -309,10 +309,7 @@ class EndpointEditor extends React.Component {
           { this.renderResponses() }
         </DocumentationBlock>
 
-        <div className={styles.buttons}>
-
-        </div>
-
+        <div className={styles.buttons} />
       </div>
     );
   }

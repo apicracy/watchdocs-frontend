@@ -32,7 +32,6 @@ class DocumentationViewer extends React.Component {
     dispatch: React.PropTypes.func,
     isFetching: React.PropTypes.bool,
     params: React.PropTypes.object,
-    currentUser: React.PropTypes.object,
     canEdit: React.PropTypes.bool,
     activeProject: React.PropTypes.object,
   }
@@ -50,7 +49,10 @@ class DocumentationViewer extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { dispatch } = this.props;
 
-    if (nextProps.params.project_name && nextProps.params.project_name !== this.props.params.project_name) {
+    if (
+      nextProps.params.project_name &&
+      nextProps.params.project_name !== this.props.params.project_name
+    ) {
       dispatch(fetchDocumentation(nextProps.params.project_name));
     }
   }
@@ -106,6 +108,7 @@ class DocumentationViewer extends React.Component {
     const { documentation, activeProject, isFetching, params } = this.props;
     const documentationPath = `https://app.watchdocs.io/${params.project_name}/documentation`;
 
+    /* eslint-disable */
     return (
       <div>
         { isFetching && <LoadingIndicator fixed /> }
@@ -139,6 +142,7 @@ class DocumentationViewer extends React.Component {
         </div>
       </div>
     );
+    /* eslint-enable */
   }
 }
 

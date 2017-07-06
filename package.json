@@ -9,7 +9,8 @@
     "build:dev": "NODE_ENV=development node ./node_modules/webpack/bin/webpack --config config/webpack.config.js",
     "app": "node server.js",
     "heroku-postbuild": "npm run build",
-    "lint": "eslint ./"
+    "lint": "eslint ./",
+    "validate": "npm ls"
   },
   "pre-commit": [
     "lint"

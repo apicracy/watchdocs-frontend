@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './JSONBodyManager.css'
 import JSONEditor from '../JSONEditor/JSONEditor';
 import ConflictResolver from '../ConflictResolver/ConflictResolver';
 import Notice from '../Notice/Notice';
@@ -93,7 +92,7 @@ class JSONBodyManager extends React.Component {
 
   warningMessage = () => (
     <div>
-      We are really sorry, but you can't edit the body. We found an edge case here.
+      We are really sorry, but you can&#39;t edit the body. We found an edge case here.
       <br />
       Please report it to <a href="mailto: contact@watchdocs.io">contact@watchdocs.io</a> sending this URL: {window.location.href}
     </div>
@@ -102,7 +101,7 @@ class JSONBodyManager extends React.Component {
   render() {
     const {
       base, draft, hiddenDifferencesFound,
-      editorEnabled, conflictResolverEnabled
+      editorEnabled, conflictResolverEnabled,
     } = this.state;
     return (
       <div>

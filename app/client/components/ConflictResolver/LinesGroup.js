@@ -68,7 +68,6 @@ class LinesGroup extends React.Component {
       </div>
     );
   }
-};
+}
 
 export default LinesGroup;
-

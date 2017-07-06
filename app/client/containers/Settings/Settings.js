@@ -37,6 +37,7 @@ class Settings extends React.Component {
   onRemoveProject = () => {
     const { projectId, dispatch } = this.props;
 
+    // eslint-disable-next-line
     if (confirm('Are you sure you want to remove this project and its data? This action can not be undone.')) {
       dispatch(removeProject(projectId));
     }

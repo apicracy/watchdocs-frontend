@@ -1,14 +1,8 @@
 import React from 'react';
 import CodeUtils from 'draft-js-code';
-import Draft from 'draft-js';
+import Draft, { Editor, EditorState, RichUtils } from 'draft-js';
 
 import styles from './CodeEditor.css';
-
-import {
-  Editor,
-  EditorState,
-  RichUtils,
-} from 'draft-js';
 
 import {
   contentStateFromPlainText,
@@ -37,7 +31,7 @@ class CodeEditor extends React.Component {
     this.props.onChange(newState);
   }
 
-  onFocus = () => this.refs.editor.focus();
+  onFocus = () => this.editor.focus();
 
   handleKeyCommand = (command) => {
     const { editorState } = this.props;
@@ -113,7 +107,7 @@ class CodeEditor extends React.Component {
     // If the user changes block type before entering any text, we can
     // either style the placeholder or hide it. Let's just hide it now.
     const className = 'RichEditor-editor';
-
+    /* eslint-disable */
     return (
       <div>
         <div className={styles.codeEditor}>
@@ -124,7 +118,7 @@ class CodeEditor extends React.Component {
               keyBindingFn={this.keyBindingFn}
               onChange={this.onChange}
               handlePastedText={this.handlePastedText}
-              ref="editor"
+              ref={(editor) => { this.editor = editor; }}
               spellCheck
               handleReturn={this.onReturn}
               onTab={this.onTab}
@@ -135,6 +129,7 @@ class CodeEditor extends React.Component {
         { !jsonIsValid && <div className={styles.information}>JSON is not valid</div> }
       </div>
     );
+    /* eslint-enable */
   }
 }
 

@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './InitialSetupInstructions.css';
 import { connect } from 'react-redux';
 import TabPanel from 'components/TabPanel/TabPanel';
-import logo from '../../assets/watchdocslogo_white_full.png';
 import { Link } from 'react-router';
 
 const SampleProjectLink = ({ projectList }) => {
@@ -17,6 +16,10 @@ const SampleProjectLink = ({ projectList }) => {
       <Link to={`/${sampleProject.slug}`} className={styles.sampleLink} target="_blank">Checkout Sample Project</Link>
     </span>
   );
+};
+
+SampleProjectLink.propTypes = {
+  projectList: React.PropTypes.string,
 };
 
 @connect(state => ({
@@ -38,12 +41,13 @@ export default class InitialSetupInstructions extends React.Component {
   render() {
     const { activeProject, projectList } = this.props;
 
+    /* eslint-disable */
     return (
       <div className={styles.wrapper}>
         <div className={styles.color}>
           <h1 className={styles.welcome__header}>Integrate your application</h1>
           <p className={styles.welcome}>
-            We're waiting for recordings from your app.
+            We&#39;re waiting for recordings from your app.
             <br />
             Follow instructions below to start documenting your API.
             <br />
@@ -65,5 +69,6 @@ export default class InitialSetupInstructions extends React.Component {
         </div>
       </div>
     );
+    /* eslint-enable */
   }
 }

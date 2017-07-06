@@ -31,12 +31,12 @@ class ScrollSpy extends React.Component {
 
   componentDidMount() {
     this.setCurrentSection();
-    const el = this.props.rootEl ? document.querySelector(this.props.rootEl) : window
+    const el = this.props.rootEl ? document.querySelector(this.props.rootEl) : window;
     el.addEventListener('scroll', this.setCurrentSection);
   }
 
   componentWillUnmount() {
-    const el = this.props.rootEl ? document.querySelector(this.props.rootEl) : window
+    const el = this.props.rootEl ? document.querySelector(this.props.rootEl) : window;
     el.removeEventListener('scroll', this.setCurrentSection);
   }
 
