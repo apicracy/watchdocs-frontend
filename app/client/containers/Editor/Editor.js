@@ -30,10 +30,17 @@ class Editor extends React.Component {
   }
 
   componentDidMount() {
+    this.container.scrollIntoView();
     openFirstEndpointIfNeeded(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
+    const { endpoint_id } = this.props.params;
+
+    if (nextProps.params.endpoint_id !== endpoint_id) {
+      this.container.scrollIntoView();
+    }
+
     openFirstEndpointIfNeeded(nextProps);
   }
 
@@ -41,7 +48,7 @@ class Editor extends React.Component {
     const { children, params } = this.props;
 
     return (
-      <div className={styles.container}>
+      <div className={styles.container} ref={(container) => { this.container = container; }}>
         <Aside params={params} />
         <Content>
           { children }
