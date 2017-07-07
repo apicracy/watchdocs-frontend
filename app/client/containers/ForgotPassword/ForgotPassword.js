@@ -6,7 +6,7 @@ import UnauthorizedLayout from 'components/UnauthorizedLayout/UnauthorizedLayout
 
 import { requestPasswordReset } from 'services/session';
 
-@connect(store => ({}))
+@connect(() => ({}))
 class ForgotPassword extends React.Component {
   static propTypes = {
     dispatch: React.PropTypes.func,

@@ -26,6 +26,7 @@ class AddUrlParam extends React.Component {
   static propTypes = {
     isVisible: React.PropTypes.bool,
     dispatch: React.PropTypes.func,
+    // eslint-disable-next-line
     modals: React.PropTypes.object,
     endpoint: React.PropTypes.object,
     endpointId: React.PropTypes.number,

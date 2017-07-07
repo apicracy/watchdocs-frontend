@@ -84,7 +84,9 @@ class Integrations extends React.Component {
         </DocumentationBlock>
         <div className={styles.overflow}>
           <div className={styles.overflowTitle}>Coming soon</div>
-          <div className={styles.overflowDescription}>Here we are going to have various integrations available for you soon.</div>
+          <div className={styles.overflowDescription}>
+            Here we are going to have various integrations available for you soon.
+          </div>
         </div>
       </div>
     );

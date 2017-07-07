@@ -26,10 +26,10 @@ class GroupEditor extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { group_id } = this.props.params;
+    const { group_id: groupId } = this.props.params;
 
-    if (prevProps.params.group_id !== group_id) {
-      this.loadGroup(group_id);
+    if (prevProps.params.group_id !== groupId) {
+      this.loadGroup(groupId);
     }
   }
 
@@ -46,11 +46,12 @@ class GroupEditor extends React.Component {
   }
 
   removeGroup = () => {
-    const { id } = this.props.group;
-    const { dispatch } = this.props;
-    if (confirm('Are you sure you want to remove this group? This action can not be undone and all endpoints and groups within will be lost')) {
-      return dispatch(removeGroup(id));
-    }
+    const { dispatch, group } = this.props;
+    const { id } = group;
+    const msg = 'Are you sure you want to remove this group? This action can not be undone and all endpoints and groups within will be lost';
+
+    // eslint-disable-next-line
+    return confirm(msg) ? dispatch(removeGroup(id)) : null;
   }
 
   render() {

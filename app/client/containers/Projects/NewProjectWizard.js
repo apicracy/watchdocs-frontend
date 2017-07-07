@@ -14,7 +14,6 @@ import { createProject } from 'services/projects';
 
 class Projects extends React.Component {
   static propTypes = {
-    projects: React.PropTypes.array,
     dispatch: React.PropTypes.func,
   }
 
@@ -25,6 +24,7 @@ class Projects extends React.Component {
   }
 
   render() {
+    /* eslint-disable */
     return (
       <div className={styles.root}>
         <div className={styles.cardContainer}>
@@ -44,6 +44,7 @@ class Projects extends React.Component {
         </div>
       </div>
     );
+    /* eslint-enable */
   }
 }
 

@@ -72,6 +72,7 @@ class ProjectSelector extends React.Component {
       </div>
     );
 
+    /* eslint-disable */
     const projectsOptions = (
       <div className={styles.optionList}>
         { projects.map(project => (
@@ -88,6 +89,7 @@ class ProjectSelector extends React.Component {
         <a onClick={this.handleAddClick} className={styles.addNew}>Add new +</a>
       </div>
     );
+    /* eslint-enable */
 
     return (
       <div className={wrapperStyle} tabIndex="0" onBlur={this.onOutsideClick}>

@@ -21,6 +21,7 @@ const validate = values => (
 const ForgotPasswordForm = (props) => {
   const { handleSubmit, submitting, buttonLabel, submitSucceeded, reset } = props;
 
+  /* eslint-disable */
   const successMessage = (
     <div className={styles.submittedInfo}>
       Okay, we sent an email with a link to reset your password.
@@ -29,6 +30,7 @@ const ForgotPasswordForm = (props) => {
       <a onClick={reset} >try again.</a>
     </div>
   );
+  /* eslint-enable */
 
   const emailForm = (
     <div>
@@ -65,4 +67,3 @@ export default reduxForm({
   form: 'ForgotPasswordForm',
   validate,
 })(ForgotPasswordForm);
-

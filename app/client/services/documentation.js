@@ -8,13 +8,11 @@ export function fetchDocumentation(projectId) {
     dispatch(fetchRequest());
     http(`/api/v1/projects/${projectId}/documentation`)
       .then(response => response.json())
-      .then(response => {
+      .then((response) => {
         dispatch(setTitles(response.name, 'Living API documentation'));
         return buildDocumentation(response.documentation);
       })
-      .then(response => {
-        return dispatch(fetchDoc(response));
-      });
+      .then(response => dispatch(fetchDoc(response)));
   };
 }
 
@@ -80,9 +78,9 @@ function createEndpoint(item, parentGroup) {
 }
 
 export function endpointReadyForDocumentation(endpoint) {
-  return endpoint.responses
-    && endpoint.responses.length > 0
-    && endpoint.responses.some(response =>
-        response.http_status_code.toString().startsWith('2')
-       );
+  return (
+    endpoint.responses &&
+    endpoint.responses.length > 0 &&
+    endpoint.responses.some(response => response.http_status_code.toString().startsWith('2'))
+  );
 }

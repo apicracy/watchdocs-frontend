@@ -5,7 +5,7 @@ import {
   logout as logoutAction,
 } from 'actions/session';
 
-import http, { httpNoAuth, httpAuth } from 'services/http';
+import http, { httpNoAuth } from 'services/http';
 
 import { browserHistory } from 'react-router';
 

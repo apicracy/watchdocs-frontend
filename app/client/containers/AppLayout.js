@@ -52,15 +52,14 @@ class AppLayout extends React.Component {
     title: React.PropTypes.string,
     subtitle: React.PropTypes.string,
     isFetching: React.PropTypes.bool,
+    location: React.PropTypes.object,
   }
 
   componentDidMount() {
     const { dispatch, params, location } = this.props;
 
     dispatch(getCurrentUser())
-      .then(() => {
-        return dispatch(loadProjects(params.project_name));
-      })
+      .then(() => dispatch(loadProjects(params.project_name)))
       .then((projects) => {
         if (!params.project_name) {
           browserHistory.push(`/${projects[0].slug}/editor`);
@@ -89,12 +88,14 @@ class AppLayout extends React.Component {
   }
 
   openHelp = () => {
+    // eslint-disable-next-line no-unused-expressions
     window.drift && window.drift.on('ready', (api) => {
       api.sidebar.open();
     });
   }
 
   openDrift = () => {
+    // eslint-disable-next-line no-unused-expressions
     window.drift && window.drift.on('ready', (api) => {
       if (typeof (Storage) !== 'undefined') {
         if (localStorage.getItem('drift-welcomed')) {
@@ -127,9 +128,9 @@ class AppLayout extends React.Component {
           <NavLink url="/settings" text="Settings" icon={<CustomIcon name="settings" size="sm" />} id="nav-settings" />
         </div>
         <div className={styles.right}>
-          <a className={styles.helpLink} onClick={this.openHelp}>
+          <button className={styles.helpLink} onClick={this.openHelp}>
             <CustomIcon name="help" size="lg" />
-          </a>
+          </button>
           <UserMenu
             username={currentUser.email}
             onLogout={this.onLogout}
@@ -139,25 +140,23 @@ class AppLayout extends React.Component {
     );
   }
 
-  guestMenu = () => {
-    return (
-      <Container center>
-        <div className={styles.navigation}>
-          <a href="/">
-            <Brand />
-          </a>
-          <div className={styles.titleContainer}>
-            <h1 className={styles.title}>{this.props.title}</h1>
-            <h2 className={styles.subtitle}>{this.props.subtitle}</h2>
-          </div>
+  guestMenu = () => (
+    <Container center>
+      <div className={styles.navigation}>
+        <a href="/">
+          <Brand />
+        </a>
+        <div className={styles.titleContainer}>
+          <h1 className={styles.title}>{this.props.title}</h1>
+          <h2 className={styles.subtitle}>{this.props.subtitle}</h2>
         </div>
-        <div className={styles.right}>
-          <Link to="/login" className={styles.navigationLink}>Login</Link>
-          <Link to="/signup" className={styles.navigationLink}>Signup</Link>
-        </div>
-      </Container>
-    );
-  }
+      </div>
+      <div className={styles.right}>
+        <Link to="/login" className={styles.navigationLink}>Login</Link>
+        <Link to="/signup" className={styles.navigationLink}>Signup</Link>
+      </div>
+    </Container>
+  );
 
   render() {
     const {
