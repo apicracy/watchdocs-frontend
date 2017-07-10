@@ -52,6 +52,7 @@ export function createProject(projectParams) {
       .then((project) => {
         dispatch(create(project));
         dispatch(loadProjects(project.slug));
+        return project;
       });
   };
 }

@@ -7,6 +7,8 @@ import icon from './project_icon.png';
 
 import { logout } from 'services/session';
 import { createProject } from 'services/projects';
+import { browserHistory } from 'react-router';
+
 
 @connect(store => ({
   projects: store.projects.projectList,
@@ -17,7 +19,9 @@ class Projects extends React.Component {
     dispatch: React.PropTypes.func,
   }
 
-  onSave = values => (this.props.dispatch(createProject(values)))
+  onSave = values => (this.props.dispatch(createProject(values)).then((project) => {
+    browserHistory.push(`/${project.slug}/editor`);
+  }))
 
   onLogout = () => {
     this.props.dispatch(logout());
