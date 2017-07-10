@@ -33,9 +33,9 @@ class Editor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { endpoint_id } = this.props.params;
+    const { endpoint_id: endpointId } = this.props.params;
 
-    if (nextProps.params.endpoint_id !== endpoint_id) {
+    if (nextProps.params.endpoint_id !== endpointId) {
       this.container.scrollIntoView();
     }
 

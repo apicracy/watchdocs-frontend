@@ -89,6 +89,7 @@
     "lodash": "^4.17.4",
     "node-sass": "^3.4.x",
     "object-hash": "^1.1.8",
+    "prop-types": "^15.5.10",
     "rc-switch": "^1.4.4",
     "react": "^15.5.4",
     "react-clipboard.js": "^1.1.2",
@@ -104,6 +105,7 @@
     "react-select": "^1.0.0-rc.3",
     "react-tinymce": "^0.5.1",
     "react-tinymce-input": "^1.2.1",
+    "react-ui-tree": "mazikwyry/react-ui-tree",
     "reapp-dev-tools": "0.2.x",
     "redux": "^3.6.0",
     "redux-form": "^6.6.3",
@@ -114,7 +116,6 @@
     "svg-inline-loader": "^0.7.1",
     "svg-url-loader": "^2.0.2",
     "traverse": "^0.6.6",
-    "react-ui-tree": "mazikwyry/react-ui-tree",
     "url-loader": "^0.5.x",
     "webpack": "^1.12.x",
     "whatwg-fetch": "^2.0.3"

@@ -11,6 +11,8 @@ import { openModal } from 'actions/modals';
 import { MODAL_NAME as UPDATE_PROJECT_MODAL } from 'modals/EditProject/EditProject';
 import { MODAL_NAME as UPDATE_PROJECT_VISIBILITY_MODAL } from 'modals/ProjectVisibilityModal/ProjectVisibilityModal';
 
+import { removeProject } from 'services/projects';
+
 @connect(store => ({
   project: store.projects.activeProject,
 }))
@@ -18,7 +20,6 @@ class Delete extends React.Component {
 
   static propTypes = {
     project: React.PropTypes.object,
-    handleRemoveProject: React.PropTypes.func,
     dispatch: React.PropTypes.func,
   }
 
@@ -29,11 +30,18 @@ class Delete extends React.Component {
   openProjectVisibilityModal = () => {
     this.props.dispatch(openModal(UPDATE_PROJECT_VISIBILITY_MODAL));
   }
+  onRemoveProject = () => {
+    const { project: { id }, dispatch } = this.props;
+
+    // eslint-disable-next-line
+    if (confirm('Are you sure you want to remove this project and its data? This action can not be undone.')) {
+      dispatch(removeProject(id));
+    }
+  }
 
   render() {
     const {
       project,
-      handleRemoveProject,
     } = this.props;
 
     return (
@@ -76,7 +84,7 @@ class Delete extends React.Component {
           <p className={styles.text}><b>Warning</b> Deleting this project will cause all of
             its associated data to be deleted immediately.</p>
           <p className={styles.text}><b>This action can not be undone.</b></p>
-          <button className={styles.deleteButton} onClick={handleRemoveProject} >
+          <button className={styles.deleteButton} onClick={this.onRemoveProject} >
             I understand -- Delete this project ({project.name}) and its data</button>
         </DocumentationBlock>
       </div>

@@ -47,6 +47,18 @@
   margin-left: -15px;
 }
 
+.menuLink {
+  display: block;
+  color: #7f7d94;
+  font-weight: bold;
+  padding: 15px 10px;
+}
+
+.menuLinkActive {
+  color: #6C6AB8 !important;
+  background-color: #ECEFF3;
+}
+
 /* Users */
 .addressWrapper{
   background: white;
@@ -108,4 +120,8 @@
 .integrationLogo {
   height: 20px;
   margin-right: 20px;
+}
+
+.relative {
+  position: relative;
 }

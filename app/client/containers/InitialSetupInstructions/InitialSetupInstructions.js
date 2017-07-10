@@ -19,7 +19,7 @@ const SampleProjectLink = ({ projectList }) => {
 };
 
 SampleProjectLink.propTypes = {
-  projectList: React.PropTypes.string,
+  projectList: React.PropTypes.array,
 };
 
 @connect(state => ({
