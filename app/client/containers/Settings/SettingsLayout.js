@@ -13,7 +13,7 @@ class SettingsLayout extends React.Component {
   }
 
   render() {
-    const { project_name } = this.props.params;
+    const { project_name: projectSlug } = this.props.params;
     const linkProps = {
       className: styles.menuLink,
       activeClassName: styles.menuLinkActive,
@@ -23,16 +23,16 @@ class SettingsLayout extends React.Component {
       <div className={styles.root}>
         <Sidebar>
           <div className={styles.menu}>
-            <Link to={`/${project_name}/settings/basics`} {...linkProps}>
+            <Link to={`/${projectSlug}/settings/basics`} {...linkProps}>
               Basics
             </Link>
-            <Link to={`/${project_name}/settings/setup`} {...linkProps}>
+            <Link to={`/${projectSlug}/settings/setup`} {...linkProps}>
               Setup
             </Link>
-            <Link to={`/${project_name}/settings/collaborators`} {...linkProps}>
+            <Link to={`/${projectSlug}/settings/collaborators`} {...linkProps}>
               Collaborators
             </Link>
-            <Link to={`/${project_name}/settings/integrations`} {...linkProps}>
+            <Link to={`/${projectSlug}/settings/integrations`} {...linkProps}>
               Integrations
             </Link>
           </div>

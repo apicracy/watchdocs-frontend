@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, IndexRoute, IndexRedirect } from 'react-router';
 
+import MainLayout from 'containers/MainLayout';
 import AppLayout from 'containers/AppLayout';
 import About from 'containers/About';
 
@@ -29,14 +30,16 @@ import InitialSetupInstructions from 'containers/InitialSetupInstructions/Initia
 import connectWithSlack from 'services/integrations/slackConnect';
 
 const getRoutes = () => (
-  <Route>
+  <Route component={MainLayout}>
     <Route path="/login" component={Login} />
     <Route path="/signup" component={Signup} />
     <Route path="/forgot_password" component={ForgotPassword} />
     <Route path="/reset_password" component={ResetPassword} />
 
     <Route>
-      <Route exact path="/" component={LoadingIndicator} component={AppLayout} />
+      <Route exact path="/" component={AppLayout} >
+        <IndexRoute component={LoadingIndicator} />
+      </Route>
 
       <Route path="new_project" component={NewProjectWizard} />
 
@@ -68,9 +71,7 @@ const getRoutes = () => (
     <Route path="callbacks">
       <Route
         path="slack_connect"
-        onEnter={(nextState) => {
-          return connectWithSlack({ code: nextState.location.query.code });
-        }}
+        onEnter={nextState => (connectWithSlack({ code: nextState.location.query.code }))}
       />
     </Route>
   </Route>

@@ -7,15 +7,15 @@ export default function connectWithSlack({ code }) {
     method: 'POST',
     body: JSON.stringify({ code }),
   };
+  const redirectUrl = localStorage.getItem('redirectUrl') || '/';
 
   return http('/auth/slack/connect', options).then(() => {
-    browserHistory.push('/').then(() => {
-      toastr.success('We have connected your app with Slack');
-    });
-  }).catch((error) => {
-    browserHistory.push('/').then(() => {
-      toastr.success('We have connected your app with Slack');
-    });
-    // toastr.error(error);
+    toastr.success("We've connected you with a slack");
+  }).catch(({ errors }) => {
+    /* eslint no-underscore-dangle:0 */
+    // _error is preferred way to setup global error for redux-form
+    toastr.error(errors._error);
+  }).then(() => {
+    browserHistory.push(redirectUrl);
   });
 }

@@ -17,6 +17,10 @@ const validationErrors = (errorData) => {
   const errors = errorData.errors[0].detail;
   const paresedErrors = {};
 
+  if (!(errors instanceof Array)) {
+    return { _error: errors };
+  }
+
   Object.keys(errors).forEach((key) => {
     const value = errors[key];
     paresedErrors[key] = value.join(', ');

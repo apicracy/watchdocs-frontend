@@ -89,6 +89,7 @@
     "lodash": "^4.17.4",
     "node-sass": "^3.4.x",
     "object-hash": "^1.1.8",
+    "prop-types": "^15.5.10",
     "rc-switch": "^1.4.4",
     "react": "^15.5.4",
     "react-clipboard.js": "^1.1.2",
