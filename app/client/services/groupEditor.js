@@ -14,7 +14,7 @@ import {
 export function loadGroup(id) {
   return (dispatch, getState) => {
     const { endpoints } = getState();
-    const group = filterByIdAndType([...endpoints.list], id, 'Group');
+    const group = filterByIdAndType([...endpoints.tree], id, 'Group');
 
     dispatch(setGroupEditor(group));
   };
