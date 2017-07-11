@@ -68,6 +68,9 @@ class EndpointList extends React.Component {
           />
           { (!endpoints || endpoints.length === 0) && this.renderNoItems() }
         </div>
+        <div className={styles.dragdrop}>
+          Drag & drop to reorder
+        </div>
         <div>
           <Select
             emptyMsg="Add New"

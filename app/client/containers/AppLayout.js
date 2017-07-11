@@ -6,8 +6,6 @@ import { logout, getCurrentUser } from 'services/session';
 import { loadProjects, setActiveProject } from 'services/projects';
 import { Link, browserHistory } from 'react-router';
 
-import ReduxToastr from 'react-redux-toastr';
-
 import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
 import AppBar from 'components/AppBar/AppBar';
 import Container from 'components/Container/Container';
@@ -18,7 +16,6 @@ import ProjectSelector from 'components/ProjectSelector/ProjectSelector';
 import Icon from 'components/Icon/Icon';
 import CustomIcon from 'components/Icon/CustomIcon';
 import Tutorial from 'components/Tutorial/Tutorial';
-import Modals from 'modals/Modals';
 
 import { openModal } from 'actions/modals';
 import { MODAL_NAME as ADD_PROJECT_MODAL } from 'modals/AddProjectModal/AddProjectModal';
@@ -66,7 +63,7 @@ class AppLayout extends React.Component {
         }
       })
       .catch(() => {
-        if (!location.pathname === '/') {
+        if (location.pathname === '/') {
           browserHistory.push('/login');
         }
       });
@@ -176,16 +173,6 @@ class AppLayout extends React.Component {
         <div className={`${styles.content} ${isModalOpened ? styles.modalOpened : ''}`}>
           { children }
         </div>
-        <Modals params={this.props.params} />
-        <ReduxToastr
-          timeOut={4000}
-          newestOnTop={false}
-          preventDuplicates
-          position="top-right"
-          transitionIn="fadeIn"
-          transitionOut="fadeOut"
-          progressBar
-        />
       </div>
     );
   }
