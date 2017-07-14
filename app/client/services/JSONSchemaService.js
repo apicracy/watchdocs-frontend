@@ -1,3 +1,5 @@
+// WOOHOO TOFIX :) Do not change to arrow functions because it changes "this"
+/* eslint-disable */
 import deepEqual from 'deep-equal';
 import generateSchema from 'generate-schema';
 import traverse from 'traverse';
@@ -50,7 +52,7 @@ const calculateObjectRequired = (base, draft) => {
 // of schema all make all properies required by default
 export function fillSchemaWithRequired(schema) {
   const resultSchema = schema;
-  traverse(resultSchema).forEach(() => {
+  traverse(resultSchema).forEach(function () {
     if (this.node.type === 'object') {
       const node = this.node;
       node.required = keys(node.properties);
@@ -65,7 +67,7 @@ export function fillSchemaWithRequired(schema) {
 export function indexSchemaNodes(schema) {
   const resultSchema = schema;
   let nodeId = 0;
-  traverse(resultSchema).forEach(() => {
+  traverse(resultSchema).forEach(function () {
     if (this.node.type && isString(this.node.type)) {
       const node = this.node;
       node.nodeId = nodeId;
@@ -79,10 +81,10 @@ export function indexSchemaNodes(schema) {
 
 export function changeRequiredForNode(schema, nodeId) {
   const resultSchema = schema;
-  traverse(resultSchema).forEach(() => {
+  traverse(resultSchema).forEach(function () {
     if (this.node.nodeId === nodeId) {
       const parentNode = this.parent.parent.node;
-      if (parentNode.required && parentNode.required.includes(this.key)) {
+      if (parentNode.required && parentNode.required.includes(this.key)){
         pull(parentNode.required, this.key);
       } else {
         if (!parentNode.required) {
@@ -127,7 +129,9 @@ export function cleanJSONSchema(output) {
 
 export function isResolved(linesOfCode) {
   const lines = flattenDeep(linesOfCode);
-  const hasConflicts = lines.some(line => line.toAdd || line.toRemove);
+  const hasConflicts = lines.some(function (line) {
+    return line.toAdd || line.toRemove;
+  });
 
   return !hasConflicts;
 }
@@ -137,7 +141,7 @@ export function acceptChange(resultSchema, groupToAccept) {
   const differenceId = groupToAccept.find(line => line.differenceId >= 0)
                                     .differenceId;
 
-  traverse(newResultSchema).forEach(() => {
+  traverse(newResultSchema).forEach(function () {
     if (this.node.differenceId === differenceId) {
       const changedProperty = this.node;
 
@@ -170,7 +174,7 @@ export function rejectChange(resultSchema, groupToAccept) {
   }
 
   const newResultSchema = resultSchema;
-  traverse(newResultSchema).forEach(() => {
+  traverse(newResultSchema).forEach(function () {
     if (this.node.differenceId === differenceId) {
       const changedProperty = this.node;
 
@@ -362,8 +366,8 @@ export function JSONSchemaToJSONLines(schema) {
 }
 
 function getLines(name, schema, isReq, space, toAdd, toRemove, toChange, isAccepted, comma) {
-  if (!schema) {
-    return [];
+  if (!schema){
+    return []
   }
   const lineToChange = toChange || schema.typeChanged || schema.requiredChanged;
   // line could be marked to remove/add by itself (from schema) or by parent
@@ -372,20 +376,9 @@ function getLines(name, schema, isReq, space, toAdd, toRemove, toChange, isAccep
 
   let lines;
   switch (schema.type) {
-    case 'object':
-      lines = getObjectLine(
-        name, schema, isReq, space, lineToAdd, lineToRemove, lineToChange, isAccepted, comma,
-      );
-      break;
-    case 'array':
-      lines = getArrayLine(
-        name, schema, isReq, space, lineToAdd, lineToRemove, lineToChange, isAccepted, comma,
-      );
-      break;
-    default:
-      lines = getSingleLine(
-        name, schema, isReq, space, lineToAdd, lineToRemove, lineToChange, isAccepted, comma,
-      );
+    case 'object': lines = getObjectLine(name, schema, isReq, space, lineToAdd, lineToRemove, lineToChange, isAccepted, comma); break;
+    case 'array': lines = getArrayLine(name, schema, isReq, space, lineToAdd, lineToRemove, lineToChange, isAccepted, comma); break;
+    default: lines = getSingleLine(name, schema, isReq, space, lineToAdd, lineToRemove, lineToChange, isAccepted, comma);
   }
   lines = [].concat(lines);
 
@@ -402,7 +395,7 @@ function getLines(name, schema, isReq, space, toAdd, toRemove, toChange, isAccep
   // protect from grouping whole node when require changed
   // it should group only first node line
   if (schema.requiredChanged) {
-    const [oldRequired, newRequired, ...unchanged] = lines;
+    const [oldRequired, newRequired, ...unchanged] = lines
     return [[oldRequired, newRequired], ...unchanged];
   }
   return lines;
@@ -421,8 +414,6 @@ const oldLines = (name, schema, isReq, space, comma) => {
   return [];
 };
 
-// TODO fonction shouldn't have more that 2 arguments - use desctructing
-// eslint-disable-next-line
 const getObjectLine = (name, schema, isReq, space, toAdd, toRemove, toChange, isAccepted, comma) => {
   let lines = [];
   lines.push(getSingleLine(name, schema, isReq, space, toAdd, toRemove,
@@ -431,9 +422,7 @@ const getObjectLine = (name, schema, isReq, space, toAdd, toRemove, toChange, is
   if (schema.requiredChanged && !schema.typeChanged) {
     // prevent items to be marked to add if only required changed
     // Warning: HACK. To be refactored
-    // eslint-disable-next-line
     toAdd = false;
-    // eslint-disable-next-line
     toChange = false;
   }
   lines = lines.concat(...objectPropertiesLines(schema, space, toAdd, toRemove,
@@ -448,17 +437,17 @@ const objectPropertiesLines = (schema, space, toAdd, toRemove, toChange, isAccep
   if (!schema.properties) {
     return [];
   }
-  const propertyKeys = Object.keys(schema.properties);
+  const keys = Object.keys(schema.properties);
 
   return (
-    propertyKeys.map((prop, index) => {
+    keys.map((prop, index) => {
       let isReqProp = false;
       if (schema.required) {
         isReqProp = schema.required.indexOf(prop) > -1;
       }
       return getLines(prop, schema.properties[prop], isReqProp, space + 2,
         (toAdd || schema.toAdd), (toRemove || schema.toRemove),
-        toChange, (isAccepted || schema.isAccepted), index !== propertyKeys.length - 1);
+        toChange, (isAccepted || schema.isAccepted), index !== keys.length - 1);
     })
   );
 };
@@ -466,18 +455,12 @@ const objectPropertiesLines = (schema, space, toAdd, toRemove, toChange, isAccep
 
 const getArrayLine = (name, schema, isReq, space, toAdd, toRemove, toChange, isAccepted, comma) => {
   let lines = [];
-  const newLine = getSingleLine(
-    name, schema, isReq, space, toAdd, toRemove, toChange, isAccepted, false,
-  );
-
-  lines.push(newLine);
+  lines.push(getSingleLine(name, schema, isReq, space, toAdd, toRemove, toChange, isAccepted, false));
 
   if (schema.requiredChanged && !schema.typeChanged) {
     // prevent items to be marked to add if only required changed
     // Warning: HACK. To be refactored
-    // eslint-disable-next-line
     toAdd = false;
-    // eslint-disable-next-line
     toChange = false;
   }
 
