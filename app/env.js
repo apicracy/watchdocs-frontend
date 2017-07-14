@@ -12,6 +12,7 @@
 
 let APP_ENV = {
   BASE_PATH: '/',
+  SLACK_CLIENT_ID: process.env.SLACK_CLIENT_ID,
   'process.env.API_URL': process.env.API_URL,
 };
 
@@ -24,6 +25,7 @@ if (process.env.NODE_ENV === 'development') {
   APP_ENV = Object.assign({}, APP_ENV, {
     BASE_PATH: '/dist/',
     'process.env.API_URL': 'https://watchdocs-backend-dev.herokuapp.com',
+    SLACK_CLIENT_ID: '2524588006.212897134580',
   });
 }
 
