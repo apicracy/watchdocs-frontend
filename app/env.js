@@ -20,12 +20,12 @@ let APP_ENV = {
  */
 
 /* eslint no-process-env:0 */
-if (process.env.NODE_ENV === 'development') {
-  APP_ENV = Object.assign({}, APP_ENV, {
-    BASE_PATH: '/dist/',
-    'process.env.API_URL': 'https://watchdocs-backend-dev.herokuapp.com',
-  });
-}
+// if (process.env.NODE_ENV === 'development') {
+//   APP_ENV = Object.assign({}, APP_ENV, {
+//     BASE_PATH: '/dist/',
+//     'process.env.API_URL': 'https://watchdocs-backend-dev.herokuapp.com',
+//   });
+// }
 
 /**
  * Personal settings override

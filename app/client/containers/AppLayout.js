@@ -58,7 +58,7 @@ class AppLayout extends React.Component {
     dispatch(getCurrentUser())
       .then(() => dispatch(loadProjects(params.project_name)))
       .then((projects) => {
-        if (!params.project_name) {
+        if (!params.project_name && projects.length) {
           browserHistory.push(`/${projects[0].slug}/editor`);
         }
       })
