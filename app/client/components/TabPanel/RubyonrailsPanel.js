@@ -41,8 +41,10 @@ class RubyonrailsPanel extends React.Component {
           <CopyableCodeBlock textToCopy={`rails g watchdocs:install --app_id ${project.app_id} --app_secret ${project.app_secret}`}>
             <span>
               rails g watchdocs:install --app_id
+              {' '}
               <span className={styles.codeColor}>{project.app_id}</span>
                --app_secret
+              {' '}
               <span className={styles.codeColor}>{project.app_secret}</span>
             </span>
           </CopyableCodeBlock>
