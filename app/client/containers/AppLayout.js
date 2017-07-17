@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import styles from './AppLayout.css';
 
 import { logout, getCurrentUser } from 'services/session';
-import { loadProjects, setActiveProject } from 'services/projects';
+import { loadProjects, setActiveProject, openFirstEndpoint } from 'services/projects';
+import { fetchEndpoints } from 'services/endpointsTree';
 import { Link, browserHistory } from 'react-router';
 
 import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
@@ -22,6 +23,7 @@ import { MODAL_NAME as ADD_PROJECT_MODAL } from 'modals/AddProjectModal/AddProje
 
 @connect(store => ({
   projects: store.projects.projectList,
+  endpoints: store.endpoints.tree,
   activeProject: store.projects.activeProject,
   username: store.session.user && store.session.user.email,
   endpointsCount: store.endpoints.tree && store.endpoints.tree.length,
@@ -42,6 +44,7 @@ class AppLayout extends React.Component {
     params: React.PropTypes.object, // supplied by react-router
     dispatch: React.PropTypes.func,
     projects: React.PropTypes.array,
+    endpoints: React.PropTypes.array,
     activeProject: React.PropTypes.object,
     endpointsCount: React.PropTypes.number,
     isModalOpened: React.PropTypes.bool,
@@ -59,7 +62,15 @@ class AppLayout extends React.Component {
       .then(() => dispatch(loadProjects(params.project_name)))
       .then((projects) => {
         if (!params.project_name && projects.length) {
-          browserHistory.push(`/${projects[0].slug}/editor`);
+          const project = projects[0];
+
+          if (this.props.endpoints.length > 0) {
+            openFirstEndpoint(project.slug, this.props.endpoints);
+          } else {
+            dispatch(fetchEndpoints(project.id)).then((end) => {
+              openFirstEndpoint(project.slug, end.payload.tree);
+            });
+          }
         }
       })
       .catch(() => {
