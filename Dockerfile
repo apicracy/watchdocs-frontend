@@ -4,3 +4,5 @@ WORKDIR /watchdocs-frontend
 ADD package.json /watchdocs-frontend/package.json
 RUN npm install
 ADD . /watchdocs-frontend
+run npm run build
+CMD npm run app
