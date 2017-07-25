@@ -53,7 +53,7 @@ class TabPanel extends React.Component {
             this.state.activePanel === 'rubyonrails' && <RubyonrailsPanel project={project} />
           }
           {
-            this.state.activePanel === 'express' && <ExpressPanel />
+            this.state.activePanel === 'express' && <ExpressPanel project={project} />
           }
           {
             this.state.activePanel === 'symfony' && <SymfonyPanel />
