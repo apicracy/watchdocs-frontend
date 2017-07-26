@@ -21,7 +21,7 @@ const UnauthorizedLayout = (props, context) => {
         </div>
         <div className={styles.links}>
           {currentPath !== '/login' && <Link to="/login">Already have an account?</Link>}
-          {currentPath !== '/signup' && <Link to="/signup">Don&#39;t have an account yet?</Link>}
+          <a href="https://watchdocs.io/signup" target="_blank" rel="noopener noreferrer">Don&#39;t have an account yet?</a>
         </div>
       </div>
     </div>

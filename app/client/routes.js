@@ -32,7 +32,8 @@ import connectWithSlack from 'services/integrations/slackConnect';
 const getRoutes = () => (
   <Route component={MainLayout}>
     <Route path="/login" component={Login} />
-    <Route path="/signup" component={Signup} />
+    { /* Add hidden route so no one can signup */ }
+    <Route path="/signupF3EoAGaHSa" component={Signup} />
     <Route path="/forgot_password" component={ForgotPassword} />
     <Route path="/reset_password" component={ResetPassword} />
 
