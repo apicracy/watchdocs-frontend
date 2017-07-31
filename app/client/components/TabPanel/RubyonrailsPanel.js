@@ -43,6 +43,7 @@ class RubyonrailsPanel extends React.Component {
               rails g watchdocs:install --app_id
               {' '}
               <span className={styles.codeColor}>{project.app_id}</span>
+              {' '}
                --app_secret
               {' '}
               <span className={styles.codeColor}>{project.app_secret}</span>
