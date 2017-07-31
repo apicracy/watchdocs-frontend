@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './TabPanel.css';
 import CopyableCodeBlock from '../CopyableCodeBlock/CopyableCodeBlock';
 
+/* eslint-disable react/no-danger */
 class JavascriptPanel extends React.Component {
   static propTypes = {
     project: React.PropTypes.object,
@@ -17,6 +18,13 @@ app.use(watchdocs({
   appSecret: '${project.app_secret}'
 }))`;
 
+    const displayCode = `const watchdocs = require('watchdocs-express')
+
+app.use(watchdocs({
+  appId: <span class="${styles.codeColor}">'${project.app_id}'</span>,
+  appSecret: <span class="${styles.codeColor}">'${project.app_secret}'</span>
+}))`;
+
     return (
       <div>
         <h2 className={styles.title}>Installation</h2>
@@ -28,7 +36,9 @@ app.use(watchdocs({
           </p>
           <CopyableCodeBlock textToCopy="npm install watchdocs-express --save">
             <span>
-              npm install watchdocs-express --save
+              npm install&nbsp;
+              <span className={styles.codeColor}>watchdocs-express</span>
+              &nbsp;--save
             </span>
           </CopyableCodeBlock>
         </div>
@@ -39,9 +49,7 @@ app.use(watchdocs({
             instanization but above all routing middlewares:
           </p>
           <CopyableCodeBlock textToCopy={code}>
-            <pre className={styles.pre}>
-              {code}
-            </pre>
+            <pre className={styles.pre} dangerouslySetInnerHTML={{ __html: displayCode }} />
           </CopyableCodeBlock>
         </div>
 
